@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app';
-import { getDatabase, set, ref,get } from 'firebase/database';
+import { getDatabase, set, ref, get, update, remove } from 'firebase/database';
 import express  from 'express';
 import bodyParser  from 'body-parser';
 
@@ -41,7 +41,7 @@ app2.post('/api/create', (req, res) => { // create user path /api/create
         });
     }
 });
-
+//get all
 app2.get('/api/get', (req, res) => { // read user path /api/read
     try{
         get(ref(db, 'users'))
@@ -92,6 +92,50 @@ app2.post('/api/getbyuser', (req, res) => {
                 });
             }
         })
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            RespCode: 500,
+            RespMessage: error.message
+        });
+    }
+});
+
+//update with request
+app2.put('/api/update', (req, res) => {
+    var fullname = req.body.fullname;
+    var balance = req.body.balance;
+    try{
+        set(ref(db, 'users/' + fullname), {
+            fullname: fullname,
+            balance: balance,
+            mil: new Date().getTime(),
+            date: new Date().toLocaleString()
+        });
+        return res.status(200).json({
+            RespCode: 200,
+            RespMessage: "Success"
+        });
+    }
+    catch(error){
+        console.log(error);
+        return res.status(500).json({
+            RespCode: 500,
+            RespMessage: error.message
+        });
+    }
+});
+
+//delete
+app2.delete('/api/delete', (req, res) => {
+    var fullname = req.body.fullname;
+    try{
+        set(ref(db, 'users/' + fullname), null);
+        return res.status(200).json({
+            RespCode: 200,
+            RespMessage: "Success"
+        });
     }
     catch(error){
         console.log(error);
