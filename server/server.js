@@ -7,7 +7,6 @@ var app2 = express();
 app2.use(bodyParser.json());
 app2.use(bodyParser.urlencoded({ extended: true }));
 var server = app2.listen(3000, console.log('Server is running on port 3000'));
-
 const firebaseConfig = {
     databaseURL: "https://healthmate-7a6f2-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
