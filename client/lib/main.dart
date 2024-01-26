@@ -1,3 +1,5 @@
+import 'package:client/Pages/First%20Login/first_login1.dart';
+import 'package:client/Pages/chatPage.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 
@@ -18,13 +20,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const NavigationExample(),
+        home: SignupPage(),
         routes: {
-          '/login': (context) => LoginPage(),
+          '/login': (context) => const LoginPage(),
           '/signup': (context) => SignupPage(),
           '/main': (context) => NavigationExample()
         });
