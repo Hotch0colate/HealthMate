@@ -3,10 +3,14 @@ const router = express.Router();
 const firebasedb = require('firebase/database');
 const db = require('../database/firebase.js');
 const { get, set, ref } = require("firebase/database");
-const cors = require('cors');
 var firebaseadmin = require("firebase-admin");
+const cors = require('cors');
 var app = express();
 app.use(cors());
+
+      /////////////////////////////////////////
+     //this file is template for create api///
+    /////////////////////////////////////////
 
 router.post('/api/create', (req, res) => { 
     var fullname = req.body.fullname;
