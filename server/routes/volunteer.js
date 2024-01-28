@@ -2,70 +2,55 @@ const express = require('express');
 const router = express.Router();
 const firebasedb = require('firebase/database');
 const db = require('../database/firebase.js');
-const { get, set, ref, update, remove } = require("firebase/database");
+const { get, set, ref, update, remove} = require("firebase/database");
 var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
 app.use(cors());
 
 
-
-
-// สร้าง user ด้วยอีเมล
-// feature signup
-router.post('/create_data', async (req, res) => { 
-    const user = {
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    }
-    firebaseadmin.auth().createUser(user)
-    .then((userCredential) => {
-        var uid = userCredential.uid;
-        firebasedb.set(ref(db, 'users/' + uid), {
+//สร้าง volunteer
+//feature volunteer register
+router.post('/create_data',async (req, res) => {
+    var uid = req.body.uid;
+    try{
+        firebasedb.set(ref(db, 'volunteers/' + uid), {
             uid: uid,
-            username:user.username,
-            email: user.email,
-            password: user.password,
-            age: 0,
-            birthday: "unknow",
-            gender: "unknow",
-            carrer: "unknow",
-            martial_status: "unknow",
-            chatgroup: [],
+            quota: 3,
+            tags: [],
+            rating_score: 100,
             mil: new Date().getTime(),
             date: new Date().toLocaleString()
         });
         return res.status(200).json({
             RespCode: 200,
-            RespMessage: "Signup Successfully !"
+            RespMessage: "Register Volunteer Succesfully !"
         });
-    })
-    .catch((error) => {
+    }
+    catch(error){
         return res.status(500).json({
             RespCode: 500,
             RespMessage: error.message
         });
-    });
+    }
 });
 
-
-//ดึงข้อมูลจาก user
-//fetch  userdata
+//ดึงข้อมูลจาก volunteer
+//fetch volunteer data
 router.post('/read_data', (req, res) => {
     var uid = req.body.uid;
     try{
-        firebasedb.get(ref(db, 'users/' + uid))
+        firebasedb.get(ref(db, 'volunteers/' + uid))
         .then((snapshot) => {
             if (snapshot.exists()) {
                 console.log(snapshot.val());
                 return res.status(200).json({
                     RespCode: 200,
-                    RespMessge: "Success",
-                    Dae: snapshot.val()
+                    RespMessage: "Success",
+                    Data: snapshot.val()
                 });
             } else {
-                console.log("No data avilabel from fetch data");
+                console.log("No data available");
                 return res.status(200).json({
                     RespCode: 200,
                     RespMessage: "No data available"
@@ -74,29 +59,22 @@ router.post('/read_data', (req, res) => {
         })
     }
     catch(error){
-        console.log(error);
         return res.status(500).json({
-            RespCode:500,
+            RespCode: 500,
             RespMessage: error.message
         });
     }
 });
 
-// อัพเดทข้อมูล ถ้ามีการกรอกเฉพาะบางข้อมูลก็อัพเดทได้
-// feature first login and edit profile
+//update volunteer data
 router.post('/update_data', (req, res) => {
     var uid = req.body.uid;
 
-    var username = req.body.username;
-    var password = req.body.password;
-    var age = req.body.age;
-    var gender = req.body.gender;
-    var birthday = req.body.birthday;
-    var career = req.body.career;
-    var martial_status = req.body.martial_status;
+    var tags = req.body.tags;
+    var rating_score = req.body.rating_score;
 
     try {
-        get(ref(db, 'users/' + uid))
+        get(ref(db, 'volunteers/' + uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     const updateData = {
@@ -105,15 +83,10 @@ router.post('/update_data', (req, res) => {
                     };
 
                     // Optional Chaining
-                    username &&(updateData.username = username);
-                    password &&(updateData.password = password);
-                    age && (updateData.age = age);
-                    gender && (updateData.gender = gender);
-                    birthday && (updateData.birthday = birthday);
-                    career && (updateData.career = career);
-                    martial_status && (updateData.martial_status = martial_status);
+                    tags && (updateData.tags = tags);
+                    rating_score && (updateData.rating_score = rating_score);
 
-                    update(ref(db, 'users/' + uid), updateData);
+                    update(ref(db, 'volunteers/' + uid), updateData);
 
                     return res.status(200).json({
                         RespCode: 200,
@@ -137,20 +110,19 @@ router.post('/update_data', (req, res) => {
     }
 });
 
-// ลบข้อมูล user
-// feature delete user
+//ลบข้อมูล volunteer
+//feature delete volunteer
 router.post('/delete_data', (req, res) => {
-    var username = req.body.username;
+    var uid = req.body.uid;
 
     try {
-        get(ref(db, 'users/' + username))
+        get(ref(db, 'volunteers/' + uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    remove(ref(db, 'users/' + username));
-
+                    remove(ref(db, 'volunteers/' + uid));
                     return res.status(200).json({
                         RespCode: 200,
-                        RespMessage: "Success"
+                        RespMessage: "Delete Successfully !"
                     });
                 } else {
                     console.log("No data available");
@@ -159,8 +131,9 @@ router.post('/delete_data', (req, res) => {
                         RespMessage: "No data available"
                     });
                 }
-            });
-    } catch (error) {
+            })
+    }
+    catch (error) {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
