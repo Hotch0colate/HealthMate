@@ -11,245 +11,115 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        // This is the theme of your application.
+        //
+        // TRY THIS: Try running your application with "flutter run". You'll see
+        // the application has a purple toolbar. Then, without quitting the app,
+        // try changing the seedColor in the colorScheme below to Colors.green
+        // and then invoke "hot reload" (save your changes or press the "hot
+        // reload" button in a Flutter-supported IDE, or press "r" if you used
+        // the command line to start the app).
+        //
+        // Notice that the counter didn't reset back to zero; the application
+        // state is not lost during the reload. To reset the state, use hot
+        // restart instead.
+        //
+        // This works for code too, not just values: Most code changes can be
+        // tested with just a hot reload.
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
       ),
-      home: const NavigationExample(),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class NavigationExample extends StatefulWidget {
-  const NavigationExample({super.key});
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key, required this.title});
+
+  // This widget is the home page of your application. It is stateful, meaning
+  // that it has a State object (defined below) that contains fields that affect
+  // how it looks.
+
+  // This class is the configuration for the state. It holds the values (in this
+  // case the title) provided by the parent (in this case the App widget) and
+  // used by the build method of the State. Fields in a Widget subclass are
+  // always marked "final".
+
+  final String title;
 
   @override
-  State<NavigationExample> createState() => _NavigationExampleState();
+  State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _NavigationExampleState extends State<NavigationExample> {
-  int currentPageIndex = 0;
+class _MyHomePageState extends State<MyHomePage> {
+  int _counter = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: RichText(
-          text: const TextSpan(
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.w600,
-            ),
-            children: [
-              TextSpan(
-                text: 'Health',
-                style: TextStyle(
-                  color: Color.fromRGBO(
-                      33, 158, 188, 1), // Set the color for 'Health'
-                ),
-              ),
-              TextSpan(
-                text: 'Mate',
-                style: TextStyle(
-                  color: Color.fromRGBO(
-                      251, 133, 0, 1), // Set the color for 'Mate'
-                ),
-              ),
-            ],
-          ),
-        ),
-        centerTitle: false,
-        automaticallyImplyLeading: false,
-        leadingWidth: 10,
-      ),
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Color.fromARGB(255, 255, 149, 68),
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.calendar_month),
-            icon: Icon(Icons.calendar_month_outlined),
-            label: 'Calendar',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.phone_in_talk),
-            icon: Icon(Icons.phone_in_talk_outlined),
-            label: 'Talk',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.chat_bubble),
-            icon: Badge(
-              label: Text('2'),
-              child: Icon(Icons.chat_bubble_outline),
-            ),
-            label: 'Messages',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.person),
-            icon: Icon(Icons.person_2_outlined),
-            label: 'Profile',
-          ),
-        ],
-      ),
-      body: <Widget>[
-        /// Calendar page
-        const Card(
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text('Calendar'),
-            ),
-          ),
-        ),
-
-        /// Select to talk page
-        Card(
-          margin: const EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                      height:
-                          20), // Adjust the spacing between 'Talk' and the boxes
-
-                  // First Box
-                  Container(
-                    width: 342,
-                    height: 223,
-                    color: const Color.fromRGBO(151, 229, 206, 0.4),
-                    margin: const EdgeInsets.all(8.0),
-                  ),
-
-                  // Second Box
-                  Container(
-                    width: 342,
-                    height: 223,
-                    color: const Color.fromRGBO(255, 202, 69, 0.4),
-                    margin: const EdgeInsets.all(8.0),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-
-        /// Messages page
-        DefaultTabController(
-          length: 2, // Number of tabs
-          child: Scaffold(
-            appBar: AppBar(
-              bottom: const TabBar(
-                tabs: [
-                  Tab(text: 'ทั้งหมด'),
-                  Tab(text: 'ยังไม่ได้อ่าน'),
-                ],
-              ),
-            ),
-            body: TabBarView(
-              children: [
-                // All Chats
-                Card(
-                  margin: const EdgeInsets.all(8.0),
-                  child: SizedBox.expand(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: 4,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: const CircleAvatar(
-                                    backgroundImage: AssetImage('####'),
-                                  ),
-                                  title: Text('อาสาสมัคร ${index + 1}'),
-                                  subtitle: const Text('สวัสดีเป็นไงบ้าง'),
-                                  // Add onTap handler or other customization as needed
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-
-                // Filtered Chats
-                Card(
-                  margin: const EdgeInsets.all(8.0),
-                  child: SizedBox.expand(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: 2, // Add your filtered chat logic here
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: const CircleAvatar(
-                                    backgroundImage: AssetImage('####'),
-                                  ),
-                                  title: Text('อาสาสมัคร ${index + 1}'),
-                                  subtitle: const Text('สบายดีค่ะ'),
-                                  trailing: const Icon(Icons
-                                      .mark_unread_chat_alt), // Add "unread" icon
-                                  // Add onTap handler or other customization as needed
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-
-        /// Profile page
-        const Card(
-          shadowColor: Colors.transparent,
-          margin: EdgeInsets.all(8.0),
-          child: SizedBox.expand(
-            child: Center(
-              child: Text('Profile'),
-            ),
-          ),
-        ),
-      ][currentPageIndex],
-    );
+  void _incrementCounter() {
+    setState(() {
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
+    });
   }
-}
-
-
-
-class ChatPage extends StatelessWidget {
-  final String personName;
-
-  ChatPage({required this.personName});
 
   @override
   Widget build(BuildContext context) {
+    // This method is rerun every time setState is called, for instance as done
+    // by the _incrementCounter method above.
+    //
+    // The Flutter framework has been optimized to make rerunning build methods
+    // fast, so that you can just rebuild anything that needs updating rather
+    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat with $personName'),
+        // TRY THIS: Try changing the color here to a specific color (to
+        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
+        // change color while the other colors stay the same.
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        title: Text(widget.title),
       ),
       body: Center(
-        child: Text('Chat content goes here...'),
+        // Center is a layout widget. It takes a single child and positions it
+        // in the middle of the parent.
+        child: Column(
+          // Column is also a layout widget. It takes a list of children and
+          // arranges them vertically. By default, it sizes itself to fit its
+          // children horizontally, and tries to be as tall as its parent.
+          //
+          // Column has various properties to control how it sizes itself and
+          // how it positions its children. Here we use mainAxisAlignment to
+          // center the children vertically; the main axis here is the vertical
+          // axis because Columns are vertical (the cross axis would be
+          // horizontal).
+          //
+          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
+          // action in the IDE, or press "p" in the console), to see the
+          // wireframe for each widget.
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text(
+              'You have pushed the button this many times:',
+            ),
+            Text(
+              '$_counter',
+              style: Theme.of(context).textTheme.headlineMedium,
+            ),
+          ],
+        ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _incrementCounter,
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
