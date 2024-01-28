@@ -1,5 +1,5 @@
 import 'package:client/Pages/First%20Login/first_login1.dart';
-import 'package:client/Pages/chatPage.dart';
+// import 'package:client/Pages/chatPage.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: SignupPage(),
+        home: NavigationExample(),
         routes: {
           '/login': (context) => const LoginPage(),
           '/signup': (context) => SignupPage(),
@@ -164,29 +164,40 @@ class _NavigationExampleState extends State<NavigationExample> {
             body: TabBarView(
               children: [
                 // All Chats
-                Card(
-                  margin: const EdgeInsets.all(8.0),
-                  child: SizedBox.expand(
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: ListView.builder(
-                              itemCount: 4,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: const CircleAvatar(
-                                    backgroundImage: AssetImage('####'),
-                                  ),
-                                  title: Text('อาสาสมัคร ${index + 1}'),
-                                  subtitle: const Text('สวัสดีเป็นไงบ้าง'),
-                                  // Add onTap handler or other customization as needed
-                                );
-                              },
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ChatPage(
+                                personName: 'KuyRabom',
+                              )),
+                    );
+                  },
+                  child: Card(
+                    margin: const EdgeInsets.all(8.0),
+                    child: SizedBox.expand(
+                      child: Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                itemCount: 4,
+                                itemBuilder: (context, index) {
+                                  return ListTile(
+                                    leading: const CircleAvatar(
+                                      backgroundImage: AssetImage('####'),
+                                    ),
+                                    title: Text('อาสาสมัคร ${index + 1}'),
+                                    subtitle: const Text('สวัสดีเป็นไงบ้าง'),
+                                    // Add onTap handler or other customization as needed
+                                  );
+                                },
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),

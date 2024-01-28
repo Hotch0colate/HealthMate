@@ -8,7 +8,10 @@ import '../models/models.dart';
 // import '../widgets/custom_container.dart';
 
 class ChatPage extends StatefulWidget {
-  const ChatPage({Key? key}) : super(key: key);
+  // final User user;
+  // final Chat chat;
+
+  // const ChatPage({super.key, required this.user, required this.chat});
 
   @override
   State<ChatPage> createState() => _ChatPageState();
