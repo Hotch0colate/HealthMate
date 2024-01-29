@@ -21,7 +21,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: ChatRoom(),
+        home: ChatRoom(
+          cid: "b4KPDSh8oY69A6mQGn4I",
+          uid: "pTw4p0fFpvRQAGlabQhHB47yUQr2",
+          messages: [],
+        ),
         routes: {
           '/login': (context) => const LoginPage(),
           '/signup': (context) => SignupPage(),

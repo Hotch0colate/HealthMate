@@ -15,5 +15,5 @@ const db = firebasedb.getDatabase();
 module.exports = firebaseapp;
 module.exports = firebaseadmin;
 module.exports = firebasedb
-module.exports = {get, set, ref};
+module.exports = { get, set, ref };
 module.exports = db;
