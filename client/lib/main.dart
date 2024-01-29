@@ -1,4 +1,6 @@
 import 'package:client/Pages/First%20Login/first_login1.dart';
+import 'package:client/Pages/First%20Login/first_login2.dart';
+import 'package:client/Pages/First%20Login/first_login3.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
 
@@ -19,9 +21,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const FirstLogin1(),
+        home: const FirstLogin3(),
         routes: {
-          '/login': (context) => const LoginPage(),
+          '/login': (context) => SignupPage(),
           '/signup': (context) => SignupPage(),
         });
   }
