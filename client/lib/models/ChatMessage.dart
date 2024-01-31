@@ -34,4 +34,14 @@ List<ChatMessage> messages = [
     messageType: "sender",
     timestamp: DateTime.now(),
   ),
+    ChatMessage(
+    messageContent: "ขอบคุณสำหรับความช่วยเหลือจ้า",
+    messageType: "sender",
+    timestamp: DateTime.now(),
+  ),
+    ChatMessage(
+    messageContent: "ขอบคุณสำหรับความช่วยเหลือจ้า",
+    messageType: "sender",
+    timestamp: DateTime.now(),
+  ),
 ];

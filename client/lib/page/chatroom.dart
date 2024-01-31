@@ -1,3 +1,4 @@
+import 'package:client/page/messages.dart';
 import 'package:client/theme/font.dart';
 import 'package:client/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -31,14 +32,14 @@ class ChatroomBody extends StatelessWidget {
         //top bar
         appBar: PreferredSize(
           preferredSize:
-              const Size.fromHeight(80.0), // Adjust the height as needed
+              const Size.fromHeight(70.0), // Adjust the height as needed
           child: AppBar(
             backgroundColor: ColorTheme.primaryColor,
             elevation: 10.0, // Remove elevation if you don't want a shadow
             shape: const ContinuousRectangleBorder(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(70.0),
-                bottomRight: Radius.circular(70.0),
+                bottomLeft: Radius.circular(30.0),
+                bottomRight: Radius.circular(30.0),
               ),
             ),
             leading: IconButton(
@@ -48,11 +49,11 @@ class ChatroomBody extends StatelessWidget {
               ),
               color: Colors.white,
               onPressed: () {
+                    Navigator.pop(context);
                 // Back to Messages page
-                Navigator.pop(context);
               },
             ),
-            title: const Row(
+            title: Row(
               children: [
                 CircleAvatar(
                   backgroundImage: AssetImage('assets/images/av1.png'),
@@ -62,10 +63,21 @@ class ChatroomBody extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'อาสาสมัคร A25',
+                      'Volunteer A25',
                       style: FontTheme.h4,
                     ),
                   ],
+                ),
+                SizedBox(
+                    width: 10.0), // Add some spacing between the name and online status
+                // Online status indicator (you can customize the color and shape)
+                Container(
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorTheme.successAction, // Use the appropriate color for online
+                  ),
                 ),
               ],
             ),
@@ -76,13 +88,14 @@ class ChatroomBody extends StatelessWidget {
                   size: 35,
                 ),
                 color: Colors.white,
-                onPressed: (
-                    //Navigate to Voice Call Page
-                    ) {},
+                onPressed: () {
+                  // Navigate to Voice Call Page
+                },
               ),
             ],
           ),
         ),
+
         body: Column(
           children: <Widget>[
             Expanded(
@@ -95,9 +108,10 @@ class ChatroomBody extends StatelessWidget {
                       children: <Widget>[
                         for (ChatMessage message in messages)
                           Column(
-                            crossAxisAlignment: (message.messageType == "receiver"
-                                ? CrossAxisAlignment.start
-                                : CrossAxisAlignment.end),
+                            crossAxisAlignment:
+                                (message.messageType == "receiver"
+                                    ? CrossAxisAlignment.start
+                                    : CrossAxisAlignment.end),
                             children: [
                               Container(
                                 padding: const EdgeInsets.only(
@@ -118,9 +132,10 @@ class ChatroomBody extends StatelessWidget {
                                       message.messageContent,
                                       style: TextStyle(
                                         fontSize: 16,
-                                        color: (message.messageType == "receiver"
-                                            ? Colors.black
-                                            : Colors.white),
+                                        color:
+                                            (message.messageType == "receiver"
+                                                ? Colors.black
+                                                : Colors.white),
                                       ),
                                     ),
                                   ),
