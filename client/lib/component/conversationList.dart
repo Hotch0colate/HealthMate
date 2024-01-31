@@ -1,24 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:client/page/chatroom.dart';
+import 'package:client/Pages/chatroom.dart';
 import 'package:client/theme/theme.dart';
 
-
 // ignore: must_be_immutable
-class ConversationList extends StatefulWidget{
-  
+class ConversationBox extends StatefulWidget {
   @override
-  _ConversationListState createState() => _ConversationListState();
+  _ConversationBoxState createState() => _ConversationBoxState();
 
   String name;
+  final String cid;
+  final String uid;
   String messageText;
   String imageURL;
-  String time;
-  bool isMessageRead;
-  ConversationList({required this.name,required this.messageText,required this.imageURL,required this.time,required this.isMessageRead});
-
+  String date;
+  bool seen;
+  ConversationBox(
+      {required this.name,
+      required this.cid,
+      required this.uid,
+      required this.messageText,
+      required this.imageURL,
+      required this.date,
+      required this.seen});
 }
 
-class _ConversationListState extends State<ConversationList> {
+class _ConversationBoxState extends State<ConversationBox> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -26,12 +32,17 @@ class _ConversationListState extends State<ConversationList> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Chatroom(), // Assuming Chatroom is your chat room page
+            builder: (context) => ChatRoom(
+              cid: widget.cid,
+              uid: widget.uid,
+              messages: [],
+            ), // Assuming Chatroom is your chat room page
           ),
         );
       },
       child: Container(
-        padding: const EdgeInsets.only(left: 16,right: 16,top: 10,bottom: 10),
+        padding:
+            const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -41,16 +52,31 @@ class _ConversationListState extends State<ConversationList> {
                     backgroundImage: NetworkImage(widget.imageURL),
                     maxRadius: 30,
                   ),
-                  const SizedBox(width: 14,),
+                  const SizedBox(
+                    width: 14,
+                  ),
                   Expanded(
                     child: Container(
                       color: Colors.transparent,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(widget.name, style: const TextStyle(fontSize: 16),),
-                          const SizedBox(height: 6,),
-                          Text(widget.messageText,style: TextStyle(fontSize: 13,color: Colors.grey.shade600, fontWeight: widget.isMessageRead?FontWeight.bold:FontWeight.normal),),
+                          Text(
+                            widget.name,
+                            style: const TextStyle(fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 6,
+                          ),
+                          Text(
+                            widget.messageText,
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.grey.shade600,
+                                fontWeight: widget.seen
+                                    ? FontWeight.bold
+                                    : FontWeight.normal),
+                          ),
                         ],
                       ),
                     ),
@@ -58,7 +84,13 @@ class _ConversationListState extends State<ConversationList> {
                 ],
               ),
             ),
-            Text(widget.time,style: TextStyle(fontSize: 12,fontWeight: widget.isMessageRead?FontWeight.bold:FontWeight.normal),),
+            Text(
+              widget.date,
+              style: TextStyle(
+                  fontSize: 12,
+                  fontWeight:
+                      widget.seen ? FontWeight.bold : FontWeight.normal),
+            ),
           ],
         ),
       ),

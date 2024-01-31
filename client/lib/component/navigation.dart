@@ -3,9 +3,8 @@ import 'package:client/theme/theme.dart';
 
 import 'package:client/Pages/calendar.dart';
 import 'package:client/Pages/select_talk.dart';
-import 'package:client/Pages/chatlog.dart';
 import 'package:client/Pages/profile.dart';
-import 'package:client/Pages/messages.dart';
+import 'package:client/Pages/chatlog.dart';
 
 class MainApp extends StatefulWidget {
   @override
@@ -17,7 +16,7 @@ class _MyAppState extends State<MainApp> {
   final _pageOptions = [
     Calendar(),
     SelectTalk(),
-    ChatPage(),
+    ChatLog(uid: "pTw4p0fFpvRQAGlabQhHB47yUQr2"),
     ProfilePage(),
   ];
 

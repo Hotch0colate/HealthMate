@@ -28,6 +28,13 @@ router.post('/create_data', async (req, res) => {
                         mil: new Date().getTime(),
                         date: new Date().toLocaleString()
                     });
+                    const updateData = {
+                        lastmessage: text,
+                        seen: false,
+                        mil: new Date().getTime(),
+                        date: new Date().toLocaleString()
+                    };
+                    update(ref(db, 'chats/' + cid), updateData);
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "Text Sent Successfully !"
