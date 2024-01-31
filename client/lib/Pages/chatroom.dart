@@ -145,14 +145,14 @@ class ChatRoomBody extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(80.0),
+        preferredSize: const Size.fromHeight(70.0),
         child: AppBar(
           backgroundColor: ColorTheme.primaryColor,
           elevation: 10.0,
           shape: const ContinuousRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(70.0),
-              bottomRight: Radius.circular(70.0),
+              bottomLeft: Radius.circular(30.0),
+              bottomRight: Radius.circular(30.0),
             ),
           ),
           leading: IconButton(
@@ -165,7 +165,7 @@ class ChatRoomBody extends State<ChatRoom> {
               Navigator.pop(context);
             },
           ),
-          title: const Row(
+          title: Row(
             children: [
               CircleAvatar(
                 backgroundImage: AssetImage('assets/images/av1.png'),
@@ -175,10 +175,23 @@ class ChatRoomBody extends State<ChatRoom> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'อาสาสมัคร A25',
+                    'Volunteer A25',
                     style: FontTheme.h4,
                   ),
                 ],
+              ),
+              SizedBox(
+                  width:
+                      10.0), // Add some spacing between the name and online status
+              // Online status indicator (you can customize the color and shape)
+              Container(
+                width: 10.0,
+                height: 10.0,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: ColorTheme
+                      .successAction, // Use the appropriate color for online
+                ),
               ),
             ],
           ),
@@ -190,6 +203,7 @@ class ChatRoomBody extends State<ChatRoom> {
               ),
               color: Colors.white,
               onPressed: () {},
+              // Navigate to Voice Call Page
             ),
           ],
         ),
