@@ -5,6 +5,7 @@ import 'package:client/Pages/calendar.dart';
 import 'package:client/Pages/select_talk.dart';
 import 'package:client/Pages/chatlog.dart';
 import 'package:client/Pages/profile.dart';
+import 'package:client/Pages/messages.dart';
 
 class MainApp extends StatefulWidget {
   @override
@@ -16,7 +17,7 @@ class _MyAppState extends State<MainApp> {
   final _pageOptions = [
     Calendar(),
     SelectTalk(),
-    Chatlog(),
+    ChatPage(),
     ProfilePage(),
   ];
 
@@ -25,14 +26,11 @@ class _MyAppState extends State<MainApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Buttom Navigation Bar Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.orange,
-      ),
       home: Scaffold(
         body: _pageOptions[_selectedPage],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedPage,
-          selectedItemColor: Colors.orange,
+          selectedItemColor: ColorTheme.primaryColor,
           unselectedItemColor: Colors.grey, // Set the selected item color
           type: BottomNavigationBarType.fixed, // Set the type to fixed
           onTap: (int index) {
@@ -40,34 +38,34 @@ class _MyAppState extends State<MainApp> {
               _selectedPage = index;
             });
           },
-          items: [
+          items: const [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.calendar_month,
                 size: 35,
               ),
-              label: 'Calendar',
+              label: 'อารมณ์',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.people,
                 size: 35,
               ),
-              label: 'Talk',
+              label: 'ปรึกษา',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.message,
                 size: 35,
               ),
-              label: 'Messages',
+              label: 'ข้อความ',
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.person,
                 size: 35,
               ),
-              label: 'Profile',
+              label: 'โปรไฟล์',
             ),
           ],
         ),
