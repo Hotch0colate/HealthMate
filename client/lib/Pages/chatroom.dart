@@ -18,19 +18,40 @@ class ChatRoom extends StatefulWidget {
 }
 
 class ChatRoomBody extends State<ChatRoom> {
-  late Future<Map<String, dynamic>> _fetchMessagesFuture;
   late Timer _apiCallTimer;
   TextEditingController _textEditingController = TextEditingController();
-  Key _futureBuilderKey = UniqueKey();
+  Key _streamBuilderKey = UniqueKey();
+  StreamController<Map<String, dynamic>> _messageStreamController =
+      StreamController<Map<String, dynamic>>();
+  int previousMessageLength = 0;
+  late ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
-    _fetchMessagesFuture = fetchMessages();
     _apiCallTimer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
-      setState(() {
-        _futureBuilderKey = UniqueKey(); // ให้สร้าง FutureBuilder ใหม่
-      });
+      fetchAndCompareMessageLength();
+    });
+
+    _scrollController = ScrollController();
+    // Add this block to scroll to the bottom only if there are messages
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.messages.isNotEmpty) {
+        _scrollToBottom();
+      }
+    });
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_scrollController.hasClients) {
+        _scrollController.animateTo(
+          _scrollController.position.maxScrollExtent + 20,
+          duration: Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      }
     });
   }
 
@@ -38,13 +59,42 @@ class ChatRoomBody extends State<ChatRoom> {
   void dispose() {
     _apiCallTimer.cancel();
     _textEditingController.dispose();
+    _messageStreamController.close();
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _scrollToBottom();
+    });
     super.dispose();
+  }
+
+  Future<void> fetchAndCompareMessageLength() async {
+    Map<String, dynamic> messagesData = await fetchMessages();
+    List<Map<String, dynamic>> messages =
+        (messagesData["Data"] as List<dynamic>? ?? [])
+            .cast<Map<String, dynamic>>();
+    int currentMessageLength = messages.length;
+
+    if (currentMessageLength != previousMessageLength) {
+      await fetchMessages().then((messages) {
+        previousMessageLength = currentMessageLength;
+        _messageStreamController.add(messages);
+        _messageStreamController.stream.listen((messages) {
+          // คอยรอจนกว่า add จะเสร็จ
+          WidgetsBinding.instance?.addPostFrameCallback((_) {
+            _scrollToBottom();
+          });
+        }).onDone(() {
+          // Do something when the stream is closed
+          _scrollToBottom(); // เลื่อนไปที่ข้อความล่าสุด
+        });
+      });
+    }
   }
 
   Future<Map<String, dynamic>> fetchMessages() async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.0.105:3000/chatroom/read_data'),
+        Uri.parse('http://localhost:3000/chatroom/read_data'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -70,7 +120,7 @@ class ChatRoomBody extends State<ChatRoom> {
   Future<void> sendMessage(String text) async {
     try {
       final response = await http.post(
-        Uri.parse('http://192.168.0.105:3000/chatroom/create_data'),
+        Uri.parse('http://localhost:3000/chatroom/create_data'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -146,9 +196,9 @@ class ChatRoomBody extends State<ChatRoom> {
       ),
       body: Stack(
         children: <Widget>[
-          FutureBuilder<Map<String, dynamic>>(
-            future: fetchMessages(),
-            key: _futureBuilderKey,
+          StreamBuilder<Map<String, dynamic>>(
+            stream: _messageStreamController.stream,
+            key: _streamBuilderKey,
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const CircularProgressIndicator();
@@ -158,7 +208,18 @@ class ChatRoomBody extends State<ChatRoom> {
                 return Text("Error: ${snapshot.data?["RespMessage"]}");
               } else {
                 List<dynamic> messages = snapshot.data?["Data"] ?? [];
+                messages.sort((a, b) {
+                  DateTime dateA =
+                      DateFormat("dd/MM/yyyy HH:mm:ss").parse(a["date"]);
+                  DateTime dateB =
+                      DateFormat("dd/MM/yyyy HH:mm:ss").parse(b["date"]);
+                  return dateA.compareTo(dateB);
+                });
+
+                _scrollToBottom();
+
                 return ListView.builder(
+                  controller: _scrollController,
                   itemCount: messages.length,
                   itemBuilder: (context, index) {
                     return Column(
@@ -171,9 +232,7 @@ class ChatRoomBody extends State<ChatRoom> {
                           padding: const EdgeInsets.only(
                               left: 14, right: 14, top: 10, bottom: 10),
                           child: ConstrainedBox(
-                            constraints: const BoxConstraints(
-                              maxWidth: 300,
-                            ),
+                            constraints: const BoxConstraints(maxWidth: 300),
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
