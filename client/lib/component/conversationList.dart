@@ -28,14 +28,16 @@ class _ConversationBoxState extends State<ConversationBox> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        final result = await Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => ChatRoom(
               cid: widget.cid,
               uid: widget.uid,
               messages: [],
+
+              // ใส่โค้ดที่คุณต้องการทำเมื่อได้รับผลลัพธ์จาก ChatRoom ที่นี่
             ), // Assuming Chatroom is your chat room page
           ),
         );

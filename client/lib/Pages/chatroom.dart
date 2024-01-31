@@ -1,3 +1,4 @@
+import 'package:client/Pages/chatlog.dart';
 import 'package:client/theme/font.dart';
 import 'package:client/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,16 @@ class ChatRoom extends StatefulWidget {
   final String uid;
   final List<Map<String, dynamic>> messages;
 
-  ChatRoom({required this.cid, required this.uid, required this.messages});
+  // ChatRoom({required this.cid, required this.uid, required this.messages});
 
   @override
   ChatRoomBody createState() => ChatRoomBody();
+
+  ChatRoom({
+    required this.cid,
+    required this.uid,
+    required this.messages,
+  });
 }
 
 class ChatRoomBody extends State<ChatRoom> {
@@ -64,6 +71,7 @@ class ChatRoomBody extends State<ChatRoom> {
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       _scrollToBottom();
     });
+
     super.dispose();
   }
 
@@ -72,22 +80,24 @@ class ChatRoomBody extends State<ChatRoom> {
     List<Map<String, dynamic>> messages =
         (messagesData["Data"] as List<dynamic>? ?? [])
             .cast<Map<String, dynamic>>();
-    int currentMessageLength = messages.length;
+    if (messagesData["Data"] != null) {
+      int currentMessageLength = messages.length;
 
-    if (currentMessageLength != previousMessageLength) {
-      await fetchMessages().then((messages) {
-        previousMessageLength = currentMessageLength;
-        _messageStreamController.add(messages);
-        _messageStreamController.stream.listen((messages) {
-          // คอยรอจนกว่า add จะเสร็จ
-          WidgetsBinding.instance?.addPostFrameCallback((_) {
-            _scrollToBottom();
+      if (currentMessageLength != previousMessageLength) {
+        await fetchMessages().then((messages) {
+          previousMessageLength = currentMessageLength;
+          _messageStreamController.add(messages);
+          _messageStreamController.stream.listen((messages) {
+            // คอยรอจนกว่า add จะเสร็จ
+            WidgetsBinding.instance?.addPostFrameCallback((_) {
+              _scrollToBottom();
+            });
+          }).onDone(() {
+            // Do something when the stream is closed
+            _scrollToBottom(); // เลื่อนไปที่ข้อความล่าสุด
           });
-        }).onDone(() {
-          // Do something when the stream is closed
-          _scrollToBottom(); // เลื่อนไปที่ข้อความล่าสุด
         });
-      });
+      }
     }
   }
 
@@ -162,7 +172,8 @@ class ChatRoomBody extends State<ChatRoom> {
             ),
             color: Colors.white,
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.pop(context, true);
+              // เรียกใช้ callback function เพื่อส่งผลลัพธ์กลับไปยัง ChatLog
             },
           ),
           title: Row(
@@ -217,14 +228,50 @@ class ChatRoomBody extends State<ChatRoom> {
                   stream: _messageStreamController.stream,
                   key: _streamBuilderKey,
                   builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const CircularProgressIndicator();
+                    if (snapshot.connectionState == ConnectionState.waiting &&
+                        snapshot.data != null) {
+                      return
+                          // const CircularProgressIndicator();
+                          Container(
+                        color: Colors.white,
+                        child: Center(
+                          child: Text(
+                            'No messages',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.black26,
+                            ),
+                          ),
+                        ),
+                      );
+                    } else if (snapshot.connectionState ==
+                            ConnectionState.waiting &&
+                        snapshot.data == null) {
+                      return Container(
+                        color: Colors.white,
+                        child: Center(),
+                      );
                     } else if (snapshot.hasError) {
                       return Text("Error: ${snapshot.error}");
                     } else if (snapshot.data?["RespCode"] != 200) {
                       return Text("Error: ${snapshot.data?["RespMessage"]}");
                     } else {
                       List<dynamic> messages = snapshot.data?["Data"] ?? [];
+                      // if (_apiCallTimer.isActive && messages.isEmpty) {
+                      //   // ไม่มีข้อมูล, แสดง Container สีขาวเปล่า
+                      //   return Container(
+                      //     color: Colors.white,
+                      //     child: Center(
+                      //       child: Text(
+                      //         'No messages available', // ข้อความที่คุณต้องการแสดง
+                      //         style: TextStyle(
+                      //           fontSize: 18,
+                      //           color: Colors.black,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   );
+                      // }
                       messages.sort((a, b) {
                         DateTime dateA =
                             DateFormat("dd/MM/yyyy HH:mm:ss").parse(a["date"]);

@@ -23,6 +23,9 @@ router.post('/create_data', async (req, res) => {
             user: user,
             volunteer: volunteer,
             messages: {},
+            lastsender: "",
+            lastmessage: "",
+            seen: false,
             complete: false,
             mil: new Date().getTime(),
             date: new Date().toLocaleString()

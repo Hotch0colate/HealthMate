@@ -7,13 +7,19 @@ import 'dart:async';
 
 import 'package:intl/intl.dart';
 
+typedef UpdateTriggerCallback = void Function(bool updateTrigger);
+
 class ChatLog extends StatefulWidget {
   final String uid;
 
-  ChatLog({required this.uid});
+  // ChatLog({required this.uid, required this.updateTriger});
 
   @override
   _ChatLogState createState() => _ChatLogState();
+
+  // Callback function type
+
+  ChatLog({required this.uid});
 }
 
 // List<ChatUsers> chatUsers = [
@@ -46,10 +52,12 @@ class _ChatLogState extends State<ChatLog> {
       StreamController<Map<String, dynamic>>();
   late Timer _apiCallTimer;
   int previousChatLogLength = 0;
+  bool _updateTrigger = false;
 
   @override
   void initState() {
     super.initState();
+// เซ็ต _updateTrigger ตามค่าที่รับมา
     _apiCallTimer = Timer.periodic(Duration(milliseconds: 50), (Timer timer) {
       fetchAndCompareChatLength();
     });
@@ -83,6 +91,10 @@ class _ChatLogState extends State<ChatLog> {
         //   // Do something when the stream is closed
         //   _scrollToBottom(); // เลื่อนไปที่ข้อความล่าสุด
         // });
+      });
+    } else if (_updateTrigger) {
+      await fetchChats().then((chats) {
+        _chatlogStreamController.add(chats);
       });
     }
   }
@@ -141,20 +153,61 @@ class _ChatLogState extends State<ChatLog> {
                 key: _streamBuilderKey,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const CircularProgressIndicator();
+                    return
+                        //  const CircularProgressIndicator();
+
+                        Container(
+                      color: Colors.white,
+                      child: Center(
+                        child: Text(
+                          'No chats',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black26,
+                          ),
+                        ),
+                      ),
+                    );
                   } else if (snapshot.hasError) {
                     return Text("Error: ${snapshot.error}");
                   } else if (snapshot.data?["RespCode"] != 200) {
                     return Text("Error: ${snapshot.data?["RespMessage"]}");
                   } else {
                     List<dynamic> chatlogs = snapshot.data?["Data"] ?? [];
-                    // chatlogs.sort((a, b) {
-                    //   DateTime dateA =
-                    //       DateFormat("dd/MM/yyyy HH:mm:ss").parse(a["date"]);
-                    //   DateTime dateB =
-                    //       DateFormat("dd/MM/yyyy HH:mm:ss").parse(b["date"]);
-                    //   return dateA.compareTo(dateB);
-                    // });
+                    chatlogs.sort((a, b) {
+                      // 1. Compare "seen" values (false should come before true)
+                      int seenComparison = a["seen"] == b["seen"]
+                          ? 0
+                          : a["seen"]
+                              ? 1
+                              : !a["seen"] && a["lastsender"] == widget.uid
+                                  ? 0
+                                  : -1;
+
+                      // 2. If "seen" values are both false, compare "date" values (newer dates should come first)
+                      if (seenComparison == 0 && !a["seen"]) {
+                        DateTime dateA =
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a["date"]);
+                        DateTime dateB =
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b["date"]);
+
+                        // Reverse the comparison to make newer dates come first
+                        return dateB.compareTo(dateA);
+                      }
+
+                      // 3. If "seen" values are both true, compare "date" values (newer dates should come first)
+                      if (seenComparison == 0 && a["seen"]) {
+                        DateTime dateA =
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a["date"]);
+                        DateTime dateB =
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b["date"]);
+
+                        // Reverse the comparison to make newer dates come first
+                        return dateB.compareTo(dateA);
+                      }
+
+                      return seenComparison;
+                    });
 
                     return ListView.builder(
                       itemCount: chatlogs.length,

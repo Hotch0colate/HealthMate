@@ -16,7 +16,9 @@ class _MyAppState extends State<MainApp> {
   final _pageOptions = [
     Calendar(),
     SelectTalk(),
-    ChatLog(uid: "pTw4p0fFpvRQAGlabQhHB47yUQr2"),
+    ChatLog(
+      uid: "pTw4p0fFpvRQAGlabQhHB47yUQr2",
+    ),
     ProfilePage(),
   ];
 

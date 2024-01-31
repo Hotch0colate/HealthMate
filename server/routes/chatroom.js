@@ -30,6 +30,7 @@ router.post('/create_data', async (req, res) => {
                     });
                     const updateData = {
                         lastmessage: text,
+                        lastsender: sender,
                         seen: false,
                         mil: new Date().getTime(),
                         date: new Date().toLocaleString()
