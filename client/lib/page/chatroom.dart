@@ -48,7 +48,7 @@ class ChatroomBody extends StatelessWidget {
               ),
               color: Colors.white,
               onPressed: () {
-                // Back to Chatlog page
+                // Back to Messages page
                 Navigator.pop(context);
               },
             ),
@@ -83,111 +83,114 @@ class ChatroomBody extends StatelessWidget {
             ],
           ),
         ),
-        body: Stack(
+        body: Column(
           children: <Widget>[
-            //show message
-            ListView.builder(
-              itemCount: messages.length,
-              shrinkWrap: true,
-              padding: const EdgeInsets.only(top: 10, bottom: 10),
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return Column(
-                  crossAxisAlignment: (messages[index].messageType == "receiver"
-                      ? CrossAxisAlignment.start
-                      : CrossAxisAlignment.end),
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.only(
-                          left: 14, right: 14, top: 10, bottom: 10),
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxWidth: 300, // Set maximum width
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: (messages[index].messageType == "receiver"
-                                ? Colors.grey.shade200
-                                : ColorTheme.primaryColor),
+            Expanded(
+              child: Stack(
+                children: <Widget>[
+                  // Show messages
+                  SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: <Widget>[
+                        for (ChatMessage message in messages)
+                          Column(
+                            crossAxisAlignment: (message.messageType == "receiver"
+                                ? CrossAxisAlignment.start
+                                : CrossAxisAlignment.end),
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.only(
+                                    left: 14, right: 14, top: 10, bottom: 10),
+                                child: ConstrainedBox(
+                                  constraints: const BoxConstraints(
+                                    maxWidth: 300, // Set maximum width
+                                  ),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: (message.messageType == "receiver"
+                                          ? Colors.grey.shade200
+                                          : ColorTheme.primaryColor),
+                                    ),
+                                    padding: const EdgeInsets.all(16),
+                                    child: Text(
+                                      message.messageContent,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        color: (message.messageType == "receiver"
+                                            ? Colors.black
+                                            : Colors.white),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10),
+                                child: Text(
+                                  DateFormat('HH:mm').format(message.timestamp),
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          padding: const EdgeInsets.all(16),
-                          child: Text(
-                            messages[index].messageContent,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: (messages[index].messageType == "receiver"
-                                  ? Colors.black
-                                  : Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(
-                          left: 20, right: 20, bottom: 10),
-                      child: Text(
-                        DateFormat('HH:mm').format(messages[index].timestamp),
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
+                  ),
+                ],
+              ),
             ),
-            //type box
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                decoration: BoxDecoration(
-                    color: const Color.fromARGB(221, 255, 255, 255),
-                    border:
-                        Border.all(color: const Color.fromARGB(81, 34, 33, 33)),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20.0),
-                      topRight: Radius.circular(20.0),
-                    )),
-                padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
-                height: 80,
-                width: double.infinity,
-                child: Row(
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    const Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                            hintText: "Type here ...",
-                            hintStyle: TextStyle(color: Color.fromARGB(98, 34, 33, 33)),
-                            border: InputBorder.none),
-                      ),
-                    ),
-                    FloatingActionButton(
-                      onPressed: (
-                        //Send Message
-                      ) {},
-                      elevation: 0,
-                      backgroundColor: Colors.white,
-                      child: const Icon(
-                        Icons.send,
-                        size: 30,
-                        color: ColorTheme.primaryColor,
-                      ),
-                    ),
-                  ],
+            // Type box
+            Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(221, 255, 255, 255),
+                border: Border.all(color: const Color.fromARGB(81, 34, 33, 33)),
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20.0),
+                  topRight: Radius.circular(20.0),
                 ),
+              ),
+              padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+              height: 80,
+              child: Row(
+                children: <Widget>[
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      height: 30,
+                      width: 30,
+                    ),
+                  ),
+                  const SizedBox(width: 15),
+                  Expanded(
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: "Type here ...",
+                        hintStyle: TextStyle(
+                          color: Color.fromARGB(98, 34, 33, 33),
+                        ),
+                        border: InputBorder.none,
+                      ),
+                    ),
+                  ),
+                  FloatingActionButton(
+                    onPressed: () {
+                      // Send Message
+                    },
+                    elevation: 0,
+                    backgroundColor: Colors.white,
+                    child: const Icon(
+                      Icons.send,
+                      size: 30,
+                      color: ColorTheme.primaryColor,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -196,6 +199,5 @@ class ChatroomBody extends StatelessWidget {
     );
   }
 }
-
 
 //FINISH BY FERN
