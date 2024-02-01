@@ -1,6 +1,6 @@
 // ignore_for_file: file_names
 import 'package:flutter/material.dart';
-import '../models/models.dart'; // Make sure to adjust the import path based on your project structure
+import '../../models/models.dart'; // Make sure to adjust the import path based on your project structure
 // Make sure to adjust the import path based on your project structure
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
