@@ -16,12 +16,19 @@ class _FirstLogin1State extends State<FirstLogin1> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: Container(
+        padding: const EdgeInsets.only(top: 50, left: 16, right: 16),
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
         child: Container(
-          padding: const EdgeInsets.only(left: 16, right: 16),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-          ),
+          // decoration: BoxDecoration(
+          //   color: Colors.white,
+          //   border: Border.all(
+          //     color: Colors.red,
+          //     width: 2,
+          //   ),
+          // ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
