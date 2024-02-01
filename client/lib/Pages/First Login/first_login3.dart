@@ -152,7 +152,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Others',
+                      value: 'พนักงานข้าราชการ',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {
@@ -173,7 +173,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Others',
+                      value: 'พนักงานรัฐวิสาหกิจ',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {
@@ -194,7 +194,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Others',
+                      value: 'พนักงานโรงงานอุตสาหกรรม',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {
@@ -215,7 +215,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Others',
+                      value: 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {

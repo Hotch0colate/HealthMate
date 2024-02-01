@@ -110,7 +110,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                         ),
                       ),
                       leading: Radio<String>(
-                        value: 'Male',
+                        value: 'single',
                         groupValue: selectedGender,
                         onChanged: (String? value) {
                           setState(() {
@@ -132,7 +132,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Female',
+                      value: 'partnered',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {
@@ -153,7 +153,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Others',
+                      value: 'married',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {
@@ -174,7 +174,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Others',
+                      value: 'divorced',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {
@@ -195,7 +195,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Others',
+                      value: 'non-binding relationship',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {
@@ -216,7 +216,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                       ),
                     ),
                     leading: Radio<String>(
-                      value: 'Others',
+                      value: 'complicated',
                       groupValue: selectedGender,
                       onChanged: (String? value) {
                         setState(() {
