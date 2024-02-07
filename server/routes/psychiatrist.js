@@ -11,7 +11,7 @@ app.use(cors());
 
 // สร้าง psychiatrist ด้วยอีเมล
 // feature signup
-router.post('/crete_data', async (req, res) => { 
+router.post('/crete_data', async (req, res) => {
   const user = {
       username: req.body.username,
       email: req.body.email,

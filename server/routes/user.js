@@ -13,17 +13,16 @@ app.use(cors());
 
 // สร้าง user ด้วยอีเมล
 // feature signup
-router.post('/create_data', async (req, res) => { 
+router.post('/create_data', async (req, res) => {
     const user = {
+        uid: req.body.uid,
         username: req.body.username,
         email: req.body.email,
         password: req.body.password
     }
-    firebaseadmin.auth().createUser(user)
-    .then((userCredential) => {
-        var uid = userCredential.uid;
+    try{
         firebasedb.set(ref(db, 'users/' + uid), {
-            uid: uid,
+            uid: user.uid,
             username:user.username,
             email: user.email,
             password: user.password,
@@ -40,13 +39,13 @@ router.post('/create_data', async (req, res) => {
             RespCode: 200,
             RespMessage: "Signup Successfully !"
         });
-    })
-    .catch((error) => {
+    }
+    catch(error) {
         return res.status(500).json({
             RespCode: 500,
             RespMessage: error.message
         });
-    });
+    }
 });
 
 
