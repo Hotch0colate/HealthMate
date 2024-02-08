@@ -1,4 +1,5 @@
-import 'package:client/Pages/chatlog.dart';
+import 'package:firebase_database/firebase_database.dart';
+// import 'package:client/Pages/chatlog.dart';
 import 'package:client/theme/font.dart';
 import 'package:client/theme/theme.dart';
 import 'package:flutter/material.dart';
@@ -25,20 +26,19 @@ class ChatRoom extends StatefulWidget {
 }
 
 class ChatRoomBody extends State<ChatRoom> {
-  late Timer _apiCallTimer;
   TextEditingController _textEditingController = TextEditingController();
-  Key _streamBuilderKey = UniqueKey();
-  StreamController<Map<String, dynamic>> _messageStreamController =
-      StreamController<Map<String, dynamic>>();
-  int previousMessageLength = 0;
+  // Key _streamBuilderKey = UniqueKey();
+  // int previousMessageLength = 0;
   late ScrollController _scrollController;
+  final _database = FirebaseDatabase.instance.reference();
+  StreamController<List<Message>> _messageStreamController =
+      StreamController<List<Message>>();
 
   @override
   void initState() {
     super.initState();
-    _apiCallTimer = Timer.periodic(Duration(milliseconds: 50), (Timer timer) {
-      fetchAndCompareMessageLength();
-    });
+
+    _activeListeners();
 
     _scrollController = ScrollController();
     // Add this block to scroll to the bottom only if there are messages
@@ -62,69 +62,47 @@ class ChatRoomBody extends State<ChatRoom> {
     });
   }
 
+  void _activeListeners() {
+    _database
+        .child('chats/' + widget.cid + '/messages')
+        .onValue
+        .listen((event) {
+      var snapshotValue = event.snapshot.value;
+      if (snapshotValue != null && snapshotValue is Map<String, dynamic>) {
+        Map<String, dynamic> snapshotMap = snapshotValue;
+
+        // ตัวอย่างการเข้าถึงข้อมูลใน messages
+        dynamic messagesData = snapshotMap;
+        if (messagesData != null) {
+          Map<String, dynamic>? messagesMap =
+              messagesData as Map<String, dynamic>?;
+          if (messagesMap != null) {
+            List<Message> parsedMessages = messagesMap.values
+                .map((message) => Message.fromMap(message))
+                .toList();
+
+            _messageStreamController.add(parsedMessages);
+          } else {
+            print('Invalid format for messages data');
+          }
+        } else {
+          print('No messages found');
+        }
+      } else {
+        print('Invalid snapshot value or format');
+      }
+    });
+  }
+
   @override
   void dispose() {
-    _apiCallTimer.cancel();
     _textEditingController.dispose();
-    _messageStreamController.close();
 
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       _scrollToBottom();
     });
 
     super.dispose();
-  }
-
-  Future<void> fetchAndCompareMessageLength() async {
-    Map<String, dynamic> messagesData = await fetchMessages();
-    List<Map<String, dynamic>> messages =
-        (messagesData["Data"] as List<dynamic>? ?? [])
-            .cast<Map<String, dynamic>>();
-    if (messagesData["Data"] != null) {
-      int currentMessageLength = messages.length;
-
-      if (currentMessageLength != previousMessageLength) {
-        await fetchMessages().then((messages) {
-          previousMessageLength = currentMessageLength;
-          _messageStreamController.add(messages);
-          _messageStreamController.stream.listen((messages) {
-            // คอยรอจนกว่า add จะเสร็จ
-            WidgetsBinding.instance?.addPostFrameCallback((_) {
-              _scrollToBottom();
-            });
-          }).onDone(() {
-            // Do something when the stream is closed
-            _scrollToBottom(); // เลื่อนไปที่ข้อความล่าสุด
-          });
-        });
-      }
-    }
-  }
-
-  Future<Map<String, dynamic>> fetchMessages() async {
-    try {
-      final response = await http.post(
-        Uri.parse('http://localhost:3000/chatroom/read_data'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({'cid': widget.cid}),
-      );
-
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
-      } else {
-        return {
-          "RespCode": response.statusCode,
-          "RespMessage": "Error: ${response.reasonPhrase}",
-        };
-      }
-    } catch (error) {
-      return {
-        "RespCode": 500,
-        "RespMessage": "Error: $error",
-      };
-    }
   }
 
   Future<void> sendMessage(String text) async {
@@ -224,19 +202,18 @@ class ChatRoomBody extends State<ChatRoom> {
           Expanded(
             child: Stack(
               children: <Widget>[
-                StreamBuilder<Map<String, dynamic>>(
+                StreamBuilder<List<Message>>(
                   stream: _messageStreamController.stream,
-                  key: _streamBuilderKey,
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting &&
-                        snapshot.data != null) {
+                        snapshot.data == null) {
                       return
                           // const CircularProgressIndicator();
                           Container(
                         color: Colors.white,
                         child: Center(
                           child: Text(
-                            'No messages',
+                            'ยังไม่มีข้อความในแชท',
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.black26,
@@ -244,39 +221,15 @@ class ChatRoomBody extends State<ChatRoom> {
                           ),
                         ),
                       );
-                    } else if (snapshot.connectionState ==
-                            ConnectionState.waiting &&
-                        snapshot.data == null) {
-                      return Container(
-                        color: Colors.white,
-                        child: Center(),
-                      );
                     } else if (snapshot.hasError) {
                       return Text("Error: ${snapshot.error}");
-                    } else if (snapshot.data?["RespCode"] != 200) {
-                      return Text("Error: ${snapshot.data?["RespMessage"]}");
                     } else {
-                      List<dynamic> messages = snapshot.data?["Data"] ?? [];
-                      // if (_apiCallTimer.isActive && messages.isEmpty) {
-                      //   // ไม่มีข้อมูล, แสดง Container สีขาวเปล่า
-                      //   return Container(
-                      //     color: Colors.white,
-                      //     child: Center(
-                      //       child: Text(
-                      //         'No messages available', // ข้อความที่คุณต้องการแสดง
-                      //         style: TextStyle(
-                      //           fontSize: 18,
-                      //           color: Colors.black,
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   );
-                      // }
+                      List<Message> messages = snapshot.data ?? [];
                       messages.sort((a, b) {
                         DateTime dateA =
-                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a["date"]);
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a.date);
                         DateTime dateB =
-                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b["date"]);
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b.date);
                         return dateA.compareTo(dateB);
                       });
 
@@ -292,7 +245,7 @@ class ChatRoomBody extends State<ChatRoom> {
                                   index++)
                                 Column(
                                   crossAxisAlignment:
-                                      (messages[index]["sender"] != widget.uid
+                                      (messages[index].sender != widget.uid
                                           ? CrossAxisAlignment.start
                                           : CrossAxisAlignment.end),
                                   children: [
@@ -309,18 +262,17 @@ class ChatRoomBody extends State<ChatRoom> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            color: (messages[index]["sender"] !=
+                                            color: (messages[index].sender !=
                                                     widget.uid
                                                 ? Colors.grey.shade200
                                                 : ColorTheme.primaryColor),
                                           ),
                                           padding: const EdgeInsets.all(16),
                                           child: Text(
-                                            messages[index]["text"],
+                                            messages[index].text,
                                             style: TextStyle(
                                               fontSize: 16,
-                                              color: (messages[index]
-                                                          ["sender"] !=
+                                              color: (messages[index].sender !=
                                                       widget.uid
                                                   ? Colors.black
                                                   : Colors.white),
@@ -335,7 +287,7 @@ class ChatRoomBody extends State<ChatRoom> {
                                       child: Text(
                                         DateFormat("HH:mm").format(
                                           DateFormat("dd/MM/yyyy HH:mm:ss")
-                                              .parse(messages[index]["date"]),
+                                              .parse(messages[index].date),
                                         ),
                                         style: TextStyle(
                                           fontSize: 14,
@@ -459,5 +411,32 @@ class ChatRoomBody extends State<ChatRoom> {
         ],
       ),
     );
+  }
+}
+
+class Message {
+  final String text;
+  final String sender;
+  final String date;
+  final String mid;
+  final int mil;
+  final bool seen;
+
+  Message(
+      {required this.text,
+      required this.sender,
+      required this.date,
+      required this.mid,
+      required this.mil,
+      required this.seen});
+
+  factory Message.fromMap(Map<String, dynamic> map) {
+    return Message(
+        text: map['text'],
+        sender: map['sender'],
+        date: map['date'],
+        mid: map['mid'],
+        mil: map['mil'],
+        seen: map['seen']);
   }
 }

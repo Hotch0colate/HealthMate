@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "281295884415",
+    "firebase_url": "https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "health-9cd54",
+    "storage_bucket": "health-9cd54.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:281295884415:android:55bb8fc75b297537a76f4a",
+        "android_client_info": {
+          "package_name": "com.example.client"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-9TeSG2XJZHyMzIvsrG-5r61P1qw-sV0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,27 +1,66 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:client/Pages/chatroom.dart';
 import 'package:client/theme/theme.dart';
 
 // ignore: must_be_immutable
 class ConversationBox extends StatefulWidget {
-  @override
-  _ConversationBoxState createState() => _ConversationBoxState();
-
   String name;
   final String cid;
   final String uid;
-  String messageText;
-  String imageURL;
-  String date;
-  bool seen;
+  // final String user;
+  // final String volunteer;
+  final bool complete;
+  final bool seen;
+  final String lastmessage;
+  final String lastsender;
+  // final List<Message> messages;
+  // final int mil;
+  final String imageURL;
+  final String date;
+
+  @override
+  _ConversationBoxState createState() => _ConversationBoxState();
+
   ConversationBox(
       {required this.name,
       required this.cid,
       required this.uid,
-      required this.messageText,
+      // required this.user,
+      // required this.volunteer,
+      required this.complete,
+      required this.seen,
+      required this.lastmessage,
+      required this.lastsender,
+      // required this.messages,
+      // required this.mil,
       required this.imageURL,
-      required this.date,
-      required this.seen});
+      required this.date});
+
+  factory ConversationBox.fromMap(Map<String, dynamic> map) {
+    return ConversationBox(
+      name: map['name'] ??
+          '', // ตรวจสอบและกำหนดค่าเริ่มต้นให้เป็น '' หากไม่มีค่าใน map
+      cid: map['cid'] ?? '',
+      uid: map['uid'] ?? '',
+      // user: map['user'] ?? '',
+      // volunteer: map['volunteer'] ?? '',
+      complete: map['complete'] ??
+          false, // ตรวจสอบและกำหนดค่าเริ่มต้นให้เป็น false หากไม่มีค่าใน map
+      seen: map['seen'] ?? false,
+      lastmessage: map['lastmessage'] ?? '',
+      lastsender: map['lastsender'] ?? '',
+      // messages: (map['messages'] as List<dynamic>?)
+      //         ?.map((msg) => Message.fromMap(msg))
+      //         ?.toList() ??
+      //     [],
+      // mil: map['mil'] ??
+      //    0, // ตรวจสอบและกำหนดค่าเริ่มต้นให้เป็น 0 หากไม่มีค่าใน map
+      imageURL: map['imageURL'] ?? '',
+      date: map['date'] ?? '',
+    );
+  }
 }
 
 class _ConversationBoxState extends State<ConversationBox> {
@@ -33,12 +72,10 @@ class _ConversationBoxState extends State<ConversationBox> {
           context,
           MaterialPageRoute(
             builder: (context) => ChatRoom(
-              cid: widget.cid,
-              uid: widget.uid,
-              messages: [],
+                cid: widget.cid, uid: widget.uid, messages: []
 
-              // ใส่โค้ดที่คุณต้องการทำเมื่อได้รับผลลัพธ์จาก ChatRoom ที่นี่
-            ), // Assuming Chatroom is your chat room page
+                // ใส่โค้ดที่คุณต้องการทำเมื่อได้รับผลลัพธ์จาก ChatRoom ที่นี่
+                ), // Assuming Chatroom is your chat room page
           ),
         );
       },
@@ -71,7 +108,7 @@ class _ConversationBoxState extends State<ConversationBox> {
                             height: 6,
                           ),
                           Text(
-                            widget.messageText,
+                            widget.lastmessage,
                             style: TextStyle(
                                 fontSize: 13,
                                 color: Colors.grey.shade600,
@@ -99,3 +136,32 @@ class _ConversationBoxState extends State<ConversationBox> {
     );
   }
 }
+
+// class Chat {
+//   final String cid;
+//   final String user;
+//   final String volunteer;
+//   final bool complete;
+//   final bool seen;
+//   final int mil;
+//   final String date;
+
+//   Chat(
+//       {required this.cid,
+//       required this.user,
+//       required this.volunteer,
+//       required this.complete,
+//       required this.seen,
+//       required this.mil,
+//       required this.date});
+
+//   factory Chat.fromMap(Map<String, dynamic> map) {
+//     return Chat(
+//         text: map['text'],
+//         sender: map['sender'],
+//         date: map['date'],
+//         mid: map['mid'],
+//         mil: map['mil'],
+//         seen: map['seen']);
+//   }
+// }

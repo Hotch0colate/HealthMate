@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:client/component/conversationList.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -11,118 +12,67 @@ typedef UpdateTriggerCallback = void Function(bool updateTrigger);
 
 class ChatLog extends StatefulWidget {
   final String uid;
-
-  // ChatLog({required this.uid, required this.updateTriger});
-
   @override
   _ChatLogState createState() => _ChatLogState();
-
-  // Callback function type
 
   ChatLog({required this.uid});
 }
 
-// List<ChatUsers> chatUsers = [
-//   ChatUsers(
-//     name: "Volunteer A25",
-//     messageText: "เป็นไงบ้าง",
-//     imageURL: "####",
-//     time: "ตอนนี้",
-//   ),
-//   ChatUsers(
-//       name: "Volunteer A23",
-//       messageText: "สบายดีค่ะ",
-//       imageURL: "####",
-//       time: "10:00"),
-//   ChatUsers(
-//       name: "Volunteer A24",
-//       messageText: "สบายดีไหม",
-//       imageURL: "####",
-//       time: "เมื่อวาน"),
-//   ChatUsers(
-//       name: "Volunteer A21",
-//       messageText: "พักผ่อนเยอะๆ",
-//       imageURL: "####",
-//       time: "28 มกราคม"),
-// ];
-
 class _ChatLogState extends State<ChatLog> {
   Key _streamBuilderKey = UniqueKey();
-  StreamController<Map<String, dynamic>> _chatlogStreamController =
-      StreamController<Map<String, dynamic>>();
-  late Timer _apiCallTimer;
-  int previousChatLogLength = 0;
+  StreamController<List<ConversationBox>> _chatlogStreamController =
+      StreamController<List<ConversationBox>>();
+  final _database = FirebaseDatabase.instance.reference();
   bool _updateTrigger = false;
 
   @override
   void initState() {
     super.initState();
-// เซ็ต _updateTrigger ตามค่าที่รับมา
-    _apiCallTimer = Timer.periodic(Duration(milliseconds: 50), (Timer timer) {
-      fetchAndCompareChatLength();
-    });
+
+    _activeListeners();
   }
 
   @override
   void dispose() {
-    _apiCallTimer.cancel();
     _chatlogStreamController.close();
 
     super.dispose();
   }
 
-  Future<void> fetchAndCompareChatLength() async {
-    Map<String, dynamic> chatsData = await fetchChats();
-    List<Map<String, dynamic>> chats =
-        (chatsData["Data"] as List<dynamic>? ?? [])
-            .cast<Map<String, dynamic>>();
-    int currentChatLogLength = chats.length;
+  void _activeListeners() {
+    _database
+        .child('users/' + widget.uid + '/chatgroup')
+        .onValue
+        .listen((event) {
+      var snapshotValue = event.snapshot.value;
+      if (snapshotValue != null && snapshotValue is List<dynamic>) {
+        List<dynamic> snapshotList = snapshotValue;
 
-    if (currentChatLogLength != previousChatLogLength) {
-      await fetchChats().then((chats) {
-        previousChatLogLength = currentChatLogLength;
-        _chatlogStreamController.add(chats);
-        // _chatlogStreamController.stream.listen((messages) {
-        //   // คอยรอจนกว่า add จะเสร็จ
-        //   WidgetsBinding.instance?.addPostFrameCallback((_) {
-        //     _scrollToBottom();
-        //   });
-        // }).onDone(() {
-        //   // Do something when the stream is closed
-        //   _scrollToBottom(); // เลื่อนไปที่ข้อความล่าสุด
-        // });
-      });
-    } else if (_updateTrigger) {
-      await fetchChats().then((chats) {
-        _chatlogStreamController.add(chats);
-      });
-    }
-  }
+        List<String> parsedChatgroup = snapshotList.cast<String>();
 
-  Future<Map<String, dynamic>> fetchChats() async {
-    try {
-      final response = await http.post(
-        Uri.parse('http://localhost:3000/chatlog/read_data_all'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode({'uid': widget.uid}),
-      );
+        _database.child('chats/').onValue.listen((event) {
+          var snapshotValue = event.snapshot.value;
+          if (snapshotValue != null && snapshotValue is Map<String, dynamic>) {
+            Map<String, dynamic> snapshotMap = snapshotValue;
 
-      if (response.statusCode == 200) {
-        return json.decode(response.body);
+            // ตัวอย่างการเข้าถึงข้อมูลใน messages
+            dynamic chatData = snapshotMap;
+            if (chatData != null) {
+              Map<String, dynamic>? chatMap = chatData as Map<String, dynamic>?;
+              if (chatMap != null) {
+                List<ConversationBox> parsedChat = chatMap.values
+                    .where((chat) => parsedChatgroup.contains(chat['cid']))
+                    .map((chat) => ConversationBox.fromMap(chat))
+                    .toList();
+                _chatlogStreamController.add(parsedChat);
+              }
+            }
+          }
+        });
       } else {
-        return {
-          "RespCode": response.statusCode,
-          "RespMessage": "Error: ${response.reasonPhrase}",
-        };
+        print('Invalid snapshot value or format');
       }
-    } catch (error) {
-      return {
-        "RespCode": 500,
-        "RespMessage": "Error: $error",
-      };
-    }
+    });
   }
 
   @override
@@ -148,7 +98,7 @@ class _ChatLogState extends State<ChatLog> {
                 ),
               ),
             ),
-            StreamBuilder<Map<String, dynamic>>(
+            StreamBuilder<List<ConversationBox>>(
                 stream: _chatlogStreamController.stream,
                 key: _streamBuilderKey,
                 builder: (context, snapshot) {
@@ -170,37 +120,35 @@ class _ChatLogState extends State<ChatLog> {
                     );
                   } else if (snapshot.hasError) {
                     return Text("Error: ${snapshot.error}");
-                  } else if (snapshot.data?["RespCode"] != 200) {
-                    return Text("Error: ${snapshot.data?["RespMessage"]}");
                   } else {
-                    List<dynamic> chatlogs = snapshot.data?["Data"] ?? [];
+                    List<ConversationBox> chatlogs = snapshot.data ?? [];
                     chatlogs.sort((a, b) {
                       // 1. Compare "seen" values (false should come before true)
-                      int seenComparison = a["seen"] == b["seen"]
+                      int seenComparison = a.seen == b.seen
                           ? 0
-                          : a["seen"]
+                          : a.seen
                               ? 1
-                              : !a["seen"] && a["lastsender"] == widget.uid
+                              : !a.seen && a.lastsender == widget.uid
                                   ? 0
                                   : -1;
 
                       // 2. If "seen" values are both false, compare "date" values (newer dates should come first)
-                      if (seenComparison == 0 && !a["seen"]) {
+                      if (seenComparison == 0 && !a.seen) {
                         DateTime dateA =
-                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a["date"]);
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a.date);
                         DateTime dateB =
-                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b["date"]);
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b.date);
 
                         // Reverse the comparison to make newer dates come first
                         return dateB.compareTo(dateA);
                       }
 
                       // 3. If "seen" values are both true, compare "date" values (newer dates should come first)
-                      if (seenComparison == 0 && a["seen"]) {
+                      if (seenComparison == 0 && a.seen) {
                         DateTime dateA =
-                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a["date"]);
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a.date);
                         DateTime dateB =
-                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b["date"]);
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b.date);
 
                         // Reverse the comparison to make newer dates come first
                         return dateB.compareTo(dateA);
@@ -217,12 +165,18 @@ class _ChatLogState extends State<ChatLog> {
                       itemBuilder: (context, index) {
                         return ConversationBox(
                           name: "ช่องแชท",
-                          cid: chatlogs[index]["cid"],
+                          cid: chatlogs[index].cid,
                           uid: widget.uid,
-                          messageText: chatlogs[index]["lastmessage"],
+                          // user: chatlogs[index].user,
+                          // volunteer: chatlogs[index].volunteer,
+                          complete: chatlogs[index].complete,
+                          seen: chatlogs[index].seen,
+                          lastmessage: chatlogs[index].lastmessage,
+                          lastsender: chatlogs[index].lastsender,
+                          // messages: [],
+                          // mil: 0,
                           imageURL: "###",
-                          date: chatlogs[index]["date"],
-                          seen: chatlogs[index]["seen"],
+                          date: chatlogs[index].date,
                         );
                       },
                     );

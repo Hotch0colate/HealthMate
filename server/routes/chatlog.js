@@ -113,7 +113,7 @@ router.post('/read_data_all', async (req, res) => {
 
         if (userChatGroupSnapshot.exists()) {
             const userChatGroups = userChatGroupSnapshot.val();
-            console.log(userChatGroups);
+            // console.log(userChatGroups);
 
             const chatData = [];
 
