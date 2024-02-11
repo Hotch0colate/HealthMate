@@ -12,7 +12,7 @@ app.use(cors());
      //this file is template for create api///
     /////////////////////////////////////////
 
-router.post('/api/create', (req, res) => { 
+router.post('/api/create', (req, res) => {
     var fullname = req.body.fullname;
 
     try{
