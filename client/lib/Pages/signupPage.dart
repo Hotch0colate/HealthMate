@@ -4,6 +4,7 @@ import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
@@ -52,9 +53,15 @@ class _SignupPageState extends State<SignupPage> {
       print(
           'username: ${latestUser?.displayName}'); // If signup is successful, you can print user information
       print('latestUser: $latestUser');
-
+      // Add user data to Firebase Realtime Database
+      final DatabaseReference dbRef =
+          FirebaseDatabase.instance.ref("users/${latestUser?.uid}");
+      await dbRef.set({
+        "username": _usernameController.text,
+        "email": _emailController.text,
+        // You can add more user details here
+      });
       Navigator.of(context).pop();
-      // yea
       // Navigate to another page or perform any other action after signup
     } catch (e) {
       // Handle signup errors here

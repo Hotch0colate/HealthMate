@@ -20,10 +20,10 @@ router.post('/create_data', async (req, res) => {
         email: req.body.email,
         password: req.body.password
     }
-    try{
+    try {
         firebasedb.set(ref(db, 'users/' + uid), {
             uid: user.uid,
-            username:user.username,
+            username: user.username,
             email: user.email,
             password: user.password,
             age: 0,
@@ -40,7 +40,7 @@ router.post('/create_data', async (req, res) => {
             RespMessage: "Signup Successfully !"
         });
     }
-    catch(error) {
+    catch (error) {
         return res.status(500).json({
             RespCode: 500,
             RespMessage: error.message
@@ -53,29 +53,29 @@ router.post('/create_data', async (req, res) => {
 //fetch  userdata
 router.post('/read_data', (req, res) => {
     var uid = req.body.uid;
-    try{
+    try {
         firebasedb.get(ref(db, 'users/' + uid))
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                console.log(snapshot.val());
-                return res.status(200).json({
-                    RespCode: 200,
-                    RespMessge: "Success",
-                    Dae: snapshot.val()
-                });
-            } else {
-                console.log("No data avilabel from fetch data");
-                return res.status(200).json({
-                    RespCode: 200,
-                    RespMessage: "No data available"
-                });
-            }
-        })
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    console.log(snapshot.val());
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessge: "Success",
+                        Dae: snapshot.val()
+                    });
+                } else {
+                    console.log("No data avilabel from fetch data");
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: "No data available"
+                    });
+                }
+            })
     }
-    catch(error){
+    catch (error) {
         console.log(error);
         return res.status(500).json({
-            RespCode:500,
+            RespCode: 500,
             RespMessage: error.message
         });
     }
@@ -104,8 +104,8 @@ router.post('/update_data', (req, res) => {
                     };
 
                     // Optional Chaining
-                    username &&(updateData.username = username);
-                    password &&(updateData.password = password);
+                    username && (updateData.username = username);
+                    password && (updateData.password = password);
                     age && (updateData.age = age);
                     gender && (updateData.gender = gender);
                     birthday && (updateData.birthday = birthday);
