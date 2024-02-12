@@ -1,10 +1,11 @@
-import 'package:client/Pages/First%20Login/first_login1.dart';
+// import 'package:client/Pages/chatPage.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'Pages/pages.dart';
-import 'Pages/login.dart';
+
 import 'Pages/signupPage.dart';
+import 'component/navigation.dart';
+import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_database/firebase_database.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => SignupPage(),
         '/signup': (context) => SignupPage(),
+        '/main': (context) => MainApp(),
       },
     );
   }

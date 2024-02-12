@@ -21,20 +21,11 @@ class DefaultFirebaseOptions {
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for android - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -53,13 +44,41 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBlbZetDBce7M6sR2G_LeaRvDNY60NxSXc',
-    appId: '1:862505056236:web:f1267500a623c6e6bbb2c9',
-    messagingSenderId: '862505056236',
-    projectId: 'healthmate-7a6f2',
-    authDomain: 'healthmate-7a6f2.firebaseapp.com',
-    databaseURL: 'https://healthmate-7a6f2-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'healthmate-7a6f2.appspot.com',
-    measurementId: 'G-ZWBP7VKDDS',
+    apiKey: 'AIzaSyCrqqXtJNo56KrB2f6oBNEk-PkGgoDWSx8',
+    appId: '1:281295884415:web:8e5bc0bacd74669ca76f4a',
+    messagingSenderId: '281295884415',
+    projectId: 'health-9cd54',
+    authDomain: 'health-9cd54.firebaseapp.com',
+    databaseURL: 'https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'health-9cd54.appspot.com',
+  );
+
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyA-9TeSG2XJZHyMzIvsrG-5r61P1qw-sV0',
+    appId: '1:281295884415:android:55bb8fc75b297537a76f4a',
+    messagingSenderId: '281295884415',
+    projectId: 'health-9cd54',
+    databaseURL: 'https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'health-9cd54.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyCWzVKUbzuthwSBdZwh-hOuv8mZiT0u6gc',
+    appId: '1:281295884415:ios:2619a5da798f88f0a76f4a',
+    messagingSenderId: '281295884415',
+    projectId: 'health-9cd54',
+    databaseURL: 'https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'health-9cd54.appspot.com',
+    iosBundleId: 'com.example.client',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyCWzVKUbzuthwSBdZwh-hOuv8mZiT0u6gc',
+    appId: '1:281295884415:ios:a92eb0cbd4b116a4a76f4a',
+    messagingSenderId: '281295884415',
+    projectId: 'health-9cd54',
+    databaseURL: 'https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'health-9cd54.appspot.com',
+    iosBundleId: 'com.example.client.RunnerTests',
   );
 }
