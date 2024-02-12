@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:client/component/conversationList.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 import 'dart:async';
 
 import 'package:intl/intl.dart';
@@ -23,7 +21,7 @@ class _ChatLogState extends State<ChatLog> {
   StreamController<List<ConversationBox>> _chatlogStreamController =
       StreamController<List<ConversationBox>>();
   final _database = FirebaseDatabase.instance.reference();
-  bool _updateTrigger = false;
+  // bool _updateTrigger = false;
 
   @override
   void initState() {
