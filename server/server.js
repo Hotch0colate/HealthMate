@@ -21,6 +21,7 @@ const server = app.listen(3000, '0.0.0.0', () => {
 app.use('/crud', require('./routes/crud'));
 app.use('/user', require('./routes/user'));
 app.use('/chatlog', require('./routes/chatlog'));
+app.use('/access', require('./routes/access'));
 app.use('/chatroom', require('./routes/chatroom'));
 app.use('/psychiatrist', require('./routes/psychiatrist'));
 app.use('/volunteer', require('./routes/volunteer'));
