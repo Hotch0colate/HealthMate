@@ -6,6 +6,7 @@ const { get, set, ref, update, remove } = require("firebase/database");
 var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
+const authenticate = require('../token');
 app.use(cors());
 
 
@@ -51,7 +52,7 @@ router.post('/create_data', async (req, res) => {
 
 //ดึงข้อมูลจาก user
 //fetch  userdata
-router.post('/read_data', (req, res) => {
+router.post('/read_data', authenticate, async (req, res) => {
     var uid = req.body.uid;
     try{
         firebasedb.get(ref(db, 'users/' + uid))

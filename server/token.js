@@ -1,15 +1,27 @@
-const { getAuth } = require('firebase-admin/auth');
+// Import Firebase Admin SDK
+var firebaseAdmin = require("firebase-admin");
 
-getAuth()
-  .verifyIdToken(idToken)
-  .then((decodedToken) => {
-    const uid = decodedToken.uid;
-    // Use the uid to identify the user in your database or perform operations
-  })
-  .catch((error) => {
-    console.log(idTokentoken);
-    console.log(error.message)
-    return res.status(410).json({ message: 'Invalid token' });
-  });
+// Middleware to authenticate requests
+const authenticate = async (req, res, next) => {
+  // Check for ID token in Authorization header
+  const header = req.headers.authorization;
+  if (!header || !header.startsWith('Bearer ')) {
+    return res.status(401).json({ message: "No token provided" });
+  }
 
-  module.exports = verifyIdToken;
+  const idToken = header.split('Bearer ')[1];
+
+  try {
+    // Verify ID token using Firebase Admin SDK
+    const decodedToken = await firebaseAdmin.auth().verifyIdToken(idToken);
+    req.user = decodedToken; // Attach decoded token to request object
+    console.log("User authenticated:", decodedToken);
+    console.log("User authenticated:", req.user);
+    next(); // Proceed to the next middleware or route handler
+  } catch (error) {
+    console.error("Error verifying token:", error);
+    res.status(403).json({ message: "Invalid token" });
+  }
+};
+
+module.exports = authenticate;
