@@ -25,3 +25,4 @@ app.use('/access', require('./routes/access'));
 app.use('/chatroom', require('./routes/chatroom'));
 app.use('/psychiatrist', require('./routes/psychiatrist'));
 app.use('/volunteer', require('./routes/volunteer'));
+app.use('/emotion', require('./routes/emotion'));
