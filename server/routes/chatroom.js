@@ -40,7 +40,8 @@ router.post('/create_data', async (req, res) => {
                         RespCode: 200,
                         RespMessage: "Text Sent Successfully !"
                     });
-                } else {
+                }
+                else {
                     console.log("No data avilabel from fetch data");
                     return res.status(200).json({
                         RespCode: 200,
@@ -76,7 +77,8 @@ router.post('/read_data', (req, res) => {
                         RespMessge: "Success",
                         Data: messagesArray  // ส่ง array ของ messages กลับ
                     });
-                } else {
+                }
+                else {
                     console.log("No data available from fetch data");
                     return res.status(200).json({
                         RespCode: 200,
@@ -89,7 +91,7 @@ router.post('/read_data', (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message + "/nPath API : /chatroom/read_data"
+            RespMessage: "Error : " + error.message + "/nPath API : /chatroom/read_data"
         });
     }
 });
@@ -111,7 +113,8 @@ router.post('/delete_data', (req, res) => {
                         RespCode: 200,
                         RespMessage: "Success" + "/nPath API : /chatroom/delete_data"
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -123,10 +126,12 @@ router.post('/delete_data', (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message + "/nPath API : /chatroom/delete_data"
+            RespMessage: "Error : " + error.message + "/nPath API : /chatroom/delete_data"
         });
     }
 });
 
 
 module.exports = router;
+
+//clear

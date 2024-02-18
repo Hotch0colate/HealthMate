@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const firebasedb = require('firebase/database');
 const db = require('../database/firebase.js');
-const { get, set, ref, update, remove} = require("firebase/database");
+const { get, set, ref, update, remove } = require("firebase/database");
 var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
@@ -11,9 +11,10 @@ app.use(cors());
 
 //สร้าง volunteer
 //feature volunteer register
-router.post('/create_data',async (req, res) => {
+router.post('/create_data', async (req, res) => {
     var uid = req.body.uid;
-    try{
+
+    try {
         firebasedb.set(ref(db, 'volunteers/' + uid), {
             uid: uid,
             quota: 3,
@@ -24,13 +25,14 @@ router.post('/create_data',async (req, res) => {
         });
         return res.status(200).json({
             RespCode: 200,
-            RespMessage: "Register Volunteer Succesfully !"
+            RespMessage: "Register volunteer succesfully !"
         });
     }
-    catch(error){
+    catch (error) {
+        console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /volunteer/create_data"
         });
     }
 });
@@ -39,29 +41,32 @@ router.post('/create_data',async (req, res) => {
 //fetch volunteer data
 router.post('/read_data', (req, res) => {
     var uid = req.body.uid;
-    try{
+
+    try {
         firebasedb.get(ref(db, 'volunteers/' + uid))
-        .then((snapshot) => {
-            if (snapshot.exists()) {
-                console.log(snapshot.val());
-                return res.status(200).json({
-                    RespCode: 200,
-                    RespMessage: "Success",
-                    Data: snapshot.val()
-                });
-            } else {
-                console.log("No data available");
-                return res.status(200).json({
-                    RespCode: 200,
-                    RespMessage: "No data available"
-                });
-            }
-        })
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    console.log(snapshot.val());
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: "Success",
+                        Data: snapshot.val()
+                    });
+                }
+                else {
+                    console.log("No data available");
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: "No data available"
+                    });
+                }
+            })
     }
-    catch(error){
+    catch (error) {
+        console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /volunteer/read_data"
         });
     }
 });
@@ -81,18 +86,16 @@ router.post('/update_data', (req, res) => {
                         mil: new Date().getTime(),
                         date: new Date().toLocaleString(),
                     };
-
                     // Optional Chaining
                     tags && (updateData.tags = tags);
                     rating_score && (updateData.rating_score = rating_score);
-
                     update(ref(db, 'volunteers/' + uid), updateData);
-
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "Update Successfully !"
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -105,7 +108,7 @@ router.post('/update_data', (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /volunteer/update_data"
         });
     }
 });
@@ -124,7 +127,8 @@ router.post('/delete_data', (req, res) => {
                         RespCode: 200,
                         RespMessage: "Delete Successfully !"
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -137,9 +141,11 @@ router.post('/delete_data', (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /volunteer/delete_data"
         });
     }
 });
 
 module.exports = router;
+
+//clear
