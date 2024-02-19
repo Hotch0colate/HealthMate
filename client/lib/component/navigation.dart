@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:client/theme/theme.dart';
 
+import 'package:client/services/auth_service.dart';
 import 'package:client/Pages/calendar.dart';
 import 'package:client/Pages/select_talk.dart';
 import 'package:client/Pages/profile.dart';
 import 'package:client/Pages/chatlog.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+import 'dart:async';
 
 class MainApp extends StatefulWidget {
   @override
@@ -13,20 +17,60 @@ class MainApp extends StatefulWidget {
 
 class _MyAppState extends State<MainApp> {
   int _selectedPage = 0;
-  final _pageOptions = [
-    Calendar(),
-    SelectTalk(),
-    ChatLog(
-      uid: "pTw4p0fFpvRQAGlabQhHB47yUQr2",
-    ),
-    ProfilePage(),
-  ];
+  String userUid = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAndSetUid();
+  }
+
+  void _fetchAndSetUid() async {
+    // สมมติว่าคุณมีฟังก์ชัน `getToken` ที่สามารถดึง token ของผู้ใช้
+    var _auth_service = AuthService();
+    String? token = await _auth_service
+        .getIdToken(); // สมมติว่า getIdToken คืนค่า Future<String?>
+    print("TOKEN!!!!! $token");
+    // ส่ง token ไปยัง backend เพื่อดึง uid
+    String uid = await fetchUidFromToken(token);
+    setState(() {
+      userUid = uid; // อัปเดต uid ใน state
+    });
+  }
+
+  Future<String> fetchUidFromToken(String? token) async {
+    final response = await http.get(
+      Uri.parse(
+          'http://localhost:3000/access/get_uid'), // แทนที่ด้วย URL จริงของ backend ของคุณ
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // ส่ง token ใน header
+      },
+    );
+    if (response.statusCode == 200) {
+      // หาก server ตอบกลับมาด้วยสถานะ 200 OK, ดึง uid จาก response
+      var jsonResponse = jsonDecode(response.body);
+      return jsonResponse['uid']; // ตัวอย่างการดึง uid จาก response
+    } else {
+      // หากการตอบกลับไม่สำเร็จ, โยน exception
+      throw Exception('Failed to load uid from token');
+    }
+  }
+
+  List<Widget> _pageOptions() => [
+        Calendar(),
+        SelectTalk(),
+        ChatLog(uid: userUid), // ใช้ userUid ที่อัปเดตแล้ว
+        ProfilePage(),
+      ];
 
   @override
   Widget build(BuildContext context) {
-    // Note: Removed MaterialApp, directly returning the Scaffold now.
+    // ใช้ _pageOptions() เป็นฟังก์ชันเพื่อเรียกใช้งาน
+    final pages = _pageOptions();
+
     return Scaffold(
-      body: _pageOptions[_selectedPage],
+      body: pages[_selectedPage],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedPage,
         selectedItemColor: ColorTheme.primaryColor,

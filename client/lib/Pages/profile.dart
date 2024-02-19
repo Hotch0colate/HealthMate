@@ -39,7 +39,7 @@ class ProfilePage extends StatelessWidget {
     try {
       await FirebaseAuth.instance.signOut();
       Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (BuildContext context) => SignupPage()),
+        MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
         (Route<dynamic> route) => false,
       );
       // Navigator.of(context).pushAndRemoveUntil(

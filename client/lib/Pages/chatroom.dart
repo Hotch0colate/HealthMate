@@ -305,60 +305,6 @@ class ChatRoomBody extends State<ChatRoom> {
               ],
             ),
           ),
-
-          // Align(
-          //   alignment: Alignment.bottomLeft,
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //         color: const Color.fromARGB(221, 255, 255, 255),
-          //         border:
-          //             Border.all(color: const Color.fromARGB(81, 34, 33, 33)),
-          //         borderRadius: const BorderRadius.only(
-          //           topLeft: Radius.circular(20.0),
-          //           topRight: Radius.circular(20.0),
-          //         )),
-          //     padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
-          //     height: 80,
-          //     width: double.infinity,
-          //     child: Row(
-          //       children: <Widget>[
-          //         GestureDetector(
-          //           onTap: () {},
-          //           child: Container(
-          //             height: 30,
-          //             width: 30,
-          //           ),
-          //         ),
-          //         const SizedBox(
-          //           width: 15,
-          //         ),
-          //         Expanded(
-          //           child: TextField(
-          //             controller: _textEditingController,
-          //             decoration: InputDecoration(
-          //                 hintText: "Type here ...",
-          //                 hintStyle:
-          //                     TextStyle(color: Color.fromARGB(98, 34, 33, 33)),
-          //                 border: InputBorder.none),
-          //           ),
-          //         ),
-          //         FloatingActionButton(
-          //           onPressed: () {
-          //             sendMessage(_textEditingController.text);
-          //             _textEditingController.clear();
-          //           },
-          //           elevation: 0,
-          //           backgroundColor: Colors.white,
-          //           child: const Icon(
-          //             Icons.send,
-          //             size: 30,
-          //             color: ColorTheme.primaryColor,
-          //           ),
-          //         ),
-          //       ],
-          //     ),
-          //   ),
-          // ),
           Container(
             decoration: BoxDecoration(
               color: const Color.fromARGB(221, 255, 255, 255),

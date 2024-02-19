@@ -86,7 +86,7 @@ router.post('/read_data', authenticate, async (req, res) => {
 
 // อัพเดทข้อมูล ถ้ามีการกรอกเฉพาะบางข้อมูลก็อัพเดทได้
 // feature first login and edit profile
-router.post('/update_data', (req, res) => {
+router.post('/update_data', authenticate, (req, res) => {
     var uid = req.body.uid;
 
     var username = req.body.username;
