@@ -1,7 +1,7 @@
 // import 'package:client/Pages/chatPage.dart';
 import 'package:flutter/material.dart';
-
-import 'Pages/signupPage.dart';
+import 'package:client/Pages/signupPage.dart';
+import 'splash_screen.dart';
 import 'component/navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_database/firebase_database.dart';
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignupPage(),
+      home: SplashScreen(),
       routes: {
         '/login': (context) => SignupPage(),
         '/signup': (context) => SignupPage(),
