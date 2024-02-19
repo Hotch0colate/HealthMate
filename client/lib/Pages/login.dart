@@ -1,4 +1,8 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+
 import 'package:client/Pages/signupPage.dart';
+import 'package:client/services/auth_service.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -9,17 +13,61 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   bool _obscurePassword = true; // Flag to toggle password visibility
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
-  void _login() {
-    if (_formKey.currentState!.validate()) {
-      // Perform login logic here
-      // For simplicity, we just print the username and password for now
-      print('Username: ${_usernameController.text}');
-      print('Password: ${_passwordController.text}');
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  void _login() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(child: CircularProgressIndicator());
+      },
+    );
+    try {
+      print('Login button pressed');
+      print('_emailController.text: ${_emailController.text}');
+      print('_passwordController.text: ${_passwordController.text}');
+      // Perform Firebase login
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+      User? user = userCredential.user;
+
+      // Get ID Token from Firebase
+      String? idToken = await user?.getIdToken();
+      print('line 47....');
+      print('idToken: $idToken');
+      // Send the ID token to your backend for verification
+      await AuthService().sendTokenToBackend(idToken);
+
+      // Assuming token verification was successful, navigate to home.dart
+      Navigator.of(context).pop(); // Close the loading indicator
+      Navigator.pushReplacementNamed(context,
+          '/main'); // Navigate to home.dart or use your preferred method
+    } catch (e) {
+      print('Error occurred during login: $e');
+      Navigator.of(context).pop(); // Close the loading indicator
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Login Error'),
+            content: Text(
+                'An error occurred during login. Please try again later. Error: $e'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
@@ -36,20 +84,7 @@ class _LoginPageState extends State<LoginPage> {
               // Handle back button tap here
               Navigator.pop(context); // Navigate back to the previous screen
             },
-            child:
-                // Container(
-                //   decoration: BoxDecoration(
-                //     border: Border.all(
-                //       color: Colors.red,
-                //     ),
-                //   ),
-                //   child: const Icon(
-                //     Icons.arrow_back_ios_new_rounded,
-                //     size: 40,
-                //     color: Colors.grey,
-                //   ),
-                // )
-                Image.asset(
+            child: Image.asset(
               'lib/icons/back_new.png',
               height: 10,
               width: 10,
@@ -146,6 +181,8 @@ class _LoginPageState extends State<LoginPage> {
                                       color: Color(0x22212133),
                                     ),
                                     child: TextFormField(
+                                      controller:
+                                          _emailController, // Assigning the controller to the TextFormField
                                       decoration: const InputDecoration(
                                         border: InputBorder.none,
                                         hintText: 'ใส่อีเมล',
@@ -192,6 +229,8 @@ class _LoginPageState extends State<LoginPage> {
                                       color: Color(0x22212133),
                                     ),
                                     child: TextFormField(
+                                      controller:
+                                          _passwordController, // Assigning the controller to the TextFormField
                                       obscureText: _obscurePassword,
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
@@ -242,7 +281,7 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             const SizedBox(height: 20),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: _login,
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
@@ -304,7 +343,8 @@ class _LoginPageState extends State<LoginPage> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => SignupPage()),
+                                          builder: (context) =>
+                                              const SignupPage()),
                                     );
                                   },
                                   hoverColor:

@@ -12,7 +12,7 @@ app.use(cors());
 
 //sign in
 router.post('/signin', authenticate, async (req, res) => {
-    res.status(200).json({ message: 'User authenticated successfully', user });
+    return res.status(200).json({ message: 'User authenticated successfully', user: req.user });
 });
 
 module.exports = router;

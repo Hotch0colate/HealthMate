@@ -1,7 +1,9 @@
 // import 'package:client/Pages/chatPage.dart';
+import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
 
 import 'Pages/signupPage.dart';
+import 'Pages/home.dart';
 import 'component/navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_database/firebase_database.dart';
@@ -23,11 +25,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SignupPage(),
+      home: LoginPage(),
       routes: {
-        '/login': (context) => SignupPage(),
+        '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),
         '/main': (context) => MainApp(),
+        '/home': (context) => const HomePage(),
       },
     );
   }

@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously
 
 import 'package:client/Pages/login.dart';
+import 'package:client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,10 +15,10 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
   bool _obscurePassword = true; // Flag to toggle password visibility
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -26,13 +27,9 @@ class _SignupPageState extends State<SignupPage> {
     // Show loading indicator
     showDialog(
       context: context,
-      barrierDismissible:
-          false, // Prevent dismissing the dialog by tapping outside
+      barrierDismissible: false,
       builder: (BuildContext context) {
-        return const Center(
-          child:
-              CircularProgressIndicator(), // Show a circular progress indicator
-        );
+        return const Center(child: CircularProgressIndicator());
       },
     );
 
@@ -42,47 +39,48 @@ class _SignupPageState extends State<SignupPage> {
         email: _emailController.text,
         password: _passwordController.text,
       );
-      // Add the username to the user profile
-      // print username from usernamecontroller
       print('_usernameController.text: ${_usernameController.text}');
       User? user = userCredential.user;
       await user?.updateDisplayName(_usernameController.text);
       await user?.reload();
 
       User? latestUser = FirebaseAuth.instance.currentUser;
-      print(
-          'username: ${latestUser?.displayName}'); // If signup is successful, you can print user information
+      print('username: ${latestUser?.displayName}');
       print('latestUser: $latestUser');
-      // Add user data to Firebase Realtime Database
+
       final DatabaseReference dbRef =
           FirebaseDatabase.instance.ref("users/${latestUser?.uid}");
       await dbRef.set({
         "username": _usernameController.text,
         "email": _emailController.text,
-        // You can add more user details here
       });
-      Navigator.of(context).pop();
-      // Navigate to another page or perform any other action after signup
+
+      // Get the ID token of the newly signed-up user
+      String? idToken = await latestUser?.getIdToken();
+
+      // Send the ID token to your backend for verification
+      await AuthService().sendTokenToBackend(idToken);
+      print('line 61');
+      // Assuming token verification was successful, navigate to home.dart
+      // Note: In a real app, you'd handle the response from your backend to confirm token verification was successful
+      Navigator.of(context).pop(); // Close the loading indicator
+      Navigator.pushReplacementNamed(context,
+          '/home'); // Navigate to home.dart or use your preferred method
     } catch (e) {
-      // Handle signup errors here
       print('Signup failed: $e');
+      Navigator.of(context).pop(); // Close the loading indicator
 
-      // Close the loading indicator dialog
-      Navigator.of(context).pop();
-
-      // Show an error message to the user
+      // Show an error message
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
             title: const Text('Signup Error'),
-            content: const Text(
-                'An error occurred during signup. Please try again later.'),
+            content: Text(
+                'An error occurred during signup. Please try again later. Error: $e'),
             actions: <Widget>[
               TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(); // Close the dialog
-                },
+                onPressed: () => Navigator.of(context).pop(),
                 child: const Text('OK'),
               ),
             ],
