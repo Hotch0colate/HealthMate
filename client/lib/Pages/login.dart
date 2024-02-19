@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, avoid_print
 
 import 'package:client/Pages/signupPage.dart';
 import 'package:client/services/auth_service.dart';
@@ -123,393 +123,398 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-      body: Container(
-        padding:
-            const EdgeInsets.only(left: 24, right: 24, top: 20, bottom: 24),
-        child: Column(
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'ยินดีต้อนรับค้าบบ,',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w400,
+      body: SingleChildScrollView(
+        child: Container(
+          padding:
+              const EdgeInsets.only(left: 24, right: 24, top: 20, bottom: 24),
+          child: Column(
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'ยินดีต้อนรับค้าบบ,',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w400,
+                    ),
                   ),
-                ),
-                const Text(
-                  'เข้าสู่ระบบกัน!',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
-                    fontWeight: FontWeight.w700,
+                  const Text(
+                    'เข้าสู่ระบบกัน!',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                    ),
                   ),
-                ),
-                Container(
-                    padding: const EdgeInsets.only(top: 15),
-                    child: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8, bottom: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 25, bottom: 4),
-                                    child: const Text(
-                                      'อีเมล',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 50,
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                      color: Color(0x22212133),
-                                    ),
-                                    child: TextFormField(
-                                      controller:
-                                          _emailController, // Assigning the controller to the TextFormField
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'ใส่อีเมล',
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 20,
+                  Container(
+                      padding: const EdgeInsets.only(top: 15),
+                      child: Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 25, bottom: 4),
+                                      child: const Text(
+                                        'อีเมล',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
                                         ),
-                                        contentPadding: EdgeInsets.only(
-                                            left: 24, right: 24),
                                       ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 25, bottom: 4),
-                                    child: const Text(
-                                      'รหัสผ่าน',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: 50,
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                      color: Color(0x22212133),
-                                    ),
-                                    child: TextFormField(
-                                      controller:
-                                          _passwordController, // Assigning the controller to the TextFormField
-                                      obscureText: _obscurePassword,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'ใส่รหัสผ่าน',
-                                        hintStyle: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 20,
+                                    Container(
+                                      height: 50,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(15),
                                         ),
-                                        contentPadding: const EdgeInsets.only(
-                                          left: 24,
-                                          right: 24,
-                                          top:
-                                              14, // Adjust top padding as needed
-                                        ),
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _obscurePassword =
-                                                  !_obscurePassword;
-                                            });
-                                          },
-                                          child: Icon(
-                                            _obscurePassword
-                                                ? Icons.visibility
-                                                : Icons.visibility_off,
+                                        color: Color(0x22212133),
+                                      ),
+                                      child: TextFormField(
+                                        controller:
+                                            _emailController, // Assigning the controller to the TextFormField
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'ใส่อีเมล',
+                                          hintStyle: TextStyle(
                                             color: Colors.grey,
+                                            fontSize: 20,
+                                          ),
+                                          contentPadding: EdgeInsets.only(
+                                              left: 24, right: 24),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(top: 8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 25, bottom: 4),
+                                      child: const Text(
+                                        'รหัสผ่าน',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                    Container(
+                                      height: 50,
+                                      decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(15),
+                                        ),
+                                        color: Color(0x22212133),
+                                      ),
+                                      child: TextFormField(
+                                        controller:
+                                            _passwordController, // Assigning the controller to the TextFormField
+                                        obscureText: _obscurePassword,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: 'ใส่รหัสผ่าน',
+                                          hintStyle: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 20,
+                                          ),
+                                          contentPadding: const EdgeInsets.only(
+                                            left: 24,
+                                            right: 24,
+                                            top:
+                                                14, // Adjust top padding as needed
+                                          ),
+                                          suffixIcon: GestureDetector(
+                                            onTap: () {
+                                              setState(() {
+                                                _obscurePassword =
+                                                    !_obscurePassword;
+                                              });
+                                            },
+                                            child: Icon(
+                                              _obscurePassword
+                                                  ? Icons.visibility
+                                                  : Icons.visibility_off,
+                                              color: Colors.grey,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              const Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'ลืมรหัสผ่าน?',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      color: Color(0xFFB95000),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                            const SizedBox(height: 5),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'ลืมรหัสผ่าน?',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                    color: Color(0xFFB95000),
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: _login,
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
                                   ),
+                                  backgroundColor: Colors.orange,
+                                  foregroundColor: Colors.white,
+                                  side: const BorderSide(color: Colors.orange),
                                 ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            ElevatedButton(
-                              onPressed: _login,
-                              style: ElevatedButton.styleFrom(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                                backgroundColor: Colors.orange,
-                                foregroundColor: Colors.white,
-                                side: const BorderSide(color: Colors.orange),
-                              ),
-                              child: const SizedBox(
-                                height: 60,
-                                child: Center(
-                                  child: Text(
-                                    'เข้าสู่ระบบ',
-                                    style: TextStyle(
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600,
+                                child: const SizedBox(
+                                  height: 60,
+                                  child: Center(
+                                    child: Text(
+                                      'เข้าสู่ระบบ',
+                                      style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text(
-                                  'เพิ่งเคยเข้ามาใน',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                const Text(' Health',
+                              const SizedBox(height: 16),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Text(
+                                    'เพิ่งเคยเข้ามาใน',
                                     style: TextStyle(
-                                      color: Colors.blue,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w300,
-                                    )),
-                                const Text(
-                                  'Mate ',
-                                  style: TextStyle(
-                                    color: Colors.orange,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
+                                      color: Colors.black,
+                                    ),
                                   ),
-                                ),
-                                const Text(
-                                  'ใช่หรือไม่',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.black,
+                                  const Text(' Health',
+                                      style: TextStyle(
+                                        color: Colors.blue,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w300,
+                                      )),
+                                  const Text(
+                                    'Mate ',
+                                    style: TextStyle(
+                                      color: Colors.orange,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w300,
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(width: 3),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SignupPage()),
-                                    );
-                                  },
-                                  hoverColor:
-                                      Colors.blue, // Set the color when hovered
-                                  child: const Text(
-                                    ' สมัครใหม่',
+                                  const Text(
+                                    'ใช่หรือไม่',
                                     style: TextStyle(
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.orange,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black,
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 36,
-                            ),
-                            Row(children: [
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(right: 8),
-                                  height: 1,
-                                  color: Colors.grey,
-                                ),
+                                  const SizedBox(width: 3),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SignupPage()),
+                                      );
+                                    },
+                                    hoverColor: Colors
+                                        .blue, // Set the color when hovered
+                                    child: const Text(
+                                      ' สมัครใหม่',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.orange,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const Text(
-                                'เข้าสู่ระบบด้วย',
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
+                              const SizedBox(
+                                height: 36,
                               ),
-                              Expanded(
-                                child: Container(
-                                  margin: const EdgeInsets.only(left: 8),
-                                  height: 1,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ]),
-                            const SizedBox(height: 19),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Material(
-                                  elevation:
-                                      2.0, // Change this value to adjust the elevation
-                                  shape: const CircleBorder(),
+                              Row(children: [
+                                Expanded(
                                   child: Container(
-                                    height: 55,
-                                    width: 55,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                    ),
-                                    child: const Center(
-                                      child: Image(
-                                        image:
-                                            AssetImage('lib/icons/google.png'),
-                                        height: 25,
-                                        width: 25,
-                                      ),
-                                    ),
+                                    margin: const EdgeInsets.only(right: 8),
+                                    height: 1,
+                                    color: Colors.grey,
                                   ),
                                 ),
-                                const SizedBox(width: 16),
-                                const Material(
-                                  elevation:
-                                      2.0, // Change this value to adjust the elevation
-                                  shape: CircleBorder(),
-                                  child: SizedBox(
-                                    height: 55,
-                                    width: 55,
-                                    child: Center(
-                                      child: Image(
-                                        image:
-                                            AssetImage('lib/icons/apple.png'),
-                                        height: 25,
-                                        width: 25,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(width: 24),
-                                Material(
-                                  elevation:
-                                      2.0, // Change this value to adjust the elevation
-                                  shape: const CircleBorder(),
-                                  child: Container(
-                                    height: 55,
-                                    width: 55,
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                    ),
-                                    child: const Center(
-                                      child: Image(
-                                        image: AssetImage(
-                                            'lib/icons/facebook.png'),
-                                        height: 25,
-                                        width: 25,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 41),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'การเข้าสู่ระบบหรือสร้างบัญชีแสดงว่าคุณยอมรับ',
+                                const Text(
+                                  'เข้าสู่ระบบด้วย',
                                   style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w300,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
                                     color: Colors.black,
                                   ),
                                 ),
-                              ],
-                            ),
-                            const Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: 'ข้อกำหนดและเงื่อนไข',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.orange, // Set to orange
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' และ ',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.black, // Set to black
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: 'นโยบายความเป็นส่วนตัว',
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.orange, // Set to orange
-                                        ),
-                                      ),
-                                    ],
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.only(left: 8),
+                                    height: 1,
+                                    color: Colors.grey,
                                   ),
                                 ),
-                              ],
-                            ),
-                          ],
-                        )
-                      ],
-                    )),
-              ],
-            ),
-          ],
+                              ]),
+                              const SizedBox(height: 19),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Material(
+                                    elevation:
+                                        2.0, // Change this value to adjust the elevation
+                                    shape: const CircleBorder(),
+                                    child: Container(
+                                      height: 55,
+                                      width: 55,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: const Center(
+                                        child: Image(
+                                          image: AssetImage(
+                                              'lib/icons/google.png'),
+                                          height: 25,
+                                          width: 25,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 16),
+                                  const Material(
+                                    elevation:
+                                        2.0, // Change this value to adjust the elevation
+                                    shape: CircleBorder(),
+                                    child: SizedBox(
+                                      height: 55,
+                                      width: 55,
+                                      child: Center(
+                                        child: Image(
+                                          image:
+                                              AssetImage('lib/icons/apple.png'),
+                                          height: 25,
+                                          width: 25,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  const SizedBox(width: 24),
+                                  Material(
+                                    elevation:
+                                        2.0, // Change this value to adjust the elevation
+                                    shape: const CircleBorder(),
+                                    child: Container(
+                                      height: 55,
+                                      width: 55,
+                                      decoration: const BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                      ),
+                                      child: const Center(
+                                        child: Image(
+                                          image: AssetImage(
+                                              'lib/icons/facebook.png'),
+                                          height: 25,
+                                          width: 25,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 41),
+                              const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'การเข้าสู่ระบบหรือสร้างบัญชีแสดงว่าคุณยอมรับ',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: 'ข้อกำหนดและเงื่อนไข',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Colors.orange, // Set to orange
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: ' และ ',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                            color: Colors.black, // Set to black
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: 'นโยบายความเป็นส่วนตัว',
+                                          style: TextStyle(
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Colors.orange, // Set to orange
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      )),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
