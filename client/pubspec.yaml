@@ -54,9 +54,6 @@ flutter_icons:
   android: true
   image_path: "assets/main_mascot.png"
 
-flutter_native_splash:
-  image: assets/large_app_name.png
-  color: "#ffffff"
 
 dev_dependencies:
   flutter_test:
@@ -84,11 +81,10 @@ flutter:
   uses-material-design: true
   # To add assets to your pplication, add an assets section, like this:
   assets:
-    # - lib/icons/backbutton.png
-    # - lib/icons/phonecall-button.png
     - lib/icons/
     - assets/
-  #   - images/a_dot_ham.jpeg
+    - assets/logos/
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
