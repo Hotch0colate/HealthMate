@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.pop(context); // Navigate back to the previous screen
             },
             child: Image.asset(
-              'lib/icons/back_new.png',
+              'icons/back_new.png',
               height: 10,
               width: 10,
               color: Colors.grey,
@@ -406,8 +406,7 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                       child: const Center(
                                         child: Image(
-                                          image: AssetImage(
-                                              'lib/icons/google.png'),
+                                          image: AssetImage('icons/google.png'),
                                           height: 25,
                                           width: 25,
                                         ),
@@ -424,8 +423,7 @@ class _LoginPageState extends State<LoginPage> {
                                       width: 55,
                                       child: Center(
                                         child: Image(
-                                          image:
-                                              AssetImage('lib/icons/apple.png'),
+                                          image: AssetImage('icons/apple.png'),
                                           height: 25,
                                           width: 25,
                                         ),
@@ -446,8 +444,8 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                       child: const Center(
                                         child: Image(
-                                          image: AssetImage(
-                                              'lib/icons/facebook.png'),
+                                          image:
+                                              AssetImage('icons/facebook.png'),
                                           height: 25,
                                           width: 25,
                                         ),

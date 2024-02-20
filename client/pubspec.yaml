@@ -75,10 +75,10 @@ flutter:
   assets:
     # - lib/icons/backbutton.png
     # - lib/icons/phonecall-button.png
-    - assets/images/SmallAppName.png
-    - assets/images/av1.png
-    - lib/icons/
+    # - assets/images/SmallAppName.png
+    # - assets/images/av1.png
     - assets/
+    # - assets/icons/back_new.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

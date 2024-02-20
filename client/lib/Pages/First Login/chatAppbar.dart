@@ -53,7 +53,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                             //   ),
                             // ),
                             child: Image.asset(
-                              'lib/icons/back_new.png',
+                              'icons/back_new.png',
                               height: 50,
                               width: 50,
                               color: Colors.white,
@@ -125,7 +125,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         //   ),
                         // ),
                         child: Image.asset(
-                          'lib/icons/phonecall-button.png',
+                          'icons/phonecall-button.png',
                           height: 20,
                           width: 20,
                           color: Colors.white,

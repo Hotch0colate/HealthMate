@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously, file_names
 
 import 'package:client/Pages/login.dart';
 import 'package:client/services/auth_service.dart';
@@ -104,7 +104,7 @@ class _SignupPageState extends State<SignupPage> {
               Navigator.pop(context); // Navigate back to the previous screen
             },
             child: Image.asset(
-              'lib/icons/back_new.png',
+              'icons/back_new.png',
               height: 20,
               width: 20,
               color: Colors.grey,

@@ -263,7 +263,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
                             height: 28,
                             width: 28,
                             child: Image(
-                              image: AssetImage('lib/icons/goback.png'),
+                              image: AssetImage('icons/goback.png'),
                             ),
                           ),
                           Text(
@@ -314,7 +314,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
                             height: 28,
                             width: 28,
                             child: Image(
-                              image: AssetImage('lib/icons/foward.png'),
+                              image: AssetImage('icons/foward.png'),
                             ),
                           ),
                           // You can customize the order of Image and Text based on your preference
