@@ -1,7 +1,7 @@
-import 'package:client/Pages/First%20Login/first_login3.dart';
+import 'package:client/Pages/First%20Login/first_login_3.dart';
 import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
-import 'package:client/Pages/First%20Login/first_login1.dart';
+import 'package:client/Pages/First%20Login/first_login_1.dart';
 import 'dart:math' as math;
 
 class FirstLogin2 extends StatefulWidget {

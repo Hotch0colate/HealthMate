@@ -111,35 +111,8 @@ class _SignupPageState extends State<SignupPage> {
               )),
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.only(right: 0),
-                child: const Text(
-                  'HEALTH',
-                  style: TextStyle(
-                    color: Color.fromRGBO(33, 150, 243, 1),
-                    fontSize: 36,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.only(left: 0),
-                child: const Text(
-                  'MATE',
-                  style: TextStyle(
-                    color: Colors.orange,
-                    fontSize: 36,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+            preferredSize: const Size.fromHeight(40),
+            child: Image.asset('../../assets/logos/medium_app_name.png')),
       ),
       body: SingleChildScrollView(
         child: Container(
