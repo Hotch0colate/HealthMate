@@ -3,7 +3,6 @@ import 'package:client/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 
-
 class SplashScreen extends StatefulWidget {
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -18,8 +17,9 @@ class _SplashScreenState extends State<SplashScreen> {
       // Navigate to the main screen after the splash screen is displayed
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) =>
-        SignupPage(),),
+        MaterialPageRoute(
+          builder: (context) => SignupPage(),
+        ),
       );
     });
   }
@@ -28,19 +28,17 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          color: Color.fromARGB(255, 255, 253, 247)
-        ),
+        decoration: BoxDecoration(color: Color.fromARGB(255, 255, 253, 247)),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                'assets/logos/main_mascot.png',
+                '../assets/logos/main_mascot.png',
               ),
               SizedBox(height: 20),
               Image.asset(
-                'assets/logos/large_app_name.png',
+                '../assets/logos/large_app_name.png',
                 width: 300,
               ),
             ],
