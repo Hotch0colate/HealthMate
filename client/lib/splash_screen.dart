@@ -1,4 +1,4 @@
-import 'package:client/Pages/signupPage.dart';
+import 'package:client/Pages/signup.dart';
 import 'package:client/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -18,7 +18,7 @@ class _SplashScreenState extends State<SplashScreen> {
       // Navigate to the main screen after the splash screen is displayed
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => 
+        MaterialPageRoute(builder: (context) =>
         SignupPage(),),
       );
     });
@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
               Image.asset(
                 'assets/logos/main_mascot.png',
               ),
-              SizedBox(height: 20), 
+              SizedBox(height: 20),
               Image.asset(
                 'assets/logos/large_app_name.png',
                 width: 300,

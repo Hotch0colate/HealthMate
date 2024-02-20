@@ -1,7 +1,8 @@
 // import 'package:client/Pages/chatPage.dart';
 import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
-import 'package:client/Pages/signupPage.dart';
+import 'package:client/Pages/signup.dart';
+import 'package:client/Pages/home.dart';
 import 'splash_screen.dart';
 import 'component/navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
