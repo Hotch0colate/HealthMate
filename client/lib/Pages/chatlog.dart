@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:client/component/conversationList.dart';
+import 'package:client/component/conversation_list.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 import 'dart:async';

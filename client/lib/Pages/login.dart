@@ -1,6 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, avoid_print
 
-import 'package:client/Pages/signupPage.dart';
+import 'package:client/Pages/signup.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -85,7 +85,7 @@ class _LoginPageState extends State<LoginPage> {
               Navigator.pop(context); // Navigate back to the previous screen
             },
             child: Image.asset(
-              'lib/icons/back_new.png',
+              'icons/back_new.png',
               height: 10,
               width: 10,
               color: Colors.grey,
@@ -93,35 +93,8 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(40),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'HEALTH',
-                      style: TextStyle(
-                        color: Color.fromRGBO(33, 150, 243, 1),
-                        fontSize: 36,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'MATE',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 36,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+            preferredSize: const Size.fromHeight(40),
+            child: Image.asset('../../assets/logos/medium_app_name.png')),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -407,7 +380,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: const Center(
                                         child: Image(
                                           image: AssetImage(
-                                              'lib/icons/google.png'),
+                                              '../../assets/icons/google.png'),
                                           height: 25,
                                           width: 25,
                                         ),
@@ -424,8 +397,7 @@ class _LoginPageState extends State<LoginPage> {
                                       width: 55,
                                       child: Center(
                                         child: Image(
-                                          image:
-                                              AssetImage('lib/icons/apple.png'),
+                                          image: AssetImage('icons/apple.png'),
                                           height: 25,
                                           width: 25,
                                         ),
@@ -446,8 +418,8 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                       child: const Center(
                                         child: Image(
-                                          image: AssetImage(
-                                              'lib/icons/facebook.png'),
+                                          image:
+                                              AssetImage('icons/facebook.png'),
                                           height: 25,
                                           width: 25,
                                         ),

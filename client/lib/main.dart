@@ -2,7 +2,7 @@
 import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
 
-import 'Pages/signupPage.dart';
+import 'Pages/signup.dart';
 import 'Pages/home.dart';
 import 'component/navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: const SignupPage(),
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),
