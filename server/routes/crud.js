@@ -5,6 +5,7 @@ const db = require('../database/firebase.js');
 const { get, set, ref } = require("firebase/database");
 var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
+const authenticate = require('../token');
 var app = express();
 app.use(cors());
 
