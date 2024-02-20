@@ -1,17 +1,16 @@
-import 'package:client/Pages/First%20Login/first_login3.dart';
-import 'package:client/Pages/First%20Login/first_login5.dart';
+import 'package:client/Pages/First%20Login/first_login_4.dart';
 import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
-import 'package:client/Pages/First%20Login/first_login2.dart';
+import 'package:client/Pages/First%20Login/first_login_2.dart';
 
-class FirstLogin4 extends StatefulWidget {
-  const FirstLogin4({Key? key});
+class FirstLogin3 extends StatefulWidget {
+  const FirstLogin3({Key? key});
 
   @override
-  _FirstLogin4State createState() => _FirstLogin4State();
+  _FirstLogin3State createState() => _FirstLogin3State();
 }
 
-class _FirstLogin4State extends State<FirstLogin4> {
+class _FirstLogin3State extends State<FirstLogin3> {
   bool agreedToTerms = false;
   String selectedGender = ''; // Variable to store selected gender
 
@@ -75,7 +74,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
               ),
               const SizedBox(height: 18),
               const Text(
-                'ตอนนี้สถานะคุณคืออะไรครับ ?',
+                'คุณทำงานอาชีพอะไรครับ ?',
                 style: TextStyle(
                     color: Color.fromRGBO(251, 133, 0, 1),
                     fontSize: 24,
@@ -102,7 +101,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                       child: ListTile(
                         dense: true, // Set dense property
                         title: const Text(
-                          'โสด',
+                          'นักเรียน/นิสิตนักศึกษา',
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 14,
@@ -111,7 +110,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                           ),
                         ),
                         leading: Radio<String>(
-                          value: 'single',
+                          value: 'Male',
                           groupValue: selectedGender,
                           onChanged: (String? value) {
                             setState(() {
@@ -124,7 +123,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                     ListTile(
                       dense: true, // Set dense property
                       title: const Text(
-                        'มีแฟนแล้ว',
+                        'พนักงานบริษัทเอกชน',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -133,7 +132,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                         ),
                       ),
                       leading: Radio<String>(
-                        value: 'partnered',
+                        value: 'Female',
                         groupValue: selectedGender,
                         onChanged: (String? value) {
                           setState(() {
@@ -145,7 +144,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                     ListTile(
                       dense: true, // Set dense property
                       title: const Text(
-                        'หมั้นแล้ว / แต่งงานแล้ว',
+                        'พนักงานข้าราชการ',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -154,7 +153,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                         ),
                       ),
                       leading: Radio<String>(
-                        value: 'married',
+                        value: 'พนักงานข้าราชการ',
                         groupValue: selectedGender,
                         onChanged: (String? value) {
                           setState(() {
@@ -166,7 +165,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                     ListTile(
                       dense: true, // Set dense property
                       title: const Text(
-                        'ม่าย / หย่าร้าง / แยกกันอยู่',
+                        'พนักงานรัฐวิสาหกิจ',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -175,7 +174,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                         ),
                       ),
                       leading: Radio<String>(
-                        value: 'divorced',
+                        value: 'พนักงานรัฐวิสาหกิจ',
                         groupValue: selectedGender,
                         onChanged: (String? value) {
                           setState(() {
@@ -187,7 +186,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                     ListTile(
                       dense: true, // Set dense property
                       title: const Text(
-                        'อยู่ในความสัมพันธ์แบบไม่ผูกมัด',
+                        'พนักงานโรงงานอุตสาหกรรม',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -196,7 +195,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                         ),
                       ),
                       leading: Radio<String>(
-                        value: 'non-binding relationship',
+                        value: 'พนักงานโรงงานอุตสาหกรรม',
                         groupValue: selectedGender,
                         onChanged: (String? value) {
                           setState(() {
@@ -208,7 +207,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                     ListTile(
                       dense: true, // Set dense property
                       title: const Text(
-                        'ค่อนข้างอธิบายยาก',
+                        'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 14,
@@ -217,7 +216,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                         ),
                       ),
                       leading: Radio<String>(
-                        value: 'complicated',
+                        value: 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
                         groupValue: selectedGender,
                         onChanged: (String? value) {
                           setState(() {
@@ -240,7 +239,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FirstLogin3(),
+                          builder: (context) => const FirstLogin2(),
                         ),
                       );
                     },
@@ -264,7 +263,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                             height: 28,
                             width: 28,
                             child: Image(
-                              image: AssetImage('lib/icons/goback.png'),
+                              image: AssetImage('icons/goback.png'),
                             ),
                           ),
                           Text(
@@ -284,7 +283,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FirstLogin5(),
+                          builder: (context) => const FirstLogin4(),
                         ),
                       );
                       // Handle button press for the left button
@@ -315,7 +314,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                             height: 28,
                             width: 28,
                             child: Image(
-                              image: AssetImage('lib/icons/foward.png'),
+                              image: AssetImage('icons/foward.png'),
                             ),
                           ),
                           // You can customize the order of Image and Text based on your preference

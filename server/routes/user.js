@@ -15,18 +15,17 @@ app.use(cors());
 // สร้าง user ด้วยอีเมล
 // feature signup
 router.post('/create_data', async (req, res) => {
-    const user = {
-        uid: req.body.uid,
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password
-    }
+    uid = req.body.uid
+    username = req.body.username
+    email = req.body.email
+    password = req.body.password
+
     try {
         firebasedb.set(ref(db, 'users/' + uid), {
-            uid: user.uid,
-            username: user.username,
-            email: user.email,
-            password: user.password,
+            uid: uid,
+            username: username,
+            email: email,
+            password: password,
             age: 0,
             birthday: "unknow",
             gender: "unknow",
@@ -38,13 +37,14 @@ router.post('/create_data', async (req, res) => {
         });
         return res.status(200).json({
             RespCode: 200,
-            RespMessage: "Signup Successfully !"
+            RespMessage: "Signup successfully !"
         });
     }
     catch (error) {
+        console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /user/create_data"
         });
     }
 });
@@ -54,6 +54,7 @@ router.post('/create_data', async (req, res) => {
 //fetch  userdata
 router.post('/read_data', authenticate, async (req, res) => {
     var uid = req.body.uid;
+
     try {
         firebasedb.get(ref(db, 'users/' + uid))
             .then((snapshot) => {
@@ -61,11 +62,12 @@ router.post('/read_data', authenticate, async (req, res) => {
                     console.log(snapshot.val());
                     return res.status(200).json({
                         RespCode: 200,
-                        RespMessge: "Success",
+                        RespMessge: "Fetch data success",
                         Dae: snapshot.val()
                     });
-                } else {
-                    console.log("No data avilabel from fetch data");
+                }
+                else {
+                    console.log("No data avilabel");
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "No data available"
@@ -77,14 +79,14 @@ router.post('/read_data', authenticate, async (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /user/read_data"
         });
     }
 });
 
 // อัพเดทข้อมูล ถ้ามีการกรอกเฉพาะบางข้อมูลก็อัพเดทได้
 // feature first login and edit profile
-router.post('/update_data', (req, res) => {
+router.post('/update_data', authenticate, (req, res) => {
     var uid = req.body.uid;
 
     var username = req.body.username;
@@ -94,7 +96,7 @@ router.post('/update_data', (req, res) => {
     var birthday = req.body.birthday;
     var career = req.body.career;
     var martial_status = req.body.martial_status;
-
+    //check attribute in database
     try {
         get(ref(db, 'users/' + uid))
             .then((snapshot) => {
@@ -117,9 +119,10 @@ router.post('/update_data', (req, res) => {
 
                     return res.status(200).json({
                         RespCode: 200,
-                        RespMessage: "Update Successfully !"
+                        RespMessage: "Update successfully !"
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -132,7 +135,7 @@ router.post('/update_data', (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /user/update_data"
         });
     }
 });
@@ -147,12 +150,12 @@ router.post('/delete_data', (req, res) => {
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     remove(ref(db, 'users/' + username));
-
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "Success"
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -164,9 +167,11 @@ router.post('/delete_data', (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /user/delete_data"
         });
     }
 });
 
 module.exports = router;
+
+//clear

@@ -1,4 +1,5 @@
 // import 'package:client/Pages/chatPage.dart';
+import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:client/Pages/signupPage.dart';
 import 'splash_screen.dart';
@@ -25,9 +26,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       routes: {
-        '/login': (context) => SignupPage(),
+        '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),
         '/main': (context) => MainApp(),
+        '/home': (context) => const HomePage(),
       },
     );
   }

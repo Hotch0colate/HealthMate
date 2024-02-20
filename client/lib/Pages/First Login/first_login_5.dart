@@ -1,7 +1,7 @@
-import 'package:client/Pages/First%20Login/first_login4.dart';
+import 'package:client/Pages/First%20Login/first_login_4.dart';
 import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
-import 'package:client/Pages/First%20Login/first_login2.dart';
+import 'package:client/Pages/First%20Login/first_login_2.dart';
 
 class FirstLogin5 extends StatefulWidget {
   const FirstLogin5({Key? key});
@@ -132,52 +132,6 @@ class _FirstLogin5State extends State<FirstLogin5> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  // ElevatedButton(
-                  //   onPressed: () {
-                  //     // Handle button press for the left button
-                  //     // You can add your logic or navigation here
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         builder: (context) => const FirstLogin4(),
-                  //       ),
-                  //     );
-                  //   },
-                  //   style: ElevatedButton.styleFrom(
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(8),
-                  //     ),
-                  //     backgroundColor: Colors.white,
-                  //     foregroundColor: const Color.fromRGBO(34, 33, 33, 0.4),
-                  //     side: const BorderSide(
-                  //       color: Color.fromRGBO(34, 33, 33, 0.4),
-                  //     ),
-                  //   ),
-                  //   child: const SizedBox(
-                  //     height: 40,
-                  //     width: 120,
-                  //     child: Row(
-                  //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //       children: [
-                  //         SizedBox(
-                  //           height: 28,
-                  //           width: 28,
-                  //           child: Image(
-                  //             image: AssetImage('lib/icons/goback.png'),
-                  //           ),
-                  //         ),
-                  //         Text(
-                  //           'ก่อนหน้า',
-                  //           style: TextStyle(
-                  //             fontSize: 20,
-                  //             fontWeight: FontWeight.w600,
-                  //           ),
-                  //         ),
-                  //         // You can customize the order of Image and Text based on your preference
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(

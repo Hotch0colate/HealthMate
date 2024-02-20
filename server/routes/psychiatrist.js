@@ -12,71 +12,73 @@ app.use(cors());
 // สร้าง psychiatrist ด้วยอีเมล
 // feature signup
 router.post('/crete_data', async (req, res) => {
-  const user = {
-      username: req.body.username,
-      email: req.body.email,
-      password: req.body.password
-  }
-  firebaseadmin.auth().createUser(user)
-  .then((userCredential) => {
-      var uid = userCredential.uid;
-      firebasedb.set(ref(db, 'psychiatrists/' + uid), {
-          uid: uid,
-          username:user.username,
-          email: user.email,
-          password: user.password,
-          age: 0,
-          birthday: "unknow",
-          gender: "unknow",
-          carrer: "unknow",
-          martial_status: "unknow",
-          chatgroup: [],
-          mil: new Date().getTime(),
-          date: new Date().toLocaleString()
-      });
-      return res.status(200).json({
-          RespCode: 200,
-          RespMessage: "Signup Successfully !"
-      });
-  })
-  .catch((error) => {
-      return res.status(500).json({
-          RespCode: 500,
-          RespMessage: "Error : " + error.message + "/nPath API : /psychiatrist/create_data"
-      });
-  });
+    username = req.body.username;
+    email = req.body.email;
+    password = req.body.password;
+
+    firebaseadmin.auth().createUser(user)
+        .then((userCredential) => {
+            var uid = userCredential.uid;
+            firebasedb.set(ref(db, 'psychiatrists/' + uid), {
+                uid: uid,
+                username: user.username,
+                email: user.email,
+                password: user.password,
+                age: 0,
+                birthday: "unknow",
+                gender: "unknow",
+                carrer: "unknow",
+                martial_status: "unknow",
+                chatgroup: [],
+                mil: new Date().getTime(),
+                date: new Date().toLocaleString()
+            });
+            return res.status(200).json({
+                RespCode: 200,
+                RespMessage: "Signup Successfully !"
+            });
+        })
+        .catch((error) => {
+            console.log(error);
+            return res.status(500).json({
+                RespCode: 500,
+                RespMessage: "Error : " + error.message + "/nPath API : /psychiatrist/create_data"
+            });
+        });
 });
 
 //ดึงข้อมูลจาก psychiatrist
 //fetch  psychiatrist
 router.post('/read_data', (req, res) => {
-  var uid = req.body.uid;
-  try{
-      firebasedb.get(ref(db, 'psychiatrists/' + uid))
-      .then((snapshot) => {
-          if (snapshot.exists()) {
-              console.log(snapshot.val());
-              return res.status(200).json({
-                  RespCode: 200,
-                  RespMessge: "Success",
-                  Dae: snapshot.val()
-              });
-          } else {
-              console.log("No data avilabel from fetch data");
-              return res.status(200).json({
-                  RespCode: 200,
-                  RespMessage: "No data available" + "/nPath API : /psychiatrist/read_data"
-              });
-          }
-      })
-  }
-  catch(error){
-      console.log(error);
-      return res.status(500).json({
-          RespCode:500,
-          RespMessage: error.message + "/nPath API : /psychiatrist/read_data"
-      });
-  }
+    var uid = req.body.uid;
+
+    try {
+        firebasedb.get(ref(db, 'psychiatrists/' + uid))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    console.log(snapshot.val());
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessge: "Success",
+                        Dae: snapshot.val()
+                    });
+                }
+                else {
+                    console.log("No data avilabel from fetch data");
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: "No data available" + "/nPath API : /psychiatrist/read_data"
+                    });
+                }
+            })
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            RespCode: 500,
+            RespMessage: error.message + "/nPath API : /psychiatrist/read_data"
+        });
+    }
 });
 
 // อัพเดทข้อมูล ถ้ามีการกรอกเฉพาะบางข้อมูลก็อัพเดทได้
@@ -102,8 +104,8 @@ router.post('/update_data', (req, res) => {
                     };
 
                     // Optional Chaining
-                    username &&(updateData.username = username);
-                    password &&(updateData.password = password);
+                    username && (updateData.username = username);
+                    password && (updateData.password = password);
                     age && (updateData.age = age);
                     gender && (updateData.gender = gender);
                     birthday && (updateData.birthday = birthday);
@@ -116,7 +118,8 @@ router.post('/update_data', (req, res) => {
                         RespCode: 200,
                         RespMessage: "Update Successfully !" + "/nPath API : /psychiatrist/update_data"
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -149,7 +152,8 @@ router.post('/delete_data', (req, res) => {
                         RespCode: 200,
                         RespMessage: "Success" + "/nPath API : /psychiatrist/delete_data"
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -167,3 +171,5 @@ router.post('/delete_data', (req, res) => {
 });
 
 module.exports = router;
+
+//clear

@@ -1,3 +1,4 @@
+import 'package:client/component/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -5,7 +6,7 @@ import '../models/models.dart';
 // import '../widgets/widgets.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +28,7 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      child: Scaffold(
-        appBar: const _CustomAppBar(),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _ChatContacts(height: height, users: users),
-            Expanded(
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  _ChatMessages(height: height, chats: chats),
-                  _CustomBottomNavBar(width: width),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      child: Scaffold(body: MainApp()),
     );
   }
 }

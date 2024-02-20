@@ -14,7 +14,7 @@ router.post('/create_data', async (req, res) => {
     var user = req.body.user;
     var volunteer = req.body.volunteer;
     var cid = firebaseadmin.firestore().collection('chats').doc().id;
-    /////////////////
+
     console.log("cid", cid);
     console.log(typeof (cid));
     try {
@@ -67,7 +67,7 @@ router.post('/create_data', async (req, res) => {
         console.log(error)
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /chatlog/create_data"
         });
     }
 });
@@ -86,7 +86,8 @@ router.post('/read_data', (req, res) => {
                         RespMessage: "Success",
                         Data: snapshot.val()
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -99,7 +100,7 @@ router.post('/read_data', (req, res) => {
     catch (error) {
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message
+            RespMessage: "Error : " + error.message + "/nPath API : /chatlog/read_data"
         });
     }
 });
@@ -154,7 +155,8 @@ router.post('/read_data_all', async (req, res) => {
                 RespMessage: "Success",
                 Data: chatData
             });
-        } else {
+        }
+        else {
             console.log("No user chat group available");
             return res.status(200).json({
                 RespCode: 200,
@@ -166,13 +168,13 @@ router.post('/read_data_all', async (req, res) => {
         console.error("Error:", error.message);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: "Internal Server Error"
+            RespMessage: "Error: " + error.message + "/nPath API : /chatlog/read_data_all"
         });
     }
 });
 
 
-// อัพเดทข้อมูล 
+// อัพเดทข้อมูล
 // Seen in chatlog update
 router.post('/update_data', (req, res) => {
     var cid = req.body.cid;
@@ -191,7 +193,8 @@ router.post('/update_data', (req, res) => {
                         RespCode: 200,
                         RespMessage: "Update Successfully !" + "/nPath API : /chatlog/update_data"
                     });
-                } else {
+                }
+                else {
                     console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
@@ -204,9 +207,11 @@ router.post('/update_data', (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: error.message + "/nPath API : /psychiatrist/update_data"
+            RespMessage: "Error : " + error.message + "/nPath API : /chatlog/update_data"
         });
     }
 });
 
 module.exports = router;
+
+//clear

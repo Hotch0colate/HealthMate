@@ -19,7 +19,6 @@ class SelectTalk extends StatelessWidget {
   }
 }
 
-
 class SelectTalkPageBody extends StatelessWidget {
   const SelectTalkPageBody({super.key});
 

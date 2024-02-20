@@ -20,7 +20,6 @@ class Calendar extends StatelessWidget {
   }
 }
 
-
 class CalendarPageBody extends StatelessWidget {
   const CalendarPageBody({super.key});
 

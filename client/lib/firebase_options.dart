@@ -25,7 +25,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -70,15 +73,5 @@ class DefaultFirebaseOptions {
     databaseURL: 'https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'health-9cd54.appspot.com',
     iosBundleId: 'com.example.client',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCWzVKUbzuthwSBdZwh-hOuv8mZiT0u6gc',
-    appId: '1:281295884415:ios:a92eb0cbd4b116a4a76f4a',
-    messagingSenderId: '281295884415',
-    projectId: 'health-9cd54',
-    databaseURL: 'https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'health-9cd54.appspot.com',
-    iosBundleId: 'com.example.client.RunnerTests',
   );
 }

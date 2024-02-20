@@ -5,18 +5,15 @@ const db = require('../database/firebase.js');
 const { get, set, ref } = require("firebase/database");
 var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
+const authenticate = require('../token');
 var app = express();
 app.use(cors());
 
-      /////////////////////////////////////////
-     //this file is template for create api///
-    /////////////////////////////////////////
-
+//ใส่ชื่อฟังก์ชันด้วยทุกครั้ง
 router.post('/api/create', (req, res) => {
     var fullname = req.body.fullname;
 
     try{
-        console.log("fullname>>>>>>>", fullname);
         firebasedb.set(ref(db, 'users/' + fullname), {
             fullname: fullname,
             balance: 100,
@@ -36,8 +33,9 @@ router.post('/api/create', (req, res) => {
         });
     }
 });
+
 //get all
-router.get('/api/get', (req, res) => { // read user path /api/read
+router.get('/api/get', (req, res) => {
     try{
         firebasedb.get(ref(db, 'users'))
         .then((snapshot) => {
@@ -164,3 +162,5 @@ router.put('/api/updateHeight', (req, res) => {
 });
 
 module.exports = router;
+
+//clear
