@@ -99,17 +99,16 @@ class _SignupPageState extends State<SignupPage> {
         leading: Transform.translate(
           offset: const Offset(24, 16),
           child: GestureDetector(
-            onTap: () {
-              // Handle back button tap here
-              Navigator.pop(context); // Navigate back to the previous screen
-            },
-            child: Image.asset(
-              'icons/back_new.png',
-              height: 20,
-              width: 20,
-              color: Colors.grey,
-            ),
-          ),
+              onTap: () {
+                // Handle back button tap here
+                Navigator.pop(context); // Navigate back to the previous screen
+              },
+              child: const Image(
+                image: AssetImage('icons/back_new.png'),
+                height: 20,
+                width: 20,
+                color: Colors.grey,
+              )),
         ),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(40),

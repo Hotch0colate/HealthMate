@@ -406,7 +406,8 @@ class _LoginPageState extends State<LoginPage> {
                                       ),
                                       child: const Center(
                                         child: Image(
-                                          image: AssetImage('icons/google.png'),
+                                          image: AssetImage(
+                                              '../../assets/icons/google.png'),
                                           height: 25,
                                           width: 25,
                                         ),
