@@ -1,7 +1,5 @@
 import 'package:client/Pages/signup.dart';
-import 'package:client/theme/theme.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 class SplashScreen extends StatefulWidget {
   @override

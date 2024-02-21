@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:client/component/button.dart';
 
 void main() {
-  runApp(Calendar());
+  runApp(const Calendar());
 }
 
 class Calendar extends StatelessWidget {
+  const Calendar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,12 +30,13 @@ class CalendarPageBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      child: const Center(
-        child: Text(
-          "Welcome!",
-          style: TextStyle(fontSize: 18.0),
-        ),
-      ),
+      child: SecondaryButton(
+            text: 'สวัสดี',
+            onPressed: () {
+              // Your button click logic here
+              print('Button clicked');
+            },
+          ),
     );
   }
 }
