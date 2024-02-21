@@ -1,6 +1,6 @@
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
-import 'package:client/theme/theme.dart'; // Make sure to import your theme file
+import 'package:client/theme/theme.dart'; 
 
 class MyButton extends StatelessWidget {
   final String text;
