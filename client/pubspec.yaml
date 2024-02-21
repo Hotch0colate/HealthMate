@@ -84,12 +84,12 @@ flutter:
     - assets/
     
   fonts:
-    - family: Mitr
+    - family: Athiti
       fonts:
-        - asset: fonts/Mitr-Bold.ttf
-        - asset: fonts/Mitr-SemiBold.ttf
-        - asset: fonts/Mitr-Regular.ttf
-        - asset: fonts/Mitr-Light.ttf
+        - asset: fonts/Athiti-Bold.ttf
+        - asset: fonts/Athiti-SemiBold.ttf
+        - asset: fonts/Athiti-Regular.ttf
+        - asset: fonts/Athiti-Light.ttf
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -165,7 +165,7 @@ class ChatRoomBody extends State<ChatRoom> {
                 children: [
                   Text(
                     'Volunteer A25',
-                    style: FontTheme.h4,
+                    style: FontTheme.subtitle1,
                   ),
                 ],
               ),

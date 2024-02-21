@@ -4,70 +4,51 @@ class FontTheme {
   FontTheme._();
 
   static const TextStyle h1 = TextStyle(
-    fontFamily: 'Poppins',
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w700,
+    fontSize: 60,
+  );
+
+  static const TextStyle h2 = TextStyle(
+    fontFamily: 'Athiti',
     fontWeight: FontWeight.w600,
     fontSize: 48,
   );
 
-  static const TextStyle h2 = TextStyle(
-    fontFamily: 'Poppins',
+  static const TextStyle h3 = TextStyle(
+    fontFamily: 'Athiti',
     fontWeight: FontWeight.w600,
-    fontSize: 32,
+    fontSize: 36,
   );
 
-  static const TextStyle h3 = TextStyle(
-    fontFamily: 'Poppins',
+  static const TextStyle subtitle1 = TextStyle(
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w800,
+    fontSize: 24,
+  );
+
+  static const TextStyle subtitle2 = TextStyle(
+    fontFamily: 'Athiti',
     fontWeight: FontWeight.w600,
     fontSize: 24,
   );
 
-  static const TextStyle h4 = TextStyle(
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.w600,
-    fontSize: 20,
-  );
-
-  static const TextStyle h5 = TextStyle(
-    fontFamily: 'Poppins',
+  static const TextStyle body1 = TextStyle(
+    fontFamily: 'Athiti',
     fontWeight: FontWeight.w600,
     fontSize: 18,
   );
 
-  static const TextStyle subtitle1 = TextStyle(
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.w600,
-    fontSize: 16,
-  );
-
-  static const TextStyle subtitle2 = TextStyle(
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.w600,
-    fontSize: 14,
-  );
-
-  static const TextStyle body1 = TextStyle(
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.normal,
-    fontSize: 14,
-  );
-
   static const TextStyle body2 = TextStyle(
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.w600,
-    fontSize: 14,
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w400,
+    fontSize: 18,
   );
 
   static const TextStyle caption = TextStyle(
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.w500,
-    fontSize: 12,
-  );
-
-  static const TextStyle overline = TextStyle(
-    fontFamily: 'Poppins',
-    fontWeight: FontWeight.w500,
-    fontSize: 12,
-    wordSpacing: 1.2,
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
   );
 }
 
@@ -88,25 +69,38 @@ class MyApp extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'สวัสดี',
+                'กราบสวัสดี H1',
                 style: FontTheme.h1,
               ),
               Text(
-                'Heading 2',
+                'กราบสวัสดี H2',
                 style: FontTheme.h2,
               ),
               Text(
-                'Heading 3',
+                'คุณชื่ออะไร',
                 style: FontTheme.h3,
               ),
               Text(
-                'Subtitle 1',
+                'กราบสวัสดีsubtitle1',
                 style: FontTheme.subtitle1,
               ),
               Text(
-                'Body Text',
+                'กราบสวัสดีsubtitle2',
+                style: FontTheme.subtitle2,
+              ),              
+              Text(
+                'กราบสวัสดีbody',
                 style: FontTheme.body1,
               ),
+              Text(
+                'กราบสวัสดีbody',
+                style: FontTheme.body2,
+              ),  
+              Text(
+                'กราบสวัสดีcaption',
+                style: FontTheme.caption,
+              ),  
+                        
             ],
           ),
         ),
