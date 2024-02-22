@@ -53,6 +53,24 @@ class FontTheme {
     fontWeight: FontWeight.w600,
     fontSize: 16,
   );
+  
+  static const TextStyle btn_large = TextStyle(
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w800,
+    fontSize: 28,
+  );
+  
+  static const TextStyle btn_medium = TextStyle(
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w800,
+    fontSize: 20,
+  );
+
+  static const TextStyle btn_small = TextStyle(
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w600,
+    fontSize: 16,
+  );
 }
 
 

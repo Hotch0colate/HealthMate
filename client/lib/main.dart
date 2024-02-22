@@ -1,10 +1,10 @@
 // import 'package:client/Pages/chatPage.dart';
-import 'package:client/Pages/login.dart';
+import 'package:client/pages/login.dart';
 import 'package:flutter/material.dart';
-import 'package:client/Pages/signup.dart';
-import 'package:client/Pages/home.dart';
+import 'package:client/pages/signup.dart';
+import 'package:client/pages/home.dart';
 import 'splash_screen.dart';
-import 'component/navigation.dart';
+import '../controllers/navigation.dart';
 import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import 'firebase_options.dart';

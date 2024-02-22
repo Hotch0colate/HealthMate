@@ -1,5 +1,11 @@
+import 'package:client/Pages/testpage.dart';
 import 'package:flutter/material.dart';
-import 'package:client/component/button.dart';
+
+import '../Pages/profile.dart';
+import '../Pages/select_talk.dart';
+import '../controllers/button.dart';
+import 'package:client/controllers/navigation.dart';
+
 
 void main() {
   runApp(const Calendar());
@@ -16,27 +22,28 @@ class Calendar extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Calendar Page"),
         ),
-        body: CalendarPageBody(),
-        
+        body: CalendarPage(),
       ),
+      routes: {
+        '/calendar': (context) => Calendar(),
+        '/talk': (context) => SelectTalk(),
+        //'/chat': (context) => ChatLog(uid: userUid),
+        '/profile': (context) => ProfilePage(),
+
+      },
     );
   }
 }
 
-class CalendarPageBody extends StatelessWidget {
-  const CalendarPageBody({super.key});
+class CalendarPage extends StatelessWidget {
+  const CalendarPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      child: SecondaryButton(
-            text: 'สวัสดี',
-            onPressed: () {
-              // Your button click logic here
-              print('Button clicked');
-            },
-          ),
-    );
+      child: const Center(
+        ),
+      );
   }
 }
