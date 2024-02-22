@@ -17,7 +17,8 @@ router.post('/create_data', async (req, res) => {
     try {
         firebasedb.set(ref(db, 'volunteers/' + uid), {
             uid: uid,
-            quota: 3,
+            help_quota: 3,
+            weekly_help: 5,
             tags: [],
             rating_score: 100,
             mil: new Date().getTime(),
