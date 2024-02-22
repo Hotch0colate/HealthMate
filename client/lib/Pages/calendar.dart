@@ -24,13 +24,6 @@ class Calendar extends StatelessWidget {
         ),
         body: CalendarPage(),
       ),
-      routes: {
-        '/calendar': (context) => Calendar(),
-        '/talk': (context) => SelectTalk(),
-        //'/chat': (context) => ChatLog(uid: userUid),
-        '/profile': (context) => ProfilePage(),
-
-      },
     );
   }
 }

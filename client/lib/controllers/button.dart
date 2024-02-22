@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:client/theme/font.dart';
-import 'package:client/theme/theme.dart';
+import 'package:client/theme/color.dart';
 
 class LgPrimaryButton extends StatelessWidget {
   final String text;

@@ -75,26 +75,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 93,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        leading: Transform.translate(
-          offset: const Offset(24, 16),
-          child: GestureDetector(
-            onTap: () {
-              // Handle back button tap here
-              Navigator.pop(context); // Navigate back to the previous screen
-            },
-            child: Image.asset(
-              'icons/back_new.png',
-              height: 10,
-              width: 10,
-              color: Colors.grey,
-            ),
-          ),
-        ),
         bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child: Image.asset('../../assets/logos/medium_app_name.png')),
+            preferredSize: const Size.fromHeight(20),
+            child: Image.asset('assets/logos/medium_app_name.png')),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -322,10 +307,8 @@ class _LoginPageState extends State<LoginPage> {
                                                 const SignupPage()),
                                       );
                                     },
-                                    hoverColor: Colors
-                                        .blue, // Set the color when hovered
                                     child: const Text(
-                                      ' สมัครใหม่',
+                                      'สมัครใหม่',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
@@ -380,7 +363,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: const Center(
                                         child: Image(
                                           image: AssetImage(
-                                              '../../assets/icons/google.png'),
+                                              'assets/icons/google.png'),
                                           height: 25,
                                           width: 25,
                                         ),
@@ -397,7 +380,7 @@ class _LoginPageState extends State<LoginPage> {
                                       width: 55,
                                       child: Center(
                                         child: Image(
-                                          image: AssetImage('icons/apple.png'),
+                                          image: AssetImage('assets/icons/apple.png'),
                                           height: 25,
                                           width: 25,
                                         ),
@@ -419,7 +402,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: const Center(
                                         child: Image(
                                           image:
-                                              AssetImage('icons/facebook.png'),
+                                              AssetImage('assets/icons/facebook.png'),
                                           height: 25,
                                           width: 25,
                                         ),

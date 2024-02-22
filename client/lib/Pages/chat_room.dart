@@ -1,7 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 // import 'package:client/Pages/chatlog.dart';
 import 'package:client/theme/font.dart';
-import 'package:client/theme/theme.dart';
+import 'package:client/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
