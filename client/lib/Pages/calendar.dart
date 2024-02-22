@@ -1,10 +1,19 @@
+import 'package:client/Pages/testpage.dart';
 import 'package:flutter/material.dart';
 
+import '../Pages/profile.dart';
+import '../Pages/select_talk.dart';
+import '../controllers/button.dart';
+import 'package:client/controllers/navigation.dart';
+
+
 void main() {
-  runApp(Calendar());
+  runApp(const Calendar());
 }
 
 class Calendar extends StatelessWidget {
+  const Calendar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,26 +22,21 @@ class Calendar extends StatelessWidget {
         appBar: AppBar(
           title: const Text("Calendar Page"),
         ),
-        body: CalendarPageBody(),
-        
+        body: CalendarPage(),
       ),
     );
   }
 }
 
-class CalendarPageBody extends StatelessWidget {
-  const CalendarPageBody({super.key});
+class CalendarPage extends StatelessWidget {
+  const CalendarPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: const Center(
-        child: Text(
-          "Welcome!",
-          style: TextStyle(fontSize: 18.0),
         ),
-      ),
-    );
+      );
   }
 }

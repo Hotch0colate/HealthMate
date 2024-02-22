@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:client/theme/theme.dart';
+import 'package:client/theme/color.dart';
 
 import 'package:client/services/auth_service.dart';
 import 'package:client/Pages/calendar.dart';
@@ -135,6 +135,7 @@ class BottomNavigationBarApp extends StatelessWidget {
           label: 'โปรไฟล์',
         ),
       ],
+      
     );
   }
 }

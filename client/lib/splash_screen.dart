@@ -1,7 +1,5 @@
-import 'package:client/Pages/signup.dart';
-import 'package:client/theme/theme.dart';
+import 'package:client/pages/signup.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -13,7 +11,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     // Simulate a delay to display the splash screen for 3 seconds
-    Future.delayed(Duration(seconds: 10), () {
+    Future.delayed(Duration(seconds: 3), () {
       // Navigate to the main screen after the splash screen is displayed
       Navigator.pushReplacement(
         context,
@@ -34,11 +32,11 @@ class _SplashScreenState extends State<SplashScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                '../assets/logos/main_mascot.png',
+                'assets/logos/main_mascot.png',
               ),
               SizedBox(height: 20),
               Image.asset(
-                '../assets/logos/large_app_name.png',
+                'assets/logos/large_app_name.png',
                 width: 300,
               ),
             ],

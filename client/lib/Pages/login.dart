@@ -77,26 +77,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 93,
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.white,
-        leading: Transform.translate(
-          offset: const Offset(24, 16),
-          child: GestureDetector(
-            onTap: () {
-              // Handle back button tap here
-              Navigator.pop(context); // Navigate back to the previous screen
-            },
-            child: Image.asset(
-              'icons/back_new.png',
-              height: 10,
-              width: 10,
-              color: Colors.grey,
-            ),
-          ),
-        ),
         bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child: Image.asset('../../assets/logos/medium_app_name.png')),
+            preferredSize: const Size.fromHeight(20),
+            child: Image.asset('assets/logos/medium_app_name.png')),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -285,9 +270,9 @@ class _LoginPageState extends State<LoginPage> {
                                                 const SignupPage()),
                                       );
                                     },
-                                    // Set the color when hovered
+                                    // Set the color when hover
                                     child: const Text(
-                                      ' สมัครใหม่',
+                                      'สมัครใหม่',
                                       style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
@@ -329,12 +314,12 @@ class _LoginPageState extends State<LoginPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   LoginWithButton(
-                                      imagePath: 'icons/google.png'),
+                                      imagePath: 'assets/icons/google.png'),
                                   SizedBox(width: 16),
-                                  LoginWithButton(imagePath: 'icons/apple.png'),
+                                  LoginWithButton(imagePath: 'assets/icons/apple.png'),
                                   SizedBox(width: 24),
                                   LoginWithButton(
-                                      imagePath: 'icons/facebook.png'),
+                                      imagePath: 'assets/icons/facebook.png'),
                                 ],
                               ),
                               const SizedBox(height: 41),
