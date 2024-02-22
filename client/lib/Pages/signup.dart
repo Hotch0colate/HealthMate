@@ -2,8 +2,7 @@
 
 import 'package:client/Pages/login.dart';
 import 'package:client/component/grey_text_field.dart';
-import 'package:client/component/long_text_field.dart';
-import 'package:client/component/orange_button.dart';
+import 'package:client/component/buttons.dart';
 import 'package:client/component/password_field.dart';
 import 'package:client/component/white_text_field.dart';
 import 'package:client/services/auth_service.dart';

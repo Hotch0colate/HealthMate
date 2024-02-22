@@ -1,6 +1,7 @@
 import 'package:client/Pages/First%20Login/first_login_3.dart';
 import 'package:client/Pages/First%20Login/first_login_5.dart';
 import 'package:client/Pages/login.dart';
+import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:client/Pages/First%20Login/first_login_2.dart';
 
@@ -58,36 +59,8 @@ class _FirstLogin4State extends State<FirstLogin4> {
                 height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
-              RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'HEALTH',
-                      style: TextStyle(
-                        color: Color.fromRGBO(33, 150, 243, 1),
-                        fontSize: 54,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'MATE',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 54,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Text(
-                '"Take deep breaths and release stress."',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins'),
-              ),
+              Image.asset('assets/logos/big_app_name.png'),
+
               const SizedBox(
                 height: 37,
               ),
@@ -95,7 +68,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                 height: 86,
                 child: Image(
                   image: AssetImage(
-                    '../../../assets/logos/main_mascot.png',
+                    'assets/logos/main_mascot.png',
                   ),
                 ),
               ),
@@ -154,96 +127,22 @@ class _FirstLogin4State extends State<FirstLogin4> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Handle button press for the left button
-                      // You can add your logic or navigation here
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FirstLogin3(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  GoBackButton(onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FirstLogin3(),
                       ),
-                      backgroundColor: Colors.white,
-                      foregroundColor: const Color.fromRGBO(34, 33, 33, 0.4),
-                      side: const BorderSide(
-                        color: Color.fromRGBO(34, 33, 33, 0.4),
+                    );
+                  }),
+                  ForwardButton(onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FirstLogin5(),
                       ),
-                    ),
-                    child: const SizedBox(
-                      height: 40,
-                      width: 120,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            height: 28,
-                            width: 28,
-                            child: Image(
-                              image: AssetImage('icons/goback.png'),
-                            ),
-                          ),
-                          Text(
-                            'ก่อนหน้า',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          // You can customize the order of Image and Text based on your preference
-                        ],
-                      ),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const FirstLogin5(),
-                        ),
-                      );
-                      // Handle button press for the left button
-                      // You can add your logic or navigation here
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      backgroundColor: Colors.orange,
-                      foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.orange),
-                    ),
-                    child: const SizedBox(
-                      height: 40,
-                      width: 118,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'ต่อไป',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 28,
-                            width: 28,
-                            child: Image(
-                              image: AssetImage('icons/foward.png'),
-                            ),
-                          ),
-                          // You can customize the order of Image and Text based on your preference
-                        ],
-                      ),
-                    ),
-                  ),
+                    );
+                  }),
                 ],
               ),
             ],

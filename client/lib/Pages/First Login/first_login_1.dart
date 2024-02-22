@@ -1,4 +1,5 @@
 import 'package:client/Pages/login.dart';
+import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:client/Pages/First%20Login/first_login_2.dart';
 
@@ -27,39 +28,10 @@ class _FirstLogin1State extends State<FirstLogin1> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 111,
+                height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
-              RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'HEALTH',
-                      style: TextStyle(
-                        color: Color.fromRGBO(33, 150, 243, 1),
-                        fontSize: 54,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'MATE',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 54,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Text(
-                '"Take deep breaths and release stress."',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins'),
-              ),
+              Image.asset('assets/logos/big_app_name.png'),
               const SizedBox(
                 height: 37,
               ),
@@ -67,7 +39,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
                 height: 86,
                 child: Image(
                   image: AssetImage(
-                    '../../../assets/logos/main_mascot.png',
+                    'assets/logos/main_mascot.png',
                   ),
                 ),
               ),
@@ -164,53 +136,18 @@ class _FirstLogin1State extends State<FirstLogin1> {
                   ],
                 ),
               ),
-              const SizedBox(height: 60),
+              const SizedBox(height: 125),
+
               Align(
                 alignment: Alignment.centerRight,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const FirstLogin2(),
-                      ),
-                    );
-                    // Handle button press for the left button
-                    // You can add your logic or navigation here
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                child: ForwardButton(onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const FirstLogin2(),
                     ),
-                    backgroundColor: Colors.orange,
-                    foregroundColor: Colors.white,
-                    side: const BorderSide(color: Colors.orange),
-                  ),
-                  child: const SizedBox(
-                    height: 40,
-                    width: 118,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'ต่อไป',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 28,
-                          width: 28,
-                          child: Image(
-                            image: AssetImage('icons/foward.png'),
-                          ),
-                        ),
-                        // You can customize the order of Image and Text based on your preference
-                      ],
-                    ),
-                  ),
-                ),
+                  );
+                }),
               ),
             ],
           ),

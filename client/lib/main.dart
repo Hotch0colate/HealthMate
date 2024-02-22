@@ -1,5 +1,7 @@
 // import 'package:client/Pages/chatPage.dart';
 import 'package:client/Pages/First%20Login/first_login_1.dart';
+import 'package:client/Pages/First%20Login/first_login_2.dart';
+import 'package:client/Pages/First%20Login/first_login_3.dart';
 import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
 import 'package:client/Pages/signup.dart';
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: FirstLogin1(),
+      home: LoginPage(),
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),

@@ -57,36 +57,8 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
-              RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'HEALTH',
-                      style: TextStyle(
-                        color: Color.fromRGBO(33, 150, 243, 1),
-                        fontSize: 54,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'MATE',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 54,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Text(
-                '"Take deep breaths and release stress."',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins'),
-              ),
+              Image.asset('assets/logos/big_app_name.png'),
+
               const SizedBox(
                 height: 37,
               ),
@@ -94,7 +66,7 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 height: 86,
                 child: Image(
                   image: AssetImage(
-                    '../../../assets/logos/main_mascot.png',
+                    'assets/logos/main_mascot.png',
                   ),
                 ),
               ),
@@ -159,7 +131,6 @@ class _FirstLogin5State extends State<FirstLogin5> {
                       ),
                       backgroundColor: const Color.fromRGBO(72, 210, 104, 1),
                       foregroundColor: Colors.white,
-                      side: const BorderSide(color: Colors.orange),
                     ),
                     child: const SizedBox(
                       height: 40,

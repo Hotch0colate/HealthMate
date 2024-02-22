@@ -2,8 +2,7 @@
 
 import 'package:client/Pages/signup.dart';
 import 'package:client/component/grey_text_field.dart';
-import 'package:client/component/login_with_button.dart';
-import 'package:client/component/orange_button.dart';
+import 'package:client/component/buttons.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -286,8 +285,7 @@ class _LoginPageState extends State<LoginPage> {
                                                 const SignupPage()),
                                       );
                                     },
-                                    hoverColor: Colors
-                                        .blue, // Set the color when hovered
+                                    // Set the color when hovered
                                     child: const Text(
                                       ' สมัครใหม่',
                                       style: TextStyle(
