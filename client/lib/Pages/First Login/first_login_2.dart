@@ -1,11 +1,11 @@
-import 'package:client/Pages/First%20Login/first_login_3.dart';
-import 'package:client/Pages/login.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert'; // For JSON encoding
+import 'package:http/http.dart' as http; // HTTP package
 import 'package:client/Pages/First%20Login/first_login_1.dart';
-import 'dart:math' as math;
+import 'package:client/Pages/First%20Login/first_login_3.dart';
 
 class FirstLogin2 extends StatefulWidget {
-  const FirstLogin2({Key? key});
+  const FirstLogin2({Key? key}) : super(key: key);
 
   @override
   _FirstLogin2State createState() => _FirstLogin2State();
@@ -14,7 +14,39 @@ class FirstLogin2 extends StatefulWidget {
 class _FirstLogin2State extends State<FirstLogin2> {
   bool agreedToTerms = false;
   String selectedGender = ''; // Variable to store selected gender
+  TextEditingController birthDateController = TextEditingController(); // Controller for birth date input
 
+  Future<void> sendUserDataToBackend() async {
+    Uri apiUrl = Uri.parse('http://localhost:3000/user/update_data'); // Replace with your backend API endpoint
+    try {
+      var response = await http.post(
+        apiUrl,
+        body: json.encode({
+          'birthDate': birthDateController.text, // Assuming you want to send the birth date
+          // Add other data you might want to send here
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Handle success
+        print('Data sent successfully');
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const FirstLogin3(),
+          ),
+        );
+      } else {
+        // Handle error
+        print('Failed to send data');
+      }
+    } catch (e) {
+      print('Error sending data: $e');
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -173,14 +205,7 @@ class _FirstLogin2State extends State<FirstLogin2> {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const FirstLogin3(),
-                          ),
-                        );
-                        // Handle button press for the left button
-                        // You can add your logic or navigation here
+                        sendUserDataToBackend();
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

@@ -1,7 +1,7 @@
 import 'package:client/Pages/First%20Login/first_login_4.dart';
 import 'package:client/Pages/login.dart';
+import 'package:client/component/navigation.dart';
 import 'package:flutter/material.dart';
-import 'package:client/Pages/First%20Login/first_login_2.dart';
 
 class FirstLogin5 extends StatefulWidget {
   const FirstLogin5({Key? key});
@@ -12,7 +12,7 @@ class FirstLogin5 extends StatefulWidget {
 
 class _FirstLogin5State extends State<FirstLogin5> {
   bool agreedToTerms = false;
-  String selectedGender = ''; // Variable to store selected gender
+  String selectedAllow = ''; // Variable to store selected gender
 
   @override
   Widget build(BuildContext context) {
@@ -116,11 +116,11 @@ class _FirstLogin5State extends State<FirstLogin5> {
                         ),
                       ),
                       leading: Radio<String>(
-                        value: 'Male',
-                        groupValue: selectedGender,
+                        value: 'Allow',
+                        groupValue: selectedAllow,
                         onChanged: (String? value) {
                           setState(() {
-                            selectedGender = value!;
+                            selectedAllow = value!;
                           });
                         },
                       ),
@@ -134,14 +134,21 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      if (selectedAllow.isNotEmpty) {
+                        Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FirstLogin5(),
+                          builder: (context) => MainApp(),
                         ),
                       );
-                      // Handle button press for the left button
-                      // You can add your logic or navigation here
+                      } else {
+                        // Show an alert or a snackbar message to select an occupation
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Please select an occupation"),
+                          ),
+                        );
+                      }
                     },
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
