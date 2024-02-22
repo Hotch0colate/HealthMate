@@ -3,6 +3,8 @@ import 'package:client/Pages/login.dart';
 import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:client/Pages/First%20Login/first_login_2.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert'; // For using json.encode
 
 class FirstLogin3 extends StatefulWidget {
   const FirstLogin3({Key? key}) : super(key: key);
@@ -13,7 +15,33 @@ class FirstLogin3 extends StatefulWidget {
 
 class _FirstLogin3State extends State<FirstLogin3> {
   bool agreedToTerms = false;
-  String selectedGender = ''; // Variable to store selected gender
+  String selectedOccupation = ''; // Changed variable name for clarity
+
+  // Function to send data to backend
+  Future<void> sendDataToBackend(String occupation) async {
+    var url = Uri.parse(
+        'http://localhost:3000/user/update_data'); // Replace with your backend endpoint
+    var response = await http.post(
+      url,
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"occupation": occupation}),
+    );
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, then navigate to the next page
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const FirstLogin4(),
+        ),
+      );
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load data');
+    }
+  }
+
   String? selectedJobRole;
 
   Widget _buildRadioListTile({required String title, required String value}) {
@@ -127,10 +155,16 @@ class _FirstLogin3State extends State<FirstLogin3> {
                   }),
                   ForwardButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => FirstLogin4()),
-                      );
+                      if (selectedOccupation.isNotEmpty) {
+                        sendDataToBackend(selectedOccupation);
+                      } else {
+                        // Show an alert or a snackbar message to select an occupation
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Please select an occupation"),
+                          ),
+                        );
+                      }
                     },
                   ),
                 ],
