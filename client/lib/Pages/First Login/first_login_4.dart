@@ -14,6 +14,32 @@ class FirstLogin4 extends StatefulWidget {
 class _FirstLogin4State extends State<FirstLogin4> {
   bool agreedToTerms = false;
   String selectedGender = ''; // Variable to store selected gender
+  String? selectedJobRole;
+
+  Widget _buildRadioListTile({required String title, required String value}) {
+    return ListTile(
+      dense: true,
+      title: Text(
+        title,
+        style: TextStyle(
+          color: selectedJobRole == value ? Colors.orange : Colors.black,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Poppins',
+        ),
+      ),
+      leading: Radio<String>(
+        value: value,
+        groupValue: selectedJobRole,
+        onChanged: (String? value) {
+          setState(() {
+            selectedJobRole = value;
+          });
+        },
+        activeColor: Colors.orange,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +95,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
                 height: 86,
                 child: Image(
                   image: AssetImage(
-                    'assets/main_mascot.png',
+                    '../../../assets/logos/main_mascot.png',
                   ),
                 ),
               ),
@@ -97,134 +123,29 @@ class _FirstLogin4State extends State<FirstLogin4> {
                 padding: const EdgeInsets.only(left: 35),
                 child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.only(top: 0, bottom: 0),
-                      child: ListTile(
-                        dense: true, // Set dense property
-                        title: const Text(
-                          'โสด',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            fontFamily: 'Poppins',
-                          ),
-                        ),
-                        leading: Radio<String>(
-                          value: 'single',
-                          groupValue: selectedGender,
-                          onChanged: (String? value) {
-                            setState(() {
-                              selectedGender = value!;
-                            });
-                          },
-                        ),
-                      ),
+                    _buildRadioListTile(
+                      title: 'โสด',
+                      value: 'single',
                     ),
-                    ListTile(
-                      dense: true, // Set dense property
-                      title: const Text(
-                        'มีแฟนแล้ว',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Radio<String>(
-                        value: 'partnered',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
+                    _buildRadioListTile(
+                      title: 'มีแฟนแล้ว',
+                      value: 'partnered',
                     ),
-                    ListTile(
-                      dense: true, // Set dense property
-                      title: const Text(
-                        'หมั้นแล้ว / แต่งงานแล้ว',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Radio<String>(
-                        value: 'married',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
+                    _buildRadioListTile(
+                      title: 'หมั้นแล้ว / แต่งงานแล้ว',
+                      value: 'married',
                     ),
-                    ListTile(
-                      dense: true, // Set dense property
-                      title: const Text(
-                        'ม่าย / หย่าร้าง / แยกกันอยู่',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Radio<String>(
-                        value: 'divorced',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
+                    _buildRadioListTile(
+                      title: 'ม่าย / หย่าร้าง / แยกกันอยู่',
+                      value: 'divorced',
                     ),
-                    ListTile(
-                      dense: true, // Set dense property
-                      title: const Text(
-                        'อยู่ในความสัมพันธ์แบบไม่ผูกมัด',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Radio<String>(
-                        value: 'non-binding relationship',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
+                    _buildRadioListTile(
+                      title: 'อยู่ในความสัมพันธ์แบบไม่ผูกมัด',
+                      value: 'non-binding relationship',
                     ),
-                    ListTile(
-                      dense: true, // Set dense property
-                      title: const Text(
-                        'ค่อนข้างอธิบายยาก',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Radio<String>(
-                        value: 'complicated',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
+                    _buildRadioListTile(
+                      title: 'ค่อนข้างอธิบายยาก',
+                      value: 'complicated',
                     ),
                   ],
                 ),

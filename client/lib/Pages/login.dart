@@ -1,6 +1,9 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, avoid_print
 
 import 'package:client/Pages/signup.dart';
+import 'package:client/component/grey_text_field.dart';
+import 'package:client/component/login_with_button.dart';
+import 'package:client/component/orange_button.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -147,29 +150,9 @@ class _LoginPageState extends State<LoginPage> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(15),
-                                        ),
-                                        color: Color(0x22212133),
-                                      ),
-                                      child: TextFormField(
-                                        controller:
-                                            _emailController, // Assigning the controller to the TextFormField
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'ใส่อีเมล',
-                                          hintStyle: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 20,
-                                          ),
-                                          contentPadding: EdgeInsets.only(
-                                              left: 24, right: 24),
-                                        ),
-                                      ),
-                                    ),
+                                    GreyTextField(
+                                        controller: _emailController,
+                                        hintText: 'ใส่อีเมล'),
                                   ],
                                 ),
                               ),
@@ -255,28 +238,9 @@ class _LoginPageState extends State<LoginPage> {
                                 ],
                               ),
                               const SizedBox(height: 20),
-                              ElevatedButton(
+                              OrangeButton(
                                 onPressed: _login,
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  backgroundColor: Colors.orange,
-                                  foregroundColor: Colors.white,
-                                  side: const BorderSide(color: Colors.orange),
-                                ),
-                                child: const SizedBox(
-                                  height: 60,
-                                  child: Center(
-                                    child: Text(
-                                      'เข้าสู่ระบบ',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                buttonText: 'เข้าสู่ระบบ',
                               ),
                               const SizedBox(height: 16),
                               Row(
@@ -363,69 +327,16 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ]),
                               const SizedBox(height: 19),
-                              Row(
+                              const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Material(
-                                    elevation:
-                                        2.0, // Change this value to adjust the elevation
-                                    shape: const CircleBorder(),
-                                    child: Container(
-                                      height: 55,
-                                      width: 55,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                      ),
-                                      child: const Center(
-                                        child: Image(
-                                          image: AssetImage(
-                                              '../../assets/icons/google.png'),
-                                          height: 25,
-                                          width: 25,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 16),
-                                  const Material(
-                                    elevation:
-                                        2.0, // Change this value to adjust the elevation
-                                    shape: CircleBorder(),
-                                    child: SizedBox(
-                                      height: 55,
-                                      width: 55,
-                                      child: Center(
-                                        child: Image(
-                                          image: AssetImage('icons/apple.png'),
-                                          height: 25,
-                                          width: 25,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(width: 24),
-                                  Material(
-                                    elevation:
-                                        2.0, // Change this value to adjust the elevation
-                                    shape: const CircleBorder(),
-                                    child: Container(
-                                      height: 55,
-                                      width: 55,
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                      ),
-                                      child: const Center(
-                                        child: Image(
-                                          image:
-                                              AssetImage('icons/facebook.png'),
-                                          height: 25,
-                                          width: 25,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  LoginWithButton(
+                                      imagePath: 'icons/google.png'),
+                                  SizedBox(width: 16),
+                                  LoginWithButton(imagePath: 'icons/apple.png'),
+                                  SizedBox(width: 24),
+                                  LoginWithButton(
+                                      imagePath: 'icons/facebook.png'),
                                 ],
                               ),
                               const SizedBox(height: 41),

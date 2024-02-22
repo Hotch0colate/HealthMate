@@ -67,7 +67,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
                 height: 86,
                 child: Image(
                   image: AssetImage(
-                    'assets/main_mascot.png',
+                    '../../../assets/logos/main_mascot.png',
                   ),
                 ),
               ),
@@ -96,9 +96,12 @@ class _FirstLogin1State extends State<FirstLogin1> {
                 child: Column(
                   children: [
                     ListTile(
-                      title: const Text('ชาย',
+                      title: Text('ชาย',
                           style: TextStyle(
-                              color: Colors.black,
+                              color: selectedGender == 'Male'
+                                  ? Colors.orange
+                                  : Colors
+                                      .black, // Change color based on selection
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Poppins')),
@@ -110,12 +113,17 @@ class _FirstLogin1State extends State<FirstLogin1> {
                             selectedGender = value!;
                           });
                         },
+                        activeColor:
+                            Colors.orange, // Set the active color to orange
                       ),
                     ),
                     ListTile(
-                      title: const Text('หญิง',
+                      title: Text('หญิง',
                           style: TextStyle(
-                              color: Colors.black,
+                              color: selectedGender == 'Female'
+                                  ? Colors.orange
+                                  : Colors
+                                      .black, // Change color based on selection
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Poppins')),
@@ -127,12 +135,17 @@ class _FirstLogin1State extends State<FirstLogin1> {
                             selectedGender = value!;
                           });
                         },
+                        activeColor:
+                            Colors.orange, // Set the active color to orange
                       ),
                     ),
                     ListTile(
-                      title: const Text('อื่นๆ',
+                      title: Text('อื่นๆ',
                           style: TextStyle(
-                              color: Colors.black,
+                              color: selectedGender == 'Others'
+                                  ? Colors.orange
+                                  : Colors
+                                      .black, // Change color based on selection
                               fontSize: 18,
                               fontWeight: FontWeight.w400,
                               fontFamily: 'Poppins')),
@@ -144,6 +157,8 @@ class _FirstLogin1State extends State<FirstLogin1> {
                             selectedGender = value!;
                           });
                         },
+                        activeColor:
+                            Colors.orange, // Set the active color to orange
                       ),
                     ),
                   ],

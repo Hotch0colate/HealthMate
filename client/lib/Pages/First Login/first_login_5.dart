@@ -13,6 +13,32 @@ class FirstLogin5 extends StatefulWidget {
 class _FirstLogin5State extends State<FirstLogin5> {
   bool agreedToTerms = false;
   String selectedGender = ''; // Variable to store selected gender
+  String? selectedJobRole;
+
+  Widget _buildRadioListTile({required String title, required String value}) {
+    return ListTile(
+      dense: true,
+      title: Text(
+        title,
+        style: TextStyle(
+          color: selectedJobRole == value ? Colors.orange : Colors.black,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Poppins',
+        ),
+      ),
+      leading: Radio<String>(
+        value: value,
+        groupValue: selectedJobRole,
+        onChanged: (String? value) {
+          setState(() {
+            selectedJobRole = value;
+          });
+        },
+        activeColor: Colors.orange,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +94,7 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 height: 86,
                 child: Image(
                   image: AssetImage(
-                    'assets/main_mascot.png',
+                    '../../../assets/logos/main_mascot.png',
                   ),
                 ),
               ),
@@ -104,26 +130,10 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 padding: const EdgeInsets.only(left: 35),
                 child: Column(
                   children: [
-                    ListTile(
-                      dense: true, // Set dense property
-                      title: const Text(
-                        'รับทราบ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Radio<String>(
-                        value: 'Male',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
+                    _buildRadioListTile(
+                      title: 'รับทราบ',
+                      value:
+                          'acknowledged', // Changed value to 'acknowledged' for clarity
                     ),
                   ],
                 ),

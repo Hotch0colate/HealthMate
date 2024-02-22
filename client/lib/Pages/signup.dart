@@ -1,6 +1,11 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously, file_names
 
 import 'package:client/Pages/login.dart';
+import 'package:client/component/grey_text_field.dart';
+import 'package:client/component/long_text_field.dart';
+import 'package:client/component/orange_button.dart';
+import 'package:client/component/password_field.dart';
+import 'package:client/component/white_text_field.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 // ignore: depend_on_referenced_packages
@@ -18,6 +23,8 @@ class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
 
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
   bool _obscurePassword = true; // Flag to toggle password visibility
 
@@ -165,32 +172,9 @@ class _SignupPageState extends State<SignupPage> {
                                     ),
                                   ),
                                   const SizedBox(height: 4),
-                                  Container(
-                                    height: 50,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.black,
-                                        width: 1,
-                                      ),
-                                      borderRadius: const BorderRadius.all(
-                                        Radius.circular(15),
-                                      ),
-                                      color: Colors.white,
-                                    ),
-                                    child: TextFormField(
+                                  GreyTextField(
                                       controller: _usernameController,
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'ชื่อผู้ใช้',
-                                        hintStyle: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 20,
-                                        ),
-                                        contentPadding: EdgeInsets.only(
-                                            left: 24, right: 24),
-                                      ),
-                                    ),
-                                  ),
+                                      hintText: 'ใส่ชื่อผู้ใช้'),
                                 ],
                               ),
                               Padding(
@@ -210,29 +194,9 @@ class _SignupPageState extends State<SignupPage> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(15),
-                                        ),
-                                        color: Color(0x22212133),
-                                      ),
-                                      child: TextFormField(
-                                        controller:
-                                            _emailController, // Assigning the controller to the TextFormField
-                                        decoration: const InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'ใส่อีเมล',
-                                          hintStyle: TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 20,
-                                          ),
-                                          contentPadding: EdgeInsets.only(
-                                              left: 24, right: 24),
-                                        ),
-                                      ),
-                                    ),
+                                    GreyTextField(
+                                        controller: _emailController,
+                                        hintText: 'ใส่อีเมล'),
                                   ],
                                 ),
                               ),
@@ -258,47 +222,9 @@ class _SignupPageState extends State<SignupPage> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(15),
-                                        ),
-                                        color: Color(0x22212133),
-                                      ),
-                                      child: TextFormField(
-                                        controller:
-                                            _passwordController, // Assigning the controller to the TextFormField
-                                        obscureText: _obscurePassword,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'ใส่รหัสผ่าน',
-                                          hintStyle: const TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 20,
-                                          ),
-                                          contentPadding: const EdgeInsets.only(
-                                            left: 24,
-                                            right: 24,
-                                            top:
-                                                14, // Adjust top padding as needed
-                                          ),
-                                          suffixIcon: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                _obscurePassword =
-                                                    !_obscurePassword;
-                                              });
-                                            },
-                                            child: Icon(
-                                              _obscurePassword
-                                                  ? Icons.visibility
-                                                  : Icons.visibility_off,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                    PasswordTextField(
+                                      controller: _passwordController,
+                                      hintText: 'ใส่รหัสผ่าน',
                                     ),
                                   ],
                                 ),
@@ -320,74 +246,17 @@ class _SignupPageState extends State<SignupPage> {
                                         ),
                                       ),
                                     ),
-                                    Container(
-                                      height: 50,
-                                      decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(15),
-                                        ),
-                                        color: Color(0x22212133),
-                                      ),
-                                      child: TextFormField(
-                                        obscureText: _obscurePassword,
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          hintText: 'ยืนยันรหัสผ่าน',
-                                          hintStyle: const TextStyle(
-                                            color: Colors.grey,
-                                            fontSize: 20,
-                                          ),
-                                          contentPadding: const EdgeInsets.only(
-                                            left: 24,
-                                            right: 24,
-                                            top:
-                                                14, // Adjust top padding as needed
-                                          ),
-                                          suffixIcon: GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                _obscurePassword =
-                                                    !_obscurePassword;
-                                              });
-                                            },
-                                            child: Icon(
-                                              _obscurePassword
-                                                  ? Icons.visibility_off
-                                                  : Icons.visibility,
-                                              color: Colors.grey,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                    PasswordTextField(
+                                      controller: _confirmPasswordController,
+                                      hintText: 'ยืนยันรหัสผ่าน',
                                     ),
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 5),
-                              const SizedBox(height: 19),
-                              ElevatedButton(
-                                onPressed:
-                                    _signup, // Call the _signup method when the button is pressed
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  backgroundColor: Colors.orange,
-                                  foregroundColor: Colors.white,
-                                  side: const BorderSide(color: Colors.orange),
-                                ),
-                                child: const SizedBox(
-                                  height: 60,
-                                  child: Center(
-                                    child: Text(
-                                      'สร้างบัญชี',
-                                      style: TextStyle(
-                                        fontSize: 24,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                              const SizedBox(height: 24),
+                              OrangeButton(
+                                onPressed: _signup,
+                                buttonText: 'สร้างบัญชี',
                               ),
                               const SizedBox(height: 18),
                               Row(
