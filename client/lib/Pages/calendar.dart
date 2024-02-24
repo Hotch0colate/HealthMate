@@ -20,9 +20,10 @@ class Calendar extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text("Calendar Page"),
+          
         ),
         body: CalendarPage(),
+        bottomNavigationBar: BottomNavigationBarApp(selectedIndex: 0, onItemTapped: (int value) {  },),
       ),
     );
   }
@@ -36,6 +37,7 @@ class CalendarPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16.0),
       child: const Center(
+        child: ThaiCalendarWithTable(),
         ),
       );
   }
