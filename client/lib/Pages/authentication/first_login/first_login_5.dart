@@ -1,7 +1,11 @@
+import 'package:flutter/material.dart';
+
+//page import
 import 'package:client/Pages/First%20Login/first_login_4.dart';
 import 'package:client/Pages/login.dart';
-import 'package:client/controllers/navigation.dart';
-import 'package:flutter/material.dart';
+
+//component import
+import '../../../component/navigation.dart';
 
 class FirstLogin5 extends StatefulWidget {
   const FirstLogin5({Key? key});

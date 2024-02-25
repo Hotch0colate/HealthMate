@@ -1,10 +1,10 @@
 import 'package:client/Pages/testpage.dart';
 import 'package:flutter/material.dart';
 
-import '../Pages/profile.dart';
-import '../Pages/select_talk.dart';
-import '../controllers/button.dart';
-import 'package:client/controllers/navigation.dart';
+import '../profile/profile.dart';
+import '../select_talk/select_talk.dart';
+import '../../component/buttons.dart';
+import '../../component/navigation.dart';
 
 
 void main() {

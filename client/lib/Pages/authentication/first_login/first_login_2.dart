@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:convert'; // For JSON encoding
 import 'package:http/http.dart' as http; // HTTP package
-import 'package:client/Pages/First%20Login/first_login_1.dart';
-import 'package:client/Pages/First%20Login/first_login_3.dart';
 import 'package:intl/intl.dart';
 
-import '../../component/buttons.dart';
+//page import
+import 'package:client/Pages/First%20Login/first_login_1.dart';
+import 'package:client/Pages/First%20Login/first_login_3.dart';
+
+//component import
+import '../../../component/buttons.dart';
 
 class FirstLogin2 extends StatefulWidget {
   const FirstLogin2({Key? key}) : super(key: key);
