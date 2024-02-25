@@ -1,9 +1,10 @@
+import 'package:client/services/ip_variable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final String _backendUrl = 'http://localhost:3000/access/signin';
+  final String _backendUrl = 'http://${fixedIp}:3000/access/signin';
 
   // Method to get the current user's ID token
   Future<String?> getIdToken() async {

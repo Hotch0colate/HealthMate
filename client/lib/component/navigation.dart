@@ -9,6 +9,7 @@ import 'package:client/Pages/chat_log.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+import 'package:client/services/ip_variable.dart';
 
 void main() => runApp(MainApp());
 
@@ -37,13 +38,14 @@ class _MainAppState extends State<MainApp> {
     String uid = await fetchUidFromToken(token);
     setState(() {
       userUid = uid; // อัปเดต uid ใน state
+      print("set state complete");
     });
   }
 
   Future<String> fetchUidFromToken(String? token) async {
     final response = await http.get(
       Uri.parse(
-          'http://localhost:3000/access/get_uid'), // แทนที่ด้วย URL จริงของ backend ของคุณ
+          'http://${fixedIp}:3000/access/get_uid'), // แทนที่ด้วย URL จริงของ backend ของคุณ
       headers: <String, String>{
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token', // ส่ง token ใน header
@@ -52,9 +54,12 @@ class _MainAppState extends State<MainApp> {
     if (response.statusCode == 200) {
       // หาก server ตอบกลับมาด้วยสถานะ 200 OK, ดึง uid จาก response
       var jsonResponse = jsonDecode(response.body);
+      print("Success api shoot");
+      print(jsonResponse['uid']);
       return jsonResponse['uid']; // ตัวอย่างการดึง uid จาก response
     } else {
       // หากการตอบกลับไม่สำเร็จ, โยน exception
+      print("Not success api shoot");
       throw Exception('Failed to load uid from token');
     }
   }

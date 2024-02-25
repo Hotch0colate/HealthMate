@@ -1,3 +1,4 @@
+import 'package:client/services/ip_variable.dart';
 import 'package:firebase_database/firebase_database.dart';
 // import 'package:client/Pages/chatlog.dart';
 import 'package:client/theme/font.dart';
@@ -108,7 +109,7 @@ class ChatRoomBody extends State<ChatRoom> {
   Future<void> sendMessage(String text) async {
     try {
       final response = await http.post(
-        Uri.parse('http://localhost:3000/chatroom/create_data'),
+        Uri.parse('http://${fixedIp}:3000/chatroom/create_data'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
