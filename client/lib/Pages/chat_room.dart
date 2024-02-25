@@ -63,28 +63,65 @@ class ChatRoomBody extends State<ChatRoom> {
     });
   }
 
+  // void _activeListeners() {
+  //   _database
+  //       .child('chats/' + widget.cid + '/messages')
+  //       .onValue
+  //       .listen((event) {
+  //     var snapshotValue = event.snapshot.value;
+  //     print("SNAPSHOTVALUE" + snapshotValue.toString());
+  //     if (snapshotValue != null && snapshotValue is Map<dynamic, dynamic>) {
+  //       Map<String, dynamic> snapshotMap =
+  //           Map<String, dynamic>.from(snapshotValue);
+  //       print("SNAPSHOTVALUEMAP" + snapshotMap.toString());
+
+  //       // ตัวอย่างการเข้าถึงข้อมูลใน messages
+  //       dynamic messagesData = snapshotMap;
+  //       if (messagesData != null) {
+  //         Map<String, dynamic>? messagesMap =
+  //             messagesData as Map<String, dynamic>?;
+  //         if (messagesMap != null) {
+  //           List<Message> parsedMessages = messagesMap.values
+  //               .map((message) => Message.fromMap(message))
+  //               .toList();
+
+  //           _messageStreamController.add(parsedMessages);
+  //         } else {
+  //           print('Invalid format for messages data');
+  //         }
+  //       } else {
+  //         print('No messages found');
+  //       }
+  //     } else {
+  //       print('Invalid snapshot value or format');
+  //     }
+  //   });
+  // }
+
   void _activeListeners() {
     _database
         .child('chats/' + widget.cid + '/messages')
         .onValue
         .listen((event) {
       var snapshotValue = event.snapshot.value;
-      if (snapshotValue != null && snapshotValue is Map<String, dynamic>) {
-        Map<String, dynamic> snapshotMap = snapshotValue;
+      if (snapshotValue != null && snapshotValue is Map<dynamic, dynamic>) {
+        Map<String, dynamic> snapshotMap =
+            Map<String, dynamic>.from(snapshotValue);
 
         // ตัวอย่างการเข้าถึงข้อมูลใน messages
         dynamic messagesData = snapshotMap;
         if (messagesData != null) {
-          Map<String, dynamic>? messagesMap =
-              messagesData as Map<String, dynamic>?;
-          if (messagesMap != null) {
+          try {
+            Map<String, dynamic> messagesMap =
+                Map<String, dynamic>.from(messagesData);
             List<Message> parsedMessages = messagesMap.values
-                .map((message) => Message.fromMap(message))
+                .map((message) =>
+                    Message.fromMap(Map<String, dynamic>.from(message)))
                 .toList();
 
             _messageStreamController.add(parsedMessages);
-          } else {
-            print('Invalid format for messages data');
+          } catch (e) {
+            print('Error processing messages data: $e');
           }
         } else {
           print('No messages found');
@@ -158,7 +195,7 @@ class ChatRoomBody extends State<ChatRoom> {
           title: Row(
             children: [
               CircleAvatar(
-                backgroundImage: AssetImage('assets/images/av1.png'),
+                backgroundImage: AssetImage('avatar/av1.png'),
               ),
               SizedBox(width: 8.0),
               Column(

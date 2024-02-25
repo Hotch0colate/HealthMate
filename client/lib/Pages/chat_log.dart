@@ -44,28 +44,37 @@ class _ChatLogState extends State<ChatLog> {
         .listen((event) {
       var snapshotValue = event.snapshot.value;
       if (snapshotValue != null && snapshotValue is List<dynamic>) {
-        List<dynamic> snapshotList = snapshotValue;
+        List<String> parsedChatgroup = List<String>.from(snapshotValue);
 
-        List<String> parsedChatgroup = snapshotList.cast<String>();
-
-        _database.child('chats/').onValue.listen((event) {
-          var snapshotValue = event.snapshot.value;
-          if (snapshotValue != null && snapshotValue is Map<String, dynamic>) {
-            Map<String, dynamic> snapshotMap = snapshotValue;
-
-            // ตัวอย่างการเข้าถึงข้อมูลใน messages
-            dynamic chatData = snapshotMap;
-            if (chatData != null) {
-              Map<String, dynamic>? chatMap = chatData as Map<String, dynamic>?;
-              if (chatMap != null) {
-                List<ConversationBox> parsedChat = chatMap.values
-                    .where((chat) => parsedChatgroup.contains(chat['cid']))
-                    .map((chat) => ConversationBox.fromMap(chat))
-                    .toList();
-                _chatlogStreamController.add(parsedChat);
-              }
+        List<Future<dynamic>> chatFutures = parsedChatgroup.map((cid) {
+          return _database
+              .child('chats/$cid')
+              .get()
+              .then((DataSnapshot snapshot) {
+            if (snapshot.value != null) {
+              return snapshot.value;
             }
-          }
+            return null;
+          });
+        }).toList();
+
+        Future.wait(chatFutures).then((List<dynamic> conversations) {
+          var validConversations = conversations
+              .where((conversation) => conversation != null)
+              .map((conversation) {
+                Map<String, dynamic> conversationMap;
+                try {
+                  conversationMap = Map<String, dynamic>.from(conversation);
+                  return ConversationBox.fromMap(conversationMap);
+                } catch (e) {
+                  print("Error converting conversation data: $e");
+                  return null;
+                }
+              })
+              .whereType<ConversationBox>()
+              .toList();
+
+          _chatlogStreamController.add(validConversations);
         });
       } else {
         print('Invalid snapshot value or format');

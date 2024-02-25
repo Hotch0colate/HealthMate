@@ -38,7 +38,6 @@ class _MainAppState extends State<MainApp> {
     String uid = await fetchUidFromToken(token);
     setState(() {
       userUid = uid; // อัปเดต uid ใน state
-      print("set state complete");
     });
   }
 
@@ -54,12 +53,9 @@ class _MainAppState extends State<MainApp> {
     if (response.statusCode == 200) {
       // หาก server ตอบกลับมาด้วยสถานะ 200 OK, ดึง uid จาก response
       var jsonResponse = jsonDecode(response.body);
-      print("Success api shoot");
-      print(jsonResponse['uid']);
       return jsonResponse['uid']; // ตัวอย่างการดึง uid จาก response
     } else {
       // หากการตอบกลับไม่สำเร็จ, โยน exception
-      print("Not success api shoot");
       throw Exception('Failed to load uid from token');
     }
   }
