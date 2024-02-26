@@ -12,6 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_database/firebase_database.dart';
 import 'firebase_options.dart';
 
+// test branch talk_gunn
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
