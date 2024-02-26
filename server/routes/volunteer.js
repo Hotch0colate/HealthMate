@@ -18,7 +18,7 @@ router.post('/create_data', async (req, res) => {
         firebasedb.set(ref(db, 'volunteers/' + uid), {
             uid: uid,
             help_quota: 3,
-            weekly_help: 5,
+            weekly_quota: 5,
             tags: [],
             rating_score: 100,
             mil: new Date().getTime(),
@@ -159,26 +159,35 @@ router.post('/query_volunteers', async (req, res) => {
             volunteers = Object.entries(volunteers).map(([uid, details]) => ({
                 uid,
                 ...details,
-                tagMatch: details.tags.includes(tag) || tag === "ALL"
+                tagMatch: details.tags && details.tags.includes(tag),
+                hasGeneric: details.tags && details.tags.includes("Generic")
             }));
 
-            // Filter by tag or "ALL"
-            let matchingVolunteers = volunteers.filter(v => v.tagMatch);
+            // Filter out volunteers without matching or generic tag
+            let matchingVolunteers = volunteers.filter(v => v.tagMatch || v.hasGeneric);
+            console.log(matchingVolunteers);
 
+            // Sort by tag match, then by quotas and score
             matchingVolunteers.sort((a, b) => {
-                // ตรวจสอบและเปลี่ยน tags ที่ไม่ตรงเป็น "ALL"
-                if (!tagsMatch(a.tags)) a.tags = "ALL";
-                if (!tagsMatch(b.tags)) b.tags = "ALL";
+                // Prioritize tag match over "Generic"
+                if (a.tagMatch && !b.tagMatch) {
+                    if (a.weekly_quota === 0 || a.help_quota === 0) return 1;
+                    return -1;
+                }
+                if (!a.tagMatch && b.tagMatch) {
+                    if (b.weekly_quota === 0 || b.help_quota === 0) return -1;
+                    return 1;
+                }
+                if (a.hasGeneric !== b.hasGeneric && a.tagMatch !== b.tagMatch) return b.hasGeneric - a.hasGeneric;
 
-                // การเรียงลำดับตาม tags, weekly_quota, help_quota, และ rating_score
-                if (a.tags !== b.tags) return a.tags.localeCompare(b.tags);
+                // Then sort by weekly_quota, help_quota, rating_score
                 if (a.weekly_quota !== b.weekly_quota) return b.weekly_quota - a.weekly_quota;
                 if (a.help_quota !== b.help_quota) return b.help_quota - a.help_quota;
                 return b.rating_score - a.rating_score;
             });
 
-            // ตรวจสอบหลังจากเรียงลำดับแล้วว่ามีคู่จับได้หรือไม่
-            if (matchingVolunteers.length === 0 || (matchingVolunteers[0].weekly_quota === 0 && matchingVolunteers[0].help_quota === 0)) {
+            // Check if a match is found
+            if (matchingVolunteers.length === 0 || matchingVolunteers[0].weekly_quota === 0 || matchingVolunteers[0].help_quota === 0) {
                 return res.status(200).json({
                     RespCode: 200,
                     RespMessage: "No match found",
@@ -186,11 +195,11 @@ router.post('/query_volunteers', async (req, res) => {
                 });
             }
 
-
+            // Return the uid of the best match
             return res.status(200).json({
                 RespCode: 200,
                 RespMessage: "Query successful",
-                Data: matchingVolunteers[0].uid // Return an array of uids
+                Data: matchingVolunteers[0].uid
             });
         } else {
             return res.status(404).json({
@@ -206,6 +215,7 @@ router.post('/query_volunteers', async (req, res) => {
         });
     }
 });
+
 
 
 module.exports = router;
