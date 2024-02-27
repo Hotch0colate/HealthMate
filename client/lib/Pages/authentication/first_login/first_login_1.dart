@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert'; 
 
 //page import
-import 'package:client/Pages/First%20Login/first_login_2.dart';
+import 'package:client/pages/authentication/first_login/first_login_2.dart';
 
 //component import
 import '../login.dart';

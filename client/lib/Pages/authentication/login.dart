@@ -4,10 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 //page import
-import 'package:client/Pages/signup.dart';
+import 'package:client/pages/authentication/signup.dart';
 
 //component import
-import '../../component/input/grey_text_field.dart';
+import '../../component/text_field/grey_text_field.dart';
 import '../../component/buttons.dart';
 
 class LoginPage extends StatefulWidget {

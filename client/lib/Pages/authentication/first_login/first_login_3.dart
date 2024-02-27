@@ -1,8 +1,8 @@
-import 'package:client/Pages/First%20Login/first_login_4.dart';
-import 'package:client/Pages/login.dart';
+import 'package:client/pages/authentication/first_login/first_login_4.dart';
+import 'package:client/pages/login.dart';
 import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
-import 'package:client/Pages/First%20Login/first_login_2.dart';
+import 'package:client/pages/authentication/first_login/first_login_2.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // For using json.encode
 

@@ -4,7 +4,7 @@ import 'dart:async';
 import 'package:intl/intl.dart';
 
 //component import
-import 'conversation_list.dart';
+import '../../component/conversation_list.dart';
 
 
 typedef UpdateTriggerCallback = void Function(bool updateTrigger);

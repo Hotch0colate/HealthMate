@@ -4,8 +4,8 @@ import 'package:http/http.dart' as http; // HTTP package
 import 'package:intl/intl.dart';
 
 //page import
-import 'package:client/Pages/First%20Login/first_login_1.dart';
-import 'package:client/Pages/First%20Login/first_login_3.dart';
+import 'package:client/pages/authentication/first_login/first_login_1.dart';
+import 'package:client/pages/authentication/first_login/first_login_3.dart';
 
 //component import
 import '../../../component/buttons.dart';

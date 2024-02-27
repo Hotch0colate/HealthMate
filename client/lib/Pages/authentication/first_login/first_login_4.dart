@@ -1,5 +1,7 @@
-import 'package:client/Pages/First%20Login/first_login_3.dart';
-import 'package:client/Pages/First%20Login/first_login_5.dart';
+import 'package:client/pages/authentication/first_login/first_login_3.dart';
+import 'package:client/pages/authentication/first_login/first_login_5.dart';
+
+
 import 'package:client/Pages/login.dart';
 import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
