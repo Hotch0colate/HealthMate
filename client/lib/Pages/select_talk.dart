@@ -7,14 +7,11 @@ void main() {
 class SelectTalk extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text("Select talk Page"),
-        ),
-        body: SelectTalkPageBody(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Select talk Page"),
       ),
+      body: SelectTalkPageBody(),
     );
   }
 }

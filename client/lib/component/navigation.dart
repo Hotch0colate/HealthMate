@@ -71,19 +71,15 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     final pages = _pageOptions();
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Bottom Navigation Bar Demo',
-      home: Scaffold(
-        body: pages[_selectedPage],
-        bottomNavigationBar: BottomNavigationBarApp(
-          selectedIndex: _selectedPage,
-          onItemTapped: (index) {
-            setState(() {
-              _selectedPage = index;
-            });
-          },
-        ),
+    return Scaffold(
+      body: pages[_selectedPage],
+      bottomNavigationBar: BottomNavigationBarApp(
+        selectedIndex: _selectedPage,
+        onItemTapped: (index) {
+          setState(() {
+            _selectedPage = index;
+          });
+        },
       ),
     );
   }

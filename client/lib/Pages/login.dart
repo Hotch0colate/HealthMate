@@ -43,12 +43,18 @@ class _LoginPageState extends State<LoginPage> {
       print('line 47....');
       print('idToken: $idToken');
       // Send the ID token to your backend for verification
-      await AuthService().sendTokenToBackend(idToken);
+      final response = await AuthService().sendTokenToBackend(idToken);
 
-      // Assuming token verification was successful, navigate to home.dart
-      Navigator.of(context).pop(); // Close the loading indicator
-      Navigator.pushReplacementNamed(context,
-          '/main'); // Navigate to home.dart or use your preferred method
+      // // Assuming token verification was successful, navigate to home.dart
+      // Navigator.of(context).pop(); // Close the loading indicator
+      // Navigator.pushReplacementNamed(context,
+      //     '/main'); // Navigate to home.dart or use your preferred method
+// Correct usage as a standalone statement
+      Navigator.pushReplacementNamed(context, '/main');
+
+// Incorrect usage as part of an expression that expects a value
+      var result = Navigator.pushReplacementNamed(
+          context, '/main'); // This will give an error
     } catch (e) {
       print('Error occurred during login: $e');
       Navigator.of(context).pop(); // Close the loading indicator
