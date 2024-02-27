@@ -63,10 +63,10 @@ class _MainAppState extends State<MainApp> {
   }
 
   List<Widget> _pageOptions() => [
-        Calendar(),
+        const Calendar(),
         SelectTalk(),
         ChatLog(uid: userUid), // ใช้ userUid ที่อัปเดตแล้ว
-        ProfilePage(),
+        const ProfilePage(),
       ];
 
   @override

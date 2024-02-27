@@ -1,14 +1,12 @@
-import 'package:client/Pages/testpage.dart';
-import 'package:flutter/material.dart';
+import 'package:client/Pages/emotion_calendar/calendar_table.dart';
+import '../emotion_calendar/add_emotion_widget.dart';
 
-import '../profile/profile.dart';
-import '../select_talk/select_talk.dart';
-import '../../component/buttons.dart';
+import 'package:client/theme/color.dart';
+import 'package:flutter/material.dart';
 import '../../component/navigation.dart';
 
-
 void main() {
-  runApp(const Calendar());
+  runApp(Calendar());
 }
 
 class Calendar extends StatelessWidget {
@@ -19,11 +17,23 @@ class Calendar extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          
+        appBar: //AppBar Widget
+        AppBar(
+          flexibleSpace: Container(
+            margin: const EdgeInsets.only(
+                top: 40, left: 16
+                ), 
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Image.asset(
+                'assets/logos/medium_app_name.png',
+                width: 200,
+                height: 40,
+              ),
+            ),
+          ),
         ),
-        body: CalendarPage(),
-        bottomNavigationBar: BottomNavigationBarApp(selectedIndex: 0, onItemTapped: (int value) {  },),
+        body: const CalendarPage(),
       ),
     );
   }
@@ -31,14 +41,38 @@ class Calendar extends StatelessWidget {
 
 class CalendarPage extends StatelessWidget {
   const CalendarPage({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      child: const Center(
-        child: ThaiCalendarWithTable(),
+    return Column(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.all(16.0),
+            child: const Center(
+              child: ThaiCalendarWithTable(),
+            ),
+          ),
         ),
-      );
+        const SizedBox(height: 12,),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: ElevatedButton(
+            onPressed: () {
+                showCustomDialog(context);
+            },
+            style: ElevatedButton.styleFrom(
+              primary: ColorTheme.primaryColor, 
+            ),
+            child: Container(
+              padding: const EdgeInsets.all(8.0), 
+              child: Icon(
+                Icons.add, 
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

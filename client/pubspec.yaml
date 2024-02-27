@@ -84,6 +84,7 @@ flutter:
     - assets/icons/
     - assets/avatar/
     - assets/images/
+    - assets/emotion/emotion_text/
 
     
   fonts:

@@ -223,8 +223,7 @@ class SmPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
-  const SmPrimaryButton({
-    super.key,
+  const SmPrimaryButton({super.key, 
     required this.text,
     required this.onPressed,
   });
