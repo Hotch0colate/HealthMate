@@ -57,6 +57,33 @@ class MdPrimaryButton extends StatelessWidget {
   }
 }
 
+class MdPrimaryButtonRed extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const MdPrimaryButtonRed({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        foregroundColor: ColorTheme.WhiteColor,
+        backgroundColor: ColorTheme.errorAction, // Text color
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+      ),
+      child: Text(text, style: FontTheme.btn_medium),
+    );
+  }
+}
+
 class SmPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
@@ -161,6 +188,35 @@ class SmSecondaryButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(color: ColorTheme.primaryColor, width: 2),
+        ),
+      ),
+      child: Text(text, style: FontTheme.btn_small),
+    );
+  }
+}
+
+class SmSecondaryButtonGrey extends StatelessWidget {
+  final String text;
+  final VoidCallback onPressed;
+
+  const SmSecondaryButtonGrey({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        foregroundColor: ColorTheme.baseColor.withOpacity(0.8),
+        backgroundColor: ColorTheme.WhiteColor,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(
+              color: ColorTheme.baseColor.withOpacity(0.2), width: 2),
         ),
       ),
       child: Text(text, style: FontTheme.btn_small),

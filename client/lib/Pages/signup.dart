@@ -100,11 +100,25 @@ class _SignupPageState extends State<SignupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false,
+        toolbarHeight: 93,
         backgroundColor: Colors.white,
+        leading: Transform.translate(
+          offset: const Offset(24, 16),
+          child: GestureDetector(
+              onTap: () {
+                // Handle back button tap here
+                Navigator.pop(context); // Navigate back to the previous screen
+              },
+              child: const Image(
+                image: AssetImage('icons/back_new.png'),
+                height: 20,
+                width: 20,
+                color: Colors.grey,
+              )),
+        ),
         bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
-            child: Image.asset('assets/logos/medium_app_name.png')),
+            preferredSize: const Size.fromHeight(40),
+            child: Image.asset('../../assets/logos/medium_app_name.png')),
       ),
       body: SingleChildScrollView(
         child: Container(

@@ -2,7 +2,10 @@
 import 'package:client/Pages/First%20Login/first_login_1.dart';
 import 'package:client/Pages/First%20Login/first_login_2.dart';
 import 'package:client/Pages/First%20Login/first_login_3.dart';
+import 'package:client/Pages/create_tag_page.dart';
+import 'package:client/Pages/find_volunteer_page.dart';
 import 'package:client/Pages/login.dart';
+import 'package:client/Pages/talk_page.dart';
 import 'package:flutter/material.dart';
 import 'package:client/pages/signup.dart';
 import 'package:client/pages/home.dart';
@@ -29,12 +32,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: const FindVolunteerPage(),
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),
         '/main': (context) => MainApp(),
         '/home': (context) => const HomePage(),
+        '/create_tag_page': (context) => const CreateTagPage(),
       },
     );
   }

@@ -1,3 +1,4 @@
+import 'package:client/Pages/talk_page.dart';
 import 'package:flutter/material.dart';
 import 'package:client/theme/color.dart';
 
@@ -61,7 +62,14 @@ class _MainAppState extends State<MainApp> {
 
   List<Widget> _pageOptions() => [
         Calendar(),
-        SelectTalk(),
+        TalkPage(
+          selectedPage: _selectedPage,
+          onPageSelected: (index) {
+            setState(() {
+              _selectedPage = index;
+            });
+          },
+        ),
         ChatLog(uid: userUid), // ใช้ userUid ที่อัปเดตแล้ว
         ProfilePage(),
       ];
@@ -135,7 +143,6 @@ class BottomNavigationBarApp extends StatelessWidget {
           label: 'โปรไฟล์',
         ),
       ],
-      
     );
   }
 }
