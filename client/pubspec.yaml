@@ -49,6 +49,7 @@ dependencies:
   flutter_native_splash: ^2.3.10
   table_calendar: ^3.1.0
 
+
 flutter_icons:
   android: true
   image_path: "assets/main_mascot.png"

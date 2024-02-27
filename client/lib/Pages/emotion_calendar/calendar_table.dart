@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'detail_emotion.dart';
+
 
 class ThaiCalendarWithTable extends StatefulWidget {
   const ThaiCalendarWithTable({super.key});
@@ -25,7 +27,9 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
 
   String _formatThaiYear(DateTime date) {
     final int thaiYear = date.year + 543;
-    return (date.year + 543).toString(); 
+    return DateFormat.yMMMM('th_TH')
+        .format(date)
+        .replaceAll(RegExp(r'\d+'), thaiYear.toString());
   }
 
   @override
@@ -90,7 +94,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                   shape: BoxShape.circle,
                   color: ColorTheme.primaryColor.withOpacity(0.5),
                 ),
-                todayDecoration: BoxDecoration(
+                todayDecoration: const BoxDecoration(
                     color: ColorTheme.primaryColor, shape: BoxShape.circle),
                 selectedTextStyle:
                     FontTheme.body1.copyWith(color: ColorTheme.WhiteColor),
@@ -124,9 +128,21 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                   _focusedDay = focusedDay;
                 });
 
+                final int thaiBuddhistYear = _selectedDay!.year + 543;
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EmotionDetailPage(
+                      selectedDay: _selectedDay!, emotionsData: [],
+                    ),
+                  ),
+                );
+
                 // Print the selected date in Thai Buddhist format to the console
-                print(
-                    '${_selectedDay!.day.toString().padLeft(2, '0')}/${_selectedDay!.month.toString().padLeft(2, '0')}/${_formatThaiYear(_selectedDay!)}');
+                print('${_selectedDay!.day.toString().padLeft(2, '0')}/'
+                    '${_selectedDay!.month.toString().padLeft(2, '0')}/'
+                    '${thaiBuddhistYear}');
               },
               selectedDayPredicate: (day) {
                 return isSameDay(_selectedDay, day);
