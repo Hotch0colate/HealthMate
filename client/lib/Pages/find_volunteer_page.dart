@@ -42,7 +42,7 @@ class FindVolunteerPage extends StatelessWidget {
         appBar: AppBar(
           leading: Image.asset('assets/icons/back_new.png'),
         ),
-        body: SingleChildScrollView(
+        body: Container(
           child: Center(
             child: Column(
               children: [
@@ -60,8 +60,9 @@ class FindVolunteerPage extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     const AnimatedBackground(), // This will display the animation
-                    Image.asset(
-                        'assets/images/Volunteer scarf.png'), // This will stay static on top
+                    Image.asset('assets/images/Volunteer scarf.png',
+                        width: 100,
+                        fit: BoxFit.contain), // This will stay static on top
                   ],
                 ),
                 const SizedBox(
@@ -121,21 +122,24 @@ class ConfirmDelete extends StatelessWidget {
             ),
             child: const Text('ยกเลิก', style: FontTheme.btn_small),
           ),
-          ElevatedButton(
-            onPressed: () {
-              // Call the function to close the dialog
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: ColorTheme.WhiteColor,
-              backgroundColor: ColorTheme.errorAction,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(color: Colors.transparent),
+          SingleChildScrollView(
+            child: ElevatedButton(
+              onPressed: () {
+                // Call the function to close the dialog
+                Navigator.of(context).pop();
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: ColorTheme.WhiteColor,
+                backgroundColor: ColorTheme.errorAction,
+                padding:
+                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                  side: BorderSide(color: Colors.transparent),
+                ),
               ),
+              child: const Text('ใช่ ยกเลิกเลย', style: FontTheme.btn_small),
             ),
-            child: const Text('ใช่ ยกเลิกเลย', style: FontTheme.btn_small),
           ),
         ],
       ),
@@ -174,10 +178,26 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     _controller.repeat(reverse: false); // Do not reverse the animation
 
     _frames = [
-      Image.asset('../../assets/loading_screen/loading_1.png'),
-      Image.asset('../../assets/loading_screen/loading_2.png'),
-      Image.asset('../../assets/loading_screen/loading_3.png'),
-      Image.asset('../../assets/loading_screen/loading_4.png'),
+      // Container(
+      //   decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+      //   child: Image.asset('../../assets/loading_screen/loading_1.png',
+      //       width: 300, fit: BoxFit.contain),
+      // ),
+      Container(
+        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+        child: Image.asset('../../assets/loading_screen/loading_2.png',
+            width: 300, fit: BoxFit.contain),
+      ),
+      Container(
+        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+        child: Image.asset('../../assets/loading_screen/loading_3.png',
+            width: 300, fit: BoxFit.contain),
+      ),
+      Container(
+        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+        child: Image.asset('../../assets/loading_screen/loading_4.png',
+            width: 300, fit: BoxFit.contain),
+      ),
     ];
   }
 
@@ -191,7 +211,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration:
-          const Duration(milliseconds: 500), // Duration of fade between images
+          const Duration(milliseconds: 3000), // Duration of fade between images
       child: _frames[_currentIndex % _frames.length],
       transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(opacity: animation, child: child);
