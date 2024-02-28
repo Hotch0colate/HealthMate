@@ -56,7 +56,14 @@ class FindVolunteerPage extends StatelessWidget {
                 const SizedBox(
                   height: 29,
                 ),
-                Image.asset('assets/images/Volunteer scarf.png'),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    const AnimatedBackground(), // This will display the animation
+                    Image.asset(
+                        'assets/images/Volunteer scarf.png'), // This will stay static on top
+                  ],
+                ),
                 const SizedBox(
                   height: 43,
                 ),
@@ -132,6 +139,63 @@ class ConfirmDelete extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+}
+
+class AnimatedBackground extends StatefulWidget {
+  const AnimatedBackground({Key? key}) : super(key: key);
+
+  @override
+  _AnimatedBackgroundState createState() => _AnimatedBackgroundState();
+}
+
+class _AnimatedBackgroundState extends State<AnimatedBackground>
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final List<Widget> _frames;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 3000), // Duration for each image
+      vsync: this,
+    )..addListener(() {
+        final newIndex = (_controller.value * _frames.length).floor();
+        if (newIndex != _currentIndex) {
+          setState(() {
+            _currentIndex = newIndex;
+          });
+        }
+      });
+
+    _controller.repeat(reverse: false); // Do not reverse the animation
+
+    _frames = [
+      Image.asset('../../assets/loading_screen/loading_1.png'),
+      Image.asset('../../assets/loading_screen/loading_2.png'),
+      Image.asset('../../assets/loading_screen/loading_3.png'),
+      Image.asset('../../assets/loading_screen/loading_4.png'),
+    ];
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSwitcher(
+      duration:
+          const Duration(milliseconds: 500), // Duration of fade between images
+      child: _frames[_currentIndex % _frames.length],
+      transitionBuilder: (Widget child, Animation<double> animation) {
+        return FadeTransition(opacity: animation, child: child);
+      },
     );
   }
 }
