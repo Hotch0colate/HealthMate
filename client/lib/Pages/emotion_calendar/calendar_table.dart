@@ -1,3 +1,4 @@
+import 'package:client/models/emotion_model_c.dart';
 import 'package:client/theme/font.dart';
 import 'package:client/theme/color.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +7,11 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'detail_emotion.dart';
 
-
 class ThaiCalendarWithTable extends StatefulWidget {
   const ThaiCalendarWithTable({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _ThaiCalendarWithTableState createState() => _ThaiCalendarWithTableState();
 }
 
@@ -41,7 +42,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
           children: [
             // Custom header
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -90,14 +91,10 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
               daysOfWeekVisible: true,
               headerVisible: false,
               calendarStyle: CalendarStyle(
-                selectedDecoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: ColorTheme.primaryColor.withOpacity(0.5),
-                ),
+                selectedDecoration: BoxDecoration(),
                 todayDecoration: const BoxDecoration(
                     color: ColorTheme.primaryColor, shape: BoxShape.circle),
-                selectedTextStyle:
-                    FontTheme.body1.copyWith(color: ColorTheme.WhiteColor),
+                selectedTextStyle: TextStyle(color: ColorTheme.baseColor),
                 todayTextStyle:
                     FontTheme.body1.copyWith(color: ColorTheme.WhiteColor),
               ),
@@ -134,7 +131,8 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => EmotionDetailPage(
-                      selectedDay: _selectedDay!, emotionsData: [],
+                      selectedDay: _selectedDay!,
+                      emotionsData: const [],
                     ),
                   ),
                 );
@@ -142,14 +140,81 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                 // Print the selected date in Thai Buddhist format to the console
                 print('${_selectedDay!.day.toString().padLeft(2, '0')}/'
                     '${_selectedDay!.month.toString().padLeft(2, '0')}/'
-                    '${thaiBuddhistYear}');
+                    '$thaiBuddhistYear');
               },
               selectedDayPredicate: (day) {
                 return isSameDay(_selectedDay, day);
               },
               calendarBuilders: CalendarBuilders(
-                outsideBuilder: (context, date, _) {
-                  return const SizedBox.shrink();
+                // Custom builder for 'today'
+                todayBuilder: (context, date, _) {
+                  var dateWithoutTime =
+                      DateTime(date.year, date.month, date.day);
+                  var emotionsForTheDay =
+                      SmallEmotions.small_emotions.where((smallEmotion) {
+                    var emotionDate = DateTime(
+                      convertBuddhistYearToGregorian(
+                          smallEmotion.dateTime.year),
+                      smallEmotion.dateTime.month,
+                      smallEmotion.dateTime.day,
+                    );
+                    return isSameDay(emotionDate, dateWithoutTime);
+                  }).toList();
+
+                  // If there are emotions for 'today', do not show the todayDecoration
+                  if (emotionsForTheDay.isNotEmpty) {
+                    return Center(
+                      child: Text(
+                        DateFormat('d').format(date),
+                        style: TextStyle(color: ColorTheme.primaryColor),
+                      ),
+                    );
+                  } else {
+                    // Apply todayDecoration if there are no emotions for today
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: ColorTheme.primaryColor,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Center(
+                        child: Text(
+                          DateFormat('d').format(date),
+                          style: TextStyle(color: ColorTheme.WhiteColor),
+                        ),
+                      ),
+                    );
+                  }
+                },
+
+                // Use markerBuilder to add emotion stickers to dates
+                markerBuilder: (context, date, events) {
+                  var dateWithoutTime =
+                      DateTime(date.year, date.month, date.day);
+                  var emotionsForTheDay =
+                      SmallEmotions.small_emotions.where((smallEmotion) {
+                    var emotionDate = DateTime(
+                      convertBuddhistYearToGregorian(
+                          smallEmotion.dateTime.year),
+                      smallEmotion.dateTime.month,
+                      smallEmotion.dateTime.day,
+                    );
+                    return isSameDay(emotionDate, dateWithoutTime);
+                  }).toList();
+
+                  if (emotionsForTheDay.isNotEmpty) {
+                    // Return a widget (e.g., an image) to indicate the emotion
+                    return Positioned(
+                      right: 1,
+                      bottom: 10,
+                      child: Image.asset(
+                        emotionsForTheDay.first
+                            .emotion, // Taking the first emotion for simplicity
+                        width: 50, // Adjust size accordingly
+                      ),
+                    );
+                  }
+
+                  return null; // Return null to not show anything if there's no emotion for the day
                 },
               ),
             ),
@@ -158,4 +223,8 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
       ),
     );
   }
+}
+
+int convertBuddhistYearToGregorian(int buddhistYear) {
+  return buddhistYear - 543;
 }

@@ -1,13 +1,12 @@
 import 'package:client/Pages/emotion_calendar/calendar_table.dart';
 import '../emotion_calendar/add_emotion_widget.dart';
-import 'package:client/pages/emotion_calendar/detail_emotion.dart';
 
 
 import 'package:client/theme/color.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(Calendar());
+  runApp(const Calendar());
 }
 
 class Calendar extends StatelessWidget {

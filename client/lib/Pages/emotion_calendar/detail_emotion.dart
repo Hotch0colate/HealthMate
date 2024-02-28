@@ -1,54 +1,63 @@
+import 'package:client/models/emotion_model.dart';
+import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import '../../component/calendar/emotion_card.dart'; // Make sure to import EmotionCard widget
+import '../../component/calendar/emotion_card.dart';
 
 class EmotionDetailPage extends StatelessWidget {
   final DateTime selectedDay;
-  final List<Map<String, dynamic>> emotionsData; // A list to hold your emotions data
+  final List<Map<String, dynamic>> emotionsData;
 
   const EmotionDetailPage({
     super.key,
     required this.selectedDay,
-    required this.emotionsData, // Accepting emotions data as a parameter
+    required this.emotionsData,
   });
 
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting('th', null); // Initialize Thai locale
+    initializeDateFormatting('th', null);
 
-    // Get the year from selectedDay
     int selectedYear = selectedDay.year;
-
-    // Convert the year to Buddhist Era (B.E.)
     int buddhistEraYear = selectedYear + 543;
-
-    // Format the date using the Thai locale and the new Buddhist Era year
-    String formattedDate = DateFormat('d MMMM ', 'th').format(selectedDay) + '$buddhistEraYear';
+    String formattedDate =
+        '${DateFormat('d MMMM ', 'th').format(selectedDay)}$buddhistEraYear';
 
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios, // Replace with your custom icon
+            color: ColorTheme.baseColor,
+            size: 30, // Customize the icon color
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
       body: Column(
         children: [
           Center(
             child: Text(
               formattedDate,
-              style: FontTheme.subtitle1,
+              style: FontTheme.h3.copyWith(color: ColorTheme.primaryColor),
             ),
           ),
           Expanded(
-            child: ListView.builder(
-              itemCount: emotionsData.length,
-              itemBuilder: (BuildContext context, int index) {
-                // Assuming your data map fits the EmotionCard parameters
-                return EmotionCard(
-                  time: emotionsData[index]['time'],
-                  name: emotionsData[index]['name'],
-                  description: emotionsData[index]['description'],
-                  icon: emotionsData[index]['icon'], // Make sure this is an IconData object
-                );
-              },
+            child: SingleChildScrollView(
+              child: Wrap(
+                spacing: 8.0,
+                runSpacing: 8.0,
+                children: Emotions.emotions.map((emotion) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: EmotionCard(emotions: emotion),
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ],

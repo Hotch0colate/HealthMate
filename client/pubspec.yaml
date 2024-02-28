@@ -86,6 +86,7 @@ flutter:
     - assets/avatar/
     - assets/images/
     - assets/emotion/emotion_text/
+    - assets/emotion/emotion_calendar/
 
     
   fonts:

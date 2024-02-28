@@ -21,8 +21,8 @@ class _EmotionScollState extends State<EmotionScoll> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 180.0,
+    return SizedBox(
+      height: 150.0,
       // Horizontal ListView
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -35,22 +35,18 @@ class _EmotionScollState extends State<EmotionScoll> {
               });
             },
             child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  Container(
-                    // Image widget
-                    child: Image.asset(
-                      'assets/emotion/emotion_text/m_${emotionImages[index]}_t.png',
-                      fit: BoxFit.fitHeight,
-                    ),
+                  Image.asset(
+                    'assets/emotion/emotion_text/m_${emotionImages[index]}_t.png',
+                    height: 120, width: 120,
                   ),
                   if (selectedEmotion == emotionImages[index])
                     Positioned(
                       child: Container(
                         width: 110,
-                        height: 110,
+                        height: 110,  // Set the width and height to be the same
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(

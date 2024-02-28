@@ -1,8 +1,10 @@
 import 'package:client/component/buttons.dart';
 import 'package:client/component/calendar/emotion_scroll.dart';
 import 'package:client/pages/emotion_calendar/calendar.dart';
+import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void showCustomDialog(BuildContext context) {
   showDialog(
@@ -24,6 +26,12 @@ void showCustomDialog(BuildContext context) {
 }
 
 Widget dialogContent(BuildContext context) {
+  // Get the current date
+  DateTime currentDate = DateTime.now();
+  int buddhistEraYear = currentDate.year + 543;
+  String formattedDate =
+      DateFormat('d MMMM ', 'th').format(currentDate) + '$buddhistEraYear';
+
   return Container(
     padding: const EdgeInsets.all(16.0),
     decoration: BoxDecoration(
@@ -39,25 +47,40 @@ Widget dialogContent(BuildContext context) {
       ],
     ),
     child: Column(
-      mainAxisSize: MainAxisSize.min, // To make the dialog compact
+      mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        const Text(
-          'เลือกอารมณ์ของคุณ', // Title
-          style: FontTheme.subtitle2,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            const Text(
+              'เลือกอารมณ์ของคุณ',
+              style: FontTheme.subtitle2,
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.close,
+                size: 30,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
         ),
-        const SizedBox(height: 16.0),
-        const Text(
-          '27 กุมภาพันธ์ 2567', // Date
-          style: FontTheme.subtitle1,
+
+        // Display the current date
+        Text(
+          formattedDate,
+          style: FontTheme.subtitle1.copyWith(color: ColorTheme.primaryColor),
         ),
         EmotionScoll(),
         const TextField(
           decoration: InputDecoration(
-            hintText: 'รายละเอียดอารมณ์ของคุณ', // Placeholder
+            hintText: 'รายละเอียดอารมณ์ของคุณ',
             hintStyle: FontTheme.body1,
           ),
         ),
-        const SizedBox(height: 24.0),
+        SizedBox(height: 20,),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: SmPrimaryButton(
