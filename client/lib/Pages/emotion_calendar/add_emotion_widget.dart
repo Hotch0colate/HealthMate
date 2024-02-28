@@ -1,6 +1,5 @@
 import 'package:client/component/buttons.dart';
 import 'package:client/component/calendar/emotion_scroll.dart';
-import 'package:client/pages/emotion_calendar/calendar.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -30,12 +29,12 @@ Widget dialogContent(BuildContext context) {
   DateTime currentDate = DateTime.now();
   int buddhistEraYear = currentDate.year + 543;
   String formattedDate =
-      DateFormat('d MMMM ', 'th').format(currentDate) + '$buddhistEraYear';
+      '${DateFormat('d MMMM ', 'th').format(currentDate)}$buddhistEraYear';
 
   return Container(
     padding: const EdgeInsets.all(16.0),
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: ColorTheme.WhiteColor,
       shape: BoxShape.rectangle,
       borderRadius: BorderRadius.circular(16.0),
       boxShadow: const [
@@ -67,8 +66,6 @@ Widget dialogContent(BuildContext context) {
             ),
           ],
         ),
-
-        // Display the current date
         Text(
           formattedDate,
           style: FontTheme.subtitle1.copyWith(color: ColorTheme.primaryColor),
@@ -80,7 +77,7 @@ Widget dialogContent(BuildContext context) {
             hintStyle: FontTheme.body1,
           ),
         ),
-        SizedBox(height: 20,),
+        const SizedBox(height: 20,),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: SmPrimaryButton(

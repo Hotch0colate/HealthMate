@@ -91,10 +91,10 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
               daysOfWeekVisible: true,
               headerVisible: false,
               calendarStyle: CalendarStyle(
-                selectedDecoration: BoxDecoration(),
+                selectedDecoration: const BoxDecoration(),
                 todayDecoration: const BoxDecoration(
                     color: ColorTheme.primaryColor, shape: BoxShape.circle),
-                selectedTextStyle: TextStyle(color: ColorTheme.baseColor),
+                selectedTextStyle: const TextStyle(color: ColorTheme.baseColor),
                 todayTextStyle:
                     FontTheme.body1.copyWith(color: ColorTheme.WhiteColor),
               ),
@@ -131,7 +131,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => EmotionDetailPage(
-                      selectedDay: _selectedDay!,
+                      date: _selectedDay!,
                       emotionsData: const [],
                     ),
                   ),
@@ -166,20 +166,20 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                     return Center(
                       child: Text(
                         DateFormat('d').format(date),
-                        style: TextStyle(color: ColorTheme.primaryColor),
+                        style: const TextStyle(color: ColorTheme.primaryColor),
                       ),
                     );
                   } else {
                     // Apply todayDecoration if there are no emotions for today
                     return Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: ColorTheme.primaryColor,
                         shape: BoxShape.circle,
                       ),
                       child: Center(
                         child: Text(
                           DateFormat('d').format(date),
-                          style: TextStyle(color: ColorTheme.WhiteColor),
+                          style: const TextStyle(color: ColorTheme.WhiteColor),
                         ),
                       ),
                     );
@@ -190,25 +190,29 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                 markerBuilder: (context, date, events) {
                   var dateWithoutTime =
                       DateTime(date.year, date.month, date.day);
-                  var emotionsForTheDay =
-                      SmallEmotions.small_emotions.where((smallEmotion) {
-                    var emotionDate = DateTime(
-                      convertBuddhistYearToGregorian(
-                          smallEmotion.dateTime.year),
-                      smallEmotion.dateTime.month,
-                      smallEmotion.dateTime.day,
-                    );
-                    return isSameDay(emotionDate, dateWithoutTime);
-                  }).toList();
+                  var emotionsForTheDay = SmallEmotions.small_emotions
+                      .where((smallEmotion) => isSameDay(
+                            DateTime(
+                              convertBuddhistYearToGregorian(
+                                smallEmotion.dateTime.year),
+                                smallEmotion.dateTime.month,
+                                smallEmotion.dateTime.day,
+                            ),
+                            dateWithoutTime,
+                          ))
+                      .toList();
 
                   if (emotionsForTheDay.isNotEmpty) {
-                    // Return a widget (e.g., an image) to indicate the emotion
+                    // Sort emotions for the day by dateTime in descending order
+                    emotionsForTheDay
+                        .sort((a, b) => b.dateTime.compareTo(a.dateTime));
+
                     return Positioned(
                       right: 1,
                       bottom: 10,
                       child: Image.asset(
-                        emotionsForTheDay.first
-                            .emotion, // Taking the first emotion for simplicity
+                         'assets/emotion/emotion_calendar/c_${emotionsForTheDay
+                            .first.emotion}.png',
                         width: 50, // Adjust size accordingly
                       ),
                     );

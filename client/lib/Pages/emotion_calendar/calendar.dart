@@ -34,6 +34,7 @@ class Calendar extends StatelessWidget {
           ),
         ),
         body: const CalendarPage(),
+        backgroundColor: ColorTheme.WhiteColor,
       ),
     );
   }

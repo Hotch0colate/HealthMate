@@ -10,20 +10,20 @@ class Emotions {
   });
   static List<Emotions> emotions = [
     Emotions (
-        dateTime: DateTime.utc(2567, 2, 27, 12, 50, 0),
-        emotion: 'assets/emotion/emotion_text/m_Angry_t.png',
+        dateTime: DateTime.utc(2024, 2, 27, 11, 36, 0),
+        emotion: 'Angry',
         detail: 'โกรธรายละเอียด'),
     Emotions(
-        dateTime: DateTime.utc(2567, 2, 24, 12, 50, 0),
-        emotion: 'assets/emotion/emotion_text/m_Tired_t.png',
+        dateTime: DateTime.utc(2024, 2, 24, 12, 50, 0),
+        emotion: 'Tired',
         detail: 'เหนื่อยรายละเอียด'),
     Emotions(
-        dateTime: DateTime.utc(2567, 2, 22, 12, 0, 0),
-        emotion: 'assets/emotion/emotion_text/m_Sad_t.png',
+        dateTime: DateTime.utc(2024, 2, 22, 23, 10, 0),
+        emotion: 'Sad',
         detail: 'เศร้ารายละเอียด'),
     Emotions(
-        dateTime: DateTime.utc(2567, 2, 27, 12, 0, 0),
-        emotion: 'assets/emotion/emotion_text/m_Happy_t.png',
+        dateTime: DateTime.utc(2024, 2, 27, 12, 50, 0),
+        emotion: 'Happy',
         detail: 'มีความสุขรายละเอียด'),
   ];
 }
