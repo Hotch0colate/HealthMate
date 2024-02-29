@@ -34,11 +34,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const FindVolunteerPage(),
       routes: {
-        '/login': (context) => LoginPage(),
-        '/signup': (context) => SignupPage(),
+        '/login': (context) => const LoginPage(),
+        '/signup': (context) => const SignupPage(),
         '/main': (context) => MainApp(),
         '/home': (context) => const HomePage(),
         '/create_tag_page': (context) => const CreateTagPage(),
+        '/find_volunteer_page': (context) => const FindVolunteerPage(),
       },
     );
   }

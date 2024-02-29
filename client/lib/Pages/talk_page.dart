@@ -1,7 +1,9 @@
+import 'package:client/Pages/find_volunteer_page.dart';
 import 'package:client/controllers/navigation.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class TalkPage extends StatelessWidget {
   final int selectedPage;
@@ -40,6 +42,7 @@ class TalkPage extends StatelessWidget {
                     height: 31,
                   ),
                   CustomCard(
+                    onPressed: () {},
                     backgroundColor: ColorTheme.secondaryColor.withOpacity(0.3),
                     text: 'จิตแพทย์',
                     imageName: 'assets/images/Psychiatrist tool glasses.png',
@@ -48,6 +51,15 @@ class TalkPage extends StatelessWidget {
                     height: 31,
                   ),
                   CustomCard(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              const FindVolunteerPage(), // Example: Navigate to a specific screen
+                        ),
+                      );
+                    },
                     backgroundColor: ColorTheme.primary2Color.withOpacity(0.4),
                     text: 'อาสาสมัคร',
                     imageName: 'assets/images/Volunteer scarf.png',
@@ -62,35 +74,69 @@ class TalkPage extends StatelessWidget {
   }
 }
 
-class CustomCard extends StatelessWidget {
+class CustomCard extends StatefulWidget {
   final String text;
   final String imageName;
   final Color backgroundColor;
+  final VoidCallback onPressed;
   const CustomCard({
     super.key,
     required this.text,
     required this.imageName,
     required this.backgroundColor,
+    required this.onPressed,
   });
 
   @override
+  State<CustomCard> createState() => _CustomCardState();
+}
+
+class _CustomCardState extends State<CustomCard> {
+  double scale = 1.0;
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() {
+      scale = 0.95; // Slightly smaller when tapping down
+    });
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() {
+      scale = 1.0; // Return to original size
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // Assuming you have a ColorTheme and FontTheme defined somewhere in your project
-    return Container(
-      height: 233,
-      width: 342,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(18),
-      ),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 19,
+    return GestureDetector(
+      onTapDown: _onTapDown,
+      onTapUp: _onTapUp,
+      onTap: widget.onPressed,
+      onTapCancel: () {
+        setState(() {
+          scale = 1.0; // Ensure the scale is reset if the tap is canceled
+        });
+      },
+      child: Transform.scale(
+        scale: scale,
+        child: Container(
+          height: 233,
+          width: 342,
+          decoration: BoxDecoration(
+            color: widget.backgroundColor,
+            borderRadius: BorderRadius.circular(18),
           ),
-          Image.asset(imageName),
-          Text(text, style: FontTheme.subtitle1.copyWith(color: Colors.black)),
-        ],
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 19,
+              ),
+              Image.asset(widget.imageName),
+              Text(widget.text,
+                  style: FontTheme.subtitle1.copyWith(color: Colors.black)),
+            ],
+          ),
+        ),
       ),
     );
   }

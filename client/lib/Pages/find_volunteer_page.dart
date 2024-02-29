@@ -164,7 +164,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 3000), // Duration for each image
+      duration: const Duration(milliseconds: 2000), // Duration for each image
       vsync: this,
     )..addListener(() {
         final newIndex = (_controller.value * _frames.length).floor();
