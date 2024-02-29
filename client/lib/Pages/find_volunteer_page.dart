@@ -11,7 +11,7 @@ class FindVolunteerPage extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return Container(
+        return SizedBox(
           height: 132,
           width: 296,
           child: AlertDialog(
@@ -40,7 +40,15 @@ class FindVolunteerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: Image.asset('assets/icons/back_new.png'),
+          leading: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              Image.asset('assets/icons/back_new.png',
+                  width: 35, fit: BoxFit.contain),
+            ],
+          ),
         ),
         body: Container(
           child: Center(
@@ -178,26 +186,14 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     _controller.repeat(reverse: false); // Do not reverse the animation
 
     _frames = [
-      // Container(
-      //   decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-      //   child: Image.asset('../../assets/loading_screen/loading_1.png',
-      //       width: 300, fit: BoxFit.contain),
-      // ),
-      Container(
-        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-        child: Image.asset('../../assets/loading_screen/loading_2.png',
-            width: 300, fit: BoxFit.contain),
-      ),
-      Container(
-        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-        child: Image.asset('../../assets/loading_screen/loading_3.png',
-            width: 300, fit: BoxFit.contain),
-      ),
-      Container(
-        // decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-        child: Image.asset('../../assets/loading_screen/loading_4.png',
-            width: 300, fit: BoxFit.contain),
-      ),
+      Image.asset('../../assets/loading_screen/loading_1.png',
+          width: 300, fit: BoxFit.contain),
+      Image.asset('../../assets/loading_screen/loading_2.png',
+          width: 300, fit: BoxFit.contain),
+      Image.asset('../../assets/loading_screen/loading_3.png',
+          width: 300, fit: BoxFit.contain),
+      Image.asset('../../assets/loading_screen/loading_4.png',
+          width: 300, fit: BoxFit.contain),
     ];
   }
 
