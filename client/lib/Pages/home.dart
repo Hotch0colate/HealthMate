@@ -1,4 +1,4 @@
-import 'package:client/component/navigation.dart';
+import '../component/navigation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
