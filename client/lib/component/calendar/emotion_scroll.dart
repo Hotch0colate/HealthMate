@@ -40,13 +40,14 @@ class _EmotionScollState extends State<EmotionScoll> {
                 children: [
                   Image.asset(
                     'assets/emotion/emotion_text/m_${emotionImages[index]}_t.png',
-                    height: 120, width: 120,
+                    height: 120,
+                    width: 120,
                   ),
                   if (selectedEmotion == emotionImages[index])
                     Positioned(
                       child: Container(
                         width: 110,
-                        height: 110,  // Set the width and height to be the same
+                        height: 110, // Set the width and height to be the same
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           border: Border.all(

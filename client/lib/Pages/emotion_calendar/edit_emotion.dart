@@ -40,11 +40,6 @@ class EmotionDetailsDialog {
                           DateFormat('HH:mm').format(emotions.dateTime),
                           style: FontTheme.subtitle1,
                         ),
-                        // Text(
-                        //   _formatThaiYear(emotions.dateTime),
-                        //   style: FontTheme.subtitle2
-                        //       .copyWith(color: ColorTheme.primaryColor),
-                        // ),
                         SizedBox(
                           width: 60,
                         ),
@@ -79,14 +74,12 @@ class EmotionDetailsDialog {
                       children: <Widget>[
                         SmPrimaryButton(text: 'บันทึก', onPressed: () {}),
                         SmSecondaryButton(
-                            text: 'ลบ',
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              foregroundColor: ColorTheme.errorAction,
-                              backgroundColor: ColorTheme.WhiteColor,
-                              side: const BorderSide(
-                                  color: ColorTheme.errorAction),
-                            ))
+                          text: 'ลบ',
+                          onPressed: () {},
+                          foregroundColor: ColorTheme.errorAction,
+                          backgroundColor: ColorTheme.WhiteColor,
+                          borderColor: ColorTheme.errorAction,
+                        )
                       ],
                     ),
                   ],

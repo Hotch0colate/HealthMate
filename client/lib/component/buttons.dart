@@ -247,24 +247,34 @@ class MdPrimaryButtonRed extends StatelessWidget {
 class SmPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color foregroundColor;
+  final Color backgroundColor;
+  final Color borderColor;
+  final double minWidth;
 
   const SmPrimaryButton({
-    super.key,
+    Key? key,
     required this.text,
     required this.onPressed,
-  });
+    this.foregroundColor = ColorTheme.WhiteColor,
+    this.backgroundColor = ColorTheme.primaryColor,
+    this.borderColor = ColorTheme.primaryColor,
+    this.minWidth = 120, // Set your desired minimum width
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        foregroundColor: ColorTheme.WhiteColor,
-        backgroundColor: ColorTheme.primaryColor, // Text color
+        foregroundColor: foregroundColor,
+        backgroundColor: backgroundColor,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: borderColor, width: 2),
         ),
+        minimumSize: Size(minWidth, 0),
       ),
       child: Text(text, style: FontTheme.btn_small),
     );
@@ -330,54 +340,34 @@ class MdSecondaryButton extends StatelessWidget {
 class SmSecondaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color foregroundColor;
+  final Color backgroundColor;
+  final Color borderColor;
+  final double minWidth;
 
   const SmSecondaryButton({
-    super.key,
+    Key? key,
     required this.text,
     required this.onPressed,
-  });
+    this.foregroundColor = ColorTheme.baseColor,
+    this.backgroundColor = ColorTheme.primaryColor,
+    this.borderColor = ColorTheme.primaryColor,
+    this.minWidth = 120, // Set your desired minimum width
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        foregroundColor: ColorTheme.primaryColor,
-        backgroundColor: ColorTheme.WhiteColor,
+        foregroundColor: foregroundColor,
+        backgroundColor: backgroundColor,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: ColorTheme.primaryColor, width: 2),
+          side: BorderSide(color: borderColor, width: 2),
         ),
-      ),
-      child: Text(text, style: FontTheme.btn_small),
-    );
-  }
-}
-
-class SmSecondaryButtonGrey extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-
-  const SmSecondaryButtonGrey({
-    super.key,
-    required this.text,
-    required this.onPressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        foregroundColor: ColorTheme.baseColor.withOpacity(0.8),
-        backgroundColor: ColorTheme.WhiteColor,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-          side: BorderSide(
-              color: ColorTheme.baseColor.withOpacity(0.2), width: 2),
-        ),
+        minimumSize: Size(minWidth, 0),
       ),
       child: Text(text, style: FontTheme.btn_small),
     );

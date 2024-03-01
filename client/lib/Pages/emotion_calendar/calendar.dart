@@ -1,7 +1,6 @@
 import 'package:client/Pages/emotion_calendar/calendar_table.dart';
 import '../emotion_calendar/add_emotion_widget.dart';
 
-
 import 'package:client/theme/color.dart';
 import 'package:flutter/material.dart';
 
@@ -18,11 +17,9 @@ class Calendar extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: //AppBar Widget
-        AppBar(
+            AppBar(
           flexibleSpace: Container(
-            margin: const EdgeInsets.only(
-                top: 40, left: 16
-                ), 
+            margin: const EdgeInsets.only(top: 40, left: 16),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Image.asset(
@@ -54,20 +51,22 @@ class CalendarPage extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 12,),
+        const SizedBox(
+          height: 12,
+        ),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: ElevatedButton(
             onPressed: () {
-                showCustomDialog(context);
+              showCustomDialog(context);
             },
             style: ElevatedButton.styleFrom(
-              primary: ColorTheme.primaryColor, 
+              primary: ColorTheme.primaryColor,
             ),
             child: Container(
-              padding: const EdgeInsets.all(8.0), 
+              padding: const EdgeInsets.all(8.0),
               child: Icon(
-                Icons.add, 
+                Icons.add,
                 color: Colors.white,
               ),
             ),

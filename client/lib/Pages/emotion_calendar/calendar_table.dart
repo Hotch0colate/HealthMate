@@ -194,9 +194,9 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                       .where((smallEmotion) => isSameDay(
                             DateTime(
                               convertBuddhistYearToGregorian(
-                                smallEmotion.dateTime.year),
-                                smallEmotion.dateTime.month,
-                                smallEmotion.dateTime.day,
+                                  smallEmotion.dateTime.year),
+                              smallEmotion.dateTime.month,
+                              smallEmotion.dateTime.day,
                             ),
                             dateWithoutTime,
                           ))
@@ -211,8 +211,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                       right: 1,
                       bottom: 10,
                       child: Image.asset(
-                         'assets/emotion/emotion_calendar/c_${emotionsForTheDay
-                            .first.emotion}.png',
+                        'assets/emotion/emotion_calendar/c_${emotionsForTheDay.first.emotion}.png',
                         width: 50, // Adjust size accordingly
                       ),
                     );

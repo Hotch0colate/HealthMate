@@ -41,7 +41,7 @@ class EmotionCard extends StatelessWidget {
                   style: FontTheme.body2,
                 ),
                 Image.asset(
-                    'assets/emotion/emotion_text/m_${emotions.emotion}_t.png',
+                  'assets/emotion/emotion_text/m_${emotions.emotion}_t.png',
                   height: 80, // Set the desired height
                   width: 80, // Set the desired width
                 ),

@@ -77,7 +77,9 @@ Widget dialogContent(BuildContext context) {
             hintStyle: FontTheme.body1,
           ),
         ),
-        const SizedBox(height: 20,),
+        const SizedBox(
+          height: 20,
+        ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: SmPrimaryButton(
