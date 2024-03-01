@@ -1,11 +1,13 @@
-import 'package:client/Pages/login.dart';
-import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // For JSON encoding
+import 'dart:convert'; 
 
-// Assuming this is the next page you want to navigate to after submitting gender
-import 'package:client/Pages/First%20Login/first_login_2.dart';
+//page import
+import 'package:client/pages/authentication/first_login/first_login_2.dart';
+
+//component import
+import '../login.dart';
+import '../../../component/buttons.dart';
 
 class FirstLogin1 extends StatefulWidget {
   const FirstLogin1({Key? key}) : super(key: key);

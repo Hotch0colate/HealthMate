@@ -1,5 +1,5 @@
-import 'package:client/Pages/find_volunteer_page.dart';
-import 'package:client/controllers/navigation.dart';
+import 'package:client/pages/select_talk/find_volunteer_page.dart';
+import 'package:client/component/navigation.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';

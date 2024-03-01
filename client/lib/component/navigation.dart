@@ -1,15 +1,15 @@
-import 'package:client/Pages/talk_page.dart';
 import 'package:flutter/material.dart';
-import 'package:client/theme/color.dart';
-
-import 'package:client/services/auth_service.dart';
-import 'package:client/Pages/calendar.dart';
-import 'package:client/Pages/select_talk.dart';
-import 'package:client/Pages/profile.dart';
-import 'package:client/Pages/chat_log.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
+
+import 'package:client/theme/color.dart';
+
+import 'package:client/services/auth_service.dart';
+import 'package:client/pages/emotion_calendar/calendar.dart';
+import 'package:client/pages/select_talk/select_talk.dart';
+import 'package:client/pages/profile/profile.dart';
+import 'package:client/pages/chat/chat_log.dart';
 
 void main() => runApp(MainApp());
 
@@ -61,17 +61,10 @@ class _MainAppState extends State<MainApp> {
   }
 
   List<Widget> _pageOptions() => [
-        Calendar(),
-        TalkPage(
-          selectedPage: _selectedPage,
-          onPageSelected: (index) {
-            setState(() {
-              _selectedPage = index;
-            });
-          },
-        ),
+        const Calendar(),
+        SelectTalk(),
         ChatLog(uid: userUid), // ใช้ userUid ที่อัปเดตแล้ว
-        ProfilePage(),
+        const ProfilePage(),
       ];
 
   @override
@@ -109,8 +102,9 @@ class BottomNavigationBarApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return BottomNavigationBar(
       currentIndex: selectedIndex,
+      backgroundColor: ColorTheme.WhiteColor,
       selectedItemColor: ColorTheme.primaryColor,
-      unselectedItemColor: Colors.grey,
+      unselectedItemColor: Colors.black26,
       type: BottomNavigationBarType.fixed,
       onTap: onItemTapped,
       items: const [

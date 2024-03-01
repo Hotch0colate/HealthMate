@@ -1,4 +1,4 @@
-import 'package:client/controllers/button.dart';
+import 'package:client/component/buttons.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';

@@ -1,11 +1,14 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, avoid_print
-
-import 'package:client/Pages/signup.dart';
-import 'package:client/component/grey_text_field.dart';
-import 'package:client/component/buttons.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+//page import
+import 'package:client/pages/authentication/signup.dart';
+
+//component import
+import 'package:client/component/text_field/grey_text_field.dart';
+import 'package:client/component/buttons.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -316,7 +319,8 @@ class _LoginPageState extends State<LoginPage> {
                                   LoginWithButton(
                                       imagePath: 'assets/icons/google.png'),
                                   SizedBox(width: 16),
-                                  LoginWithButton(imagePath: 'assets/icons/apple.png'),
+                                  LoginWithButton(
+                                      imagePath: 'assets/icons/apple.png'),
                                   SizedBox(width: 24),
                                   LoginWithButton(
                                       imagePath: 'assets/icons/facebook.png'),

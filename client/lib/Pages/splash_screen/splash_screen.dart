@@ -1,4 +1,4 @@
-import 'package:client/pages/signup.dart';
+import 'package:client/pages/authentication/signup.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

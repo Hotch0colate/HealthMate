@@ -50,7 +50,7 @@ class FontTheme {
 
   static const TextStyle caption = TextStyle(
     fontFamily: 'Athiti',
-    fontWeight: FontWeight.w600,
+    fontWeight: FontWeight.w300,
     fontSize: 16,
   );
   

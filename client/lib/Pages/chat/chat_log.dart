@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:client/components/conversation_list.dart';
 import 'package:firebase_database/firebase_database.dart';
-
 import 'dart:async';
-
 import 'package:intl/intl.dart';
+
+//component import
+import '../../component/conversation_list.dart';
+
 
 typedef UpdateTriggerCallback = void Function(bool updateTrigger);
 

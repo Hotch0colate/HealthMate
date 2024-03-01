@@ -1,12 +1,14 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously, file_names
 
-import 'package:client/Pages/login.dart';
-import 'package:client/component/grey_text_field.dart';
-import 'package:client/component/buttons.dart';
-import 'package:client/component/password_field.dart';
-import 'package:client/component/white_text_field.dart';
+import 'package:client/pages/authentication/login.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:flutter/material.dart';
+
+import '../../component/text_field/grey_text_field.dart';
+import '../../component/buttons.dart';
+import '../../component/text_field/password_field.dart';
+import '../../component/text_field/white_text_field.dart';
+
 // ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
