@@ -45,7 +45,9 @@ class EmotionDetailsDialog {
                         //   style: FontTheme.subtitle2
                         //       .copyWith(color: ColorTheme.primaryColor),
                         // ),
-                        SizedBox(width: 60,),
+                        SizedBox(
+                          width: 60,
+                        ),
                         IconButton(
                           icon: const Icon(
                             Icons.close,
@@ -77,12 +79,14 @@ class EmotionDetailsDialog {
                       children: <Widget>[
                         SmPrimaryButton(text: 'บันทึก', onPressed: () {}),
                         SmSecondaryButton(
-                          text: 'ลบ',
-                          onPressed: () {},
-                          foregroundColor: ColorTheme.errorAction,
-                          backgroundColor: ColorTheme.WhiteColor,
-                          borderColor: ColorTheme.errorAction,
-                        )
+                            text: 'ลบ',
+                            onPressed: () {},
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: ColorTheme.errorAction,
+                              backgroundColor: ColorTheme.WhiteColor,
+                              side: const BorderSide(
+                                  color: ColorTheme.errorAction),
+                            ))
                       ],
                     ),
                   ],

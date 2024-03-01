@@ -1,5 +1,4 @@
 import 'package:client/pages/authentication/first_login/first_login_4.dart';
-import 'package:client/pages/login.dart';
 import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
