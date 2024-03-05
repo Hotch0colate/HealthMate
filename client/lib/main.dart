@@ -8,6 +8,7 @@ import 'pages/authentication/signup.dart';
 import 'pages/splash_screen/splash_screen.dart';
 import 'component/navigation.dart';
 import 'pages/home.dart';
+import 'pages/authentication/first_login/first_login_1.dart';
 import 'pages/select_talk/create_tag_page.dart';
 import 'pages/select_talk/find_volunteer_page.dart';
 
@@ -28,10 +29,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: SplashScreen(),
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),
+        '/first_login': (context) =>  FirstLogin1(),
         '/main': (context) => MainApp(),
         '/home': (context) => const HomePage(),
         '/create_tag_page': (context) => const CreateTagPage(),

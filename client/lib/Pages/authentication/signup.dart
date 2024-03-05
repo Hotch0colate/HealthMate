@@ -73,7 +73,7 @@ class _SignupPageState extends State<SignupPage> {
       // Note: In a real app, you'd handle the response from your backend to confirm token verification was successful
       Navigator.of(context).pop(); // Close the loading indicator
       Navigator.pushReplacementNamed(context,
-          '/home'); // Navigate to home.dart or use your preferred method
+          '/first_login'); // Navigate to home.dart or use your preferred method
     } catch (e) {
       print('Signup failed: $e');
       Navigator.of(context).pop(); // Close the loading indicator

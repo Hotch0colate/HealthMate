@@ -1,8 +1,9 @@
 import 'package:client/pages/authentication/first_login/first_login_3.dart';
 import 'package:client/pages/authentication/first_login/first_login_5.dart';
-
+import 'package:client/services/auth_service.dart';
 import 'package:client/pages/authentication/login.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/services/ip_variable.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // For using json.encode
@@ -18,13 +19,20 @@ class _FirstLogin4State extends State<FirstLogin4> {
   bool agreedToTerms = false;
   String selectedMartial = ''; // Variable to store selected gender
 
-  Future<void> sendDataToBackend(String occupation) async {
+  Future<void> sendDataToBackend(String martial_status) async {
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+
     var url = Uri.parse(
-        'http://localhost:3000/user/update_data'); // Replace with your backend endpoint
+        'http://${fixedIp}:3000/user/update_data'); // Replace with your backend endpoint
     var response = await http.post(
       url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"occupation": occupation}),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+        },
+      body: jsonEncode({"martial_status": martial_status}
+      ),
     );
 
     if (response.statusCode == 200) {

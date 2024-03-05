@@ -1,3 +1,4 @@
+import 'package:client/Pages/authentication/login.dart';
 import 'package:client/pages/authentication/signup.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => SignupPage(),
+          builder: (context) => LoginPage(),
         ),
       );
     });

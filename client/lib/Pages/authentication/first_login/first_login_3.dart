@@ -1,7 +1,9 @@
 import 'package:client/pages/authentication/first_login/first_login_4.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/services/ip_variable.dart';
 import 'package:flutter/material.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
+import 'package:client/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert'; // For using json.encode
 
@@ -17,14 +19,21 @@ class _FirstLogin3State extends State<FirstLogin3> {
   String selectedOccupation = ''; // Changed variable name for clarity
 
   // Function to send data to backend
-  Future<void> sendDataToBackend(String occupation) async {
+  Future<void> sendDataToBackend(String career) async {
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+
     var url = Uri.parse(
-        'http://localhost:3000/user/update_data'); // Replace with your backend endpoint
+        'http://${fixedIp}:3000/user/update_data'); // Replace with your backend endpoint
     var response = await http.post(
       url,
-      headers: {"Content-Type": "application/json"},
-      body: jsonEncode({"occupation": occupation}),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      },
+      body: jsonEncode({"career": career}),
     );
+
 
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, then navigate to the next page

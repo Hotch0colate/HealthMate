@@ -1,6 +1,8 @@
+import 'package:client/services/ip_variable.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert'; // For JSON encoding
 import 'package:http/http.dart' as http; // HTTP package
+import 'package:client/services/auth_service.dart';
 import 'package:intl/intl.dart';
 
 //page import
@@ -24,38 +26,31 @@ class _FirstLogin2State extends State<FirstLogin2> {
       TextEditingController(); // Controller for birth date input
 
   Future<void> sendUserDataToBackend() async {
-    Uri apiUrl = Uri.parse(
-        'http://localhost:3000/user/update_data'); // Replace with your backend API endpoint
-    try {
-      var response = await http.post(
-        apiUrl,
-        body: json.encode({
-          'birthDate': birthDateController
-              .text, // Assuming you want to send the birth date
-          // Add other data you might want to send here
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      );
+  var _auth_service = AuthService();
+  String? token = await _auth_service.getIdToken();
+  var url = Uri.parse('http://${fixedIp}:3000/user/update_data'); // Your actual endpoint
+  var response = await http.post(url,
+      body: json.encode({
+        'birthday': birthDateController.text,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token'
+      });
 
-      if (response.statusCode == 200) {
-        // Handle success
-        print('Data sent successfully');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const FirstLogin3(),
-          ),
-        );
-      } else {
-        // Handle error
-        print('Failed to send data');
-      }
-    } catch (e) {
-      print('Error sending data: $e');
-    }
+  if (response.statusCode == 200) {
+    print("Data submitted successfully");
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const FirstLogin3(), // Navigate to the next page
+      ),
+    );
+  } else {
+    print("Failed to submit data: ${response.body}");
   }
+}
+
 
   DateTime? selectedDate;
   TextEditingController dateController = TextEditingController();

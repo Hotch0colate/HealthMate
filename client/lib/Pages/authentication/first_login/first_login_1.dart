@@ -1,13 +1,13 @@
+import 'package:client/services/ip_variable.dart';
 import 'package:flutter/material.dart';
+import 'package:client/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 //page import
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
 
 //component import
-import '../login.dart';
-import 'package:client/component/buttons.dart';
+import '../../../component/buttons.dart';
 
 class FirstLogin1 extends StatefulWidget {
   const FirstLogin1({Key? key}) : super(key: key);
@@ -21,12 +21,17 @@ class _FirstLogin1State extends State<FirstLogin1> {
   String selectedGender = ''; // Variable to store selected gender
 
   // Function to submit the gender to the backend
-  Future<void> submitGender(String gender) async {
+  Future<void> sendUserDataToBackend(String gender) async {
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
     var url = Uri.parse(
-        'http://localhost:3000/user/update_data'); // Change to your actual endpoint
+        'http://${fixedIp}:3000/user/update_data'); // Change to your actual endpoint
     var response = await http.post(url,
         body: json.encode({'gender': gender}),
-        headers: {'Content-Type': 'application/json'});
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
 
     if (response.statusCode == 200) {
       // Handle successful request
@@ -180,7 +185,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
                 child: ForwardButton(
                   onPressed: () {
                     if (selectedGender.isNotEmpty) {
-                      submitGender(selectedGender);
+                      sendUserDataToBackend(selectedGender);
                     } else {
                       // Prompt user to select a gender or handle this case accordingly
                       print("Please select a gender");
