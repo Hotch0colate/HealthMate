@@ -50,6 +50,8 @@ class _LoginPageState extends State<LoginPage> {
       // Send the ID token to your backend for verification
       final response = await AuthService().sendTokenToBackend(idToken);
 
+      AuthService().saveToken(idToken.toString());
+
       // // Assuming token verification was successful, navigate to home.dart
       // Navigator.of(context).pop(); // Close the loading indicator
       // Navigator.pushReplacementNamed(context,

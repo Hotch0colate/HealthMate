@@ -71,6 +71,7 @@ class _SignupPageState extends State<SignupPage> {
       print('line 61');
       // Assuming token verification was successful, navigate to home.dart
       // Note: In a real app, you'd handle the response from your backend to confirm token verification was successful
+      AuthService().saveToken(idToken.toString());
       Navigator.of(context).pop(); // Close the loading indicator
       Navigator.pushReplacementNamed(context,
           '/first_login'); // Navigate to home.dart or use your preferred method

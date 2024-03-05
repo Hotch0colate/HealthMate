@@ -1,3 +1,5 @@
+import 'package:client/services/auth_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:client/Pages/authentication/login.dart';
 import 'package:client/pages/authentication/signup.dart';
 import 'package:flutter/material.dart';
@@ -13,14 +15,26 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     // Simulate a delay to display the splash screen for 3 seconds
     Future.delayed(Duration(seconds: 3), () {
-      // Navigate to the main screen after the splash screen is displayed
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => LoginPage(),
-        ),
-      );
+      // // Navigate to the main screen after the splash screen is displayed
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => LoginPage(),
+      //   ),
+      // );
+      checkLoggedInState();
     });
+  }
+
+  void checkLoggedInState() async {
+    String? token = await AuthService().getToken();
+    if (token != null) {
+      // Token exists, so navigate to the main app screen
+      Navigator.of(context).pushReplacementNamed('/main');
+    } else {
+      // No token, so navigate to the login screen
+      Navigator.of(context).pushReplacementNamed('/login');
+    }
   }
 
   @override

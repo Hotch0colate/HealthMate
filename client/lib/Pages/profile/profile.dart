@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
+import 'package:client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
 
 //page import
 import '../authentication/login.dart';
-
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -52,6 +52,7 @@ class ProfilePage extends StatelessWidget {
       //     content: Text("Logged out successfully"),
       //   ),
       // );
+      AuthService().removeToken();
       print("Logged out successfully");
     } catch (e) {
       print(e); // Add this line to print the error to the console

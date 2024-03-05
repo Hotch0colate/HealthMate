@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
@@ -5,6 +6,22 @@ import 'package:http/http.dart' as http;
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final String _backendUrl = 'http://${fixedIp}:3000/access/signin';
+
+  Future<void> saveToken(String token) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('auth_token', token);
+  }
+
+  Future<String?> getToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('auth_token');
+  }
+
+  Future<void> removeToken() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('auth_token');
+    // Navigate to login or perform other actions as needed
+  }
 
   // Method to get the current user's ID token
   Future<String?> getIdToken() async {
