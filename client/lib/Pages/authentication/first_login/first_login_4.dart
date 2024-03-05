@@ -17,7 +17,7 @@ class FirstLogin4 extends StatefulWidget {
 
 class _FirstLogin4State extends State<FirstLogin4> {
   bool agreedToTerms = false;
-  String selectedMartial = ''; // Variable to store selected gender
+  String selectedMartialStatusValue = ''; // Variable to store selected gender
 
   Future<void> sendDataToBackend(String martial_status) async {
     var _auth_service = AuthService();
@@ -30,9 +30,8 @@ class _FirstLogin4State extends State<FirstLogin4> {
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
-        },
-      body: jsonEncode({"martial_status": martial_status}
-      ),
+      },
+      body: jsonEncode({"martial_status": martial_status}),
     );
 
     if (response.statusCode == 200) {
@@ -50,7 +49,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
     }
   }
 
-  String? selectedJobRole;
+  String? selectedMartialStatus;
 
   Widget _buildRadioListTile({required String title, required String value}) {
     return ListTile(
@@ -58,7 +57,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
       title: Text(
         title,
         style: TextStyle(
-          color: selectedJobRole == value ? Colors.orange : Colors.black,
+          color: selectedMartialStatus == value ? Colors.orange : Colors.black,
           fontSize: 14,
           fontWeight: FontWeight.w400,
           fontFamily: 'Poppins',
@@ -66,10 +65,11 @@ class _FirstLogin4State extends State<FirstLogin4> {
       ),
       leading: Radio<String>(
         value: value,
-        groupValue: selectedJobRole,
+        groupValue: selectedMartialStatus,
         onChanged: (String? value) {
           setState(() {
-            selectedJobRole = value;
+            selectedMartialStatus = value;
+            selectedMartialStatusValue = value!;
           });
         },
         activeColor: Colors.orange,
@@ -133,27 +133,27 @@ class _FirstLogin4State extends State<FirstLogin4> {
                   children: [
                     _buildRadioListTile(
                       title: 'โสด',
-                      value: 'single',
+                      value: 'Single',
                     ),
                     _buildRadioListTile(
                       title: 'มีแฟนแล้ว',
-                      value: 'partnered',
+                      value: 'Partnered',
                     ),
                     _buildRadioListTile(
                       title: 'หมั้นแล้ว / แต่งงานแล้ว',
-                      value: 'married',
+                      value: 'Married',
                     ),
                     _buildRadioListTile(
                       title: 'ม่าย / หย่าร้าง / แยกกันอยู่',
-                      value: 'divorced',
+                      value: 'Divorced',
                     ),
                     _buildRadioListTile(
                       title: 'อยู่ในความสัมพันธ์แบบไม่ผูกมัด',
-                      value: 'non-binding relationship',
+                      value: 'NonBindingRelationship',
                     ),
                     _buildRadioListTile(
                       title: 'ค่อนข้างอธิบายยาก',
-                      value: 'complicated',
+                      value: 'Complicated',
                     ),
                   ],
                 ),
@@ -171,8 +171,8 @@ class _FirstLogin4State extends State<FirstLogin4> {
                     );
                   }),
                   ForwardButton(onPressed: () {
-                    if (selectedMartial.isNotEmpty) {
-                      sendDataToBackend(selectedMartial);
+                    if (selectedMartialStatusValue.isNotEmpty) {
+                      sendDataToBackend(selectedMartialStatusValue);
                     } else {
                       // Show an alert or a snackbar message to select an occupation
                       ScaffoldMessenger.of(context).showSnackBar(

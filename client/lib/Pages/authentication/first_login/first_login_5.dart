@@ -15,8 +15,8 @@ class FirstLogin5 extends StatefulWidget {
 
 class _FirstLogin5State extends State<FirstLogin5> {
   bool agreedToTerms = false;
-  String selectedAllow = ''; // Variable to store selected gender
-  String? selectedJobRole;
+  String acceptedTermValue = ''; // Variable to store selected gender
+  String? acceptedTerm;
 
   Widget _buildRadioListTile({required String title, required String value}) {
     return ListTile(
@@ -24,7 +24,7 @@ class _FirstLogin5State extends State<FirstLogin5> {
       title: Text(
         title,
         style: TextStyle(
-          color: selectedJobRole == value ? Colors.orange : Colors.black,
+          color: acceptedTerm == value ? Colors.orange : Colors.black,
           fontSize: 14,
           fontWeight: FontWeight.w400,
           fontFamily: 'Poppins',
@@ -32,10 +32,11 @@ class _FirstLogin5State extends State<FirstLogin5> {
       ),
       leading: Radio<String>(
         value: value,
-        groupValue: selectedJobRole,
+        groupValue: acceptedTerm,
         onChanged: (String? value) {
           setState(() {
-            selectedJobRole = value;
+            acceptedTerm = value;
+            acceptedTermValue = value!;
           });
         },
         activeColor: Colors.orange,
@@ -119,7 +120,7 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      if (selectedAllow.isNotEmpty) {
+                      if (acceptedTermValue.isNotEmpty) {
                         Navigator.push(
                           context,
                           MaterialPageRoute(

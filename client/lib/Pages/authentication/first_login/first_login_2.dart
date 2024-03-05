@@ -22,38 +22,37 @@ class FirstLogin2 extends StatefulWidget {
 class _FirstLogin2State extends State<FirstLogin2> {
   bool agreedToTerms = false;
   String selectedGender = ''; // Variable to store selected gender
-  TextEditingController birthDateController =
-      TextEditingController(); // Controller for birth date input
 
   Future<void> sendUserDataToBackend() async {
-  var _auth_service = AuthService();
-  String? token = await _auth_service.getIdToken();
-  var url = Uri.parse('http://${fixedIp}:3000/user/update_data'); // Your actual endpoint
-  var response = await http.post(url,
-      body: json.encode({
-        'birthday': birthDateController.text,
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token'
-      });
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+    var url = Uri.parse(
+        'http://${fixedIp}:3000/user/update_data'); // Your actual endpoint
+    var response = await http.post(url,
+        body: json.encode({
+          'birthday': birthDateController.text,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
 
-  if (response.statusCode == 200) {
-    print("Data submitted successfully");
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const FirstLogin3(), // Navigate to the next page
-      ),
-    );
-  } else {
-    print("Failed to submit data: ${response.body}");
+    if (response.statusCode == 200) {
+      print("Data submitted successfully");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              const FirstLogin3(), // Navigate to the next page
+        ),
+      );
+    } else {
+      print("Failed to submit data: ${response.body}");
+    }
   }
-}
-
 
   DateTime? selectedDate;
-  TextEditingController dateController = TextEditingController();
+  TextEditingController birthDateController = TextEditingController();
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -67,7 +66,8 @@ class _FirstLogin2State extends State<FirstLogin2> {
       setState(() {
         selectedDate = picked;
         // Update the text field with the selected date formatted as DD/MM/YYYY
-        dateController.text = DateFormat('dd/MM/yyyy').format(selectedDate!);
+        birthDateController.text =
+            DateFormat('dd/MM/yyyy').format(selectedDate!);
       });
     }
   }
@@ -125,7 +125,7 @@ class _FirstLogin2State extends State<FirstLogin2> {
                 Container(
                   padding: const EdgeInsets.only(left: 24, right: 24),
                   child: TextFormField(
-                    controller: dateController,
+                    controller: birthDateController,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),

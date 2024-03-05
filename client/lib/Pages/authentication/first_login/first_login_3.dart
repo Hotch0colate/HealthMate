@@ -16,7 +16,7 @@ class FirstLogin3 extends StatefulWidget {
 
 class _FirstLogin3State extends State<FirstLogin3> {
   bool agreedToTerms = false;
-  String selectedOccupation = ''; // Changed variable name for clarity
+  String selectedCareerValue = ''; // Changed variable name for clarity
 
   // Function to send data to backend
   Future<void> sendDataToBackend(String career) async {
@@ -34,7 +34,6 @@ class _FirstLogin3State extends State<FirstLogin3> {
       body: jsonEncode({"career": career}),
     );
 
-
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, then navigate to the next page
       Navigator.push(
@@ -50,7 +49,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
     }
   }
 
-  String? selectedJobRole;
+  String? selectedCareer;
 
   Widget _buildRadioListTile({required String title, required String value}) {
     return ListTile(
@@ -58,7 +57,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
       title: Text(
         title,
         style: TextStyle(
-          color: selectedJobRole == value ? Colors.orange : Colors.black,
+          color: selectedCareer == value ? Colors.orange : Colors.black,
           fontSize: 14,
           fontWeight: FontWeight.w400,
           fontFamily: 'Poppins',
@@ -66,10 +65,11 @@ class _FirstLogin3State extends State<FirstLogin3> {
       ),
       leading: Radio<String>(
         value: value,
-        groupValue: selectedJobRole,
+        groupValue: selectedCareer,
         onChanged: (String? value) {
           setState(() {
-            selectedJobRole = value;
+            selectedCareer = value;
+            selectedCareerValue = value!;
           });
         },
         activeColor: Colors.orange,
@@ -126,27 +126,27 @@ class _FirstLogin3State extends State<FirstLogin3> {
                   children: <Widget>[
                     _buildRadioListTile(
                       title: 'นักเรียน/นิสิตนักศึกษา',
-                      value: 'นักเรียน/นิสิตนักศึกษา',
+                      value: 'Student',
                     ),
                     _buildRadioListTile(
                       title: 'พนักงานบริษัทเอกชน',
-                      value: 'พนักงานบริษัทเอกชน',
+                      value: 'OfficeWorker',
                     ),
                     _buildRadioListTile(
                       title: 'พนักงานข้าราชการ',
-                      value: 'พนักงานข้าราชการ',
+                      value: 'PublicServant',
                     ),
                     _buildRadioListTile(
                       title: 'พนักงานรัฐวิสาหกิจ',
-                      value: 'พนักงานรัฐวิสาหกิจ',
+                      value: 'StateEnterpriseEmployee',
                     ),
                     _buildRadioListTile(
                       title: 'พนักงานโรงงานอุตสาหกรรม',
-                      value: 'พนักงานโรงงานอุตสาหกรรม',
+                      value: 'IndustryWorker',
                     ),
                     _buildRadioListTile(
                       title: 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
-                      value: 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
+                      value: 'PrivateBusiness',
                     ),
                   ],
                 ),
@@ -163,8 +163,8 @@ class _FirstLogin3State extends State<FirstLogin3> {
                   }),
                   ForwardButton(
                     onPressed: () {
-                      if (selectedOccupation.isNotEmpty) {
-                        sendDataToBackend(selectedOccupation);
+                      if (selectedCareerValue.isNotEmpty) {
+                        sendDataToBackend(selectedCareerValue);
                       } else {
                         // Show an alert or a snackbar message to select an occupation
                         ScaffoldMessenger.of(context).showSnackBar(
