@@ -165,6 +165,11 @@ class _FirstLogin3State extends State<FirstLogin3> {
                     onPressed: () {
                       if (selectedCareerValue.isNotEmpty) {
                         sendDataToBackend(selectedCareerValue);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FirstLogin4()),
+                        );
                       } else {
                         // Show an alert or a snackbar message to select an occupation
                         ScaffoldMessenger.of(context).showSnackBar(

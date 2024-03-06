@@ -170,6 +170,11 @@ class _FirstLogin2State extends State<FirstLogin2> {
                     ForwardButton(
                       onPressed: () {
                         sendUserDataToBackend();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FirstLogin3()),
+                        );
                         // Handle button press for the left button
                         // You can add your logic or navigation here
                       },

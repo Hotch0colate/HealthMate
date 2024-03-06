@@ -99,7 +99,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
                 height: 86,
                 child: Image(
                   image: AssetImage(
-                    'assets/main_mascot.png',
+                    'assets/logos/main_mascot.png',
                   ),
                 ),
               ),
@@ -179,13 +179,18 @@ class _FirstLogin1State extends State<FirstLogin1> {
                   ],
                 ),
               ),
-              const SizedBox(height: 125),
+              const SizedBox(height: 60),
               Align(
                 alignment: Alignment.centerRight,
                 child: ForwardButton(
                   onPressed: () {
                     if (selectedGender.isNotEmpty) {
                       sendUserDataToBackend(selectedGender);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const FirstLogin2()),
+                      );
                     } else {
                       // Prompt user to select a gender or handle this case accordingly
                       print("Please select a gender");
