@@ -4,10 +4,6 @@ import '../emotion_calendar/add_emotion_widget.dart';
 import 'package:client/theme/color.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const Calendar());
-}
-
 class Calendar extends StatelessWidget {
   const Calendar({super.key});
 
