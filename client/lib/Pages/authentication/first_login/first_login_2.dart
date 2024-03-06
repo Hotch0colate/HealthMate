@@ -87,7 +87,7 @@ class _FirstLogin2State extends State<FirstLogin2> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 51,
+                  height: 45,
                   width: MediaQuery.of(context).size.width - 32,
                 ),
                 Image.asset('assets/logos/big_app_name.png'),

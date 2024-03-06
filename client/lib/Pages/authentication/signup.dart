@@ -113,7 +113,7 @@ class _SignupPageState extends State<SignupPage> {
                 Navigator.pop(context); // Navigate back to the previous screen
               },
               child: const Image(
-                image: AssetImage('icons/back_new.png'),
+                image: AssetImage('assets/icons/back_new.png'),
                 height: 20,
                 width: 20,
                 color: Colors.grey,
@@ -122,7 +122,7 @@ class _SignupPageState extends State<SignupPage> {
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(40),
             child:
-                Image.asset('package:client/assets/logos/medium_app_name.png')),
+                Image.asset('assets/logos/medium_app_name.png')),
       ),
       body: SingleChildScrollView(
         child: Container(
