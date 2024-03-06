@@ -9,6 +9,7 @@ class SplashScreen extends StatefulWidget {
   _SplashScreenState createState() => _SplashScreenState();
 }
 
+// new branch bro xD
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
