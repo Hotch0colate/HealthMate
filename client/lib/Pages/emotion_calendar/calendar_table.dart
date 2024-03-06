@@ -1,3 +1,9 @@
+import 'dart:convert';
+
+import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:client/models/emotion_model_c.dart';
 import 'package:client/theme/font.dart';
 import 'package:client/theme/color.dart';
@@ -19,11 +25,13 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
+  List<SmallEmotions> unformatEmotions = [];
 
   @override
   void initState() {
     super.initState();
     initializeDateFormatting('th');
+    _fetchAndSetUid();
   }
 
   String _formatThaiYear(DateTime date) {
@@ -31,6 +39,42 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
     return DateFormat.yMMMM('th_TH')
         .format(date)
         .replaceAll(RegExp(r'\d+'), thaiYear.toString());
+  }
+
+  void _fetchAndSetUid() async {
+    // สมมติว่าคุณมีฟังก์ชัน `getToken` ที่สามารถดึง token ของผู้ใช้
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+    await recievedAllEmotionCalendar(token);
+  }
+
+  Future<void> recievedAllEmotionCalendar(String? token) async {
+    try {
+      final response = await http.post(
+          Uri.parse('http://${fixedIp}:3000/emotion/read_all_data'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token', // ส่ง token ใน header
+          });
+
+      if (response.statusCode == 200) {
+        print('Received each last emotion of each day successfully');
+        Map<String, dynamic> data = json.decode(response.body)['Data'];
+
+        data.forEach((dateStr, emotion) {
+          if (emotion != null) {
+            // Assuming the date comes in the format "dd-MM-yyyy"
+            DateTime parsedDate = DateFormat("dd-MM-yyyy").parse(dateStr);
+            unformatEmotions
+                .add(SmallEmotions(dateTime: parsedDate, emotion: emotion));
+          }
+        });
+      } else {
+        print('Error recieving: ${response.reasonPhrase}');
+      }
+    } catch (error) {
+      print('Error recieving: $error');
+    }
   }
 
   @override
@@ -130,10 +174,8 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => EmotionDetailPage(
-                      date: _selectedDay!,
-                      emotionsData: const [],
-                    ),
+                    builder: (context) =>
+                        EmotionDetailPage(date: _selectedDay!),
                   ),
                 );
 
@@ -150,8 +192,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                 todayBuilder: (context, date, _) {
                   var dateWithoutTime =
                       DateTime(date.year, date.month, date.day);
-                  var emotionsForTheDay =
-                      SmallEmotions.small_emotions.where((smallEmotion) {
+                  var formattedEmotion = unformatEmotions.where((smallEmotion) {
                     var emotionDate = DateTime(
                       convertBuddhistYearToGregorian(
                           smallEmotion.dateTime.year),
@@ -162,7 +203,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                   }).toList();
 
                   // If there are emotions for 'today', do not show the todayDecoration
-                  if (emotionsForTheDay.isNotEmpty) {
+                  if (formattedEmotion.isNotEmpty) {
                     return Center(
                       child: Text(
                         DateFormat('d').format(date),
@@ -190,7 +231,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                 markerBuilder: (context, date, events) {
                   var dateWithoutTime =
                       DateTime(date.year, date.month, date.day);
-                  var emotionsForTheDay = SmallEmotions.small_emotions
+                  var formattedEmotion = unformatEmotions
                       .where((smallEmotion) => isSameDay(
                             DateTime(
                               convertBuddhistYearToGregorian(
@@ -202,16 +243,16 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                           ))
                       .toList();
 
-                  if (emotionsForTheDay.isNotEmpty) {
+                  if (formattedEmotion.isNotEmpty) {
                     // Sort emotions for the day by dateTime in descending order
-                    emotionsForTheDay
+                    formattedEmotion
                         .sort((a, b) => b.dateTime.compareTo(a.dateTime));
 
                     return Positioned(
                       right: 1,
                       bottom: 10,
                       child: Image.asset(
-                        'assets/emotion/emotion_calendar/c_${emotionsForTheDay.first.emotion}.png',
+                        'assets/emotion/emotion_calendar/c_${formattedEmotion.first.emotion}.png',
                         width: 50, // Adjust size accordingly
                       ),
                     );

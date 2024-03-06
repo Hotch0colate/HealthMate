@@ -6,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TalkPage extends StatelessWidget {
-  final int selectedPage;
-  final Function(int) onPageSelected;
+  // final int selectedPage;
+  // final Function(int) onPageSelected;
 
-  const TalkPage(
-      {super.key, required this.selectedPage, required this.onPageSelected});
+  // const TalkPage(
+  //     {super.key, required this.selectedPage, required this.onPageSelected});
 
   @override
   Widget build(BuildContext context) {

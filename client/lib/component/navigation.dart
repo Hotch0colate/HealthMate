@@ -8,7 +8,7 @@ import 'package:client/services/ip_variable.dart';
 
 import 'package:client/theme/color.dart';
 
-import 'package:client/pages/select_talk/select_talk.dart';
+import 'package:client/Pages/select_talk/talk_page.dart';
 import 'package:client/pages/profile/profile.dart';
 import 'package:client/pages/chat/chat_log.dart';
 
@@ -34,7 +34,7 @@ class _MainAppState extends State<MainApp> {
     var _auth_service = AuthService();
     String? token = await _auth_service
         .getIdToken(); // สมมติว่า getIdToken คืนค่า Future<String?>
-    print("TOKEN!!!!! $token");
+    // print("TOKEN!!!!! $token");
     // ส่ง token ไปยัง backend เพื่อดึง uid
     String uid = await fetchUidFromToken(token);
     setState(() {
@@ -63,7 +63,7 @@ class _MainAppState extends State<MainApp> {
 
   List<Widget> _pageOptions() => [
         const Calendar(),
-        SelectTalk(),
+        TalkPage(),
         ChatLog(uid: userUid), // ใช้ userUid ที่อัปเดตแล้ว
         const ProfilePage(),
       ];

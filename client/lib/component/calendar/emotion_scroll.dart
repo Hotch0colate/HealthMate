@@ -10,7 +10,6 @@ class _EmotionScollState extends State<EmotionScoll> {
   String selectedEmotion = '';
 
   final List<String> emotionImages = [
-    'Default',
     'Happy',
     'Excited',
     'Angry',

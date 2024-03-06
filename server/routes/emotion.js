@@ -11,8 +11,8 @@ app.use(cors());
 
 // สร้าง emotion ด้วยอีเมล
 // feature signup
-router.post('/create_data', async (req, res) => {
-  uid = req.body.uid
+router.post('/create_data', authenticate, async (req, res) => {
+  uid = req.user.uid
   emotion = req.body.emotion
   description = req.body.description
 
@@ -49,44 +49,37 @@ router.post('/create_data', async (req, res) => {
 
 //ดึงข้อมูลจาก emotions
 //fetch  emotions
-router.post('/read_all_data', async (req, res) => {
-  var uid = req.body.uid;
-
-  var monthYear = req.body.monthsYear; // รับค่า MM-yyyy จาก request body
-  var monthYearParts = monthYear.split('-');
-  var targetMonth = parseInt(monthYearParts[0], 10);
-  var targetYear = parseInt(monthYearParts[1], 10);
+router.post('/read_all_data', authenticate, async (req, res) => {
+  var uid = req.user.uid;
 
   try {
     firebasedb.get(ref(db, 'users/' + uid + '/calendar'))
       .then((snapshot) => {
         if (snapshot.exists()) {
           let allData = snapshot.val();
-          let filteredData = {};
-          // กรองข้อมูลโดยวนลูปผ่าน keys ของ allData
-          Object.keys(allData).forEach(date => {
-            let dateParts = date.split('-'); // สมมติว่า date มีรูปแบบ dd-MM-yyyy
-            // let day = parseInt(dateParts[0], 10);
-            let month = parseInt(dateParts[1], 10);
-            let year = parseInt(dateParts[2], 10);
+          let emotionsData = {};
 
-            // เช็คว่าเดือนและปีตรงกับ targetMonth และ targetYear หรือไม่
-            if (month === targetMonth && year === targetYear) {
-              filteredData[date] = allData[date]; // เก็บข้อมูลที่ตรงกัน
+          // Loop through each date key and extract the lastemotion
+          Object.keys(allData).forEach(date => {
+            if (allData[date] && allData[date].lastemotion) {
+              emotionsData[date] = allData[date].lastemotion;
             }
           });
+
+          console.log(emotionsData);
 
           return res.status(200).json({
             RespCode: 200,
             RespMessage: "Fetch data success",
-            Data: filteredData // ส่งข้อมูลที่กรองแล้วกลับไป
+            Data: emotionsData // ส่งข้อมูลที่กรองแล้วกลับไป
           });
         }
         else {
           console.log("No data avilabel");
           return res.status(200).json({
             RespCode: 200,
-            RespMessage: "No data available"
+            RespMessage: "No data available",
+            Data: {}
           });
         }
       })
@@ -103,21 +96,24 @@ router.post('/read_all_data', async (req, res) => {
 
 //ดึงข้อมูลจาก emotions ตามวันที่
 //fetch  emotions
-router.post('/read_data', async (req, res) => {
-  var uid = req.body.uid;
+router.post('/read_data', authenticate, async (req, res) => {
+  var uid = req.user.uid;
 
   var dayMonthYear = req.body.dayMonthYear; // รับค่า MM-yyyy จาก request body
   var dayMonthYearParts = dayMonthYear.split('-');
   var targetDay = parseInt(dayMonthYearParts[0], 10);
   var targetMonth = parseInt(dayMonthYearParts[1], 10);
+  if (targetDay < 10) {
+    targetDay = "0" + targetDay;
+  }
   if (targetMonth < 10) {
     targetMonth = "0" + targetMonth;
   }
   var targetYear = parseInt(dayMonthYearParts[2], 10);
 
   try {
-    console.log('users/' + uid + '/calendar/' + targetDay + '-' + targetMonth + '-' + targetYear);
-    firebasedb.get(ref(db, 'users/' + uid + '/calendar/' + targetDay + '-' + targetMonth + '-' + targetYear))
+    console.log('users/' + uid + '/calendar/' + targetDay + '-' + targetMonth + '-' + targetYear + '/emotions');
+    firebasedb.get(ref(db, 'users/' + uid + '/calendar/' + targetDay + '-' + targetMonth + '-' + targetYear + '/emotions'))
       .then((snapshot) => {
         if (snapshot.exists()) {
           return res.status(200).json({

@@ -1,3 +1,4 @@
+import 'package:client/Pages/select_talk/talk_page.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -135,6 +136,12 @@ class ConfirmDelete extends StatelessWidget {
               onPressed: () {
                 // Call the function to close the dialog
                 Navigator.of(context).pop();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => TalkPage(),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: ColorTheme.WhiteColor,

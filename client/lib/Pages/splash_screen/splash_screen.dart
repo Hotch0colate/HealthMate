@@ -30,6 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     String? token = await AuthService().getToken();
     if (token != null) {
       // Token exists, so navigate to the main app screen
+      // print("Token:" + token);
       Navigator.of(context).pushReplacementNamed('/main');
     } else {
       // No token, so navigate to the login screen
