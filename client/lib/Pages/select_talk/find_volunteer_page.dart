@@ -49,13 +49,19 @@ class FindVolunteerPage extends StatelessWidget {
                   width: 35, fit: BoxFit.contain),
             ],
           ),
+          flexibleSpace: Image.asset(
+            'assets/loading_screen/Vector.png',
+            fit: BoxFit.cover,
+          ),
+          backgroundColor: Colors.transparent,
+          toolbarHeight: 170,
         ),
         body: Container(
           child: Center(
             child: Column(
               children: [
                 const SizedBox(
-                  height: 118,
+                  height: 20,
                 ),
                 Text(
                   'กำลังค้นหา',
@@ -68,9 +74,9 @@ class FindVolunteerPage extends StatelessWidget {
                   alignment: Alignment.center,
                   children: [
                     const AnimatedBackground(), // This will display the animation
-                    Image.asset('assets/images/Volunteer scarf.png',
-                        width: 100,
-                        fit: BoxFit.contain), // This will stay static on top
+                    // Image.asset('assets/images/Volunteer scarf.png',
+                    //     width: 100,
+                    //     fit: BoxFit.contain), // This will stay static on top
                   ],
                 ),
                 const SizedBox(
@@ -186,13 +192,13 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     _controller.repeat(reverse: false); // Do not reverse the animation
 
     _frames = [
-      Image.asset('package:client/assets/loading_screen/loading_1.png',
+      Image.asset('assets/loading_screen/loading_1.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_2.png',
+      Image.asset('assets/loading_screen/loading_2.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_3.png',
+      Image.asset('assets/loading_screen/loading_3.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_4.png',
+      Image.asset('assets/loading_screen/loading_4.png',
           width: 300, fit: BoxFit.contain),
     ];
   }
