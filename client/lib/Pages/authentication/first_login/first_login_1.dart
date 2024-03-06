@@ -59,39 +59,10 @@ class _FirstLogin1State extends State<FirstLogin1> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 111,
+                height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
-              RichText(
-                text: const TextSpan(
-                  children: [
-                    TextSpan(
-                      text: 'HEALTH',
-                      style: TextStyle(
-                        color: Color.fromRGBO(33, 150, 243, 1),
-                        fontSize: 54,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    TextSpan(
-                      text: 'MATE',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 54,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const Text(
-                '"Take deep breaths and release stress."',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: 'Poppins'),
-              ),
+              Image.asset('assets/logos/big_app_name.png'),
               const SizedBox(
                 height: 37,
               ),
@@ -179,27 +150,36 @@ class _FirstLogin1State extends State<FirstLogin1> {
                   ],
                 ),
               ),
-              const SizedBox(height: 60),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ForwardButton(
-                  onPressed: () {
-                    if (selectedGender.isNotEmpty) {
-                      sendUserDataToBackend(selectedGender);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const FirstLogin2()),
-                      );
-                    } else {
-                      // Prompt user to select a gender or handle this case accordingly
-                      print("Please select a gender");
-                    }
-                  },
-                ),
-              ),
+              // const SizedBox(height: 60),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              height: 40,
+              width: 118,
+            ),
+            ForwardButton(
+              onPressed: () {
+                if (selectedGender.isNotEmpty) {
+                  sendUserDataToBackend(selectedGender);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FirstLogin2()),
+                  );
+                } else {
+                  // Prompt user to select a gender or handle this case accordingly
+                  print("Please select a gender");
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

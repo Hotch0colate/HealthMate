@@ -151,39 +151,47 @@ class _FirstLogin3State extends State<FirstLogin3> {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GoBackButton(onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FirstLogin2()),
-                    );
-                  }),
-                  ForwardButton(
-                    onPressed: () {
-                      if (selectedCareerValue.isNotEmpty) {
-                        sendDataToBackend(selectedCareerValue);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const FirstLogin4()),
-                        );
-                      } else {
-                        // Show an alert or a snackbar message to select an occupation
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Please select an occupation"),
-                          ),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GoBackButton(
+              onPressed: () {
+                // Your navigation or functionality here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const FirstLogin2(), // Example: Navigate to a specific screen
+                  ),
+                );
+              },
+            ),
+            ForwardButton(
+              onPressed: () {
+                if (selectedCareerValue.isNotEmpty) {
+                  sendDataToBackend(selectedCareerValue);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FirstLogin4()),
+                  );
+                } else {
+                  // Show an alert or a snackbar message to select an occupation
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please select an occupation"),
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

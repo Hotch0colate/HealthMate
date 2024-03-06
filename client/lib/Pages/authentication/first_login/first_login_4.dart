@@ -158,39 +158,40 @@ class _FirstLogin4State extends State<FirstLogin4> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GoBackButton(onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FirstLogin3(),
-                      ),
-                    );
-                  }),
-                  ForwardButton(onPressed: () {
-                    if (selectedMartialStatusValue.isNotEmpty) {
-                      sendDataToBackend(selectedMartialStatusValue);
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const FirstLogin5()),
-                      );
-                    } else {
-                      // Show an alert or a snackbar message to select an occupation
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text("Please select an occupation"),
-                        ),
-                      );
-                    }
-                  }),
-                ],
-              ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GoBackButton(onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FirstLogin3(),
+                ),
+              );
+            }),
+            ForwardButton(onPressed: () {
+              if (selectedMartialStatusValue.isNotEmpty) {
+                sendDataToBackend(selectedMartialStatusValue);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FirstLogin5()),
+                );
+              } else {
+                // Show an alert or a snackbar message to select an occupation
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Please select an occupation"),
+                  ),
+                );
+              }
+            }),
+          ],
         ),
       ),
     );
