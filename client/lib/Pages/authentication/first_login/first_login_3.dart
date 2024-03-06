@@ -88,7 +88,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 51,
+                height: 45,
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
