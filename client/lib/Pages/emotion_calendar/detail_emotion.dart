@@ -27,10 +27,10 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
   @override
   void initState() {
     super.initState();
-    _fetchAndSetUid();
+    _recieveDetailDayEmotionWithToken();
   }
 
-  void _fetchAndSetUid() async {
+  void _recieveDetailDayEmotionWithToken() async {
     // สมมติว่าคุณมีฟังก์ชัน `getToken` ที่สามารถดึง token ของผู้ใช้
     var _auth_service = AuthService();
     String? token = await _auth_service.getIdToken();
@@ -54,35 +54,43 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
       );
 
       if (response.statusCode == 200) {
-        print('Received each emotions in that day successfully');
-        final data = json.decode(response.body)['Data'] as Map<String, dynamic>;
+        print('Received each emotion of the day successfully');
+        final data = json.decode(response.body)['Data'];
 
-        // Clear the list before adding new items to avoid duplicating the previous state's data
-        unformattedEmotion.clear();
+        // Check if data is not null before proceeding
+        if (data != null) {
+          final emotionData = Map<String, dynamic>.from(data);
 
-        data.forEach((key, value) {
-          // Parsing the date string to DateTime without timezone conversion
-          DateTime parsedDate =
-              DateFormat("d/M/yyyy HH:mm:ss", 'th').parse(value['time'], true);
+          // Clear the list before adding new items to avoid duplicating the previous state's data
+          unformattedEmotion.clear();
 
-// Create a new DateTime object with the adjusted year and zeroed time.
-          parsedDate = DateTime(
-              parsedDate.year - 543, // Adjust year for Buddhist calendar
-              parsedDate.month,
-              parsedDate.day,
-              parsedDate.hour, // Preserve the hour
-              parsedDate.minute, // Preserve the minutes
-              parsedDate.second // Preserve the seconds
-              );
+          emotionData.forEach((key, value) {
+            // Ensure that the required fields are not null before proceeding
+            if (value != null &&
+                value['time'] != null &&
+                value['emotion'] != null &&
+                value['description'] != null) {
+              DateTime parsedDate = DateFormat("d/M/yyyy HH:mm:ss", 'th')
+                  .parse(value['time'], true);
+              parsedDate = DateTime(
+                  parsedDate.year - 543, // Adjust year for Buddhist calendar
+                  parsedDate.month,
+                  parsedDate.day,
+                  parsedDate.hour, // Preserve the hour
+                  parsedDate.minute, // Preserve the minutes
+                  parsedDate.second // Preserve the seconds
+                  );
 
-          unformattedEmotion.add(Emotions(
-            dateTime: parsedDate,
-            emotion: value['emotion'],
-            detail: value['description'],
-          ));
-        });
+              unformattedEmotion.add(Emotions(
+                dateTime: parsedDate,
+                emotion: value['emotion'],
+                detail: value['description'],
+              ));
+            }
+          });
 
-        setState(() {});
+          setState(() {}); // Trigger a state update to refresh the UI
+        }
       } else {
         print('Error receiving: ${response.reasonPhrase}');
       }

@@ -1,12 +1,16 @@
 import "package:client/theme/color.dart";
 import "package:flutter/material.dart";
 
-class EmotionScoll extends StatefulWidget {
+class EmotionScroll extends StatefulWidget {
+  final Function(String) onEmotionSelected;
+
+  EmotionScroll({Key? key, required this.onEmotionSelected}) : super(key: key);
+
   @override
-  _EmotionScollState createState() => _EmotionScollState();
+  _EmotionScrollState createState() => _EmotionScrollState();
 }
 
-class _EmotionScollState extends State<EmotionScoll> {
+class _EmotionScrollState extends State<EmotionScroll> {
   String selectedEmotion = '';
 
   final List<String> emotionImages = [
@@ -32,6 +36,7 @@ class _EmotionScollState extends State<EmotionScoll> {
               setState(() {
                 selectedEmotion = emotionImages[index];
               });
+              widget.onEmotionSelected(selectedEmotion);
             },
             child: Container(
               child: Stack(

@@ -31,7 +31,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
   void initState() {
     super.initState();
     initializeDateFormatting('th');
-    _fetchAndSetUid();
+    _recieveAllEmotionWithToken();
   }
 
   String _formatThaiYear(DateTime date) {
@@ -41,7 +41,13 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
         .replaceAll(RegExp(r'\d+'), thaiYear.toString());
   }
 
-  void _fetchAndSetUid() async {
+  // void refreshEmotions() {
+  //   setState(() {
+  //     _recieveAllEmotionWithToken();
+  //   });
+  // }
+
+  void _recieveAllEmotionWithToken() async {
     // สมมติว่าคุณมีฟังก์ชัน `getToken` ที่สามารถดึง token ของผู้ใช้
     var _auth_service = AuthService();
     String? token = await _auth_service.getIdToken();
