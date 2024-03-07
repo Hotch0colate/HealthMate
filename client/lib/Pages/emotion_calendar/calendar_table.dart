@@ -199,6 +199,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                   var dateWithoutTime =
                       DateTime(date.year, date.month, date.day);
                   var formattedEmotion = unformatEmotions.where((smallEmotion) {
+                    ///small emotion for lastest emotion of each day
                     var emotionDate = DateTime(
                       convertBuddhistYearToGregorian(
                           smallEmotion.dateTime.year),

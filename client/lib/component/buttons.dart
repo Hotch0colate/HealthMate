@@ -230,17 +230,16 @@ class MdPrimaryButtonRed extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        foregroundColor: ColorTheme.WhiteColor,
-        backgroundColor: ColorTheme.errorAction, // Text color
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          foregroundColor: ColorTheme.WhiteColor,
+          backgroundColor: ColorTheme.errorAction, // Text color
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16),
+          ),
         ),
-      ),
-      child: Text(text, style: FontTheme.btn_medium),
-    );
+        child: Text(text, style: FontTheme.btn_medium));
   }
 }
 

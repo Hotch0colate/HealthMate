@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 
 class FindVolunteerPage extends StatelessWidget {
   const FindVolunteerPage({super.key});
+  
+
 
   // This function is used to show the dialog when the button is pressed
   void _showCancelDialog(BuildContext context) {
@@ -40,67 +42,82 @@ class FindVolunteerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: Column(
+      appBar: AppBar(
+        leading: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Image.asset('assets/icons/back_new.png',
+                width: 35, fit: BoxFit.contain),
+          ],
+        ),
+        flexibleSpace: Image.asset(
+          'assets/loading_screen/Vector.png',
+          fit: BoxFit.cover,
+        ),
+        backgroundColor: Colors.transparent,
+        toolbarHeight: 170,
+      ),
+      body: Container(
+        child: Center(
+          child: Column(
             children: [
+              // const SizedBox(
+              //   height: 10,
+              // ),
+              Text(
+                'กำลังค้นหา',
+                style: FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
+              ),
               const SizedBox(
                 height: 10,
               ),
-              Image.asset('assets/icons/back_new.png',
-                  width: 35, fit: BoxFit.contain),
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  const AnimatedBackground(), // This will display the animation
+                  Image.asset('assets/images/Volunteer scarf.png',
+                      width: 100,
+                      fit: BoxFit.contain), // This will stay static on top
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                'การพูดคุยกับอาสาสมัครหรือจิตแพทย์',
+                style: FontTheme.body1
+                    .copyWith(color: Colors.black.withOpacity(0.8)),
+              ),
+              Text(
+                'ไม่มีการเปิดเผยตัวตนทั้งสองฝ่าย',
+                style: FontTheme.body1
+                    .copyWith(color: ColorTheme.warningAction.withOpacity(0.6)),
+              ),
+              const SizedBox(
+                height: 65,
+              ),
             ],
           ),
         ),
-        body: Container(
-          child: Center(
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 118,
-                ),
-                Text(
-                  'กำลังค้นหา',
-                  style: FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
-                ),
-                const SizedBox(
-                  height: 29,
-                ),
-                Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    const AnimatedBackground(), // This will display the animation
-                    Image.asset('assets/images/Volunteer scarf.png',
-                        width: 100,
-                        fit: BoxFit.contain), // This will stay static on top
-                  ],
-                ),
-                const SizedBox(
-                  height: 43,
-                ),
-                Text(
-                  'การพูดคุยกับอาสาสมัครหรือจิตแพทย์',
-                  style: FontTheme.body1
-                      .copyWith(color: Colors.black.withOpacity(0.8)),
-                ),
-                Text(
-                  'ไม่มีการเปิดเผยตัวตนทั้งสองฝ่าย',
-                  style: FontTheme.body1.copyWith(
-                      color: ColorTheme.warningAction.withOpacity(0.6)),
-                ),
-                const SizedBox(
-                  height: 65,
-                ),
-                MdPrimaryButtonRed(
-                  onPressed: () {
-                    // Call the function to show the dialog
-                    _showCancelDialog(context);
-                  },
-                  text: 'ยกเลิก',
-                )
-              ],
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            MdPrimaryButtonRed(
+              onPressed: () {
+                // Call the function to show the dialog
+                _showCancelDialog(context);
+              },
+              text: 'ยกเลิก',
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }
 
@@ -134,13 +151,9 @@ class ConfirmDelete extends StatelessWidget {
           SingleChildScrollView(
             child: ElevatedButton(
               onPressed: () {
-                // Call the function to close the dialog
-                Navigator.of(context).pop();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => TalkPage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => TalkPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -193,13 +206,13 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     _controller.repeat(reverse: false); // Do not reverse the animation
 
     _frames = [
-      Image.asset('package:client/assets/loading_screen/loading_1.png',
+      Image.asset('assets/loading_screen/loading_1.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_2.png',
+      Image.asset('assets/loading_screen/loading_2.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_3.png',
+      Image.asset('assets/loading_screen/loading_3.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_4.png',
+      Image.asset('assets/loading_screen/loading_4.png',
           width: 300, fit: BoxFit.contain),
     ];
   }

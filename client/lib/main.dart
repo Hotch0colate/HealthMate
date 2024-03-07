@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      home: FindVolunteerPage(),
       routes: {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),

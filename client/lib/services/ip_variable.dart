@@ -1,4 +1,4 @@
 library globals;
 
 //Config according to your IP
-String fixedIp = "192.168.1.121";
+String fixedIp = "10.17.154.208";
