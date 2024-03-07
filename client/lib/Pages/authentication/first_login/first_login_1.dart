@@ -59,7 +59,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 45,
+                height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
@@ -150,22 +150,36 @@ class _FirstLogin1State extends State<FirstLogin1> {
                   ],
                 ),
               ),
-              const SizedBox(height: 125),
-              Align(
-                alignment: Alignment.centerRight,
-                child: ForwardButton(
-                  onPressed: () {
-                    if (selectedGender.isNotEmpty) {
-                      sendUserDataToBackend(selectedGender);
-                    } else {
-                      // Prompt user to select a gender or handle this case accordingly
-                      print("Please select a gender");
-                    }
-                  },
-                ),
-              ),
+              // const SizedBox(height: 60),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              height: 40,
+              width: 118,
+            ),
+            ForwardButton(
+              onPressed: () {
+                if (selectedGender.isNotEmpty) {
+                  sendUserDataToBackend(selectedGender);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FirstLogin2()),
+                  );
+                } else {
+                  // Prompt user to select a gender or handle this case accordingly
+                  print("Please select a gender");
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

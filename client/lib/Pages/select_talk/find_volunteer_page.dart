@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 
 class FindVolunteerPage extends StatelessWidget {
   const FindVolunteerPage({super.key});
-  
-
 
   // This function is used to show the dialog when the button is pressed
   void _showCancelDialog(BuildContext context) {
@@ -45,13 +43,31 @@ class FindVolunteerPage extends StatelessWidget {
       appBar: AppBar(
         leading: Column(
           children: [
-            const SizedBox(
-              height: 10,
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Image.asset(
+                'assets/icons/back_new.png',
+              ),
             ),
-            Image.asset('assets/icons/back_new.png',
-                width: 35, fit: BoxFit.contain),
           ],
         ),
+        leadingWidth: 40,
+        // Column(
+        //   children: [
+        //     const SizedBox(
+        //       height: 10,
+        //     ),
+        //     GestureDetector(
+        //       onTap: () {
+        //         Navigator.pop(context);
+        //       },
+        //       child: Image.asset('assets/icons/back_new.png',
+        //           width: 35, fit: BoxFit.contain),
+        //     )
+        //   ],
+        // ),
         flexibleSpace: Image.asset(
           'assets/loading_screen/Vector.png',
           fit: BoxFit.cover,
@@ -192,7 +208,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 2000), // Duration for each image
+      duration: const Duration(milliseconds: 1000), // Duration for each image
       vsync: this,
     )..addListener(() {
         final newIndex = (_controller.value * _frames.length).floor();
@@ -227,7 +243,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration:
-          const Duration(milliseconds: 3000), // Duration of fade between images
+          const Duration(milliseconds: 2500), // Duration of fade between images
       child: _frames[_currentIndex % _frames.length],
       transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(opacity: animation, child: child);

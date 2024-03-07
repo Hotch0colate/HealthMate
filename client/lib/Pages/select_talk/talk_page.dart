@@ -18,6 +18,14 @@ class TalkPage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, 60),
         child: AppBar(
+          leading: GestureDetector(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Image.asset('assets/icons/back_new.png',
+                width: 100, fit: BoxFit.contain),
+          ),
+          leadingWidth: 40,
           title: Image.asset('assets/logos/small_app_name.png'),
           elevation: 0,
         ),
@@ -30,16 +38,13 @@ class TalkPage extends StatelessWidget {
                 Column(mainAxisAlignment: MainAxisAlignment.center, children: [
               Column(
                 children: [
-                  const SizedBox(
-                    height: 31,
-                  ),
                   Text(
                     'พูดคุย',
                     style:
                         FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
                   ),
                   const SizedBox(
-                    height: 31,
+                    height: 10,
                   ),
                   CustomCard(
                     onPressed: () {},

@@ -87,7 +87,7 @@ class _FirstLogin2State extends State<FirstLogin2> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 45,
+                  height: 51,
                   width: MediaQuery.of(context).size.width - 32,
                 ),
                 Image.asset('assets/logos/big_app_name.png'),
@@ -151,34 +151,40 @@ class _FirstLogin2State extends State<FirstLogin2> {
                         true, // Prevents keyboard from appearing when tapping the field
                   ),
                 ),
-                const SizedBox(height: 242),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GoBackButton(
-                      onPressed: () {
-                        // Your navigation or functionality here
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const FirstLogin1(), // Example: Navigate to a specific screen
-                          ),
-                        );
-                      },
-                    ),
-                    ForwardButton(
-                      onPressed: () {
-                        sendUserDataToBackend();
-                        // Handle button press for the left button
-                        // You can add your logic or navigation here
-                      },
-                    ),
-                  ],
-                ),
               ],
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GoBackButton(
+              onPressed: () {
+                // Your navigation or functionality here
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const FirstLogin1(), // Example: Navigate to a specific screen
+                  ),
+                );
+              },
+            ),
+            ForwardButton(
+              onPressed: () {
+                sendUserDataToBackend();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FirstLogin3()),
+                );
+                // Handle button press for the left button
+                // You can add your logic or navigation here
+              },
+            ),
+          ],
         ),
       ),
     );

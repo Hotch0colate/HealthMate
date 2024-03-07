@@ -1,3 +1,4 @@
+import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
 
 //page import
@@ -58,7 +59,7 @@ class _FirstLogin5State extends State<FirstLogin5> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 45,
+                height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
@@ -114,57 +115,67 @@ class _FirstLogin5State extends State<FirstLogin5> {
                   ],
                 ),
               ),
-              const SizedBox(height: 240),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      if (acceptedTermValue.isNotEmpty) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MainApp(),
-                          ),
-                        );
-                      } else {
-                        // Show an alert or a snackbar message to select an occupation
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Please select an occupation"),
-                          ),
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      backgroundColor: const Color.fromRGBO(72, 210, 104, 1),
-                      foregroundColor: Colors.white,
-                    ),
-                    child: const SizedBox(
-                      height: 40,
-                      width: 137,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'ดำเนินการต่อ',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          // You can customize the order of Image and Text based on your preference
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
             ],
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GoBackButton(onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => FirstLogin4(),
+                ),
+              );
+            }),
+            ElevatedButton(
+              onPressed: () {
+                if (acceptedTermValue.isNotEmpty) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MainApp(),
+                    ),
+                  );
+                } else {
+                  // Show an alert or a snackbar message to select an occupation
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please select an occupation"),
+                    ),
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                backgroundColor: const Color.fromRGBO(72, 210, 104, 1),
+                foregroundColor: Colors.white,
+              ),
+              child: const SizedBox(
+                height: 40,
+                width: 118,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'ดำเนินการต่อ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    // You can customize the order of Image and Text based on your preference
+                  ],
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
