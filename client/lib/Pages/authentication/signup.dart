@@ -101,35 +101,36 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 93,
+        toolbarHeight: screenHeight * 0.1,
         backgroundColor: Colors.white,
         leading: Transform.translate(
           offset: const Offset(24, 16),
           child: GestureDetector(
-              onTap: () {
-                // Handle back button tap here
-                Navigator.pop(context); // Navigate back to the previous screen
-              },
-              child: const Image(
-                image: AssetImage('assets/icons/back_new.png'),
-                height: 20,
-                width: 20,
-                color: Colors.grey,
-              )),
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: const Image(
+              image: AssetImage('assets/icons/back_new.png'),
+              height: 20,
+              width: 20,
+              color: Colors.grey,
+            ),
+          ),
         ),
         bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child:
-                Image.asset('assets/logos/medium_app_name.png')),
+          preferredSize: Size.fromHeight(screenHeight * 0.04),
+          child: Image.asset('assets/logos/medium_app_name.png'),
+        ),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.only(
-            left: 24,
-            right: 24,
-            top: 20,
+          padding: EdgeInsets.symmetric(
+            horizontal: screenHeight * 0.02,
+            vertical: screenHeight * 0.01,
           ),
           child: Column(
             children: [
@@ -154,19 +155,44 @@ class _SignupPageState extends State<SignupPage> {
                     ),
                   ),
                   Container(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Column(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Column(
+                    padding: EdgeInsets.only(top: screenHeight * 0.015),
+                    child: Column(
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.only(left: 25),
+                                  child: const Text(
+                                    'ชื่อผู้ใช้',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                GreyTextField(
+                                  controller: _usernameController,
+                                  hintText: 'ใส่ชื่อผู้ใช้',
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(top: screenHeight * 0.007),
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Container(
-                                    padding: const EdgeInsets.only(left: 25),
+                                    padding: const EdgeInsets.only(
+                                        left: 25, bottom: 4),
                                     child: const Text(
-                                      'ชื่อผู้ใช้',
+                                      'อีเมล',
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 18,
@@ -174,181 +200,153 @@ class _SignupPageState extends State<SignupPage> {
                                       ),
                                     ),
                                   ),
-                                  const SizedBox(height: 4),
                                   GreyTextField(
-                                      controller: _usernameController,
-                                      hintText: 'ใส่ชื่อผู้ใช้'),
+                                    controller: _emailController,
+                                    hintText: 'ใส่อีเมล',
+                                  ),
                                 ],
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 7),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 25, bottom: 4),
-                                      child: const Text(
-                                        'อีเมล',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                    GreyTextField(
-                                        controller: _emailController,
-                                        hintText: 'ใส่อีเมล'),
-                                  ],
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: screenHeight * 0.007),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 25, bottom: 4),
+                                child: const Text(
+                                  'รหัสผ่าน',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
+                              ),
+                              PasswordTextField(
+                                controller: _passwordController,
+                                hintText: 'ใส่รหัสผ่าน',
                               ),
                             ],
                           ),
-                          Column(
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: screenHeight * 0.007),
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.only(top: 7),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 25, bottom: 4),
-                                      child: const Text(
-                                        'รหัสผ่าน',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                    PasswordTextField(
-                                      controller: _passwordController,
-                                      hintText: 'ใส่รหัสผ่าน',
-                                    ),
-                                  ],
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 25, bottom: 4),
+                                child: const Text(
+                                  'ยืนยันรหัสผ่าน',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 7),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 25, bottom: 4),
-                                      child: const Text(
-                                        'ยืนยันรหัสผ่าน',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                    ),
-                                    PasswordTextField(
-                                      controller: _confirmPasswordController,
-                                      hintText: 'ยืนยันรหัสผ่าน',
-                                    ),
-                                  ],
+                              PasswordTextField(
+                                controller: _confirmPasswordController,
+                                hintText: 'ยืนยันรหัสผ่าน',
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: screenHeight * 0.02),
+                        OrangeButton(
+                          onPressed: _signup,
+                          buttonText: 'สร้างบัญชี',
+                        ),
+                        SizedBox(height: screenHeight * 0.015),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text(
+                              'มีบัญชีอยู่แล้วใช่หรือไม่?',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
+                              ),
+                            ),
+                            const SizedBox(width: 3),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginPage(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                ' เข้าสู่ระบบที่นี่',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.orange,
                                 ),
                               ),
-                              const SizedBox(height: 24),
-                              OrangeButton(
-                                onPressed: _signup,
-                                buttonText: 'สร้างบัญชี',
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: screenHeight * 0.02),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'การเข้าสู่ระบบหรือสร้างบัญชีแสดงว่าคุณยอมรับ',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w300,
+                                color: Colors.black,
                               ),
-                              const SizedBox(height: 18),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                            ),
+                          ],
+                        ),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text.rich(
+                              TextSpan(
                                 children: [
-                                  const Text(
-                                    'มีบัญชีอยู่แล้วใช่หรือไม่?',
+                                  TextSpan(
+                                    text: 'ข้อกำหนดและเงื่อนไข',
                                     style: TextStyle(
-                                      fontSize: 16,
+                                      fontSize: 14,
                                       fontWeight: FontWeight.w300,
-                                      color: Colors.black,
+                                      color: Colors.orange,
                                     ),
                                   ),
-                                  const SizedBox(width: 3),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const LoginPage()),
-                                      );
-                                    },
-                                    child: const Text(
-                                      ' เข้าสู่ระบบที่นี่',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.orange,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 24),
-                              const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'การเข้าสู่ระบบหรือสร้างบัญชีแสดงว่าคุณยอมรับ',
+                                  TextSpan(
+                                    text: ' และ ',
                                     style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w300,
                                       color: Colors.black,
                                     ),
                                   ),
-                                ],
-                              ),
-                              const Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text.rich(
-                                    TextSpan(
-                                      children: [
-                                        TextSpan(
-                                          text: 'ข้อกำหนดและเงื่อนไข',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w300,
-                                            color:
-                                                Colors.orange, // Set to orange
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: ' และ ',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w300,
-                                            color: Colors.black, // Set to black
-                                          ),
-                                        ),
-                                        TextSpan(
-                                          text: 'นโยบายความเป็นส่วนตัว',
-                                          style: TextStyle(
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w300,
-                                            color:
-                                                Colors.orange, // Set to orange
-                                          ),
-                                        ),
-                                      ],
+                                  TextSpan(
+                                    text: 'นโยบายความเป็นส่วนตัว',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w300,
+                                      color: Colors.orange,
                                     ),
                                   ),
                                 ],
                               ),
-                            ],
-                          )
-                        ],
-                      )),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ],
