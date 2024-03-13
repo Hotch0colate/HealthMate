@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:client/Pages/emotion_calendar/calendar_table.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:http/http.dart' as http;
@@ -38,14 +39,18 @@ Future<void> createEmotionAndSending(String? token, String description) async {
   }
 }
 
-void _sendingEmotionWithToken(BuildContext context, String description) async {
+void _sendingEmotionWithToken(BuildContext context, String description,
+    VoidCallback refreshEmotionsCallback) async {
   // สมมติว่าคุณมีฟังก์ชัน `getToken` ที่สามารถดึง token ของผู้ใช้
   var _auth_service = AuthService();
   String? token = await _auth_service.getIdToken();
   await createEmotionAndSending(token, description);
+  print(refreshEmotionsCallback);
+  refreshEmotionsCallback();
 }
 
-void showCustomDialog(BuildContext context) {
+void showCustomDialog(
+    BuildContext context, VoidCallback refreshEmotionsCallback) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -59,13 +64,14 @@ void showCustomDialog(BuildContext context) {
             backgroundColor: Colors.transparent,
             child: dialogContent(context, (selectedEmotion) {
               currentSelectedEmotion = selectedEmotion;
-            }),
+            }, refreshEmotionsCallback),
           ));
     },
   );
 }
 
-Widget dialogContent(BuildContext context, Function(String) onEmotionSelected) {
+Widget dialogContent(BuildContext context, Function(String) onEmotionSelected,
+    VoidCallback refreshEmotionsCallback) {
   // Get the current date
   DateTime currentDate = DateTime.now();
   int buddhistEraYear = currentDate.year + 543;
@@ -127,7 +133,10 @@ Widget dialogContent(BuildContext context, Function(String) onEmotionSelected) {
           child: SmPrimaryButton(
             text: 'บันทึก',
             onPressed: () {
-              _sendingEmotionWithToken(context, descriptionController.text);
+              print(refreshEmotionsCallback);
+              _sendingEmotionWithToken(context, descriptionController.text, () {
+                refreshEmotionsCallback();
+              });
               descriptionController.clear();
               Navigator.of(context).pop();
             },

@@ -9,32 +9,36 @@ class Calendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: //AppBar Widget
-            AppBar(
-          flexibleSpace: Container(
-            margin: const EdgeInsets.only(top: 40, left: 16),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Image.asset(
-                'assets/logos/medium_app_name.png',
-                width: 200,
-                height: 40,
-              ),
+    return Scaffold(
+      appBar: //AppBar Widget
+          AppBar(
+        flexibleSpace: Container(
+          margin: const EdgeInsets.only(top: 40, left: 16),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Image.asset(
+              'assets/logos/medium_app_name.png',
+              width: 200,
+              height: 40,
             ),
           ),
         ),
-        body: const CalendarPage(),
-        backgroundColor: ColorTheme.WhiteColor,
       ),
+      body: const CalendarPage(),
+      backgroundColor: ColorTheme.WhiteColor,
     );
   }
 }
 
 class CalendarPage extends StatelessWidget {
   const CalendarPage({super.key});
+
+  void refreshEmotionsCallback() {
+    // Access the stateful widget and call the refresh function
+    final state = calendarKey.currentState;
+    state?.refreshEmotions();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -42,8 +46,8 @@ class CalendarPage extends StatelessWidget {
         Expanded(
           child: Container(
             padding: const EdgeInsets.all(16.0),
-            child: const Center(
-              child: ThaiCalendarWithTable(),
+            child: Center(
+              child: ThaiCalendarWithTable(key: calendarKey),
             ),
           ),
         ),
@@ -54,7 +58,7 @@ class CalendarPage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: ElevatedButton(
             onPressed: () {
-              showCustomDialog(context);
+              showCustomDialog(context, refreshEmotionsCallback);
             },
             style: ElevatedButton.styleFrom(
               primary: ColorTheme.primaryColor,
