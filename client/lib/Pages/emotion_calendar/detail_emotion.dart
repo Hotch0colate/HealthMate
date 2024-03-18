@@ -117,6 +117,8 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
       return emotionDate.isAtSameMomentAs(widgetDate);
     }).toList();
 
+    formattedEmotion.sort((a, b) => a.dateTime.compareTo(b.dateTime));
+
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
