@@ -48,7 +48,6 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
   }
 
   void refreshEmotions() {
-    print("refreshing emotions");
     setState(() {
       _fetchEmotions();
     });
@@ -201,8 +200,9 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                              EmotionDetailPage(date: _selectedDay!),
+                          builder: (context) => EmotionDetailPage(
+                              date: _selectedDay!,
+                              refreshEmotionCalendarCallback: refreshEmotions),
                         ),
                       );
 

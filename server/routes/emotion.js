@@ -66,7 +66,7 @@ router.post('/read_all_data', authenticate, async (req, res) => {
             }
           });
 
-          console.log(emotionsData);
+          // console.log(emotionsData);
 
           return res.status(200).json({
             RespCode: 200,
@@ -142,29 +142,87 @@ router.post('/read_data', authenticate, async (req, res) => {
 
 // ลบข้อมูล emotion
 // feature delete emotion
-router.post('/delete_data', (req, res) => {
-  var uid = req.body.uid;
+// router.post('/delete_data', authenticate, (req, res) => {
+//   var uid = req.user.uid;
+//   var date = req.body.date;
+//   var eid = req.body.eid;
+
+//   console.log('users/' + uid + '/calendar/' + date + '/emotions/' + eid);
+
+//   try {
+//     get(ref(db, 'users/' + uid + '/calendar/' + date + '/emotions/' + eid))
+//       .then((snapshot) => {
+//         if (snapshot.exists()) {
+//           remove(ref(db, 'users/' + uid + '/calendar/' + date + '/emotions/' + eid));
+//           return res.status(200).json({
+//             RespCode: 200,
+//             RespMessage: "Deleted successfully"
+//           });
+//         }
+//         else {
+//           console.log("No data available");
+//           return res.status(200).json({
+//             RespCode: 200,
+//             RespMessage: "No data available"
+//           });
+//         }
+//       });
+//   } catch (error) {
+//     console.log(error);
+//     return res.status(500).json({
+//       RespCode: 500,
+//       RespMessage: "Error : " + error.message + "/nPath API : /emotion/delete_data"
+//     });
+//   }
+// });
+
+router.post('/delete_data', authenticate, (req, res) => {
+  var uid = req.user.uid;
   var date = req.body.date;
   var eid = req.body.eid;
 
+  const datePath = 'users/' + uid + '/calendar/' + date;
+  const emotionsPath = datePath + '/emotions/';
+  const emotionToDeletePath = emotionsPath + eid;
+  const lastEmotionPath = datePath + '/lastemotion';
+
+  console.log(emotionToDeletePath);
+
   try {
-    get(ref(db, 'users/' + uid + '/calendar/' + date + '/emotions/' + eid))
-      .then((snapshot) => {
-        if (snapshot.exists()) {
-          remove(ref(db, 'users/' + uid + '/calendar/' + date + '/emotions/' + eid));
-          return res.status(200).json({
-            RespCode: 200,
-            RespMessage: "Deleted successfully"
-          });
+    get(ref(db, emotionsPath)).then((snapshot) => {
+      if (snapshot.exists() && snapshot.hasChild(eid)) {
+        // Delete the specified emotion
+        remove(ref(db, emotionToDeletePath));
+
+        // Check if there are any emotions left after deletion
+        const remainingEmotions = snapshot.val();
+        const testEmotions = Object.keys(remainingEmotions)
+          .map(key => ({ ...remainingEmotions[key], key }))
+        delete remainingEmotions[eid]; // Remove the deleted emotion from local copy
+
+        if (Object.keys(remainingEmotions).length === 0) {
+          // If no emotions are left, delete the whole date
+          remove(ref(db, datePath));
+        } else {
+          // Find and set the last emotion
+          const sortedEmotions = Object.keys(remainingEmotions)
+            .map(key => ({ ...remainingEmotions[key], key }))
+            .sort((a, b) => new Date(b.time) - new Date(a.time));
+          set(ref(db, lastEmotionPath), sortedEmotions[sortedEmotions.length - 1].emotion);
         }
-        else {
-          console.log("No data available");
-          return res.status(200).json({
-            RespCode: 200,
-            RespMessage: "No data available"
-          });
-        }
-      });
+
+        return res.status(200).json({
+          RespCode: 200,
+          RespMessage: "Deleted successfully"
+        });
+      } else {
+        console.log("No data available");
+        return res.status(200).json({
+          RespCode: 200,
+          RespMessage: "No data available"
+        });
+      }
+    });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
@@ -173,6 +231,7 @@ router.post('/delete_data', (req, res) => {
     });
   }
 });
+
 
 module.exports = router;
 

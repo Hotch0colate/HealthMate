@@ -14,8 +14,13 @@ import 'package:client/component/calendar/emotion_card.dart';
 
 class EmotionDetailPage extends StatefulWidget {
   final DateTime date;
+  VoidCallback refreshEmotionCalendarCallback;
 
-  const EmotionDetailPage({Key? key, required this.date}) : super(key: key);
+  EmotionDetailPage(
+      {Key? key,
+      required this.date,
+      required this.refreshEmotionCalendarCallback})
+      : super(key: key);
 
   @override
   _EmotionDetailPageState createState() => _EmotionDetailPageState();
@@ -54,7 +59,7 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
       );
 
       if (response.statusCode == 200) {
-        print('Received each emotion of the day successfully');
+        // print('Received each emotion of the day successfully');
         final data = json.decode(response.body)['Data'];
 
         // Check if data is not null before proceeding
@@ -69,7 +74,8 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
             if (value != null &&
                 value['time'] != null &&
                 value['emotion'] != null &&
-                value['description'] != null) {
+                value['description'] != null &&
+                value['eid'] != null) {
               DateTime parsedDate = DateFormat("d/M/yyyy HH:mm:ss", 'th')
                   .parse(value['time'], true);
               parsedDate = DateTime(
@@ -82,10 +88,10 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
                   );
 
               unformattedEmotion.add(Emotions(
-                dateTime: parsedDate,
-                emotion: value['emotion'],
-                detail: value['description'],
-              ));
+                  dateTime: parsedDate,
+                  emotion: value['emotion'],
+                  detail: value['description'],
+                  eid: value['eid']));
             }
           });
 
@@ -97,6 +103,12 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
     } catch (error) {
       print('Error receiving: $error');
     }
+  }
+
+  void refreshEmotionsCallback() {
+    // Access the stateful widget and call the refresh function
+    _recieveDetailDayEmotionWithToken();
+    widget.refreshEmotionCalendarCallback();
   }
 
   @override
@@ -153,7 +165,9 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
                 children: formattedEmotion.map((emotion) {
                   return Padding(
                     padding: const EdgeInsets.all(4.0),
-                    child: EmotionCard(emotions: emotion),
+                    child: EmotionCard(
+                        emotions: emotion,
+                        refreshEmotionsCallback: refreshEmotionsCallback),
                   );
                 }).toList(),
               ),

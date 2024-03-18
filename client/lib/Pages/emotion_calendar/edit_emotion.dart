@@ -1,3 +1,9 @@
+import 'dart:convert';
+
+import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:client/component/buttons.dart';
@@ -7,9 +13,48 @@ import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 
 class EmotionDetailsDialog {
-  static void show(BuildContext context, Emotions emotions) {
+  static void show(BuildContext context, Emotions emotions,
+      VoidCallback refreshEmotionsCallback) {
     TextEditingController _controller =
         TextEditingController(text: emotions.detail);
+
+    // print(emotions.eid);
+
+    Future<void> deleteEmotion(String? token) async {
+      try {
+        String formattedDate = formatToBuddhistYear(emotions.dateTime);
+
+        final response = await http.post(
+          Uri.parse('http://${fixedIp}:3000/emotion/delete_data'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token', // Send token in the header
+          },
+          body: jsonEncode(
+              {"date": "${formattedDate}", "eid": "${emotions.eid}"}),
+        );
+
+        print(emotions.eid);
+
+        if (response.statusCode == 200) {
+          print('Delete emotion of the day successfully');
+        } else {
+          print('Error receiving: ${response.reasonPhrase}');
+        }
+      } catch (error) {
+        print('Error receiving: $error');
+      }
+    }
+
+    void _deleteEmotionWithToken(
+        BuildContext context, VoidCallback refreshEmotionsCallback) async {
+      // สมมติว่าคุณมีฟังก์ชัน `getToken` ที่สามารถดึง token ของผู้ใช้
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
+      await deleteEmotion(token);
+      // print(refreshEmotionsCallback);
+      refreshEmotionsCallback();
+    }
 
     showDialog(
       context: context,
@@ -75,7 +120,12 @@ class EmotionDetailsDialog {
                         SmPrimaryButton(text: 'บันทึก', onPressed: () {}),
                         SmSecondaryButton(
                           text: 'ลบ',
-                          onPressed: () {},
+                          onPressed: () {
+                            _deleteEmotionWithToken(context, () {
+                              refreshEmotionsCallback();
+                            });
+                            Navigator.of(context).pop();
+                          },
                           foregroundColor: ColorTheme.errorAction,
                           backgroundColor: ColorTheme.WhiteColor,
                           borderColor: ColorTheme.errorAction,
@@ -97,5 +147,12 @@ class EmotionDetailsDialog {
     final thaiDate = DateTime(thaiYear, dateTime.month, dateTime.day,
         dateTime.hour, dateTime.minute, dateTime.second);
     return DateFormat('dd MMMM yyyy', 'th_TH').format(thaiDate);
+  }
+
+  static String formatToBuddhistYear(DateTime dateTime) {
+    final buddhistYear = dateTime.year + 543;
+    final dateWithBuddhistYear =
+        DateTime(buddhistYear, dateTime.month, dateTime.day);
+    return DateFormat('dd-MM-yyyy').format(dateWithBuddhistYear);
   }
 }

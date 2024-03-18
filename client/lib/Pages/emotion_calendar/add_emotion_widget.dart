@@ -45,7 +45,7 @@ void _sendingEmotionWithToken(BuildContext context, String description,
   var _auth_service = AuthService();
   String? token = await _auth_service.getIdToken();
   await createEmotionAndSending(token, description);
-  print(refreshEmotionsCallback);
+  // print(refreshEmotionsCallback);
   refreshEmotionsCallback();
 }
 
@@ -133,7 +133,7 @@ Widget dialogContent(BuildContext context, Function(String) onEmotionSelected,
           child: SmPrimaryButton(
             text: 'บันทึก',
             onPressed: () {
-              print(refreshEmotionsCallback);
+              // print(refreshEmotionsCallback);
               _sendingEmotionWithToken(context, descriptionController.text, () {
                 refreshEmotionsCallback();
               });

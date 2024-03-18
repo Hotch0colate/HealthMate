@@ -7,11 +7,11 @@ import 'package:intl/intl.dart';
 
 class EmotionCard extends StatelessWidget {
   final Emotions emotions;
+  final VoidCallback refreshEmotionsCallback;
 
-  const EmotionCard({
-    Key? key,
-    required this.emotions,
-  }) : super(key: key);
+  const EmotionCard(
+      {Key? key, required this.emotions, required this.refreshEmotionsCallback})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class EmotionCard extends StatelessWidget {
       width: 150,
       child: GestureDetector(
         onTap: () {
-          EmotionDetailsDialog.show(context, emotions);
+          EmotionDetailsDialog.show(context, emotions, refreshEmotionsCallback);
         },
         child: Card(
           color: ColorTheme.WhiteColor,
