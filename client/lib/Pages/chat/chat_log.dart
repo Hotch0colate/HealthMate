@@ -38,6 +38,7 @@ class _ChatLogState extends State<ChatLog> {
   }
 
   void _activeListeners() {
+    print(widget.uid);
     _database
         .child('users/' + widget.uid + '/chatgroup')
         .onValue
@@ -77,7 +78,7 @@ class _ChatLogState extends State<ChatLog> {
           _chatlogStreamController.add(validConversations);
         });
       } else {
-        print('Invalid snapshot value or format');
+        print('Invalid snapshot value or format chatlog');
       }
     });
   }

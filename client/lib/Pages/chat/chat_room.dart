@@ -1,3 +1,4 @@
+import 'package:client/component/navigation.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:firebase_database/firebase_database.dart';
 // import 'package:client/Pages/chatlog.dart';
@@ -92,7 +93,7 @@ class ChatRoomBody extends State<ChatRoom> {
           print('No messages found');
         }
       } else {
-        print('Invalid snapshot value or format');
+        print('Invalid snapshot value or format chatroom');
       }
     });
   }
@@ -154,7 +155,6 @@ class ChatRoomBody extends State<ChatRoom> {
             color: Colors.white,
             onPressed: () {
               Navigator.pop(context, true);
-              // เรียกใช้ callback function เพื่อส่งผลลัพธ์กลับไปยัง ChatLog
             },
           ),
           title: Row(

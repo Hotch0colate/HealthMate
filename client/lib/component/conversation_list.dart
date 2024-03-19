@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 //page import
@@ -76,11 +75,8 @@ class _ConversationBoxState extends State<ConversationBox> {
         final result = await Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ChatRoom(
-                cid: widget.cid, uid: widget.uid, messages: []
-
-                // ใส่โค้ดที่คุณต้องการทำเมื่อได้รับผลลัพธ์จาก ChatRoom ที่นี่
-                ), // Assuming Chatroom is your chat room page
+            builder: (context) =>
+                ChatRoom(cid: widget.cid, uid: widget.uid, messages: []),
           ),
         );
       },
@@ -141,32 +137,3 @@ class _ConversationBoxState extends State<ConversationBox> {
     );
   }
 }
-
-// class Chat {
-//   final String cid;
-//   final String user;
-//   final String volunteer;
-//   final bool complete;
-//   final bool seen;
-//   final int mil;
-//   final String date;
-
-//   Chat(
-//       {required this.cid,
-//       required this.user,
-//       required this.volunteer,
-//       required this.complete,
-//       required this.seen,
-//       required this.mil,
-//       required this.date});
-
-//   factory Chat.fromMap(Map<String, dynamic> map) {
-//     return Chat(
-//         text: map['text'],
-//         sender: map['sender'],
-//         date: map['date'],
-//         mid: map['mid'],
-//         mil: map['mil'],
-//         seen: map['seen']);
-//   }
-// }
