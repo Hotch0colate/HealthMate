@@ -1,3 +1,4 @@
+import 'package:client/pages/select_talk/create_tag_page.dart';
 import 'package:client/pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/navigation.dart';
 import 'package:client/theme/color.dart';
@@ -6,12 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class TalkPage extends StatelessWidget {
-  // final int selectedPage;
-  // final Function(int) onPageSelected;
-
-  // const TalkPage(
-  //     {super.key, required this.selectedPage, required this.onPageSelected});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +51,7 @@ class TalkPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              const FindVolunteerPage(), // Example: Navigate to a specific screen
+                              const CreateTagPage(), // Example: Navigate to a specific screen
                         ),
                       );
                     },
@@ -79,13 +74,14 @@ class CustomCard extends StatefulWidget {
   final String imageName;
   final Color backgroundColor;
   final VoidCallback onPressed;
+
   const CustomCard({
-    super.key,
+    Key? key,
     required this.text,
     required this.imageName,
     required this.backgroundColor,
     required this.onPressed,
-  });
+  }) : super(key: key);
 
   @override
   State<CustomCard> createState() => _CustomCardState();
@@ -108,6 +104,9 @@ class _CustomCardState extends State<CustomCard> {
 
   @override
   Widget build(BuildContext context) {
+    double cardHeight = MediaQuery.of(context).size.width * 0.4 * 1.5;
+    double cardWidth = MediaQuery.of(context).size.width * 0.6 * 1.5;
+
     return GestureDetector(
       onTapDown: _onTapDown,
       onTapUp: _onTapUp,
@@ -120,8 +119,8 @@ class _CustomCardState extends State<CustomCard> {
       child: Transform.scale(
         scale: scale,
         child: Container(
-          height: 233,
-          width: 342,
+          height: cardHeight,
+          width: cardWidth,
           decoration: BoxDecoration(
             color: widget.backgroundColor,
             borderRadius: BorderRadius.circular(18),
@@ -131,9 +130,15 @@ class _CustomCardState extends State<CustomCard> {
               const SizedBox(
                 height: 19,
               ),
-              Image.asset(widget.imageName),
-              Text(widget.text,
-                  style: FontTheme.subtitle1.copyWith(color: Colors.black)),
+              Image.asset(
+                widget.imageName,
+                height: cardHeight * 0.6,
+              ),
+              Text(
+                widget.text,
+                style:
+                    TextStyle(fontSize: cardWidth * 0.07, color: Colors.black),
+              ),
             ],
           ),
         ),

@@ -4,137 +4,141 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
 class CreateTagPage extends StatefulWidget {
-  const CreateTagPage({super.key});
+  const CreateTagPage({Key? key});
 
   @override
   _CreateTagPageState createState() => _CreateTagPageState();
 }
 
 class _CreateTagPageState extends State<CreateTagPage> {
-  // This will keep track of the selected index
   int selectedIndex = -1;
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+
     return Scaffold(
       appBar: AppBar(
         leading: Image.asset('assets/icons/back_new.png'),
       ),
       body: SingleChildScrollView(
-          child: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(height: 15),
-              Image.asset('assets/images/Volunteer scarf.png'),
-              Text(
-                'อาสาสมัคร',
-                style: FontTheme.subtitle1.copyWith(color: Colors.black),
-              ),
-              const SizedBox(
-                height: 28,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 6),
-                  child: Text(
-                    'คุณเครียดเรื่องอะไร ?',
-                    style: FontTheme.subtitle2.copyWith(color: Colors.black),
-                  ),
-                )
-              ]),
-              const SizedBox(
-                height: 11,
-              ),
-              Row(
-                children: [
-                  TagButton(
-                    text: 'ภาระหน้าที่',
-                    index: 0,
-                    isSelected: selectedIndex == 0,
-                    onSelect: () {
-                      setState(() {
-                        selectedIndex = 0;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 4),
-                  TagButton(
-                    text: 'ความสัมพันธ์',
-                    index: 1,
-                    isSelected: selectedIndex == 1,
-                    onSelect: () {
-                      setState(() {
-                        selectedIndex = 1;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 4),
-                  TagButton(
-                    text: 'สุขภาพ',
-                    index: 2,
-                    isSelected: selectedIndex == 2,
-                    onSelect: () {
-                      setState(() {
-                        selectedIndex = 2;
-                      });
-                    },
-                  ),
-                  const SizedBox(width: 4),
-                  TagButton(
-                    text: 'อื่นๆ',
-                    index: 3,
-                    isSelected: selectedIndex == 3,
-                    onSelect: () {
-                      setState(() {
-                        selectedIndex = 3;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 29,
-              ),
-              Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 22),
-                  child: Text('รายละเอียด',
-                      style: FontTheme.subtitle2.copyWith(color: Colors.black)),
-                )
-              ]),
-              const SizedBox(height: 8),
-              TextFormField(
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15),
-                    borderSide: BorderSide(
-                      color: ColorTheme.baseColor.withOpacity(0.4),
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.08,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: screenHeight * 0.02),
+                Image.asset('assets/images/Volunteer scarf.png'),
+                Text(
+                  'อาสาสมัคร',
+                  style: FontTheme.subtitle1.copyWith(color: Colors.black),
+                ),
+                SizedBox(height: screenHeight * 0.05),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: screenWidth * 0.003),
+                      child: Text(
+                        'คุณเครียดเรื่องอะไร ?',
+                        style:
+                            FontTheme.subtitle2.copyWith(color: Colors.black),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.01),
+                Row(
+                  children: [
+                    TagButton(
+                      text: 'ภาระหน้าที่',
+                      index: 0,
+                      isSelected: selectedIndex == 0,
+                      onSelect: () {
+                        setState(() {
+                          selectedIndex = 0;
+                        });
+                      },
+                    ),
+                    SizedBox(width: screenWidth * 0.005),
+                    TagButton(
+                      text: 'ความสัมพันธ์',
+                      index: 1,
+                      isSelected: selectedIndex == 1,
+                      onSelect: () {
+                        setState(() {
+                          selectedIndex = 1;
+                        });
+                      },
+                    ),
+                    SizedBox(width: screenWidth * 0.005),
+                    TagButton(
+                      text: 'สุขภาพ',
+                      index: 2,
+                      isSelected: selectedIndex == 2,
+                      onSelect: () {
+                        setState(() {
+                          selectedIndex = 2;
+                        });
+                      },
+                    ),
+                    SizedBox(width: screenWidth * 0.005),
+                    TagButton(
+                      text: 'อื่นๆ',
+                      index: 3,
+                      isSelected: selectedIndex == 3,
+                      onSelect: () {
+                        setState(() {
+                          selectedIndex = 3;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.03),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: screenWidth * 0.01),
+                      child: Text('รายละเอียด',
+                          style: FontTheme.subtitle2
+                              .copyWith(color: Colors.black)),
+                    )
+                  ],
+                ),
+                SizedBox(height: screenHeight * 0.005),
+                TextFormField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(screenWidth * 0.03),
+                      borderSide: BorderSide(
+                        color: ColorTheme.baseColor.withOpacity(0.4),
+                      ),
                     ),
                   ),
+                  maxLines: 6,
                 ),
-                maxLines: 6,
-              ),
-              const SizedBox(
-                height: 24,
-              ),
-              MdPrimaryButton(
-                text: 'ค้นหาอาสาสมัคร',
-                onPressed: () {},
-              ),
-              const SizedBox(
-                height: 34,
-              ),
-              SmSecondaryButton(
-                text: 'ลงทะเบียนอาสาสมัคร',
-                onPressed: () {},
-              ),
-            ],
+                SizedBox(height: screenHeight * 0.015),
+                MdPrimaryButton(
+                  text: 'ค้นหาอาสาสมัคร',
+                  onPressed: () {},
+                ),
+                SizedBox(height: screenHeight * 0.02),
+                SmSecondaryButton(
+                  text: 'ลงทะเบียนอาสาสมัคร',
+                  onPressed: () {},
+                ),
+              ],
+            ),
           ),
         ),
-      )),
+      ),
     );
   }
 }
@@ -155,10 +159,14 @@ class TagButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: onSelect,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: EdgeInsets.symmetric(
+          horizontal: screenWidth * 0.02,
+          vertical: screenWidth * 0.010,
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           color: isSelected ? ColorTheme.primaryColor : Colors.transparent,

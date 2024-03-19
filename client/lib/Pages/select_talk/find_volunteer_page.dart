@@ -51,7 +51,7 @@ class FindVolunteerPage extends StatelessWidget {
             ],
           ),
         ),
-        body: Container(
+        body: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
@@ -193,13 +193,13 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
     _controller.repeat(reverse: false); // Do not reverse the animation
 
     _frames = [
-      Image.asset('package:client/assets/loading_screen/loading_1.png',
+      Image.asset('assets/loading_screen/loading_1.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_2.png',
+      Image.asset('assets/loading_screen/loading_2.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_3.png',
+      Image.asset('assets/loading_screen/loading_3.png',
           width: 300, fit: BoxFit.contain),
-      Image.asset('package:client/assets/loading_screen/loading_4.png',
+      Image.asset('assets/loading_screen/loading_4.png',
           width: 300, fit: BoxFit.contain),
     ];
   }
