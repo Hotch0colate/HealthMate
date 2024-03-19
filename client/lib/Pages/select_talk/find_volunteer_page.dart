@@ -1,5 +1,6 @@
 import 'package:client/Pages/select_talk/talk_page.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/component/navigation.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -169,7 +170,8 @@ class ConfirmDelete extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => TalkPage()),
+                  MaterialPageRoute(
+                      builder: (context) => MainApp(SelectedPage: 1)),
                 );
               },
               style: ElevatedButton.styleFrom(

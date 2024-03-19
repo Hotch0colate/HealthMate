@@ -12,15 +12,17 @@ import 'package:client/Pages/select_talk/talk_page.dart';
 import 'package:client/pages/profile/profile.dart';
 import 'package:client/pages/chat/chat_log.dart';
 
-void main() => runApp(MainApp());
+void main() => runApp(MainApp(SelectedPage: 0));
 
 class MainApp extends StatefulWidget {
+  int SelectedPage;
+
+  MainApp({super.key, required this.SelectedPage});
   @override
   _MainAppState createState() => _MainAppState();
 }
 
 class _MainAppState extends State<MainApp> {
-  int _selectedPage = 0;
   String userUid = '';
 
   @override
@@ -73,12 +75,12 @@ class _MainAppState extends State<MainApp> {
     final pages = _pageOptions();
 
     return Scaffold(
-      body: pages[_selectedPage],
+      body: pages[widget.SelectedPage],
       bottomNavigationBar: BottomNavigationBarApp(
-        selectedIndex: _selectedPage,
+        selectedIndex: widget.SelectedPage,
         onItemTapped: (index) {
           setState(() {
-            _selectedPage = index;
+            widget.SelectedPage = index;
           });
         },
       ),

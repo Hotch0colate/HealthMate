@@ -28,7 +28,10 @@ class HomePage extends StatelessWidget {
           ],
         ),
       ),
-      child: Scaffold(body: MainApp()),
+      child: Scaffold(
+          body: MainApp(
+        SelectedPage: 0,
+      )),
     );
   }
 }

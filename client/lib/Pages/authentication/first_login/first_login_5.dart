@@ -138,7 +138,9 @@ class _FirstLogin5State extends State<FirstLogin5> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainApp(),
+                      builder: (context) => MainApp(
+                        SelectedPage: 0,
+                      ),
                     ),
                   );
                 } else {
