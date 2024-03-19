@@ -28,11 +28,13 @@ class EmotionDetailPage extends StatefulWidget {
 
 class _EmotionDetailPageState extends State<EmotionDetailPage> {
   List<Emotions> unformattedEmotion = [];
+  bool deleteLastOneClose = false;
 
   @override
   void initState() {
     super.initState();
     _recieveDetailDayEmotionWithToken();
+    deleteLastOneClose = false;
   }
 
   void _recieveDetailDayEmotionWithToken() async {
@@ -95,7 +97,15 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
             }
           });
 
+          if (unformattedEmotion.length >= 1) {
+            deleteLastOneClose = true;
+          }
+
           setState(() {}); // Trigger a state update to refresh the UI
+        } else {
+          if (deleteLastOneClose) {
+            Navigator.pop(context);
+          }
         }
       } else {
         print('Error receiving: ${response.reasonPhrase}');

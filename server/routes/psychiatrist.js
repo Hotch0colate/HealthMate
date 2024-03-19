@@ -7,6 +7,7 @@ var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
 app.use(cors());
+const formatDate = require('../service');
 
 
 // สร้าง psychiatrist ด้วยอีเมล
@@ -28,10 +29,10 @@ router.post('/crete_data', async (req, res) => {
                 birthday: "unknow",
                 gender: "unknow",
                 carrer: "unknow",
-                martial_status: "unknow",
+                martialstatus: "unknow",
                 chatgroup: [],
                 mil: new Date().getTime(),
-                date: new Date().toLocaleString()
+                date: formatDate(new Date())
             });
             return res.status(200).json({
                 RespCode: 200,
@@ -92,7 +93,7 @@ router.post('/update_data', (req, res) => {
     var gender = req.body.gender;
     var birthday = req.body.birthday;
     var career = req.body.career;
-    var martial_status = req.body.martial_status;
+    var martialstatus = req.body.martialstatus;
 
     try {
         get(ref(db, 'psychiatrist/' + uid))
@@ -100,7 +101,7 @@ router.post('/update_data', (req, res) => {
                 if (snapshot.exists()) {
                     const updateData = {
                         mil: new Date().getTime(),
-                        date: new Date().toLocaleString(),
+                        date: formatDate(new Date()),
                     };
 
                     // Optional Chaining
@@ -110,7 +111,7 @@ router.post('/update_data', (req, res) => {
                     gender && (updateData.gender = gender);
                     birthday && (updateData.birthday = birthday);
                     career && (updateData.career = career);
-                    martial_status && (updateData.martial_status = martial_status);
+                    martialstatus && (updateData.martialstatus = martialstatus);
 
                     update(ref(db, 'psychiatrist/' + uid), updateData);
 

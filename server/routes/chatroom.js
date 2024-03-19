@@ -7,6 +7,7 @@ var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
 app.use(cors());
+const formatDate = require('../service');
 
 // สร้าง message และส่ง message ไปหาคู่สนทนา
 // feature signup
@@ -26,14 +27,14 @@ router.post('/create_data', async (req, res) => {
                         text: text,
                         seen: false,
                         mil: new Date().getTime(),
-                        date: new Date().toLocaleString()
+                        date: formatDate(new Date())
                     });
                     const updateData = {
                         lastmessage: text,
                         lastsender: sender,
                         seen: false,
                         mil: new Date().getTime(),
-                        date: new Date().toLocaleString()
+                        date: formatDate(new Date())
                     };
                     update(ref(db, 'chats/' + cid), updateData);
                     return res.status(200).json({

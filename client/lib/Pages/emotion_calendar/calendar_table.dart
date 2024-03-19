@@ -206,9 +206,9 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                         ),
                       );
 
-                      print('${_selectedDay!.day.toString().padLeft(2, '0')}/'
-                          '${_selectedDay!.month.toString().padLeft(2, '0')}/'
-                          '$thaiBuddhistYear');
+                      // print('${_selectedDay!.day.toString().padLeft(2, '0')}/'
+                      //     '${_selectedDay!.month.toString().padLeft(2, '0')}/'
+                      //     '$thaiBuddhistYear');
                     },
                     selectedDayPredicate: (day) {
                       return isSameDay(_selectedDay, day);

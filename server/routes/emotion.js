@@ -8,6 +8,7 @@ const cors = require('cors');
 var app = express();
 const authenticate = require('../token');
 app.use(cors());
+const formatDate = require('../service');
 
 // สร้าง emotion ด้วยอีเมล
 // feature signup
@@ -26,7 +27,7 @@ router.post('/create_data', authenticate, async (req, res) => {
       eid: eid,
       emotion: emotion,
       description: description,
-      time: new Date().toLocaleString()
+      time: formatDate(new Date())
     });
     const updateData = {
       lastemotion: emotion,
@@ -140,42 +141,6 @@ router.post('/read_data', authenticate, async (req, res) => {
   }
 });
 
-// ลบข้อมูล emotion
-// feature delete emotion
-// router.post('/delete_data', authenticate, (req, res) => {
-//   var uid = req.user.uid;
-//   var date = req.body.date;
-//   var eid = req.body.eid;
-
-//   console.log('users/' + uid + '/calendar/' + date + '/emotions/' + eid);
-
-//   try {
-//     get(ref(db, 'users/' + uid + '/calendar/' + date + '/emotions/' + eid))
-//       .then((snapshot) => {
-//         if (snapshot.exists()) {
-//           remove(ref(db, 'users/' + uid + '/calendar/' + date + '/emotions/' + eid));
-//           return res.status(200).json({
-//             RespCode: 200,
-//             RespMessage: "Deleted successfully"
-//           });
-//         }
-//         else {
-//           console.log("No data available");
-//           return res.status(200).json({
-//             RespCode: 200,
-//             RespMessage: "No data available"
-//           });
-//         }
-//       });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({
-//       RespCode: 500,
-//       RespMessage: "Error : " + error.message + "/nPath API : /emotion/delete_data"
-//     });
-//   }
-// });
-
 router.post('/delete_data', authenticate, (req, res) => {
   var uid = req.user.uid;
   var date = req.body.date;
@@ -196,8 +161,6 @@ router.post('/delete_data', authenticate, (req, res) => {
 
         // Check if there are any emotions left after deletion
         const remainingEmotions = snapshot.val();
-        const testEmotions = Object.keys(remainingEmotions)
-          .map(key => ({ ...remainingEmotions[key], key }))
         delete remainingEmotions[eid]; // Remove the deleted emotion from local copy
 
         if (Object.keys(remainingEmotions).length === 0) {
@@ -208,7 +171,7 @@ router.post('/delete_data', authenticate, (req, res) => {
           const sortedEmotions = Object.keys(remainingEmotions)
             .map(key => ({ ...remainingEmotions[key], key }))
             .sort((a, b) => new Date(b.time) - new Date(a.time));
-          set(ref(db, lastEmotionPath), sortedEmotions[sortedEmotions.length - 1].emotion);
+          set(ref(db, lastEmotionPath), sortedEmotions[0].emotion);
         }
 
         return res.status(200).json({

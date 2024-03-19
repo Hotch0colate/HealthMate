@@ -229,11 +229,7 @@ class ChatRoomBody extends State<ChatRoom> {
                     } else {
                       List<Message> messages = snapshot.data ?? [];
                       messages.sort((a, b) {
-                        DateTime dateA =
-                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a.date);
-                        DateTime dateB =
-                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b.date);
-                        return dateA.compareTo(dateB);
+                        return a.date.compareTo(b.date);
                       });
 
                       _scrollToBottom();

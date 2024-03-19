@@ -7,6 +7,7 @@ var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
 app.use(cors());
+const formatDate = require('../service');
 
 
 //สร้าง volunteer
@@ -22,7 +23,7 @@ router.post('/create_data', async (req, res) => {
             tags: [],
             rating_score: 100,
             mil: new Date().getTime(),
-            date: new Date().toLocaleString()
+            date: formatDate(new Date())
         });
         return res.status(200).json({
             RespCode: 200,
@@ -85,7 +86,7 @@ router.post('/update_data', (req, res) => {
                 if (snapshot.exists()) {
                     const updateData = {
                         mil: new Date().getTime(),
-                        date: new Date().toLocaleString(),
+                        date: formatDate(new Date())
                     };
                     // Optional Chaining
                     tags && (updateData.tags = tags);

@@ -29,9 +29,7 @@ Future<void> createEmotionAndSending(String? token, String description) async {
       }),
     );
 
-    if (response.statusCode == 200) {
-      print('Sending emotion to the database successfully');
-    } else {
+    if (response.statusCode != 200) {
       print('Error while sending emotion: ${response.reasonPhrase}');
     }
   } catch (error) {

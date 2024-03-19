@@ -34,11 +34,7 @@ class EmotionDetailsDialog {
               {"date": "${formattedDate}", "eid": "${emotions.eid}"}),
         );
 
-        print(emotions.eid);
-
-        if (response.statusCode == 200) {
-          print('Delete emotion of the day successfully');
-        } else {
+        if (response.statusCode != 200) {
           print('Error receiving: ${response.reasonPhrase}');
         }
       } catch (error) {

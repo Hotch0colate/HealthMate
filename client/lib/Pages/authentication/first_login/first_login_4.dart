@@ -31,7 +31,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       },
-      body: jsonEncode({"martial_status": martial_status}),
+      body: jsonEncode({"martialstatus": martial_status}),
     );
 
     if (response.statusCode == 200) {

@@ -7,6 +7,7 @@ var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
 app.use(cors());
+const formatDate = require('../service');
 
 //create chatlog
 //feature create chatlog
@@ -28,7 +29,7 @@ router.post('/create_data', async (req, res) => {
             seen: false,
             complete: false,
             mil: new Date().getTime(),
-            date: new Date().toLocaleString()
+            date: formatDate(new Date())
         });
         const userRef = ref(db, 'users/' + user);
         const volunteerRef = ref(db, 'users/' + volunteer);

@@ -8,6 +8,7 @@ const cors = require('cors');
 var app = express();
 const authenticate = require('../token');
 app.use(cors());
+const formatDate = require('../service');
 
 
 
@@ -30,10 +31,10 @@ router.post('/create_data', async (req, res) => {
             birthday: "unknow",
             gender: "unknow",
             carrer: "unknow",
-            martial_status: "unknow",
+            martialstatus: "unknow",
             chatgroup: [],
             mil: new Date().getTime(),
-            date: new Date().toLocaleString()
+            date: formatDate(new Date())
         });
         return res.status(200).json({
             RespCode: 200,
@@ -95,7 +96,7 @@ router.post('/update_data', authenticate, (req, res) => {
     var gender = req.body.gender;
     var birthday = req.body.birthday;
     var career = req.body.career;
-    var martial_status = req.body.martial_status;
+    var martialstatus = req.body.martialstatus;
     //check attribute in database
     try {
         get(ref(db, 'users/' + uid))
@@ -103,7 +104,7 @@ router.post('/update_data', authenticate, (req, res) => {
                 if (snapshot.exists()) {
                     const updateData = {
                         mil: new Date().getTime(),
-                        date: new Date().toLocaleString(),
+                        date: formatDate(new Date())
                     };
 
                     // Optional Chaining
@@ -111,9 +112,18 @@ router.post('/update_data', authenticate, (req, res) => {
                     password && (updateData.password = password);
                     age && (updateData.age = age);
                     gender && (updateData.gender = gender);
-                    birthday && (updateData.birthday = birthday);
+                    if (birthday) {
+                        var birthdayParts = birthday.split('/');
+
+                        if (parseInt(birthdayParts[2]) < 2500) {
+                            updateData.birthday = birthdayParts[0] + '/' + birthdayParts[1] + '/' + String(parseInt(birthdayParts[2]) + 543);
+                        }
+                        else {
+                            updateData.birthday = birthday;
+                        }
+                    }
                     career && (updateData.career = career);
-                    martial_status && (updateData.martial_status = martial_status);
+                    martialstatus && (updateData.martialstatus = martialstatus);
 
                     update(ref(db, 'users/' + uid), updateData);
 
