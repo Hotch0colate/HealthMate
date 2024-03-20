@@ -146,6 +146,7 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
               ],
             ),
           ),
+          // set to start left 
           Expanded(
             child: SingleChildScrollView(
               child: Wrap(
