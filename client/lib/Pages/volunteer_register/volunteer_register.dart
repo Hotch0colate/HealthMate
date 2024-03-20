@@ -22,6 +22,13 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
   bool agreedToTerms = false;
   String selectedGender = '';
 
+  Map<String, bool> selectedOptions = {
+    'stopCrying': false,
+    'comfortEncourage': false,
+    'waitSilently': false,
+    'suggestSolutions': false,
+  };
+
   Future<void> sendUserDataToBackend(String gender) async {
     var _auth_service = AuthService();
     String? token = await _auth_service.getIdToken();
@@ -108,14 +115,14 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
                           fontFamily: 'Poppins',
                         ),
                       ),
-                      leading: Radio<String>(
-                        value: 'Male',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
+                      leading: Checkbox(
+                        value: selectedOptions['stopCrying'],
+                        onChanged: (bool? value) {
                           setState(() {
-                            selectedGender = value!;
+                            selectedOptions['stopCrying'] = value!;
                           });
                         },
+                        activeColor: ColorTheme.primaryColor,
                       ),
                     ),
                     ListTile(
@@ -128,14 +135,14 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
                           fontFamily: 'Poppins',
                         ),
                       ),
-                      leading: Radio<String>(
-                        value: 'Female',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
+                      leading: Checkbox(
+                        value: selectedOptions['comfortEncourage'],
+                        onChanged: (bool? value) {
                           setState(() {
-                            selectedGender = value!;
+                            selectedOptions['comfortEncourage'] = value!;
                           });
                         },
+                        activeColor: ColorTheme.primaryColor,
                       ),
                     ),
                     ListTile(
@@ -148,14 +155,14 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
                           fontFamily: 'Poppins',
                         ),
                       ),
-                      leading: Radio<String>(
-                        value: 'Others',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
+                      leading: Checkbox(
+                        value: selectedOptions['waitSilently'],
+                        onChanged: (bool? value) {
                           setState(() {
-                            selectedGender = value!;
+                            selectedOptions['waitSilently'] = value!;
                           });
                         },
+                        activeColor: ColorTheme.primaryColor,
                       ),
                     ),
                     ListTile(
@@ -168,14 +175,14 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
                           fontFamily: 'Poppins',
                         ),
                       ),
-                      leading: Radio<String>(
-                        value: 'f',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
+                      leading: Checkbox(
+                        value: selectedOptions['suggestSolutions'],
+                        onChanged: (bool? value) {
                           setState(() {
-                            selectedGender = value!;
+                            selectedOptions['suggestSolutions'] = value!;
                           });
                         },
+                        activeColor: ColorTheme.primaryColor,
                       ),
                     ),
                   ],
