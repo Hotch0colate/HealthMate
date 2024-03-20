@@ -21,6 +21,12 @@ class FontTheme {
     fontSize: 36,
   );
 
+  static const TextStyle h4 = TextStyle(
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w800,
+    fontSize: 32,
+  );
+
   static const TextStyle subtitle1 = TextStyle(
     fontFamily: 'Athiti',
     fontWeight: FontWeight.w800,

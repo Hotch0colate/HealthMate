@@ -1,4 +1,5 @@
 import 'package:client/services/ip_variable.dart';
+import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:http/http.dart' as http;
@@ -132,11 +133,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
                     ),
                     ListTile(
                       title: const Text('อื่นๆ',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Poppins')),
+                          style: FontTheme.body2),
                       leading: Radio<String>(
                         value: 'Others',
                         groupValue: selectedGender,

@@ -106,10 +106,7 @@ class GoBackButton extends StatelessWidget {
             ),
             Text(
               'ก่อนหน้า',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
+              style: FontTheme.body2
             ),
           ],
         ),
@@ -136,17 +133,14 @@ class ForwardButton extends StatelessWidget {
         side: const BorderSide(color: Colors.orange),
       ),
       child: const SizedBox(
+        width: 100,
         height: 40,
-        width: 118,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               'ต่อไป',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
+              style: FontTheme.body1
             ),
             SizedBox(
               height: 28,
