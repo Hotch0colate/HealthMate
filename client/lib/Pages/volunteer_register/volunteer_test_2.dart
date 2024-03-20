@@ -14,7 +14,6 @@ class VolunteerTest2 extends StatefulWidget {
 
 class _VolunteerTest2State extends State<VolunteerTest2> {
   int selectedIndex = -1;
-  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +24,7 @@ class _VolunteerTest2State extends State<VolunteerTest2> {
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: EdgeInsets.only(top: 50, left: 16, right: 16),
+            padding: const EdgeInsets.only(top: 50, left: 16, right: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -39,6 +38,92 @@ class _VolunteerTest2State extends State<VolunteerTest2> {
                 ),
                 Image.asset('assets/images/Volunteer hat.png'),
                 SizedBox(height: screenHeight * 0.05),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: screenWidth * 0.2,
+                      child: Text(
+                        'อ่านสถานการณ์ต่อไปนี้และตอบคำถาม',
+                        style: FontTheme.btn_medium
+                            .copyWith(color: ColorTheme.baseColor),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    SizedBox(width: screenWidth * 0.05),
+                    ElevatedButton(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              child: Container(
+                                padding: EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Text(
+                                      'พี่แอน และ น้องบี',
+                                      style: FontTheme.h3.copyWith(
+                                          color: ColorTheme.baseColor),
+                                    ),
+                                    Text(
+                                      'วันหนึ่งมี Volunteer คนหนึ่งชื่อ "พี่แอน" ไปให้คำปรึกษาผู้มาปรึกษาคนหนึ่งชื่อ "น้องบี" น้องบีเล่าให้พี่แอนฟังว่า น้องบีกำลังเครียดกับงานประจำที่หนักมาก จนทำให้น้องบีนอนไม่หลับ ปวดหัวบ่อยๆ และหงุดหงิดง่าย',
+                                      style: FontTheme.subtitle2.copyWith(
+                                          color: ColorTheme.baseColor),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 20),
+                                    ElevatedButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      style: ElevatedButton.styleFrom(
+                                        primary:
+                                            Colors.black, // Background color
+                                        onPrimary: Colors.white, // Text color
+                                      ),
+                                      child: Text("Exit"),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                          side: BorderSide(
+                            color: ColorTheme.primaryColor,
+                            width: 2.0,
+                          ),
+                        ),
+                        backgroundColor: ColorTheme.WhiteColor,
+                        foregroundColor: ColorTheme.baseColor,
+                      ),
+                      child: const SizedBox(
+                        height: 60,
+                        child: Center(
+                          child: Text(
+                            'สถานการณ์',
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Padding(
                   padding: EdgeInsets.only(left: screenWidth * 0.003),
                   child: Text(

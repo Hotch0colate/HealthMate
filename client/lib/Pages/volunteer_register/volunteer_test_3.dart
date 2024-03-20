@@ -1,4 +1,5 @@
 import 'package:client/Pages/volunteer_register/volunteer_test_2.dart';
+import 'package:client/Pages/volunteer_register/volunteer_test_waiting.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -172,7 +173,7 @@ class _VolunteerTest3State extends State<VolunteerTest3> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => VolunteerTest3(),
+                    builder: (context) => const VolunteerTestWating(),
                   ),
                 );
               },
