@@ -187,24 +187,34 @@ class LgPrimaryButton extends StatelessWidget {
 class MdPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color foregroundColor;
+  final Color backgroundColor;
+  final Color borderColor;
+  final double minWidth;
 
   const MdPrimaryButton({
-    super.key,
+    Key? key,
     required this.text,
     required this.onPressed,
-  });
+    this.foregroundColor = ColorTheme.WhiteColor,
+    this.backgroundColor = ColorTheme.primaryColor,
+    this.borderColor = ColorTheme.primaryColor,
+    this.minWidth = 120, // Set your desired minimum width
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        foregroundColor: ColorTheme.WhiteColor,
-        backgroundColor: ColorTheme.primaryColor, // Text color
+        foregroundColor: foregroundColor,
+        backgroundColor: backgroundColor,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
+          side: BorderSide(color: borderColor, width: 2),
         ),
+        minimumSize: Size(minWidth, 0),
       ),
       child: Text(text, style: FontTheme.btn_medium),
     );
@@ -294,7 +304,7 @@ class LgSecondaryButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: ColorTheme.primaryColor, width: 2),
+          side: BorderSide(color: ColorTheme.primaryColor, width: 1),
         ),
       ),
       child: Text(text, style: FontTheme.btn_large),
@@ -322,7 +332,7 @@ class MdSecondaryButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: ColorTheme.primaryColor, width: 2),
+          side: BorderSide(color: ColorTheme.primaryColor, width: 1),
         ),
       ),
       child: Text(text, style: FontTheme.btn_medium),
@@ -342,8 +352,8 @@ class SmSecondaryButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
-    this.foregroundColor = ColorTheme.baseColor,
-    this.backgroundColor = ColorTheme.primaryColor,
+    this.foregroundColor = ColorTheme.primaryColor,
+    this.backgroundColor = Colors.white,
     this.borderColor = ColorTheme.primaryColor,
     this.minWidth = 120, // Set your desired minimum width
   }) : super(key: key);
@@ -358,7 +368,7 @@ class SmSecondaryButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: borderColor, width: 2),
+          side: BorderSide(color: borderColor, width: 1),
         ),
         minimumSize: Size(minWidth, 0),
       ),

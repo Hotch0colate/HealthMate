@@ -1,5 +1,6 @@
 import 'package:client/component/buttons.dart';
 import 'package:client/component/checkbox.dart';
+import 'package:client/pages/psychiar/attach_cert.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'HealthMate Calendar',
+      title: 'HealthMate',
       home: PsyRegister(),
     );
   }
@@ -40,8 +41,8 @@ class PsyRegister extends StatelessWidget {
                                 icon: const Icon(
                                   Icons
                                       .arrow_back_ios, // Replace with your custom icon
-                                  color: Colors.black26,
-                                  size: 40, // Customize the icon color
+                                  color: Colors.black38,
+                                  size: 30, // Customize the icon color
                                 ),
                                 onPressed: () {},
                               ),
@@ -53,7 +54,8 @@ class PsyRegister extends StatelessWidget {
                                 TextSpan(
                                   text: 'ลงทะเบียน',
                                   style: FontTheme.h4.copyWith(
-                                      color: ColorTheme.baseColor), // Black color for the first part of the text
+                                      color: ColorTheme
+                                          .baseColor), // Black color for the first part of the text
                                 ),
                                 TextSpan(
                                   text: 'จิตแพทย์',
@@ -112,7 +114,7 @@ class PsyRegister extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: ForwardButton(
                               onPressed: () {
-                                // Implement onPressed action
+                                AttachCertificate();
                               },
                             ),
                           ),
