@@ -30,17 +30,30 @@ class PsyRegister extends StatelessWidget {
                       minHeight: MediaQuery.of(context).size.height,
                     ),
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons
+                                      .arrow_back_ios, // Replace with your custom icon
+                                  color: Colors.black26,
+                                  size: 40, // Customize the icon color
+                                ),
+                                onPressed: () {},
+                              ),
+                            ],
+                          ),
                           RichText(
                             text: TextSpan(
                               children: [
                                 TextSpan(
                                   text: 'ลงทะเบียน',
                                   style: FontTheme.h4.copyWith(
-                                      color: Colors
-                                          .black), // Black color for the first part of the text
+                                      color: ColorTheme.baseColor), // Black color for the first part of the text
                                 ),
                                 TextSpan(
                                   text: 'จิตแพทย์',
@@ -94,15 +107,15 @@ class PsyRegister extends StatelessWidget {
                               print('Checkbox state changed: $value');
                             },
                           ),
-                          SizedBox(height: 10),
+                          SizedBox(height: 50),
                           Align(
                             alignment: Alignment.bottomRight,
                             child: ForwardButton(
-                                onPressed: () {
-                                  // Implement onPressed action
-                                },
-                              ),
+                              onPressed: () {
+                                // Implement onPressed action
+                              },
                             ),
+                          ),
                         ])))));
   }
 }
