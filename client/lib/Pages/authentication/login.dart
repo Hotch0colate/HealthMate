@@ -2,7 +2,7 @@
 import 'package:client/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 //page import
 import 'package:client/pages/authentication/signup.dart';
 
@@ -81,6 +81,34 @@ class _LoginPageState extends State<LoginPage> {
           );
         },
       );
+    }
+  }
+
+  Future<void> _loginWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser != null) {
+        final GoogleSignInAuthentication googleAuth =
+            await googleUser.authentication;
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        // Sign in to Firebase with the Google user credentials
+        final UserCredential userCredential =
+            await _auth.signInWithCredential(credential);
+        User? user = userCredential.user;
+
+        if (user != null) {
+          // Successful login with Google, proceed to your app
+          Navigator.pushReplacementNamed(context, '/main');
+        }
+      }
+    } catch (e) {
+      print('Error during Google login: $e');
     }
   }
 
@@ -342,13 +370,18 @@ class _LoginPageState extends State<LoginPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 LoginWithButton(
-                                    imagePath: 'assets/icons/google.png'),
+                                  imagePath: 'assets/icons/google.png',
+                                  onPressed: _loginWithGoogle,
+                                ),
                                 SizedBox(width: screenHeight * 0.016),
                                 LoginWithButton(
-                                    imagePath: 'assets/icons/apple.png'),
+                                  imagePath: 'assets/icons/apple.png',
+                                  onPressed: () {},
+                                ),
                                 SizedBox(width: screenHeight * 0.024),
                                 LoginWithButton(
-                                    imagePath: 'assets/icons/facebook.png'),
+                                    imagePath: 'assets/icons/facebook.png',
+                                    onPressed: () {}),
                               ],
                             ),
                             SizedBox(height: screenHeight * 0.041),
