@@ -5,18 +5,6 @@ import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: AttachCertificate(),
-    );
-  }
-}
 
 class AttachCertificate extends StatelessWidget {
   final TextEditingController _firstnameController = TextEditingController();
