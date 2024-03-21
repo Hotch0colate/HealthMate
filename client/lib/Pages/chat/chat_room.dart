@@ -133,6 +133,20 @@ class ChatRoomBody extends State<ChatRoom> {
     }
   }
 
+  void onBackPress(BuildContext context) {
+    Navigator.popUntil(context, (route) {
+      if (route.settings.name == '/main') {
+        // Assuming the MainApp route is the root ('/')
+        final state = mainAppKey.currentState;
+        if (state != null) {
+          state.goToChatLog();
+        }
+        return true;
+      }
+      return false;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,7 +168,8 @@ class ChatRoomBody extends State<ChatRoom> {
             ),
             color: Colors.white,
             onPressed: () {
-              Navigator.pop(context, true);
+              onBackPress(context);
+              // Navigator.pop(context, true);
             },
           ),
           title: Row(

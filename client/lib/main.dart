@@ -1,3 +1,4 @@
+import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -10,7 +11,6 @@ import 'component/navigation.dart';
 import 'pages/home.dart';
 import 'pages/authentication/first_login/first_login_1.dart';
 import 'pages/select_talk/create_tag_page.dart';
-import 'pages/select_talk/find_volunteer_page.dart';
 
 // test branch talk_gunn
 void main() async {
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
             ),
         '/home': (context) => const HomePage(),
         '/create_tag_page': (context) => const CreateTagPage(),
-        '/find_volunteer_page': (context) => const FindVolunteerPage(),
+        // '/find_volunteer_page': (context) => const FindVolunteerPage(),
       },
     );
   }

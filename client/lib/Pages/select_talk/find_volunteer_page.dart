@@ -1,3 +1,12 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:client/Pages/chat/chat_room.dart';
+import 'package:client/models/volunteer_response.dart';
+import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:client/Pages/select_talk/talk_page.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/component/navigation.dart';
@@ -6,7 +15,12 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
 class FindVolunteerPage extends StatelessWidget {
-  const FindVolunteerPage({super.key});
+  final String selectedTag;
+  final String text;
+
+  const FindVolunteerPage(
+      {Key? key, required this.selectedTag, required this.text})
+      : super(key: key);
 
   // This function is used to show the dialog when the button is pressed
   void _showCancelDialog(BuildContext context) {
@@ -38,6 +52,120 @@ class FindVolunteerPage extends StatelessWidget {
     );
   }
 
+  Future<VolunteerQueryResponse?> findVolunteer() async {
+    await Future.delayed(Duration(seconds: 3));
+    try {
+      final result = await _tagMatchQuery(selectedTag);
+      // Do something with result if needed
+      return result;
+    } catch (error) {
+      print('Error finding volunteer: $error');
+      // You may want to handle the error state differently,
+      // such as returning null or indicating an error to the user.
+      return null;
+    }
+  }
+
+  Future<VolunteerQueryResponse> _tagMatchQuery(String tag) async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
+
+      final response = await http.post(
+        Uri.parse('http://${fixedIp}:3000/volunteer/query_volunteers'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({"tags": tag}),
+      );
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        return VolunteerQueryResponse.fromJson(jsonResponse);
+      } else {
+        throw Exception('Failed to load volunteers');
+      }
+    } catch (error) {
+      throw Exception('Failed to load volunteers: $error');
+    }
+  }
+
+  Future<void> _CreateChatRoomAndSendFirstMessage(
+      BuildContext context, String volunteerUid) async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
+
+      final response = await http.post(
+        Uri.parse('http://${fixedIp}:3000/chatlog/create_data'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: jsonEncode({
+          "volunteer": volunteerUid,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final jsonResponse = jsonDecode(response.body);
+        String cid = jsonResponse['Data'];
+
+        if (cid != null) {
+          String? token = await _auth_service.getIdToken();
+          String uid = await fetchUidFromToken(token);
+
+          if (text != "") {
+            final _response = await http.post(
+              Uri.parse('http://${fixedIp}:3000/chatroom/create_data'),
+              headers: <String, String>{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token',
+              },
+              body: jsonEncode({"cid": cid, "text": text, "sender": uid}),
+            );
+
+            if (_response.statusCode != 200) {
+              throw Exception('Fail to sent messages');
+            }
+          }
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChatRoom(cid: cid, uid: uid, messages: []),
+            ),
+          );
+        } else {
+          throw Exception('CID not found in response');
+        }
+      } else {
+        throw Exception('Failed to load volunteers');
+      }
+    } catch (error) {
+      throw Exception('Failed to load volunteers: $error');
+    }
+  }
+
+  Future<String> fetchUidFromToken(String? token) async {
+    final response = await http.get(
+      Uri.parse(
+          'http://${fixedIp}:3000/access/get_uid'), // แทนที่ด้วย URL จริงของ backend ของคุณ
+      headers: <String, String>{
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token', // ส่ง token ใน header
+      },
+    );
+    if (response.statusCode == 200) {
+      // หาก server ตอบกลับมาด้วยสถานะ 200 OK, ดึง uid จาก response
+      var jsonResponse = jsonDecode(response.body);
+      return jsonResponse['uid']; // ตัวอย่างการดึง uid จาก response
+    } else {
+      // หากการตอบกลับไม่สำเร็จ, โยน exception
+      throw Exception('Failed to load uid from token');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,20 +183,6 @@ class FindVolunteerPage extends StatelessWidget {
           ],
         ),
         leadingWidth: 40,
-        // Column(
-        //   children: [
-        //     const SizedBox(
-        //       height: 10,
-        //     ),
-        //     GestureDetector(
-        //       onTap: () {
-        //         Navigator.pop(context);
-        //       },
-        //       child: Image.asset('assets/icons/back_new.png',
-        //           width: 35, fit: BoxFit.contain),
-        //     )
-        //   ],
-        // ),
         flexibleSpace: Image.asset(
           'assets/loading_screen/Vector.png',
           fit: BoxFit.cover,
@@ -76,48 +190,31 @@ class FindVolunteerPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         toolbarHeight: 170,
       ),
-      body: Container(
-        child: Center(
-          child: Column(
-            children: [
-              // const SizedBox(
-              //   height: 10,
-              // ),
-              Text(
-                'กำลังค้นหา',
-                style: FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  const AnimatedBackground(), // This will display the animation
-                  Image.asset('assets/images/Volunteer scarf.png',
-                      width: 100,
-                      fit: BoxFit.contain), // This will stay static on top
-                ],
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                'การพูดคุยกับอาสาสมัครหรือจิตแพทย์',
-                style: FontTheme.body1
-                    .copyWith(color: Colors.black.withOpacity(0.8)),
-              ),
-              Text(
-                'ไม่มีการเปิดเผยตัวตนทั้งสองฝ่าย',
-                style: FontTheme.body1
-                    .copyWith(color: ColorTheme.warningAction.withOpacity(0.6)),
-              ),
-              const SizedBox(
-                height: 65,
-              ),
-            ],
-          ),
-        ),
+      body: FutureBuilder(
+        future: findVolunteer(), // Replace with your actual API call
+        builder: (context, snapshot) {
+          // While waiting for the API, show the animation and other content
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return buildWaitingContent();
+          } else if (snapshot.hasError) {
+            // If the Future completes with an error, show an error message
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (snapshot.hasData) {
+            // If we have data, use it to create a chatroom and send a message
+            final data = snapshot.data;
+            if (data != null) {
+              // If the `findVolunteer` future is complete and has a volunteer UID, proceed to create chat room
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                _CreateChatRoomAndSendFirstMessage(context, data.data!);
+              });
+            }
+            // Return a temporary placeholder widget if needed
+            return Container();
+          } else {
+            // If no data and no error, you can show a default message
+            return Center(child: Text('No data found'));
+          }
+        },
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 20),
@@ -136,6 +233,50 @@ class FindVolunteerPage extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget buildWaitingContent() {
+  // This method contains the content that's always visible, plus the AnimatedBackground
+  return Center(
+    child: Column(
+      children: [
+        // const SizedBox(
+        //   height: 10,
+        // ),
+        Text(
+          'กำลังค้นหา',
+          style: FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        Stack(
+          alignment: Alignment.center,
+          children: [
+            const AnimatedBackground(), // This will display the animation
+            Image.asset('assets/images/Volunteer scarf.png',
+                width: 100,
+                fit: BoxFit.contain), // This will stay static on top
+          ],
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+        Text(
+          'การพูดคุยกับอาสาสมัครหรือจิตแพทย์',
+          style: FontTheme.body1.copyWith(color: Colors.black.withOpacity(0.8)),
+        ),
+        Text(
+          'ไม่มีการเปิดเผยตัวตนทั้งสองฝ่าย',
+          style: FontTheme.body1
+              .copyWith(color: ColorTheme.warningAction.withOpacity(0.6)),
+        ),
+        const SizedBox(
+          height: 65,
+        ),
+      ],
+    ),
+  );
 }
 
 class ConfirmDelete extends StatelessWidget {

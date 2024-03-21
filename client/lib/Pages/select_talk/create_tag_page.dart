@@ -1,3 +1,4 @@
+import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -29,6 +30,12 @@ class _CreateTagPageState extends State<CreateTagPage> {
   // This will keep track of the selected index
   int selectedIndex = -1;
   final _formKey = GlobalKey<FormState>();
+
+  TextEditingController descriptionTextController = TextEditingController();
+
+  List<String> _tagOptions() =>
+      ["Responbility", "Relation", "Health", "Generic"];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,7 +106,7 @@ class _CreateTagPageState extends State<CreateTagPage> {
                   ),
                   const SizedBox(width: 4),
                   TagButton(
-                    text: 'อื่นๆ',
+                    text: 'ทั่วไป',
                     index: 3,
                     isSelected: selectedIndex == 3,
                     onSelect: () {
@@ -122,6 +129,7 @@ class _CreateTagPageState extends State<CreateTagPage> {
               ]),
               const SizedBox(height: 8),
               TextFormField(
+                controller: descriptionTextController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
@@ -137,7 +145,17 @@ class _CreateTagPageState extends State<CreateTagPage> {
               ),
               MdPrimaryButton(
                 text: 'ค้นหาอาสาสมัคร',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FindVolunteerPage(
+                        selectedTag: _tagOptions()[selectedIndex],
+                        text: descriptionTextController.text,
+                      ),
+                    ),
+                  );
+                },
               ),
               const SizedBox(
                 height: 34,

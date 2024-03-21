@@ -1,3 +1,4 @@
+import 'package:client/Pages/select_talk/create_tag_page.dart';
 import 'package:client/pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/navigation.dart';
 import 'package:client/theme/color.dart';
@@ -61,7 +62,7 @@ class TalkPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              const FindVolunteerPage(), // Example: Navigate to a specific screen
+                              const CreateTagPage(), // Example: Navigate to a specific screen
                         ),
                       );
                     },

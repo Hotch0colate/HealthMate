@@ -6,13 +6,14 @@ const { get, set, ref, update, remove } = require("firebase/database");
 var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
+const authenticate = require('../token');
 app.use(cors());
 const formatDate = require('../service');
 
 
 //สร้าง volunteer
 //feature volunteer register
-router.post('/create_data', async (req, res) => {
+router.post('/create_data', authenticate, async (req, res) => {
     var uid = req.body.uid;
 
     try {
@@ -41,7 +42,7 @@ router.post('/create_data', async (req, res) => {
 
 //ดึงข้อมูลจาก volunteer
 //fetch volunteer data
-router.post('/read_data', (req, res) => {
+router.post('/read_data', authenticate, (req, res) => {
     var uid = req.body.uid;
 
     try {
@@ -74,7 +75,7 @@ router.post('/read_data', (req, res) => {
 });
 
 //update volunteer data
-router.post('/update_data', (req, res) => {
+router.post('/update_data', authenticate, (req, res) => {
     var uid = req.body.uid;
 
     var tags = req.body.tags;
@@ -117,7 +118,7 @@ router.post('/update_data', (req, res) => {
 
 //ลบข้อมูล volunteer
 //feature delete volunteer
-router.post('/delete_data', (req, res) => {
+router.post('/delete_data', authenticate, (req, res) => {
     var uid = req.body.uid;
 
     try {
@@ -148,7 +149,8 @@ router.post('/delete_data', (req, res) => {
     }
 });
 
-router.post('/query_volunteers', async (req, res) => {
+router.post('/query_volunteers', authenticate, async (req, res) => {
+    var uid = req.user.uid;
     const { tag } = req.body;
 
     try {
@@ -165,7 +167,7 @@ router.post('/query_volunteers', async (req, res) => {
             }));
 
             // Filter out volunteers without matching or generic tag
-            let matchingVolunteers = volunteers.filter(v => v.tagMatch || v.hasGeneric);
+            let matchingVolunteers = volunteers.filter(v => v.uid !== uid && (v.tagMatch || v.hasGeneric));
             console.log(matchingVolunteers);
 
             // Sort by tag match, then by quotas and score

@@ -14,10 +14,12 @@ import 'package:client/pages/chat/chat_log.dart';
 
 void main() => runApp(MainApp(SelectedPage: 0));
 
+GlobalKey<_MainAppState> mainAppKey = GlobalKey();
+
 class MainApp extends StatefulWidget {
   int SelectedPage;
 
-  MainApp({super.key, required this.SelectedPage});
+  MainApp({required this.SelectedPage}) : super(key: mainAppKey);
   @override
   _MainAppState createState() => _MainAppState();
 }
@@ -42,6 +44,12 @@ class _MainAppState extends State<MainApp> {
     print(uid);
     setState(() {
       userUid = uid; // อัปเดต uid ใน state
+    });
+  }
+
+  void goToChatLog() {
+    setState(() {
+      widget.SelectedPage = 2;
     });
   }
 

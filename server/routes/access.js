@@ -16,7 +16,7 @@ router.post('/signin', authenticate, async (req, res) => {
 });
 
 router.get('/get_uid', authenticate, async (req, res) => {
-    console.log("UID:" + req.user.uid);
+    // console.log("UID:" + req.user.uid);
     return res.status(200).json({ uid: req.user.uid });
 })
 

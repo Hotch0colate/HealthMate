@@ -6,18 +6,19 @@ const { get, set, ref } = require("firebase/database");
 var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
+const authenticate = require('../token');
 app.use(cors());
 const formatDate = require('../service');
 
 //create chatlog
 //feature create chatlog
-router.post('/create_data', async (req, res) => {
-    var user = req.body.user;
+router.post('/create_data', authenticate, async (req, res) => {
+    var user = req.user.uid;
     var volunteer = req.body.volunteer;
     var cid = firebaseadmin.firestore().collection('chats').doc().id;
 
-    console.log("cid", cid);
-    console.log(typeof (cid));
+    // console.log("cid", cid);
+    // console.log(typeof (cid));
     try {
         set(ref(db, 'chats/' + cid), {
             cid: cid,
@@ -61,7 +62,8 @@ router.post('/create_data', async (req, res) => {
         });
         return res.status(200).json({
             RespCode: 200,
-            RespMessage: "Create Chatlog Successfully !"
+            RespMessage: "Create Chatlog Successfully !",
+            Data: cid
         });
     }
     catch (error) {
