@@ -1,6 +1,7 @@
 import 'package:client/component/buttons.dart';
 import 'package:client/component/checkbox.dart';
 import 'package:client/pages/psychiar/attach_cert.dart';
+import 'package:client/pages/select_talk/talk_page.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,15 @@ class PsyRegister extends StatelessWidget {
                                   color: Colors.black38,
                                   size: 30, // Customize the icon color
                                 ),
-                                onPressed: () {},
+                                onPressed: () {
+                                  //กลับไปหน้า Select talk
+                                  //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => TalkPage()),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -114,7 +123,12 @@ class PsyRegister extends StatelessWidget {
                             alignment: Alignment.bottomRight,
                             child: ForwardButton(
                               onPressed: () {
-                                AttachCertificate();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AttachCertificate()),
+                                );
                               },
                             ),
                           ),

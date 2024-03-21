@@ -38,7 +38,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         _getImage(ImageSource.gallery); // Change to ImageSource.camera for camera
       },
       child: Container(
-        height: 200,
+        height: 150,
         width: 400,
         child: DecoratedBox(
           decoration: BoxDecoration(

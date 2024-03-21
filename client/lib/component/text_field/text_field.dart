@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
-import 'package:intl/intl.dart';
 
 class InputTextField extends StatefulWidget {
   final TextEditingController controller;
@@ -189,95 +188,3 @@ class _InputLongTextFieldState extends State<InputTextField> {
   }
 }
 
-class InputDateField extends StatefulWidget {
-  final TextEditingController controller;
-  final String hintText;
-  final String labelText;
-
-  const InputDateField({
-    Key? key,
-    required this.controller,
-    required this.hintText,
-    required this.labelText,
-  }) : super(key: key);
-
-  @override
-  _InputDateFieldState createState() => _InputDateFieldState();
-}
-
-class _InputDateFieldState extends State<InputDateField> {
-  late FocusNode _focusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    _focusNode = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    _focusNode.dispose();
-    super.dispose();
-  }
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2101),
-    );
-    if (picked != null && picked != widget.controller.text) {
-      setState(() {
-        widget.controller.text = DateFormat('yyyy-MM-dd').format(picked);
-      });
-    }
-  }
-
-   @override
-  Widget build(BuildContext context) {
-    return SizedBox( 
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                widget.labelText,
-                style: FontTheme.body1
-              ),
-              Text(
-                ' *',
-                style: TextStyle(
-                  fontSize: 16, // Change font size if needed
-                  color: Colors.red, // Change color if needed
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: 5),
-          GestureDetector(
-            onTap: () => _selectDate(context),
-            child: AbsorbPointer(
-              child: TextFormField(
-                controller: widget.controller,
-                focusNode: _focusNode,
-                decoration: InputDecoration(
-                  hintText: widget.hintText,hintStyle: FontTheme.body2,
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Colors.white, // Customize border color
-                      width: 1, // Set border width to 1
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                keyboardType: TextInputType.datetime,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}

@@ -49,6 +49,9 @@ dependencies:
   flutter_native_splash: ^2.3.10
   table_calendar: ^3.1.0
   image_picker: ^1.0.7
+  scroll_date_picker : "^3.8.0"
+
+
 
 
 flutter_icons:

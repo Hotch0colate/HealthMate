@@ -24,7 +24,7 @@ class _ColorChangingCheckboxState extends State<ColorChangingCheckbox> {
     return Row(
       children: <Widget>[
         Transform.scale(
-          scale: 1.5, // Change the scale factor to adjust checkbox size
+          scale: 1.3, // Change the scale factor to adjust checkbox size
           child: Checkbox(
             value: isChecked,
             onChanged: (value) {

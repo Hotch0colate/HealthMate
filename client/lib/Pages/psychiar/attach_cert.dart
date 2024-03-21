@@ -1,10 +1,28 @@
 import 'package:client/component/buttons.dart';
+import 'package:client/component/text_field/date_picker.dart';
 import 'package:client/component/text_field/text_field.dart';
+import 'package:client/pages/psychiar/loading_register.dart';
+import 'package:client/pages/psychiar/register.dart';
 import 'package:client/pages/psychiar/upload_image.dart';
+import 'package:client/pages/testpage.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'HealthMate',
+      home: AttachCertificate(),
+    );
+  }
+}
 
 class AttachCertificate extends StatelessWidget {
   final TextEditingController _firstnameController = TextEditingController();
@@ -15,7 +33,9 @@ class AttachCertificate extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView( // Wrap with SingleChildScrollView
+      body: SingleChildScrollView(
+        physics: NeverScrollableScrollPhysics(),
+        // Wrap with SingleChildScrollView
         child: Padding(
           padding: EdgeInsets.all(20),
           child: Center(
@@ -32,11 +52,17 @@ class AttachCertificate extends StatelessWidget {
                     children: [
                       IconButton(
                         icon: const Icon(
-                          Icons.arrow_back_ios,
+                          Icons.arrow_back_ios, // Replace with your custom icon
                           color: Colors.black38,
-                          size: 30,
+                          size: 30, // Customize the icon color
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => PsyRegister()),
+                          );
+                        },
                       ),
                     ],
                   ),
@@ -62,7 +88,9 @@ class AttachCertificate extends StatelessWidget {
                     'แนบใบประกอบวิชาชีพและกรอกข้อมูลด้านล่าง',
                     style: FontTheme.body2,
                   ),
+                  SizedBox(height: 10),
                   ImageUploadScreen(),
+                  SizedBox(height: 10),
                   Row(
                     children: [
                       Expanded(
@@ -89,17 +117,24 @@ class AttachCertificate extends StatelessWidget {
                     labelText: 'เลขที่ใบอนุญาต',
                   ),
                   SizedBox(height: 10),
-                  InputDateField(
+                  CupertinoDatePickerField(
                     controller: _dateController,
-                    hintText: 'กรอกวันที่ออกใบอนุญาต',
-                    labelText: 'วันที่ออก',
+                    hintText: 'เลือกวันที่ออกใบอนุญาต',
+                    labelText: 'วันที่ออกใบอนุญาต',
                   ),
                   SizedBox(height: 20),
-                  MdPrimaryButton(text: 'ลงทะเบียน',                         
-                  onPressed: () {},
-                  foregroundColor: Colors.white, // Change text color
-                  backgroundColor: ColorTheme.successAction,
-                  borderColor: ColorTheme.successAction, // Change button background color
+                  MdPrimaryButton(
+                    text: 'ลงทะเบียน',
+                    onPressed: () {
+                      Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const LoadingPsyRegister()),
+                    );
+                    },
+                    foregroundColor: Colors.white, // Change text color
+                    backgroundColor: ColorTheme.successAction,
+                    borderColor: ColorTheme
+                        .successAction, // Change button background color
                   ),
                 ],
               ),
@@ -107,6 +142,28 @@ class AttachCertificate extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class MyDatePickerWidget extends StatefulWidget {
+  @override
+  _MyDatePickerWidgetState createState() => _MyDatePickerWidgetState();
+}
+
+class _MyDatePickerWidgetState extends State<MyDatePickerWidget> {
+  DateTime selectedDate = DateTime.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return CupertinoDatePicker(
+      mode: CupertinoDatePickerMode.date,
+      initialDateTime: selectedDate,
+      onDateTimeChanged: (DateTime newDate) {
+        setState(() {
+          selectedDate = newDate;
+        });
+      },
     );
   }
 }
