@@ -41,7 +41,7 @@ router.get('/api/get', (req, res) => {
         firebasedb.get(ref(db, 'users'))
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    console.log(snapshot.val());
+                    // console.log(snapshot.val());
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "Success",
@@ -72,7 +72,7 @@ router.post('/api/getbyuser', (req, res) => {
         firebasedb.get(ref(db, 'users/' + fullname))
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    console.log(snapshot.val());
+                    // console.log(snapshot.val());
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "Success",

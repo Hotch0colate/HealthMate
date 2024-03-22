@@ -207,6 +207,8 @@ class FindVolunteerPage extends StatelessWidget {
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _CreateChatRoomAndSendFirstMessage(context, data.data!);
               });
+            } else {
+              return Center(child: Text('No data found'));
             }
             // Return a temporary placeholder widget if needed
             return Container();

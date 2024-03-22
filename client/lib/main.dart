@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
+import 'package:client/services/notification.dart';
+
 //page import
 import 'pages/authentication/login.dart';
 import 'pages/authentication/signup.dart';
@@ -18,6 +20,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await NotificationService().initNotification();
 
   runApp(const MyApp());
 }

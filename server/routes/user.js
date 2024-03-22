@@ -60,7 +60,7 @@ router.post('/read_data', authenticate, async (req, res) => {
         firebasedb.get(ref(db, 'users/' + uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    console.log(snapshot.val());
+                    // console.log(snapshot.val());
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessge: "Fetch data success",
@@ -68,7 +68,7 @@ router.post('/read_data', authenticate, async (req, res) => {
                     });
                 }
                 else {
-                    console.log("No data avilabel");
+                    console.log("No data available");
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "No data available"

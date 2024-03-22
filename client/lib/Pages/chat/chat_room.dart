@@ -106,6 +106,8 @@ class ChatRoomBody extends State<ChatRoom> {
       _scrollToBottom();
     });
 
+    _messageStreamController.close();
+
     super.dispose();
   }
 

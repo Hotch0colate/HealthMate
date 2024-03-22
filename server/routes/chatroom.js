@@ -43,7 +43,7 @@ router.post('/create_data', async (req, res) => {
                     });
                 }
                 else {
-                    console.log("No data avilabel from fetch data");
+                    console.log("No data available from fetch data");
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "No data available" + "/nPath API : /chatroom/create_data"
@@ -72,7 +72,7 @@ router.post('/read_data', (req, res) => {
                     const messages = snapshot.val();  // ดึงข้อมูลทั้งหมดใน messages
                     const messagesArray = Object.values(messages);  // แปลง object เป็น array
 
-                    console.log(messagesArray);
+                    // console.log(messagesArray);
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessge: "Success",

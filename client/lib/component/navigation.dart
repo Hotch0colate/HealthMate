@@ -38,10 +38,10 @@ class _MainAppState extends State<MainApp> {
     var _auth_service = AuthService();
     String? token = await _auth_service
         .getIdToken(); // สมมติว่า getIdToken คืนค่า Future<String?>
-    print(token);
+    // print(token);
     // ส่ง token ไปยัง backend เพื่อดึง uid
     String uid = await fetchUidFromToken(token);
-    print(uid);
+    // print(uid);
     setState(() {
       userUid = uid; // อัปเดต uid ใน state
     });

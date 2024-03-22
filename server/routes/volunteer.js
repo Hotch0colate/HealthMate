@@ -14,7 +14,7 @@ const formatDate = require('../service');
 //สร้าง volunteer
 //feature volunteer register
 router.post('/create_data', authenticate, async (req, res) => {
-    var uid = req.body.uid;
+    var uid = req.user.uid;
 
     try {
         firebasedb.set(ref(db, 'volunteers/' + uid), {
@@ -49,7 +49,7 @@ router.post('/read_data', authenticate, (req, res) => {
         firebasedb.get(ref(db, 'volunteers/' + uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    console.log(snapshot.val());
+                    // console.log(snapshot.val());
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "Success",
@@ -168,7 +168,6 @@ router.post('/query_volunteers', authenticate, async (req, res) => {
 
             // Filter out volunteers without matching or generic tag
             let matchingVolunteers = volunteers.filter(v => v.uid !== uid && (v.tagMatch || v.hasGeneric));
-            console.log(matchingVolunteers);
 
             // Sort by tag match, then by quotas and score
             matchingVolunteers.sort((a, b) => {

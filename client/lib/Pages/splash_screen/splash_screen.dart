@@ -28,6 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void checkLoggedInState() async {
     String? token = await AuthService().getToken();
+    print("Shared Token: " + token.toString());
     if (token != null) {
       // Token exists, so navigate to the main app screen
       // print("Token:" + token);

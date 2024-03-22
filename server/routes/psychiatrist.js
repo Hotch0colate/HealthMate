@@ -57,7 +57,7 @@ router.post('/read_data', (req, res) => {
         firebasedb.get(ref(db, 'psychiatrists/' + uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    console.log(snapshot.val());
+                    // console.log(snapshot.val());
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessge: "Success",
@@ -65,7 +65,7 @@ router.post('/read_data', (req, res) => {
                     });
                 }
                 else {
-                    console.log("No data avilabel from fetch data");
+                    console.log("No data available from fetch data");
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessage: "No data available" + "/nPath API : /psychiatrist/read_data"

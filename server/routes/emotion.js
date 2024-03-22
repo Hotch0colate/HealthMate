@@ -76,7 +76,7 @@ router.post('/read_all_data', authenticate, async (req, res) => {
           });
         }
         else {
-          console.log("No data avilabel");
+          console.log("No data available");
           return res.status(200).json({
             RespCode: 200,
             RespMessage: "No data available",
@@ -113,7 +113,7 @@ router.post('/read_data', authenticate, async (req, res) => {
   var targetYear = parseInt(dayMonthYearParts[2], 10);
 
   try {
-    console.log('users/' + uid + '/calendar/' + targetDay + '-' + targetMonth + '-' + targetYear + '/emotions');
+    // console.log('users/' + uid + '/calendar/' + targetDay + '-' + targetMonth + '-' + targetYear + '/emotions');
     firebasedb.get(ref(db, 'users/' + uid + '/calendar/' + targetDay + '-' + targetMonth + '-' + targetYear + '/emotions'))
       .then((snapshot) => {
         if (snapshot.exists()) {
@@ -124,7 +124,7 @@ router.post('/read_data', authenticate, async (req, res) => {
           });
         }
         else {
-          console.log("No data avilabel");
+          console.log("No data available");
           return res.status(200).json({
             RespCode: 200,
             RespMessage: "No data available"
@@ -151,7 +151,7 @@ router.post('/delete_data', authenticate, (req, res) => {
   const emotionToDeletePath = emotionsPath + eid;
   const lastEmotionPath = datePath + '/lastemotion';
 
-  console.log(emotionToDeletePath);
+  // console.log(emotionToDeletePath);
 
   try {
     get(ref(db, emotionsPath)).then((snapshot) => {
