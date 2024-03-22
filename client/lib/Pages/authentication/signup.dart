@@ -257,7 +257,7 @@ class _SignupPageState extends State<SignupPage> {
                                 ),
                               ),
                               const SizedBox(height: 24),
-                              OrangeButton(
+                              SpecialButton(
                                 onPressed: _signup,
                                 buttonText: 'สร้างบัญชี',
                               ),

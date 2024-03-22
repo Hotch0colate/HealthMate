@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:client/theme/font.dart';
 import 'package:client/theme/color.dart';
 
-class OrangeButton extends StatelessWidget {
+class SpecialButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String buttonText;
 
-  const OrangeButton({
+  const SpecialButton({
     Key? key,
     required this.onPressed,
     required this.buttonText,
@@ -18,20 +18,18 @@ class OrangeButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(8),
         ),
         backgroundColor: ColorTheme.primaryColor,
         foregroundColor: ColorTheme.WhiteColor,
       ),
       child: SizedBox(
-        height: 60,
+        height: 50,
+        width: 250,
         child: Center(
           child: Text(
             buttonText,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-            ),
+            style: FontTheme.btn_medium
           ),
         ),
       ),
