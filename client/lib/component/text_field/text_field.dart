@@ -42,9 +42,10 @@ class _InputTextFieldState extends State<InputTextField> {
         Row(
           // Row to display label text and asterisk
           children: [
+            SizedBox(width: 10),
             Text(
               widget.labelText, // Display the label text
-              style: FontTheme.body1,
+              style: FontTheme.subtitle2,
             ),
             Text(' *',
                 style: FontTheme.body2.copyWith(color: ColorTheme.errorAction)),
@@ -136,13 +137,14 @@ class _PasswordInputTextFieldState extends State<PasswordInputTextField> {
         Row(
           // Row to display label text and asterisk
           children: [
+            SizedBox(width: 10),
             Text(
               widget.labelText, // Display the label text
-              style: FontTheme.body1,
+              style: FontTheme.subtitle2,
             ),
             Text(
               ' *',
-              style: FontTheme.body1.copyWith(color: ColorTheme.errorAction),
+              style: FontTheme.subtitle2.copyWith(color: ColorTheme.errorAction),
             ),
           ],
         ),
@@ -151,7 +153,7 @@ class _PasswordInputTextFieldState extends State<PasswordInputTextField> {
           height: 50,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: _focusNode.hasFocus ? Colors.white : Colors.grey[200],
+            color: Colors.white,
             border: Border.all(
               color: Colors.black12, // Adjusted border color
               width: 1,
@@ -184,17 +186,20 @@ class _PasswordInputTextFieldState extends State<PasswordInputTextField> {
                     width: 1), // Adjusted focused border color
                 borderRadius: BorderRadius.circular(10),
               ),
-              // suffixIcon: IconButton(
-              //   onPressed: () {
-              //     setState(() {
-              //       _obscureText = !_obscureText; // Toggle obscureText
-              //     });
-              //   },
-              //   icon: Icon(
-              //     _obscureText ? Icons.visibility : Icons.visibility_off,
-              //     color: _obscureText ? Colors.grey : ColorTheme.primaryColor,
-              //   ),
-              // ),
+              icon: Align(
+                widthFactor: 1.0,
+                child: IconButton(
+                  onPressed: () {
+                    setState(() {
+                      _obscureText = !_obscureText; // Toggle obscureText
+                    });
+                  },
+                  icon: Icon(
+                    _obscureText ? Icons.visibility_off : Icons.visibility,
+                    color: _obscureText ? Colors.grey : ColorTheme.primaryColor,
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -292,6 +297,38 @@ class _InputLongTextFieldState extends State<InputTextField> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class NormalPasswordTextField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const NormalPasswordTextField({Key? key, required this.controller})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PasswordInputTextField(
+      controller: controller,
+      hintText: 'กรอกรหัสผ่าน',
+      labelText: 'รหัสผ่าน',
+    );
+  }
+}
+
+class ConfirmPasswordTextField extends StatelessWidget {
+  final TextEditingController controller;
+
+  const ConfirmPasswordTextField({Key? key, required this.controller})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return PasswordInputTextField(
+      controller: controller,
+      hintText: 'กรอกรหัสผ่านอีกครั้ง',
+      labelText: 'ยืนยันรหัสผ่าน',
     );
   }
 }

@@ -1,9 +1,6 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, avoid_print
-import 'package:client/component/text_field/text_field.dart';
-import 'package:client/services/auth_service.dart';
-import 'package:client/theme/color.dart';
-import 'package:client/theme/font.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 
 //page import
@@ -11,20 +8,9 @@ import 'package:client/pages/authentication/signup.dart';
 
 //component import
 import 'package:client/component/buttons.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HealthMate',
-      home: LoginPage(),
-    );
-  }
-}
+import 'package:client/component/text_field/text_field.dart';
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
