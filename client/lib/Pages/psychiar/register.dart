@@ -1,5 +1,5 @@
 import 'package:client/component/buttons.dart';
-import 'package:client/component/checkbox.dart';
+import 'package:client/component/select_box.dart';
 import 'package:client/pages/psychiar/attach_cert.dart';
 import 'package:client/pages/select_talk/talk_page.dart';
 import 'package:client/theme/color.dart';

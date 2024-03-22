@@ -1,4 +1,6 @@
+import 'package:client/component/select_box.dart';
 import 'package:client/services/ip_variable.dart';
+import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:client/services/auth_service.dart';
@@ -76,74 +78,46 @@ class _FirstLogin1State extends State<FirstLogin1> {
                 ),
               ),
               const SizedBox(height: 18),
-              const Text(
-                'เพศของคุณคืออะไร ?',
-                style: TextStyle(
-                  color: Color.fromRGBO(251, 133, 0, 1),
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
+              Text('เพศของคุณคืออะไร ?',
+                  style: FontTheme.subtitle1
+                      .copyWith(color: ColorTheme.primaryColor)),
               const SizedBox(height: 26.5),
-              const Text(
-                'คำตอบของคุณ: ',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              Text('คำตอบของคุณ: ', style: FontTheme.body1),
               const SizedBox(height: 30),
               Container(
                 padding: const EdgeInsets.only(left: 35),
                 child: Column(
                   children: [
-                    ListTile(
-                      title: const Text('ชาย',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Poppins')),
-                      leading: Radio<String>(
-                        value: 'Male',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
+                    ColorChangingRadio(
+                      text: 'หญิง',
+                      value: 'Female',
+                      groupValue: selectedGender,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedGender = value!;
+                        });
+                      },
                     ),
-                    ListTile(
-                      title: const Text('หญิง',
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w400,
-                              fontFamily: 'Poppins')),
-                      leading: Radio<String>(
-                        value: 'Female',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
+                    ColorChangingRadio(
+                      text: 'ชาย',
+                      value: 'Male',
+                      groupValue: selectedGender,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedGender = value!;
+                        });
+                      },
                     ),
-                    ListTile(
-                      title: const Text('อื่นๆ',
-                          style: FontTheme.body2),
-                      leading: Radio<String>(
-                        value: 'Others',
-                        groupValue: selectedGender,
-                        onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
-                      ),
-                    ),
+                    ColorChangingRadio(
+                      text: 'อื่น ๆ',
+                      value: 'Others',
+                      groupValue: selectedGender,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedGender = value!;
+                        });
+                      },
+                    )
                   ],
                 ),
               ),

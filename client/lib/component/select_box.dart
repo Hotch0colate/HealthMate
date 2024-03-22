@@ -47,3 +47,47 @@ class _ColorChangingCheckboxState extends State<ColorChangingCheckbox> {
     );
   }
 }
+
+
+class ColorChangingRadio extends StatefulWidget {
+  final String text;
+  final String value;
+  final String groupValue;
+  final ValueChanged<String?> onChanged;
+
+  const ColorChangingRadio({
+    Key? key,
+    required this.text,
+    required this.value,
+    required this.groupValue,
+    required this.onChanged,
+  }) : super(key: key);
+
+  @override
+  _ColorChangingRadioState createState() => _ColorChangingRadioState();
+}
+
+class _ColorChangingRadioState extends State<ColorChangingRadio> {
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        widget.text,
+        style: TextStyle(
+          color: widget.groupValue == widget.value
+              ? ColorTheme.primaryColor
+              : ColorTheme.baseColor,
+          fontSize: 18,
+          fontWeight: FontWeight.w400,
+          fontFamily: 'Athiti',
+        ),
+      ),
+      leading: Radio<String>(
+        value: widget.value,
+        groupValue: widget.groupValue,
+        onChanged: widget.onChanged,
+        activeColor: Colors.orange,
+      ),
+    );
+  }
+}

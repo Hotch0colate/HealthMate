@@ -1,6 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously, file_names
 
+import 'package:client/component/select_box.dart';
 import 'package:client/component/text_field/text_field.dart';
+import 'package:client/pages/authentication/first_login/first_login_2.dart';
 import 'package:client/pages/authentication/login.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -19,136 +21,130 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'HealthMate',
-      home: SignupPage(),
+      home: FirstLogin1(),
     );
   }
 }
 
-class SignupPage extends StatefulWidget {
-  const SignupPage({super.key});
+class FirstLogin1 extends StatefulWidget {
+  const FirstLogin1({Key? key}) : super(key: key);
 
   @override
-  _SignupPageState createState() => _SignupPageState();
+  _FirstLogin3State createState() => _FirstLogin3State();
 }
 
-class _SignupPageState extends State<SignupPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
+class _FirstLogin3State extends State<FirstLogin1> {
+  bool agreedToTerms = false;
+  String selectedGender = ''; // Variable to store selected gender
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-            top: 50,
-          ),
+          padding: const EdgeInsets.only(top: 50, left: 16, right: 16),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset('assets/logos/medium_app_name.png'),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text('สวัสดีฮับป๋ม,', style: FontTheme.subtitle1),
-                  const Text('มาสร้างบัญชีกัน!', style: FontTheme.subtitle2),
-                  Container(
-                      padding: const EdgeInsets.only(top: 15),
-                      child: Column(
-                        children: [
-                          Column(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(top: 8),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        InputTextField(
-                                          controller: _usernameController,
-                                          hintText: 'กรอกชื่อผู้ใช้',
-                                          labelText: 'ชื่อผู้ใช้',
-                                        ),
-                                        SizedBox(height: 5),
-                                        InputTextField(
-                                          controller: _emailController,
-                                          hintText: 'กรอกอีเมล',
-                                          labelText: 'อีเมล',
-                                        ),
-                                        SizedBox(height: 5),
-                                        NormalPasswordTextField(
-                                          controller: _passwordController,
-                                        ),
-                                        SizedBox(height: 5),
-                                        ConfirmPasswordTextField(
-                                          controller:
-                                              _confirmPasswordController,
-                                        ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SpecialButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const LoginPage()),
-                                                  );
-                                                },
-                                                buttonText: 'สร้างบัญชี')
-                                          ],
-                                        ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text('มับัญชีอยู่แล้วใช่หรือไม่?',
-                                                style: FontTheme.body2),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const LoginPage()),
-                                                );
-                                              },
-                                              // Set the color when hover
-                                              child: Text(' เข้าสู่ระบบที่นี่',
-                                                  style: FontTheme.body1
-                                                      .copyWith(
-                                                          color: ColorTheme
-                                                              .primaryColor)),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      )),
-                ],
+              SizedBox(
+                height: 51,
+                width: MediaQuery.of(context).size.width - 32,
               ),
+              Image.asset('assets/logos/big_app_name.png'),
+              const SizedBox(
+                height: 37,
+              ),
+              const SizedBox(
+                height: 86,
+                child: Image(
+                  image: AssetImage(
+                    'assets/logos/main_mascot.png',
+                  ),
+                ),
+              ),
+              const SizedBox(height: 18),
+              Text(
+                'เพศของคุณคืออะไร ?',
+                style: FontTheme.subtitle1.copyWith(color: ColorTheme.primaryColor)
+              ),
+              const SizedBox(height: 26.5),
+              Text(
+                'คำตอบของคุณ: ',
+                style: FontTheme.body1
+              ),
+              const SizedBox(height: 30),
+              Container(
+                padding: const EdgeInsets.only(left: 35),
+                child: Column(
+                  children: [
+                    ColorChangingRadio(
+                      text: 'หญิง', 
+                      value: 'Female', 
+                      groupValue: selectedGender, 
+                      onChanged: (String? value) {
+                          setState(() {
+                            selectedGender = value!;
+                          });
+                        },
+                      ),
+                      ColorChangingRadio(
+                      text: 'ชาย', 
+                      value: 'Male', 
+                      groupValue: selectedGender, 
+                      onChanged: (String? value) {
+                          setState(() {
+                            selectedGender = value!;
+                          });
+                        },
+                      ),
+                      ColorChangingRadio(
+                      text: 'อื่น ๆ', 
+                      value: 'Others', 
+                      groupValue: selectedGender, 
+                      onChanged: (String? value) {
+                          setState(() {
+                            selectedGender = value!;
+                          });
+                        },
+                      )
+                  ],
+                ),
+              ),
+              // const SizedBox(height: 60),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(
+              height: 40,
+              width: 118,
+            ),
+            ForwardButton(
+              onPressed: () {
+                if (selectedGender.isNotEmpty) {
+                  sendUserDataToBackend(selectedGender);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const FirstLogin2()),
+                  );
+                } else {
+                  // Prompt user to select a gender or handle this case accordingly
+                  print("Please select a gender");
+                }
+              },
+            ),
+          ],
+        ),
+      ),
     );
   }
+  
+  void sendUserDataToBackend(String selectedGender) {}
 }
