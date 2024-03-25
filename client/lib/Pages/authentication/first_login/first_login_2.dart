@@ -1,4 +1,7 @@
+import 'package:client/component/text_field/date_picker.dart';
 import 'package:client/services/ip_variable.dart';
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert'; // For JSON encoding
 import 'package:http/http.dart' as http; // HTTP package
@@ -54,6 +57,7 @@ class _FirstLogin2State extends State<FirstLogin2> {
   DateTime? selectedDate;
   TextEditingController birthDateController = TextEditingController();
 
+//เฟิร์น-ไม่เข้าใจเรื่องการเก็บวันเดือนปีจาก cuperdatepicker
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -87,70 +91,28 @@ class _FirstLogin2State extends State<FirstLogin2> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 51,
                   width: MediaQuery.of(context).size.width - 32,
                 ),
                 Image.asset('assets/logos/big_app_name.png'),
+                const SizedBox(height: 24),
                 const SizedBox(
-                  height: 37,
-                ),
-                const SizedBox(
-                  height: 86,
+                  height: 72,
                   child: Image(
-                    image: AssetImage(
-                      'assets/logos/main_mascot.png',
-                    ),
+                    image: AssetImage('assets/logos/main_mascot.png'),
                   ),
                 ),
                 const SizedBox(height: 18),
-                const Text(
-                  'วันเกิดคุณคือวันไหนครับ ?',
-                  style: TextStyle(
-                      color: Color.fromRGBO(251, 133, 0, 1),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins'),
-                ),
-                const SizedBox(height: 26.5),
-                const Text(
-                  'คำตอบของคุณ: ',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Poppins'),
-                ),
-                // Radio buttons for gender selection
-                const SizedBox(height: 14),
-                Container(
-                  padding: const EdgeInsets.only(left: 24, right: 24),
-                  child: TextFormField(
-                    controller: birthDateController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15),
-                        borderSide: const BorderSide(
-                          color: Color.fromRGBO(34, 33, 33, 0.6),
-                          width: 2,
-                        ),
-                      ),
-                      hintText: 'DD/MM/YYYY',
-                      hintStyle: const TextStyle(
-                        color: Color.fromRGBO(34, 33, 33, 0.6),
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Poppins',
-                      ),
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.calendar_today),
-                        onPressed: () => _selectDate(context),
-                        color: Color.fromRGBO(34, 33, 33, 0.6),
-                      ),
-                    ),
-                    readOnly:
-                        true, // Prevents keyboard from appearing when tapping the field
-                  ),
-                ),
+                Text('คุณเกิดวันที่เท่าไหร่ครับ ?',
+                    style: FontTheme.subtitle1
+                        .copyWith(color: ColorTheme.primaryColor)),
+                const SizedBox(height: 24),
+                Text('คำตอบของคุณ: ', style: FontTheme.body1),
+                const SizedBox(height: 12),
+                CupertinoDatePickerField(
+                  controller: birthDateController,
+                  hintText: 'เลือกวันเกิดของคุณ',
+                  labelText: '',
+                )
               ],
             ),
           ),

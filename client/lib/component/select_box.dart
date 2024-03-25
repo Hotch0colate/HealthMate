@@ -70,23 +70,27 @@ class ColorChangingRadio extends StatefulWidget {
 class _ColorChangingRadioState extends State<ColorChangingRadio> {
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(
-        widget.text,
-        style: TextStyle(
-          color: widget.groupValue == widget.value
-              ? ColorTheme.primaryColor
-              : ColorTheme.baseColor,
-          fontSize: 18,
-          fontWeight: FontWeight.w400,
-          fontFamily: 'Athiti',
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 0.0), // Adjust vertical spacing here
+      child: ListTile(
+        contentPadding: EdgeInsets.zero, // Remove default ListTile padding
+        title: Text(
+          widget.text,
+          style: TextStyle(
+            color: widget.groupValue == widget.value
+                ? ColorTheme.primaryColor
+                : ColorTheme.baseColor,
+            fontSize: 18,
+            fontWeight: FontWeight.w400,
+            fontFamily: 'Athiti',
+          ),
         ),
-      ),
-      leading: Radio<String>(
-        value: widget.value,
-        groupValue: widget.groupValue,
-        onChanged: widget.onChanged,
-        activeColor: Colors.orange,
+        leading: Radio<String>(
+          value: widget.value,
+          groupValue: widget.groupValue,
+          onChanged: widget.onChanged,
+          activeColor: Colors.orange,
+        ),
       ),
     );
   }

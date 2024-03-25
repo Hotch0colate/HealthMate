@@ -12,6 +12,20 @@ import 'package:client/pages/authentication/first_login/first_login_2.dart';
 //component import
 import '../../../component/buttons.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'HealthMate',
+      home: FirstLogin1(),
+    );
+  }
+}
+
 class FirstLogin1 extends StatefulWidget {
   const FirstLogin1({Key? key}) : super(key: key);
 
@@ -62,28 +76,23 @@ class _FirstLogin1State extends State<FirstLogin1> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
+              const SizedBox(height: 24),
               const SizedBox(
-                height: 37,
-              ),
-              const SizedBox(
-                height: 86,
+                height: 72,
                 child: Image(
-                  image: AssetImage(
-                    'assets/logos/main_mascot.png',
-                  ),
+                  image: AssetImage('assets/logos/main_mascot.png'),
                 ),
               ),
               const SizedBox(height: 18),
-              Text('เพศของคุณคืออะไร ?',
+              Text('เพศของคุณคืออะไรครับ ?',
                   style: FontTheme.subtitle1
                       .copyWith(color: ColorTheme.primaryColor)),
-              const SizedBox(height: 26.5),
+              const SizedBox(height: 24),
               Text('คำตอบของคุณ: ', style: FontTheme.body1),
-              const SizedBox(height: 30),
+              const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.only(left: 35),
                 child: Column(

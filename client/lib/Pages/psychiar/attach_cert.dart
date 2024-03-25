@@ -4,7 +4,6 @@ import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/psychiar/loading_register.dart';
 import 'package:client/pages/psychiar/register.dart';
 import 'package:client/pages/psychiar/upload_image.dart';
-import 'package:client/pages/testpage.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';

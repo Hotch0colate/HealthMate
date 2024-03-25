@@ -1,6 +1,9 @@
+import 'package:client/component/select_box.dart';
 import 'package:client/pages/authentication/first_login/first_login_4.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/services/ip_variable.dart';
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
 import 'package:client/services/auth_service.dart';
@@ -51,31 +54,6 @@ class _FirstLogin3State extends State<FirstLogin3> {
 
   String? selectedCareer;
 
-  Widget _buildRadioListTile({required String title, required String value}) {
-    return ListTile(
-      dense: true,
-      title: Text(
-        title,
-        style: TextStyle(
-          color: selectedCareer == value ? Colors.orange : Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          fontFamily: 'Poppins',
-        ),
-      ),
-      leading: Radio<String>(
-        value: value,
-        groupValue: selectedCareer,
-        onChanged: (String? value) {
-          setState(() {
-            selectedCareer = value;
-            selectedCareerValue = value!;
-          });
-        },
-        activeColor: Colors.orange,
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,66 +66,95 @@ class _FirstLogin3State extends State<FirstLogin3> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
-              const SizedBox(height: 37),
+              const SizedBox(height: 24),
               const SizedBox(
-                height: 86,
+                height: 72,
                 child: Image(
                   image: AssetImage('assets/logos/main_mascot.png'),
                 ),
               ),
               const SizedBox(height: 18),
-              const Text(
-                'คุณทำงานอาชีพอะไรครับ ?',
-                style: TextStyle(
-                  color: Color.fromRGBO(251, 133, 0, 1),
-                  fontSize: 24,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-              const SizedBox(height: 26.5),
-              const Text(
-                'คำตอบของคุณ: ',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'Poppins',
-                ),
-              ),
-              const SizedBox(height: 14),
+              Text('คุณทำงานอาชีพอะไรครับ ?',  
+              style: FontTheme.subtitle1
+                      .copyWith(color: ColorTheme.primaryColor)),
+              const SizedBox(height: 24),
+              Text('คำตอบของคุณ: ', style: FontTheme.body1),
+              const SizedBox(height: 12),
               Container(
                 padding: const EdgeInsets.only(left: 35),
                 child: Column(
                   children: <Widget>[
-                    _buildRadioListTile(
-                      title: 'นักเรียน/นิสิตนักศึกษา',
+                    ColorChangingRadio(
+                      text: 'นักเรียน/นิสิตนักศึกษา',
                       value: 'Student',
+                      groupValue: selectedCareerValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedCareer = value;
+                          selectedCareerValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'พนักงานบริษัทเอกชน',
+                    ColorChangingRadio(
+                      text: 'พนักงานบริษัทเอกชน',
                       value: 'OfficeWorker',
+                      groupValue: selectedCareerValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedCareer = value;
+                          selectedCareerValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'พนักงานข้าราชการ',
+                    ColorChangingRadio(
+                      text: 'พนักงานข้าราชการ',
                       value: 'PublicServant',
+                      groupValue: selectedCareerValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedCareer = value;
+                          selectedCareerValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'พนักงานรัฐวิสาหกิจ',
+                    ColorChangingRadio(
+                      text: 'พนักงานรัฐวิสาหกิจ',
                       value: 'StateEnterpriseEmployee',
+                      groupValue: selectedCareerValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedCareer = value;
+                          selectedCareerValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'พนักงานโรงงานอุตสาหกรรม',
+                    ColorChangingRadio(
+                      text: 'พนักงานโรงงานอุตสาหกรรม',
                       value: 'IndustryWorker',
+                      groupValue: selectedCareerValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedCareer = value;
+                          selectedCareerValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
+                    ColorChangingRadio(
+                      text: 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
                       value: 'PrivateBusiness',
+                      groupValue: selectedCareerValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedCareer = value;
+                          selectedCareerValue = value!;
+                        });
+                      },
                     ),
+
+                    
                   ],
                 ),
               ),

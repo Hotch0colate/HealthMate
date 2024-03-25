@@ -82,29 +82,26 @@ class GoBackButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromRGBO(34, 33, 33, 0.4),
+        backgroundColor: ColorTheme.WhiteColor,
+        foregroundColor: Colors.black54,
         side: const BorderSide(
-          color: Color.fromRGBO(34, 33, 33, 0.4),
+          color: Colors.black12,
         ),
       ),
       child: const SizedBox(
         height: 40,
-        width: 120,
+        width: 100,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
               height: 28,
               width: 28,
-              child: Image(
-                image: AssetImage(
-                    'assets/icons/goback.png'), // Ensure the image path is correct
-              ),
+              child: Icon(Icons.arrow_back_ios)
             ),
             Text(
               'ก่อนหน้า',
-              style: FontTheme.body2
+              style: FontTheme.body1
             ),
           ],
         ),
@@ -143,10 +140,7 @@ class ForwardButton extends StatelessWidget {
             SizedBox(
               height: 28,
               width: 28,
-              child: Image(
-                image: AssetImage(
-                    'assets/icons/foward.png'), // Ensure the image path is correct
-              ),
+              child: Icon(Icons.arrow_forward_ios)
             ),
           ],
         ),
@@ -197,7 +191,9 @@ class MdPrimaryButton extends StatelessWidget {
     this.foregroundColor = ColorTheme.WhiteColor,
     this.backgroundColor = ColorTheme.primaryColor,
     this.borderColor = ColorTheme.primaryColor,
-    this.minWidth = 120, // Set your desired minimum width
+    this.minWidth = 120,
+    
+     // Set your desired minimum width
   }) : super(key: key);
 
   @override
@@ -207,14 +203,13 @@ class MdPrimaryButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: foregroundColor,
         backgroundColor: backgroundColor,
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: borderColor, width: 2),
         ),
-        minimumSize: Size(minWidth, 0),
+        minimumSize: Size(minWidth, 40),
       ),
-      child: Text(text, style: FontTheme.btn_medium),
+      child: Text(text, style: FontTheme.body1),
     );
   }
 }

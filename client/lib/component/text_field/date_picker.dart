@@ -38,9 +38,7 @@ class _CupertinoDatePickerFieldState extends State<CupertinoDatePickerField> {
                 widget.labelText, // Display the label text
                 style: FontTheme.body1,
               ),
-              Text(' *',
-                  style:
-                      FontTheme.body2.copyWith(color: ColorTheme.errorAction)),
+            
             ],
           ),
           SizedBox(height: 5),
