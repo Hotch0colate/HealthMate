@@ -1,6 +1,7 @@
 import 'package:client/component/buttons.dart';
 import 'package:client/component/text_field/date_picker.dart';
 import 'package:client/component/text_field/text_field.dart';
+import 'package:client/pages/psychiar/finish_register.dart';
 import 'package:client/pages/psychiar/loading_register.dart';
 import 'package:client/pages/psychiar/register.dart';
 import 'package:client/pages/psychiar/upload_image.dart';
@@ -126,14 +127,20 @@ class AttachCertificate extends StatelessWidget {
                     text: 'ลงทะเบียน',
                     onPressed: () {
                       Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoadingPsyRegister()),
-                    );
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoadingPsyRegister()),
+                      );
+                      Future.delayed(const Duration(seconds: 3), () {
+                         Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const FinishRegisterPsy()),
+                      );// Navigate back after 3 seconds
+                      });
                     },
                     foregroundColor: Colors.white, // Change text color
                     backgroundColor: ColorTheme.successAction,
-                    borderColor: ColorTheme
-                        .successAction, // Change button background color
                   ),
                 ],
               ),

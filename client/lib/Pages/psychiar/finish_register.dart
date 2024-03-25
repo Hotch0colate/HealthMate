@@ -1,3 +1,4 @@
+import 'package:client/pages/emotion_calendar/calendar.dart';
 import 'package:client/pages/psychiar/register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -84,7 +85,7 @@ class _FinishRegisterPsyState extends State<FinishRegisterPsy> {
                     //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => PsyRegister()),
+                      MaterialPageRoute(builder: (context) => Calendar()),
                     );
                   },
                 )

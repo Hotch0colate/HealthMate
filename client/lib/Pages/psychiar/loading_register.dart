@@ -1,6 +1,7 @@
 import 'package:client/pages/psychiar/finish_register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class LoadingPsyRegister extends StatelessWidget {
@@ -41,19 +42,6 @@ class LoadingPsyRegister extends StatelessWidget {
                   'กรุณารอซักครู่ . . .',
                   style: FontTheme.subtitle1.copyWith(color: ColorTheme.secondaryColor),
                 ),
-                 IconButton(
-                  icon: Icon(
-                    Icons.abc,
-                    color: ColorTheme.primaryColor,
-                    size: 50,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FinishRegisterPsy()),
-                    );
-                  },
-                )
               ],
             ),
           ),

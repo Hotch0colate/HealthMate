@@ -39,11 +39,12 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       },
       child: Container(
         height: 150,
-        width: 400,
+        width: 300,
         child: DecoratedBox(
           decoration: BoxDecoration(
+            border: Border.all(color: ColorTheme.secondaryColor),
             borderRadius: BorderRadius.circular(
-                12),          ),
+                24),          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -53,9 +54,9 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
                   children: [
                     Image.file(
                       _image!,
-                      width: 250.0,
-                      height: 150.0,
-                      fit: BoxFit.cover,
+                      width: 245.0,
+                      height: 145.0,
+                      fit: BoxFit.fitHeight,
                     ),
                     IconButton(
                       onPressed: _clearImage,

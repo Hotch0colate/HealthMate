@@ -34,9 +34,10 @@ class _CupertinoDatePickerFieldState extends State<CupertinoDatePickerField> {
           Row(
             // Row to display label text and asterisk
             children: [
+          SizedBox(width: 10),
               Text(
                 widget.labelText, // Display the label text
-                style: FontTheme.body1,
+                style: FontTheme.subtitle2,
               ),
             
             ],
@@ -44,7 +45,7 @@ class _CupertinoDatePickerFieldState extends State<CupertinoDatePickerField> {
           SizedBox(height: 5),
           Container(
             height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
               border: Border.all(
                 color: Colors.black12, // Adjusted border color
@@ -59,7 +60,7 @@ class _CupertinoDatePickerFieldState extends State<CupertinoDatePickerField> {
                     controller: widget.controller,
                     placeholder: widget.hintText,
                     placeholderStyle:
-                        FontTheme.body2.copyWith(color: Colors.black54),
+                        FontTheme.body2,
                     readOnly: true,
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.transparent),

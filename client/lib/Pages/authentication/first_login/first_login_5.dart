@@ -119,8 +119,6 @@ class _FirstLogin5State extends State<FirstLogin5> {
               },
               foregroundColor: Colors.white, // Change text color
               backgroundColor: ColorTheme.successAction,
-              borderColor:
-                  ColorTheme.successAction, // Change button background color
             ),
           ],
         ),

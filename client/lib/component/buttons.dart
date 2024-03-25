@@ -181,16 +181,14 @@ class MdPrimaryButton extends StatelessWidget {
   final VoidCallback onPressed;
   final Color foregroundColor;
   final Color backgroundColor;
-  final Color borderColor;
   final double minWidth;
 
-  const MdPrimaryButton({
+  MdPrimaryButton({
     Key? key,
     required this.text,
     required this.onPressed,
     this.foregroundColor = ColorTheme.WhiteColor,
     this.backgroundColor = ColorTheme.primaryColor,
-    this.borderColor = ColorTheme.primaryColor,
     this.minWidth = 120,
     
      // Set your desired minimum width
@@ -205,7 +203,6 @@ class MdPrimaryButton extends StatelessWidget {
         backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
-          side: BorderSide(color: borderColor, width: 2),
         ),
         minimumSize: Size(minWidth, 40),
       ),
@@ -324,7 +321,7 @@ class MdSecondaryButton extends StatelessWidget {
         backgroundColor: ColorTheme.WhiteColor,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: ColorTheme.primaryColor, width: 1),
         ),
       ),

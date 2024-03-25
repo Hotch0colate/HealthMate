@@ -261,7 +261,7 @@ class _InputLongTextFieldState extends State<InputTextField> {
           height: 50,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: _focusNode.hasFocus ? Colors.white : ColorTheme.WhiteColor,
+            color:  Colors.white,
             border: Border.all(
               color: Colors.black12, // Adjusted border color
               width: 1,

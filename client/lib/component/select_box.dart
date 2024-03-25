@@ -37,7 +37,7 @@ class _ColorChangingCheckboxState extends State<ColorChangingCheckbox> {
           ),
         ),
         Text(widget.text,
-            style: FontTheme.body2.copyWith(
+            style: FontTheme.caption.copyWith(
                 color: isChecked
                     ? ColorTheme.primaryColor
                     : ColorTheme
