@@ -247,9 +247,9 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
                         SizedBox(height: screenHeight * 0.02),
-                        OrangeButton(
+                        LgPrimaryButton(
                           onPressed: _signup,
-                          buttonText: 'สร้างบัญชี',
+                          text: 'สร้างบัญชี',
                         ),
                         SizedBox(height: screenHeight * 0.015),
                         Row(

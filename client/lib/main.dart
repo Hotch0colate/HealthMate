@@ -1,5 +1,5 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
-import 'package:client/Pages/select_talk/select_talk.dart';
+
 import 'package:client/Pages/select_talk/talk_page.dart';
 import 'package:client/Pages/volunteer_register/volunteer_congrats.dart';
 import 'package:client/Pages/volunteer_register/volunteer_register.dart';

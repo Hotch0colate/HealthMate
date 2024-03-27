@@ -197,8 +197,8 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            OrangeButton(
-              buttonText: "เริ่มทำแบบทดสอบ",
+            LgPrimaryButton(
+              text: "เริ่มทำแบบทดสอบ",
               onPressed: () {
                 Navigator.push(
                   context,
