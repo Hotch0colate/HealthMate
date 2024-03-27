@@ -1,11 +1,11 @@
+import 'package:flutter/material.dart';
 import 'package:client/pages/authentication/first_login/first_login_4.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/services/ip_variable.dart';
-import 'package:flutter/material.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // For using json.encode
+import 'dart:convert';
 
 class FirstLogin3 extends StatefulWidget {
   const FirstLogin3({Key? key}) : super(key: key);
@@ -16,15 +16,13 @@ class FirstLogin3 extends StatefulWidget {
 
 class _FirstLogin3State extends State<FirstLogin3> {
   bool agreedToTerms = false;
-  String selectedCareerValue = ''; // Changed variable name for clarity
+  String selectedCareerValue = '';
 
-  // Function to send data to backend
   Future<void> sendDataToBackend(String career) async {
     var _auth_service = AuthService();
     String? token = await _auth_service.getIdToken();
 
-    var url = Uri.parse(
-        'http://${fixedIp}:3000/user/update_data'); // Replace with your backend endpoint
+    var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
     var response = await http.post(
       url,
       headers: {
@@ -35,7 +33,6 @@ class _FirstLogin3State extends State<FirstLogin3> {
     );
 
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, then navigate to the next page
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -43,8 +40,6 @@ class _FirstLogin3State extends State<FirstLogin3> {
         ),
       );
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
       throw Exception('Failed to load data');
     }
   }
@@ -162,12 +157,10 @@ class _FirstLogin3State extends State<FirstLogin3> {
           children: [
             GoBackButton(
               onPressed: () {
-                // Your navigation or functionality here
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const FirstLogin2(), // Example: Navigate to a specific screen
+                    builder: (context) => const FirstLogin2(),
                   ),
                 );
               },
@@ -179,10 +172,10 @@ class _FirstLogin3State extends State<FirstLogin3> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const FirstLogin4()),
+                      builder: (context) => const FirstLogin4(),
+                    ),
                   );
                 } else {
-                  // Show an alert or a snackbar message to select an occupation
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Please select an occupation"),

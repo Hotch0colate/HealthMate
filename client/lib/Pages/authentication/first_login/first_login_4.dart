@@ -1,12 +1,12 @@
-import 'package:client/pages/authentication/first_login/first_login_3.dart';
+import 'package:client/Pages/authentication/first_login/first_login_3.dart';
+import 'package:flutter/material.dart';
 import 'package:client/pages/authentication/first_login/first_login_5.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/pages/authentication/login.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/services/ip_variable.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert'; // For using json.encode
+import 'dart:convert';
 
 class FirstLogin4 extends StatefulWidget {
   const FirstLogin4({Key? key});
@@ -17,14 +17,13 @@ class FirstLogin4 extends StatefulWidget {
 
 class _FirstLogin4State extends State<FirstLogin4> {
   bool agreedToTerms = false;
-  String selectedMartialStatusValue = ''; // Variable to store selected gender
+  String selectedMartialStatusValue = '';
 
   Future<void> sendDataToBackend(String martial_status) async {
     var _auth_service = AuthService();
     String? token = await _auth_service.getIdToken();
 
-    var url = Uri.parse(
-        'http://${fixedIp}:3000/user/update_data'); // Replace with your backend endpoint
+    var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
     var response = await http.post(
       url,
       headers: {
@@ -35,7 +34,6 @@ class _FirstLogin4State extends State<FirstLogin4> {
     );
 
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, then navigate to the next page
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -43,8 +41,6 @@ class _FirstLogin4State extends State<FirstLogin4> {
         ),
       );
     } else {
-      // If the server did not return a 200 OK response,
-      // then throw an exception.
       throw Exception('Failed to load data');
     }
   }
@@ -95,7 +91,6 @@ class _FirstLogin4State extends State<FirstLogin4> {
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
-
               const SizedBox(
                 height: 37,
               ),
@@ -125,7 +120,6 @@ class _FirstLogin4State extends State<FirstLogin4> {
                     fontWeight: FontWeight.w700,
                     fontFamily: 'Poppins'),
               ),
-              // Radio buttons for gender selection
               const SizedBox(height: 14),
               Container(
                 padding: const EdgeInsets.only(left: 35),
@@ -183,7 +177,6 @@ class _FirstLogin4State extends State<FirstLogin4> {
                   MaterialPageRoute(builder: (context) => const FirstLogin5()),
                 );
               } else {
-                // Show an alert or a snackbar message to select an occupation
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Please select an occupation"),

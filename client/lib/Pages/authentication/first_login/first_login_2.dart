@@ -1,16 +1,13 @@
 import 'package:client/services/ip_variable.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert'; // For JSON encoding
-import 'package:http/http.dart' as http; // HTTP package
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:client/services/auth_service.dart';
 import 'package:intl/intl.dart';
 
-//page import
 import 'package:client/pages/authentication/first_login/first_login_1.dart';
 import 'package:client/pages/authentication/first_login/first_login_3.dart';
-
-//component import
-import 'package:client/component/buttons.dart';
+import '../../../component/buttons.dart';
 
 class FirstLogin2 extends StatefulWidget {
   const FirstLogin2({Key? key}) : super(key: key);
@@ -21,29 +18,27 @@ class FirstLogin2 extends StatefulWidget {
 
 class _FirstLogin2State extends State<FirstLogin2> {
   bool agreedToTerms = false;
-  String selectedGender = ''; // Variable to store selected gender
+  String selectedGender = '';
 
   Future<void> sendUserDataToBackend() async {
     var _auth_service = AuthService();
     String? token = await _auth_service.getIdToken();
-    var url = Uri.parse(
-        'http://${fixedIp}:3000/user/update_data'); // Your actual endpoint
-    var response = await http.post(url,
-        body: json.encode({
-          'birthday': birthDateController.text,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token'
-        });
+    var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
+    var response = await http.post(
+      url,
+      body: json.encode({'birthday': birthDateController.text}),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
 
     if (response.statusCode == 200) {
       print("Data submitted successfully");
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              const FirstLogin3(), // Navigate to the next page
+          builder: (context) => const FirstLogin3(),
         ),
       );
     } else {
@@ -57,15 +52,13 @@ class _FirstLogin2State extends State<FirstLogin2> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate ??
-          DateTime.now(), // Use the current date if no date is selected
-      firstDate: DateTime(2000), // Adjust the starting date as per requirement
-      lastDate: DateTime(2025), // Adjust the ending date as per requirement
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2025),
     );
     if (picked != null && picked != selectedDate) {
       setState(() {
         selectedDate = picked;
-        // Update the text field with the selected date formatted as DD/MM/YYYY
         birthDateController.text =
             DateFormat('dd/MM/yyyy').format(selectedDate!);
       });
@@ -106,21 +99,22 @@ class _FirstLogin2State extends State<FirstLogin2> {
                 const Text(
                   'วันเกิดคุณคือวันไหนครับ ?',
                   style: TextStyle(
-                      color: Color.fromRGBO(251, 133, 0, 1),
-                      fontSize: 24,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Poppins'),
+                    color: Color.fromRGBO(251, 133, 0, 1),
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'Poppins',
+                  ),
                 ),
                 const SizedBox(height: 26.5),
                 const Text(
                   'คำตอบของคุณ: ',
                   style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Poppins'),
+                    color: Colors.black,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'Poppins',
+                  ),
                 ),
-                // Radio buttons for gender selection
                 const SizedBox(height: 14),
                 Container(
                   padding: const EdgeInsets.only(left: 24, right: 24),
@@ -147,8 +141,7 @@ class _FirstLogin2State extends State<FirstLogin2> {
                         color: Color.fromRGBO(34, 33, 33, 0.6),
                       ),
                     ),
-                    readOnly:
-                        true, // Prevents keyboard from appearing when tapping the field
+                    readOnly: true,
                   ),
                 ),
               ],
@@ -163,12 +156,10 @@ class _FirstLogin2State extends State<FirstLogin2> {
           children: [
             GoBackButton(
               onPressed: () {
-                // Your navigation or functionality here
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) =>
-                        const FirstLogin1(), // Example: Navigate to a specific screen
+                    builder: (context) => const FirstLogin1(),
                   ),
                 );
               },
@@ -180,8 +171,6 @@ class _FirstLogin2State extends State<FirstLogin2> {
                   context,
                   MaterialPageRoute(builder: (context) => const FirstLogin3()),
                 );
-                // Handle button press for the left button
-                // You can add your logic or navigation here
               },
             ),
           ],

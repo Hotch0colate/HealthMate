@@ -1,10 +1,7 @@
 import 'package:client/component/buttons.dart';
 import 'package:flutter/material.dart';
-
-//page import
+import 'package:client/component/buttons.dart';
 import 'package:client/pages/authentication/first_login/first_login_4.dart';
-
-//component import
 import 'package:client/component/navigation.dart';
 
 class FirstLogin5 extends StatefulWidget {
@@ -16,7 +13,7 @@ class FirstLogin5 extends StatefulWidget {
 
 class _FirstLogin5State extends State<FirstLogin5> {
   bool agreedToTerms = false;
-  String acceptedTermValue = ''; // Variable to store selected gender
+  String acceptedTermValue = '';
   String? acceptedTerm;
 
   Widget _buildRadioListTile({required String title, required String value}) {
@@ -63,7 +60,6 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
-
               const SizedBox(
                 height: 37,
               ),
@@ -101,7 +97,6 @@ class _FirstLogin5State extends State<FirstLogin5> {
                     fontWeight: FontWeight.w700,
                     fontFamily: 'Poppins'),
               ),
-              // Radio buttons for gender selection
               const SizedBox(height: 14),
               Container(
                 padding: const EdgeInsets.only(left: 35),
@@ -109,8 +104,7 @@ class _FirstLogin5State extends State<FirstLogin5> {
                   children: [
                     _buildRadioListTile(
                       title: 'รับทราบ',
-                      value:
-                          'Allow', // Changed value to 'acknowledged' for clarity
+                      value: 'Allow',
                     ),
                   ],
                 ),
@@ -138,13 +132,10 @@ class _FirstLogin5State extends State<FirstLogin5> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainApp(
-                        SelectedPage: 0,
-                      ),
+                      builder: (context) => MainApp(),
                     ),
                   );
                 } else {
-                  // Show an alert or a snackbar message to select an occupation
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text("Please select an occupation"),
@@ -172,7 +163,6 @@ class _FirstLogin5State extends State<FirstLogin5> {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    // You can customize the order of Image and Text based on your preference
                   ],
                 ),
               ),
