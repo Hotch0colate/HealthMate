@@ -21,6 +21,12 @@ class FontTheme {
     fontSize: 36,
   );
 
+  static const TextStyle h4 = TextStyle(
+    fontFamily: 'Athiti',
+    fontWeight: FontWeight.w800,
+    fontSize: 32,
+  );
+
   static const TextStyle subtitle1 = TextStyle(
     fontFamily: 'Athiti',
     fontWeight: FontWeight.w800,
@@ -37,14 +43,14 @@ class FontTheme {
   static const TextStyle body1 = TextStyle(
     fontFamily: 'Athiti',
     fontWeight: FontWeight.w600,
-    fontSize: 18,
+    fontSize: 20,
   );
 
 
   static const TextStyle body2 = TextStyle(
     fontFamily: 'Athiti',
     fontWeight: FontWeight.w400,
-    fontSize: 18,
+    fontSize: 20,
   );
 
 

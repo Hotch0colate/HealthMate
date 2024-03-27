@@ -156,7 +156,7 @@ class _ThaiCalendarWithTableState extends State<ThaiCalendarWithTable> {
                     firstDay: DateTime.utc(2021, 1, 1),
                     lastDay: DateTime.utc(2030, 12, 31),
                     startingDayOfWeek: StartingDayOfWeek.sunday,
-                    daysOfWeekVisible: true,
+                    daysOfWeekVisible: false,
                     headerVisible: false,
                     calendarStyle: CalendarStyle(
                       selectedDecoration: const BoxDecoration(),

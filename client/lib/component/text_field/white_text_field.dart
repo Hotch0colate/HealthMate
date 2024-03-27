@@ -1,3 +1,5 @@
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
 class WhiteTextField extends StatelessWidget {
@@ -16,23 +18,20 @@ class WhiteTextField extends StatelessWidget {
       height: 50,
       decoration: BoxDecoration(
         border: Border.all(
-          color: Colors.black,
+          color: Colors.black26,
           width: 1,
         ),
         borderRadius: const BorderRadius.all(
-          Radius.circular(15),
+          Radius.circular(10),
         ),
-        color: Colors.white,
+        color: ColorTheme.WhiteColor,
       ),
       child: TextFormField(
         controller: controller,
         decoration: InputDecoration(
           border: InputBorder.none,
           hintText: hintText,
-          hintStyle: const TextStyle(
-            color: Colors.grey,
-            fontSize: 20,
-          ),
+          hintStyle:FontTheme.body2,
           contentPadding: const EdgeInsets.only(left: 24, right: 24),
         ),
       ),

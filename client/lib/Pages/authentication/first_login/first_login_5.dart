@@ -1,4 +1,7 @@
 import 'package:client/component/buttons.dart';
+import 'package:client/component/select_box.dart';
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/pages/authentication/first_login/first_login_4.dart';
@@ -16,32 +19,6 @@ class _FirstLogin5State extends State<FirstLogin5> {
   String acceptedTermValue = '';
   String? acceptedTerm;
 
-  Widget _buildRadioListTile({required String title, required String value}) {
-    return ListTile(
-      dense: true,
-      title: Text(
-        title,
-        style: TextStyle(
-          color: acceptedTerm == value ? Colors.orange : Colors.black,
-          fontSize: 14,
-          fontWeight: FontWeight.w400,
-          fontFamily: 'Poppins',
-        ),
-      ),
-      leading: Radio<String>(
-        value: value,
-        groupValue: acceptedTerm,
-        onChanged: (String? value) {
-          setState(() {
-            acceptedTerm = value;
-            acceptedTermValue = value!;
-          });
-        },
-        activeColor: Colors.orange,
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,12 +33,11 @@ class _FirstLogin5State extends State<FirstLogin5> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
               const SizedBox(
-                height: 37,
+                height: 24,
               ),
               const SizedBox(
                 height: 86,
@@ -72,39 +48,30 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 ),
               ),
               const SizedBox(height: 18),
-              const Text(
-                'ขอบคุณสำหรับการให้ข้อมูลนะครับ',
-                style: TextStyle(
-                    color: Color.fromRGBO(251, 133, 0, 1),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins'),
-              ),
-              const Text(
-                'ข้อมูลต่างๆ สามารแก้ไขได้ภายหลัง',
-                style: TextStyle(
-                    color: Color.fromRGBO(251, 133, 0, 1),
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins'),
-              ),
-              const SizedBox(height: 26.5),
-              const Text(
+              Text(
+                  'ขอบคุณสำหรับการให้ข้อมูลนะครับ\nข้อมูลต่างๆ สามารแก้ไขได้ภายหลัง',
+                  style:
+                      FontTheme.body1.copyWith(color: ColorTheme.primaryColor)),
+              const SizedBox(height: 24),
+              Text(
                 'คำตอบของคุณ: ',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Poppins'),
+                style: FontTheme.body1,
               ),
               const SizedBox(height: 14),
               Container(
                 padding: const EdgeInsets.only(left: 35),
                 child: Column(
                   children: [
-                    _buildRadioListTile(
-                      title: 'รับทราบ',
-                      value: 'Allow',
+                    ColorChangingRadio(
+                      text: 'รับทราบ',
+                      value: 'allow',
+                      groupValue: acceptedTermValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          acceptedTerm = value;
+                          acceptedTermValue = value!;
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -126,7 +93,8 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 ),
               );
             }),
-            ElevatedButton(
+            MdPrimaryButton(
+              text: 'ดำเนินการต่อ',
               onPressed: () {
                 if (acceptedTermValue.isNotEmpty) {
                   Navigator.push(
@@ -140,34 +108,13 @@ class _FirstLogin5State extends State<FirstLogin5> {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text("Please select an occupation"),
+                      content: Text("Please select accept"),
                     ),
                   );
                 }
               },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                backgroundColor: const Color.fromRGBO(72, 210, 104, 1),
-                foregroundColor: Colors.white,
-              ),
-              child: const SizedBox(
-                height: 40,
-                width: 118,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'ดำเนินการต่อ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              foregroundColor: Colors.white, // Change text color
+              backgroundColor: ColorTheme.successAction,
             ),
           ],
         ),

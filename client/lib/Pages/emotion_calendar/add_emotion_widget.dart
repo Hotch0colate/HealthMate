@@ -52,18 +52,18 @@ void showCustomDialog(
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return Align(
-          alignment: Alignment.bottomCenter,
-          child: Dialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-            elevation: 0,
-            backgroundColor: Colors.transparent,
-            child: dialogContent(context, (selectedEmotion) {
-              currentSelectedEmotion = selectedEmotion;
-            }, refreshEmotionsCallback),
-          ));
+      return Center(
+        child: Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16.0),
+          ),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          child: dialogContent(context, (selectedEmotion) {
+            currentSelectedEmotion = selectedEmotion;
+          }, refreshEmotionsCallback),
+        ),
+      );
     },
   );
 }
@@ -77,7 +77,7 @@ Widget dialogContent(BuildContext context, Function(String) onEmotionSelected,
       '${DateFormat('d MMMM ', 'th').format(currentDate)}$buddhistEraYear';
 
   return Container(
-    padding: const EdgeInsets.all(16.0),
+    padding: EdgeInsets.all(16.0),
     decoration: BoxDecoration(
       color: ColorTheme.WhiteColor,
       shape: BoxShape.rectangle,
@@ -92,16 +92,17 @@ Widget dialogContent(BuildContext context, Function(String) onEmotionSelected,
     ),
     child: Column(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Text(
+            Text(
               'เลือกอารมณ์ของคุณ',
               style: FontTheme.subtitle2,
             ),
             IconButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.close,
                 size: 30,
               ),
@@ -115,7 +116,12 @@ Widget dialogContent(BuildContext context, Function(String) onEmotionSelected,
           formattedDate,
           style: FontTheme.subtitle1.copyWith(color: ColorTheme.primaryColor),
         ),
-        EmotionScroll(onEmotionSelected: onEmotionSelected),
+        Center(
+          child: EmotionScroll(onEmotionSelected: onEmotionSelected),
+        ),
+        SizedBox(
+          height: 16,
+        ),
         TextField(
           controller: descriptionController,
           decoration: InputDecoration(
@@ -123,11 +129,11 @@ Widget dialogContent(BuildContext context, Function(String) onEmotionSelected,
             hintStyle: FontTheme.body1,
           ),
         ),
-        const SizedBox(
+        SizedBox(
           height: 20,
         ),
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: SmPrimaryButton(
             text: 'บันทึก',
             onPressed: () {

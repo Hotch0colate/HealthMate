@@ -4,6 +4,10 @@ import '../emotion_calendar/add_emotion_widget.dart';
 import 'package:client/theme/color.dart';
 import 'package:flutter/material.dart';
 
+void main() {
+  runApp(Calendar());
+}
+
 class Calendar extends StatelessWidget {
   const Calendar({super.key});
 
@@ -18,8 +22,9 @@ class Calendar extends StatelessWidget {
             alignment: Alignment.centerLeft,
             child: Image.asset(
               'assets/logos/medium_app_name.png',
-              width: 200,
-              height: 40,
+              width: MediaQuery.of(context).size.width *
+                  2, // Adjust the factor as needed
+              height: MediaQuery.of(context).size.width * 1,
             ),
           ),
         ),

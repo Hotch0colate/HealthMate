@@ -1,10 +1,13 @@
-import 'package:client/Pages/authentication/first_login/first_login_3.dart';
-import 'package:flutter/material.dart';
+import 'package:client/component/select_box.dart';
+import 'package:client/pages/authentication/first_login/first_login_3.dart';
 import 'package:client/pages/authentication/first_login/first_login_5.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/pages/authentication/login.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/services/ip_variable.dart';
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -87,67 +90,93 @@ class _FirstLogin4State extends State<FirstLogin4> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(
-                height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
               Image.asset('assets/logos/big_app_name.png'),
+              const SizedBox(height: 24),
               const SizedBox(
-                height: 37,
-              ),
-              const SizedBox(
-                height: 86,
+                height: 72,
                 child: Image(
-                  image: AssetImage(
-                    'assets/logos/main_mascot.png',
-                  ),
+                  image: AssetImage('assets/logos/main_mascot.png'),
                 ),
               ),
               const SizedBox(height: 18),
-              const Text(
-                'ตอนนี้สถานะคุณคืออะไรครับ ?',
-                style: TextStyle(
-                    color: Color.fromRGBO(251, 133, 0, 1),
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins'),
-              ),
-              const SizedBox(height: 26.5),
-              const Text(
-                'คำตอบของคุณ: ',
-                style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: 'Poppins'),
-              ),
-              const SizedBox(height: 14),
+              Text('สถานะของคุณคืออะไรครับ?',
+                  style: FontTheme.subtitle1
+                      .copyWith(color: ColorTheme.primaryColor)),
+              const SizedBox(height: 24),
+              Text('คำตอบของคุณ: ', style: FontTheme.body1),
+              const SizedBox(height: 12),
+              // Radio buttons for gender selection
               Container(
                 padding: const EdgeInsets.only(left: 35),
                 child: Column(
                   children: [
-                    _buildRadioListTile(
-                      title: 'โสด',
+                    ColorChangingRadio(
+                      text: 'โสด',
                       value: 'Single',
+                      groupValue: selectedMartialStatusValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedMartialStatus = value;
+                          selectedMartialStatusValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'มีแฟนแล้ว',
+                    ColorChangingRadio(
+                      text: 'มีแฟนแล้ว',
                       value: 'Partnered',
+                      groupValue: selectedMartialStatusValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedMartialStatus = value;
+                          selectedMartialStatusValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'หมั้นแล้ว / แต่งงานแล้ว',
+                    ColorChangingRadio(
+                      text: 'หมั้นแล้ว / แต่งงานแล้ว',
                       value: 'Married',
+                      groupValue: selectedMartialStatusValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedMartialStatus = value;
+                          selectedMartialStatusValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'ม่าย / หย่าร้าง / แยกกันอยู่',
+                    ColorChangingRadio(
+                      text: 'ม่าย / หย่าร้าง / แยกกันอยู่',
                       value: 'Divorced',
+                      groupValue: selectedMartialStatusValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedMartialStatus = value;
+                          selectedMartialStatusValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'อยู่ในความสัมพันธ์แบบไม่ผูกมัด',
+                    ColorChangingRadio(
+                      text: 'อยู่ในความสัมพันธ์แบบไม่ผูกมัด',
                       value: 'NonBindingRelationship',
+                      groupValue: selectedMartialStatusValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedMartialStatus = value;
+                          selectedMartialStatusValue = value!;
+                        });
+                      },
                     ),
-                    _buildRadioListTile(
-                      title: 'ค่อนข้างอธิบายยาก',
+                    ColorChangingRadio(
+                      text: 'ค่อนข้างอธิบายยาก',
                       value: 'Complicated',
+                      groupValue: selectedMartialStatusValue,
+                      onChanged: (String? value) {
+                        setState(() {
+                          selectedMartialStatus = value;
+                          selectedMartialStatusValue = value!;
+                        });
+                      },
                     ),
                   ],
                 ),
@@ -179,7 +208,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
-                    content: Text("Please select an occupation"),
+                    content: Text("Please select an Status"),
                   ),
                 );
               }

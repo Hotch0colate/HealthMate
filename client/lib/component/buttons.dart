@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:client/theme/font.dart';
 import 'package:client/theme/color.dart';
 
-class OrangeButton extends StatelessWidget {
+class SpecialButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String buttonText;
 
-  const OrangeButton({
+  const SpecialButton({
     Key? key,
     required this.onPressed,
     required this.buttonText,
@@ -18,20 +18,18 @@ class OrangeButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(8),
         ),
         backgroundColor: ColorTheme.primaryColor,
         foregroundColor: ColorTheme.WhiteColor,
       ),
       child: SizedBox(
-        height: 60,
+        height: 50,
+        width: 250,
         child: Center(
           child: Text(
             buttonText,
-            style: const TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.w600,
-            ),
+            style: FontTheme.btn_medium
           ),
         ),
       ),
@@ -89,32 +87,26 @@ class GoBackButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        backgroundColor: Colors.white,
-        foregroundColor: const Color.fromRGBO(34, 33, 33, 0.4),
+        backgroundColor: ColorTheme.WhiteColor,
+        foregroundColor: Colors.black54,
         side: const BorderSide(
-          color: Color.fromRGBO(34, 33, 33, 0.4),
+          color: Colors.black12,
         ),
       ),
       child: const SizedBox(
         height: 40,
-        width: 120,
+        width: 100,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
               height: 28,
               width: 28,
-              child: Image(
-                image: AssetImage(
-                    'assets/icons/goback.png'), // Ensure the image path is correct
-              ),
+              child: Icon(Icons.arrow_back_ios)
             ),
             Text(
               'ก่อนหน้า',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
+              style: FontTheme.body1
             ),
           ],
         ),
@@ -141,25 +133,19 @@ class ForwardButton extends StatelessWidget {
         side: const BorderSide(color: Colors.orange),
       ),
       child: const SizedBox(
+        width: 100,
         height: 40,
-        width: 118,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               'ต่อไป',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-              ),
+              style: FontTheme.body1
             ),
             SizedBox(
               height: 28,
               width: 28,
-              child: Image(
-                image: AssetImage(
-                    'assets/icons/foward.png'), // Ensure the image path is correct
-              ),
+              child: Icon(Icons.arrow_forward_ios)
             ),
           ],
         ),
@@ -198,26 +184,34 @@ class LgPrimaryButton extends StatelessWidget {
 class MdPrimaryButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final Color foregroundColor;
+  final Color backgroundColor;
+  final double minWidth;
 
-  const MdPrimaryButton({
-    super.key,
+  MdPrimaryButton({
+    Key? key,
     required this.text,
     required this.onPressed,
-  });
+    this.foregroundColor = ColorTheme.WhiteColor,
+    this.backgroundColor = ColorTheme.primaryColor,
+    this.minWidth = 120,
+    
+     // Set your desired minimum width
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        foregroundColor: ColorTheme.WhiteColor,
-        backgroundColor: ColorTheme.primaryColor, // Text color
-        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+        foregroundColor: foregroundColor,
+        backgroundColor: backgroundColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
         ),
+        minimumSize: Size(minWidth, 40),
       ),
-      child: Text(text, style: FontTheme.btn_medium),
+      child: Text(text, style: FontTheme.body1),
     );
   }
 }
@@ -305,7 +299,7 @@ class LgSecondaryButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: ColorTheme.primaryColor, width: 2),
+          side: BorderSide(color: ColorTheme.primaryColor, width: 1),
         ),
       ),
       child: Text(text, style: FontTheme.btn_large),
@@ -332,8 +326,8 @@ class MdSecondaryButton extends StatelessWidget {
         backgroundColor: ColorTheme.WhiteColor,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: ColorTheme.primaryColor, width: 2),
+          borderRadius: BorderRadius.circular(8),
+          side: BorderSide(color: ColorTheme.primaryColor, width: 1),
         ),
       ),
       child: Text(text, style: FontTheme.btn_medium),
@@ -353,8 +347,8 @@ class SmSecondaryButton extends StatelessWidget {
     Key? key,
     required this.text,
     required this.onPressed,
-    this.foregroundColor = ColorTheme.baseColor,
-    this.backgroundColor = ColorTheme.primaryColor,
+    this.foregroundColor = ColorTheme.primaryColor,
+    this.backgroundColor = Colors.white,
     this.borderColor = ColorTheme.primaryColor,
     this.minWidth = 120, // Set your desired minimum width
   }) : super(key: key);
@@ -369,7 +363,7 @@ class SmSecondaryButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
-          side: BorderSide(color: borderColor, width: 2),
+          side: BorderSide(color: borderColor, width: 1),
         ),
         minimumSize: Size(minWidth, 0),
       ),

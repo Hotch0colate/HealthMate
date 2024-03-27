@@ -12,6 +12,9 @@ import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:client/component/calendar/emotion_card.dart';
 
+
+
+
 class EmotionDetailPage extends StatefulWidget {
   final DateTime date;
   VoidCallback refreshEmotionCalendarCallback;
@@ -167,6 +170,7 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
               ],
             ),
           ),
+          // set to start left 
           Expanded(
             child: SingleChildScrollView(
               child: Wrap(

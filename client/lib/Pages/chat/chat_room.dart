@@ -10,6 +10,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
+void main() {
+  runApp(ChatRoom(cid: '', uid: '', messages: [],));
+}
+
 class ChatRoom extends StatefulWidget {
   final String cid;
   final String uid;

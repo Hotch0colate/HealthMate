@@ -1,14 +1,17 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, avoid_print
-import 'package:client/services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:client/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 //page import
 import 'package:client/pages/authentication/signup.dart';
 
 //component import
-import 'package:client/component/text_field/grey_text_field.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/component/text_field/text_field.dart';
+import 'package:client/component/text_field/grey_text_field.dart';
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -136,25 +139,12 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'ยินดีต้อนรับค้าบบ,',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const Text(
-                    'เข้าสู่ระบบกัน!',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  Image.asset('assets/logos/medium_app_name.png'),
+                  Text('ยินดีต้อนรับค้าบบ,', style: FontTheme.subtitle1),
+                  const Text('เข้าสู่ระบบกัน!', style: FontTheme.subtitle2),
                   Container(
                     padding: EdgeInsets.only(top: screenHeight * 0.015),
                     child: Column(
@@ -274,9 +264,9 @@ class _LoginPageState extends State<LoginPage> {
                               ],
                             ),
                             SizedBox(height: screenHeight * 0.02),
-                            OrangeButton(
+                            LgPrimaryButton(
                               onPressed: _login,
-                              buttonText: 'เข้าสู่ระบบ',
+                              text: 'เข้าสู่ระบบ',
                             ),
                             SizedBox(height: screenHeight * 0.016),
                             Row(

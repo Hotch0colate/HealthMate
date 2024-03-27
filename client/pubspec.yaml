@@ -50,6 +50,10 @@ dependencies:
   table_calendar: ^3.1.0
   firebase_messaging: ^14.7.19
   google_sign_in: ^6.2.1
+  image_picker: ^1.0.7
+  scroll_date_picker : "^3.8.0"
+
+
 
 
 flutter_icons:
@@ -88,6 +92,7 @@ flutter:
     - assets/icons/
     - assets/avatar/
     - assets/images/
+    - assets/psy/
     - assets/emotion/emotion_text/
     - assets/emotion/emotion_calendar/
     - assets/loading_screen/

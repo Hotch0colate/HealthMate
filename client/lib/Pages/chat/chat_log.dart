@@ -6,6 +6,11 @@ import 'package:intl/intl.dart';
 //component import
 import 'package:client/component/conversation_list.dart';
 
+void main() {
+  runApp(ChatLog(uid: '',));
+}
+
+
 typedef UpdateTriggerCallback = void Function(bool updateTrigger);
 
 class ChatLog extends StatefulWidget {

@@ -6,6 +6,10 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+
+
+
+
 class TalkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

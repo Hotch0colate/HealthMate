@@ -1,7 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously, file_names
 
+import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/authentication/login.dart';
 import 'package:client/services/auth_service.dart';
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
 import 'package:client/component/text_field/grey_text_field.dart';
@@ -22,12 +25,11 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final TextEditingController _emailController = TextEditingController();
-
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
-  final TextEditingController _usernameController = TextEditingController();
-  bool _obscurePassword = true; // Flag to toggle password visibility
+  final TextEditingController _usernameController =
+      TextEditingController(); // Flag to toggle password visibility
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -134,26 +136,13 @@ class _SignupPageState extends State<SignupPage> {
           ),
           child: Column(
             children: [
+              Image.asset('assets/logos/medium_app_name.png'),
               Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text(
-                    'สวัสดีฮับป๋ม,',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                  const Text(
-                    'มาสร้างบัญชีกัน!',
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
+                  const Text('สวัสดีฮับป๋ม,', style: FontTheme.subtitle1),
+                  const Text('มาสร้างบัญชีกัน!', style: FontTheme.subtitle2),
                   Container(
                     padding: EdgeInsets.only(top: screenHeight * 0.015),
                     child: Column(
