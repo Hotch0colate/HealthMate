@@ -113,10 +113,19 @@ router.post('/update_data', authenticate, (req, res) => {
                     age && (updateData.age = age);
                     gender && (updateData.gender = gender);
                     if (birthday) {
-                        var birthdayParts = birthday.split('/');
+                        var birthdayParts = birthday.split(/[-/]/);
 
-                        if (parseInt(birthdayParts[2]) < 2500) {
+                        if (parseInt(birthdayParts[2]) < 2500 && birthdayParts[2] >= 1500 && birthdayParts[0] <= 31 && birthdayParts[0] > 0) {
                             updateData.birthday = birthdayParts[0] + '/' + birthdayParts[1] + '/' + String(parseInt(birthdayParts[2]) + 543);
+                        }
+                        else if (parseInt(birthdayParts[0]) < 2500 && birthdayParts[0] >= 1500 && birthdayParts[2] <= 31 && birthdayParts[2] > 0) {
+                            updateData.birthday = birthdayParts[2] + '/' + birthdayParts[1] + '/' + String(parseInt(birthdayParts[0]) + 543);
+                        }
+                        else if (parseInt(birthdayParts[2]) >= 2500 && birthdayParts[0] <= 31 && birthdayParts[0] > 0) {
+                            updateData.birthday = birthdayParts[0] + '/' + birthdayParts[1] + '/' + String(parseInt(birthdayParts[2]));
+                        }
+                        else if (parseInt(birthdayParts[0]) >= 2500 && birthdayParts[2] <= 31 && birthdayParts[2] > 0) {
+                            updateData.birthday = birthdayParts[2] + '/' + birthdayParts[1] + '/' + String(parseInt(birthdayParts[0]));
                         }
                         else {
                             updateData.birthday = birthday;
