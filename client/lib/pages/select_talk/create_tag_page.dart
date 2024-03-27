@@ -120,6 +120,7 @@ class _CreateTagPageState extends State<CreateTagPage> {
                 ),
                 SizedBox(height: screenHeight * 0.005),
                 TextFormField(
+                  controller: descriptionTextController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(screenWidth * 0.03),

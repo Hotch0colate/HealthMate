@@ -11,7 +11,11 @@ import 'package:http/http.dart' as http;
 import 'dart:async';
 
 void main() {
-  runApp(ChatRoom(cid: '', uid: '', messages: [],));
+  runApp(ChatRoom(
+    cid: '',
+    uid: '',
+    messages: [],
+  ));
 }
 
 class ChatRoom extends StatefulWidget {
@@ -97,7 +101,7 @@ class ChatRoomBody extends State<ChatRoom> {
           print('No messages found');
         }
       } else {
-        print('Invalid snapshot value or format chatroom');
+        print('Invalid snapshot value or format chatroom AYO');
       }
     });
   }

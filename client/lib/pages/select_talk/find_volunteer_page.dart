@@ -115,8 +115,10 @@ class FindVolunteerPage extends StatelessWidget {
         if (cid != null) {
           String? token = await _auth_service.getIdToken();
           String uid = await fetchUidFromToken(token);
+          print('cid reached');
 
           if (text != "") {
+            print('text field reached');
             final _response = await http.post(
               Uri.parse('http://${fixedIp}:3000/chatroom/create_data'),
               headers: <String, String>{
@@ -128,6 +130,8 @@ class FindVolunteerPage extends StatelessWidget {
 
             if (_response.statusCode != 200) {
               throw Exception('Fail to sent messages');
+            } else {
+              print('text sent');
             }
           }
           Navigator.push(
