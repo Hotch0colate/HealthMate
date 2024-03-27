@@ -1,11 +1,11 @@
-import 'package:client/Pages/select_talk/find_volunteer_page.dart';
+import 'package:client/pages/select_talk/find_volunteer_page.dart';
 
-import 'package:client/Pages/select_talk/talk_page.dart';
-import 'package:client/Pages/volunteer_register/volunteer_congrats.dart';
-import 'package:client/Pages/volunteer_register/volunteer_register.dart';
-import 'package:client/Pages/volunteer_register/volunteer_test_1.dart';
-import 'package:client/Pages/volunteer_register/volunteer_test_2.dart';
-import 'package:client/Pages/volunteer_register/volunteer_test_waiting.dart';
+import 'package:client/pages/select_talk/talk_page.dart';
+import 'package:client/pages/volunteer_register/volunteer_congrats.dart';
+import 'package:client/pages/volunteer_register/volunteer_register.dart';
+import 'package:client/pages/volunteer_register/volunteer_test_1.dart';
+import 'package:client/pages/volunteer_register/volunteer_test_2.dart';
+import 'package:client/pages/volunteer_register/volunteer_test_waiting.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
