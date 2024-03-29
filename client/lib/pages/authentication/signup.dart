@@ -16,6 +16,20 @@ import 'package:client/component/text_field/white_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'HealthMate',
+      home: SignupPage(),
+    );
+  }
+}
+
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
@@ -106,242 +120,104 @@ class _SignupPageState extends State<SignupPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: screenHeight * 0.1,
-        backgroundColor: Colors.white,
-        leading: Transform.translate(
-          offset: const Offset(24, 16),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: const Image(
-              image: AssetImage('assets/icons/back_new.png'),
-              height: 20,
-              width: 20,
-              color: Colors.grey,
-            ),
-          ),
-        ),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(screenHeight * 0.04),
-          child: Image.asset('assets/logos/medium_app_name.png'),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenHeight * 0.02,
-            vertical: screenHeight * 0.01,
-          ),
-          child: Column(
-            children: [
-              Image.asset('assets/logos/medium_app_name.png'),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const Text('สวัสดีฮับป๋ม,', style: FontTheme.subtitle1),
-                  const Text('มาสร้างบัญชีกัน!', style: FontTheme.subtitle2),
-                  Container(
-                    padding: EdgeInsets.only(top: screenHeight * 0.015),
-                    child: Column(
+        body: SingleChildScrollView(
+            child: Container(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 50,
+                ),
+                child: Column(children: [
+                  Image.asset('assets/logos/medium_app_name.png'),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                        const Text('สวัสดีฮับป๋ม,', style: FontTheme.subtitle1),
+                        const Text('มาสร้างบัญชีกัน!',
+                            style: FontTheme.subtitle2),
+                        Container(
+                          padding: const EdgeInsets.only(top: 15),
+                          child: Column(children: [
                             Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  padding: const EdgeInsets.only(left: 25),
-                                  child: const Text(
-                                    'ชื่อผู้ใช้',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(top: 8),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          InputTextField(
+                                            controller: _usernameController,
+                                            hintText: 'กรอกชื่อผู้ใช้',
+                                            labelText: 'ชื่อผู้ใช้',
+                                          ),
+                                          SizedBox(height: 5),
+                                          InputTextField(
+                                            controller: _emailController,
+                                            hintText: 'กรอกอีเมล',
+                                            labelText: 'อีเมล',
+                                          ),
+                                          SizedBox(height: 5),
+                                          NormalPasswordTextField(
+                                            controller: _passwordController,
+                                          ),
+                                          SizedBox(height: 5),
+                                          ConfirmPasswordTextField(
+                                            controller:
+                                                _confirmPasswordController,
+                                          ),
+                                          SizedBox(height: 20),
+                                          Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            SpecialButton(
+                                                onPressed: () {
+                                                  _signup();
+                                                },
+                                                buttonText: 'สร้างบัญชี')
+                                          ],
+                                        ),
+                                        SizedBox(height: 20),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text('มับัญชีอยู่แล้วใช่หรือไม่?',
+                                                style: FontTheme.body2),
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const LoginPage()),
+                                                );
+                                              },
+                                              // Set the color when hover
+                                              child: Text(' เข้าสู่ระบบที่นี่',
+                                                  style: FontTheme.body1
+                                                      .copyWith(
+                                                          color: ColorTheme
+                                                              .primaryColor)),
+                                            ),
+                                          ],
+                                        ),
+                                          SizedBox(height: screenHeight * 0.02)
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                const SizedBox(height: 4),
-                                GreyTextField(
-                                  controller: _usernameController,
-                                  hintText: 'ใส่ชื่อผู้ใช้',
+                                  ],
                                 ),
                               ],
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: screenHeight * 0.007),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.only(
-                                        left: 25, bottom: 4),
-                                    child: const Text(
-                                      'อีเมล',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  GreyTextField(
-                                    controller: _emailController,
-                                    hintText: 'ใส่อีเมล',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                          ]),
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: screenHeight * 0.007),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(left: 25, bottom: 4),
-                                child: const Text(
-                                  'รหัสผ่าน',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              PasswordTextField(
-                                controller: _passwordController,
-                                hintText: 'ใส่รหัสผ่าน',
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: screenHeight * 0.007),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                padding:
-                                    const EdgeInsets.only(left: 25, bottom: 4),
-                                child: const Text(
-                                  'ยืนยันรหัสผ่าน',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                              PasswordTextField(
-                                controller: _confirmPasswordController,
-                                hintText: 'ยืนยันรหัสผ่าน',
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(height: screenHeight * 0.02),
-                        LgPrimaryButton(
-                          onPressed: _signup,
-                          text: 'สร้างบัญชี',
-                        ),
-                        SizedBox(height: screenHeight * 0.015),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'มีบัญชีอยู่แล้วใช่หรือไม่?',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w300,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(width: 3),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginPage(),
-                                  ),
-                                );
-                              },
-                              child: const Text(
-                                ' เข้าสู่ระบบที่นี่',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.orange,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: screenHeight * 0.02),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'การเข้าสู่ระบบหรือสร้างบัญชีแสดงว่าคุณยอมรับ',
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w300,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'ข้อกำหนดและเงื่อนไข',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.orange,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' และ ',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'นโยบายความเป็นส่วนตัว',
-                                    style: TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w300,
-                                      color: Colors.orange,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+                      ])
+                ]))));
   }
 }
