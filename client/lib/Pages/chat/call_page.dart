@@ -1,6 +1,4 @@
 import 'package:client/component/buttons.dart';
-import 'package:client/pages/chat/popup/end_conversation.dart';
-import 'package:client/pages/chat/popup/report.dart';
 import 'package:client/pages/psychiar/attach_cert.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -34,7 +32,6 @@ class _DetailUserPageState extends State<DetailUserPage> {
       body: Stack(
         children: [
           SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(),
             // Wrap with SingleChildScrollView
             child: Padding(
               padding: EdgeInsets.all(20),
@@ -52,8 +49,7 @@ class _DetailUserPageState extends State<DetailUserPage> {
                         children: [
                           IconButton(
                             icon: const Icon(
-                              Icons
-                                  .arrow_back_ios, // Replace with your custom icon
+                              Icons.arrow_back_ios, // Replace with your custom icon
                               color: Colors.black38,
                               size: 30, // Customize the icon color
                             ),
@@ -86,17 +82,15 @@ class _DetailUserPageState extends State<DetailUserPage> {
                       ),
                       Text(
                         'ออนไลน์',
-                        style: FontTheme.btn_small
-                            .copyWith(color: ColorTheme.successAction),
+                        style: FontTheme.btn_small.copyWith(color: ColorTheme.successAction),
                       ),
                       SizedBox(
                         height: 30,
                       ),
                       MdPrimaryButton(
-                          text: 'จบการสนทนา',
-                          onPressed: () {
-                            showEndcConvarsationDialog(context);
-                          }),
+                        text: 'จบการสนทนา',
+                        onPressed: () {},
+                      ),
                       SizedBox(
                         height: 20,
                       ),
@@ -112,13 +106,15 @@ class _DetailUserPageState extends State<DetailUserPage> {
             bottom: 20,
             child: GestureDetector(
               onTap: () {
-                showReportDialog(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => AttachCertificate()),
+                );
               },
               child: Text(
                 'รายงานผู้ใช้ ?',
                 textAlign: TextAlign.center,
-                style:
-                    FontTheme.btn_small.copyWith(color: ColorTheme.errorAction),
+                style: FontTheme.btn_small.copyWith(color: ColorTheme.errorAction),
               ),
             ),
           ),

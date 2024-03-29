@@ -201,6 +201,7 @@ class MdPrimaryButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: foregroundColor,
         backgroundColor: backgroundColor,
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
