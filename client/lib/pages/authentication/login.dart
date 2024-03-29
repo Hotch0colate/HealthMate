@@ -13,6 +13,20 @@ import 'package:client/component/text_field/grey_text_field.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'HealthMate',
+      home: LoginPage(),
+    );
+  }
+}
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
@@ -120,22 +134,9 @@ class _LoginPageState extends State<LoginPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(screenHeight * 0.04),
-          child: Image.asset('assets/logos/medium_app_name.png'),
-        ),
-      ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(
-            left: screenHeight * 0.04,
-            right: screenHeight * 0.04,
-            top: screenHeight * 0.03,
-            bottom: screenHeight * 0.03,
-          ),
+          padding: const EdgeInsets.all(30),
           child: Column(
             children: [
               Column(
@@ -146,205 +147,100 @@ class _LoginPageState extends State<LoginPage> {
                   Text('ยินดีต้อนรับค้าบบ,', style: FontTheme.subtitle1),
                   const Text('เข้าสู่ระบบกัน!', style: FontTheme.subtitle2),
                   Container(
-                    padding: EdgeInsets.only(top: screenHeight * 0.015),
-                    child: Column(
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: screenHeight * 0.008,
-                                bottom: screenHeight * 0.008,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                      left: screenHeight * 0.025,
-                                      bottom: screenHeight * 0.004,
+                      padding: const EdgeInsets.only(top: 25),
+                      child: Column(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 8, bottom: 8),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InputTextField(
+                                      controller: _emailController,
+                                      hintText: 'ใส่อีเมล',
+                                      labelText: 'อีเมล',
                                     ),
-                                    child: const Text(
-                                      'อีเมล',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  GreyTextField(
-                                    controller: _emailController,
-                                    hintText: 'ใส่อีเมล',
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: screenHeight * 0.008),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(
-                                      left: screenHeight * 0.025,
-                                      bottom: screenHeight * 0.004,
-                                    ),
-                                    child: const Text(
-                                      'รหัสผ่าน',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                  Container(
-                                    height: screenHeight * 0.06,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(screenHeight * 0.015),
-                                      ),
-                                      color: const Color(0x22212133),
-                                    ),
-                                    child: TextFormField(
+                                    SizedBox(height: 10),
+                                    PasswordInputTextField(
                                       controller: _passwordController,
-                                      obscureText: _obscurePassword,
-                                      decoration: InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: 'ใส่รหัสผ่าน',
-                                        hintStyle: const TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 20,
-                                        ),
-                                        contentPadding: EdgeInsets.only(
-                                          left: screenHeight * 0.024,
-                                          right: screenHeight * 0.024,
-                                          top: screenHeight * 0.014,
-                                        ),
-                                        suffixIcon: GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _obscurePassword =
-                                                  !_obscurePassword;
-                                            });
-                                          },
-                                          child: Icon(
-                                            _obscurePassword
-                                                ? Icons.visibility
-                                                : Icons.visibility_off,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
+                                      hintText: 'ใส่รหัสผ่าน',
+                                      labelText: 'รหัสผ่าน',
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    'ลืมรหัสผ่าน?',
+                                    style: FontTheme.caption.copyWith(
+                                        color: ColorTheme.warningAction),
                                   ),
                                 ],
                               ),
-                            ),
-                            SizedBox(height: screenHeight * 0.005),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  'ลืมรหัสผ่าน?',
-                                  style: TextStyle(
-                                    fontSize: screenHeight * 0.014,
-                                    fontWeight: FontWeight.w400,
-                                    color: const Color(0xFFB95000),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: screenHeight * 0.02),
-                            LgPrimaryButton(
-                              onPressed: _login,
-                              text: 'เข้าสู่ระบบ',
-                            ),
-                            SizedBox(height: screenHeight * 0.016),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'เพิ่งเคยเข้ามาใน',
-                                  style: TextStyle(
-                                    fontSize: screenHeight * 0.016,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                Text(
-                                  ' Health',
-                                  style: TextStyle(
-                                    color: Colors.blue,
-                                    fontSize: screenHeight * 0.016,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                Text(
-                                  'Mate ',
-                                  style: TextStyle(
-                                    color: Colors.orange,
-                                    fontSize: screenHeight * 0.016,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                Text(
-                                  'ใช่หรือไม่',
-                                  style: TextStyle(
-                                    fontSize: screenHeight * 0.016,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                SizedBox(width: screenHeight * 0.003),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const SignupPage(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    'สมัครใหม่',
-                                    style: TextStyle(
-                                      fontSize: screenHeight * 0.016,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.orange,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: screenHeight * 0.036,
-                            ),
-                            Row(children: [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      right: screenHeight * 0.008),
-                                  height: 1,
-                                  color: Colors.grey,
-                                ),
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SpecialButton(
+                                      onPressed: _login,
+                                      buttonText: 'เข้าสู่ระบบ')
+                                ],
                               ),
+                              SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text('เข้า', style: FontTheme.body2),
+                                  Text(' Health',
+                                      style: FontTheme.body2.copyWith(
+                                          color: ColorTheme.primaryColor)),
+                                  Text('Mate ',
+                                      style: FontTheme.body2.copyWith(
+                                          color: ColorTheme.secondaryColor)),
+                                  Text('ครั้งแรกใช่ไหม?',
+                                      style: FontTheme.body2),
+                                  const SizedBox(width: 3),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SignupPage()),
+                                      );
+                                    },
+                                    // Set the color when hover
+                                    child: Text('สมัครใหม่',
+                                        style: FontTheme.body1.copyWith(
+                                            color: ColorTheme.primaryColor)),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 36,
+                              ),
+                              Row(children: [
+                                Expanded(
+                                  child: Container(
+                                    margin: const EdgeInsets.only(right: 8),
+                                    height: 1,
+                                    color: Colors.grey,
+                                  ),
+                                ),
                               Text(
                                 'เข้าสู่ระบบด้วย',
-                                style: TextStyle(
-                                  fontSize: screenHeight * 0.02,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                ),
+                                style: FontTheme.body1
                               ),
                               Expanded(
                                 child: Container(
@@ -359,10 +255,10 @@ class _LoginPageState extends State<LoginPage> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                LoginWithButton(
-                                  imagePath: 'assets/icons/google.png',
-                                  onPressed: _loginWithGoogle,
-                                ),
+                                // LoginWithButton(
+                                //   imagePath: 'assets/icons/google.png',
+                                //   onPressed: _loginWithGoogle,
+                                // ),
                                 SizedBox(width: screenHeight * 0.016),
                                 LoginWithButton(
                                   imagePath: 'assets/icons/apple.png',
@@ -375,54 +271,6 @@ class _LoginPageState extends State<LoginPage> {
                               ],
                             ),
                             SizedBox(height: screenHeight * 0.041),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'การเข้าสู่ระบบหรือสร้างบัญชีแสดงว่าคุณยอมรับ',
-                                  style: TextStyle(
-                                    fontSize: screenHeight * 0.014,
-                                    fontWeight: FontWeight.w300,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text.rich(
-                                  TextSpan(
-                                    children: [
-                                      TextSpan(
-                                        text: 'ข้อกำหนดและเงื่อนไข',
-                                        style: TextStyle(
-                                          fontSize: screenHeight * 0.014,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.orange,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: ' และ ',
-                                        style: TextStyle(
-                                          fontSize: screenHeight * 0.014,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                      TextSpan(
-                                        text: 'นโยบายความเป็นส่วนตัว',
-                                        style: TextStyle(
-                                          fontSize: screenHeight * 0.014,
-                                          fontWeight: FontWeight.w300,
-                                          color: Colors.orange,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
                       ],
