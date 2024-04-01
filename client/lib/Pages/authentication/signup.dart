@@ -25,7 +25,7 @@ class SignupPage extends StatefulWidget {
 }
 
 class _SignupPageState extends State<SignupPage> {
-   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController =
       TextEditingController();
@@ -161,14 +161,7 @@ class _SignupPageState extends State<SignupPage> {
                                               MainAxisAlignment.center,
                                           children: [
                                             SpecialButton(
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            const LoginPage()),
-                                                  );
-                                                },
+                                                onPressed: _signup,
                                                 buttonText: 'สร้างบัญชี')
                                           ],
                                         ),
