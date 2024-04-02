@@ -104,16 +104,11 @@ class EmotionDetailsDialog {
                       width: 120,
                     ),
                     const SizedBox(
-                      height: 10,
-                    ),
-                    GreyTextField(controller: _controller, hintText: ''),
-                    const SizedBox(
                       height: 20,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
-                        SmPrimaryButton(text: 'บันทึก', onPressed: () {}),
                         SmSecondaryButton(
                           text: 'ลบ',
                           onPressed: () {

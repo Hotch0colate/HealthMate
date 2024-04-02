@@ -1,5 +1,5 @@
 import 'package:client/pages/emotion_calendar/calendar.dart';
-import 'package:client/pages/psychiar/register.dart';
+import 'package:client/pages/psychiar_register/register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
