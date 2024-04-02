@@ -67,7 +67,7 @@ class ProfilePage extends StatelessWidget {
                     Row(
                       children: [
                         Image.asset(
-                          'assets/avatar/av1.png',
+                          'assets/avatar/md_10.png',
                           width: 80,
                         ),
                         SizedBox(

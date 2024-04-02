@@ -143,7 +143,9 @@ class _LoginPageState extends State<LoginPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  SizedBox(height: 20),
                   Image.asset('assets/logos/medium_app_name.png'),
+                  SizedBox(height: 20),
                   Text('ยินดีต้อนรับค้าบบ,', style: FontTheme.subtitle1),
                   const Text('เข้าสู่ระบบกัน!', style: FontTheme.subtitle2),
                   Container(
@@ -201,15 +203,15 @@ class _LoginPageState extends State<LoginPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('เข้า', style: FontTheme.body2),
+                                  Text('เข้า', style: FontTheme.caption),
                                   Text(' Health',
-                                      style: FontTheme.body2.copyWith(
+                                      style: FontTheme.caption.copyWith(
                                           color: ColorTheme.primaryColor)),
                                   Text('Mate ',
-                                      style: FontTheme.body2.copyWith(
+                                      style: FontTheme.caption.copyWith(
                                           color: ColorTheme.secondaryColor)),
                                   Text('ครั้งแรกใช่ไหม?',
-                                      style: FontTheme.body2),
+                                      style: FontTheme.caption),
                                   const SizedBox(width: 3),
                                   InkWell(
                                     onTap: () {
@@ -222,7 +224,7 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                     // Set the color when hover
                                     child: Text('สมัครใหม่',
-                                        style: FontTheme.body1.copyWith(
+                                        style: FontTheme.caption.copyWith(
                                             color: ColorTheme.primaryColor)),
                                   ),
                                 ],
