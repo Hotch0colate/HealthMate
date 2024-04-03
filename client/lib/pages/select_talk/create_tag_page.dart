@@ -1,6 +1,8 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/component/navigation.dart';
+import 'package:client/pages/psychiar_register/register.dart';
+import 'package:client/pages/volunteer_register/volunteer_register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,6 @@ class _CreateTagPageState extends State<CreateTagPage> {
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Navigator.pop(context);
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 1)),
@@ -159,7 +160,13 @@ class _CreateTagPageState extends State<CreateTagPage> {
                 SizedBox(height: screenHeight * 0.02),
                 SmSecondaryButton(
                   text: 'ลงทะเบียนอาสาสมัคร',
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PsyRegister(),
+                        ));
+                  },
                 ),
               ],
             ),
