@@ -2,6 +2,7 @@ import 'package:client/component/buttons.dart';
 import 'package:client/component/calendar/emotion_scroll.dart';
 import 'package:client/component/select_box.dart';
 import 'package:client/pages/chat/popup/end_conversation.dart';
+import 'package:client/pages/chat/popup/rating.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -106,9 +107,9 @@ Widget dialogContent(BuildContext context) {
         Padding(
           padding: EdgeInsets.all(8.0),
           child: SmPrimaryButton(
-            text: 'รายงาน',
+            text: 'รายงานและจบการสนทนา',
             onPressed: () {
-                  showEndcConvarsationDialog(context);
+                  showRatingDialog(context);
             },
           ),
         ),

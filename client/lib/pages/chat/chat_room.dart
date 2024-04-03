@@ -1,9 +1,11 @@
 import 'package:client/component/navigation.dart';
+import 'package:client/pages/chat/detail_user.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:firebase_database/firebase_database.dart';
 // import 'package:client/Pages/chatlog.dart';
 import 'package:client/theme/font.dart';
 import 'package:client/theme/color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -65,7 +67,7 @@ class ChatRoomBody extends State<ChatRoom> {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(
           _scrollController.position.maxScrollExtent,
-          duration: Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 300),
           curve: Curves.easeOut,
         );
       }
@@ -161,20 +163,20 @@ class ChatRoomBody extends State<ChatRoom> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(70.0),
+        preferredSize: const Size.fromHeight(64.0),
         child: AppBar(
           backgroundColor: ColorTheme.primaryColor,
           elevation: 10.0,
           shape: const ContinuousRectangleBorder(
             borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(30.0),
-              bottomRight: Radius.circular(30.0),
+              bottomLeft: Radius.circular(48.0),
+              bottomRight: Radius.circular(48.0),
             ),
           ),
           leading: IconButton(
             icon: const Icon(
-              Icons.arrow_back,
-              size: 30,
+              CupertinoIcons.back,
+              size: 35,
             ),
             color: Colors.white,
             onPressed: () {
@@ -184,45 +186,55 @@ class ChatRoomBody extends State<ChatRoom> {
           ),
           title: Row(
             children: [
-              CircleAvatar(
-                backgroundImage: AssetImage('avatar/av1.png'),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailUserPage(), // Replace NextPage() with the actual page you want to navigate to
+                        ),
+                      );
+                },
+                child: CircleAvatar(
+                  backgroundImage: AssetImage('assets/images/avatar/md_11.png'),
+                ),
               ),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     'Volunteer A25',
-                    style: FontTheme.subtitle1,
+                    style: FontTheme.subtitle2
+                        .copyWith(color: ColorTheme.WhiteColor),
                   ),
                 ],
               ),
-              SizedBox(
-                  width:
-                      10.0), // Add some spacing between the name and online status
-              // Online status indicator (you can customize the color and shape)
+              const SizedBox(width: 4.0),
               Container(
                 width: 10.0,
                 height: 10.0,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: ColorTheme
                       .successAction, // Use the appropriate color for online
                 ),
               ),
+              const Expanded(
+                child: SizedBox(), // Spacer
+              ),
+              IconButton(
+                onPressed: () {
+                  //call page
+                },
+                icon: Icon(
+                  CupertinoIcons.phone_fill,
+                  size: 35,
+                  color: Colors.white,
+                ),
+              ),
             ],
           ),
-          actions: [
-            IconButton(
-              icon: const Icon(
-                Icons.call,
-                size: 35,
-              ),
-              color: Colors.white,
-              onPressed: () {},
-              // Navigate to Voice Call Page
-            ),
-          ],
         ),
       ),
       body: Column(
@@ -239,14 +251,9 @@ class ChatRoomBody extends State<ChatRoom> {
                           // const CircularProgressIndicator();
                           Container(
                         color: Colors.white,
-                        child: Center(
-                          child: Text(
-                            'ยังไม่มีข้อความในแชท',
-                            style: TextStyle(
-                              fontSize: 18,
-                              color: Colors.black26,
-                            ),
-                          ),
+                        child: const Center(
+                          child: Text('ยังไม่มีข้อความในแชท',
+                              style: FontTheme.body1),
                         ),
                       );
                     } else if (snapshot.hasError) {
@@ -313,7 +320,7 @@ class ChatRoomBody extends State<ChatRoom> {
                                           DateFormat("dd/MM/yyyy HH:mm:ss")
                                               .parse(messages[index].date),
                                         ),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 14,
                                           color: Colors.grey,
                                         ),
@@ -353,7 +360,7 @@ class ChatRoomBody extends State<ChatRoom> {
                 Expanded(
                   child: TextField(
                     controller: _textEditingController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: "Type here ...",
                       hintStyle: TextStyle(
                         color: Color.fromARGB(98, 34, 33, 33),

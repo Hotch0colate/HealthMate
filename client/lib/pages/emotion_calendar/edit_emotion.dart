@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -79,14 +80,14 @@ class EmotionDetailsDialog {
                       children: [
                         Text(
                           DateFormat('HH:mm').format(emotions.dateTime),
-                          style: FontTheme.subtitle1,
+                          style: FontTheme.subtitle2,
                         ),
                         SizedBox(
                           width: 60,
                         ),
                         IconButton(
-                          icon: const Icon(
-                            Icons.close,
+                          icon: Icon(
+                            CupertinoIcons.xmark,
                             size: 30,
                           ),
                           onPressed: () {
@@ -95,16 +96,19 @@ class EmotionDetailsDialog {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     Image.asset(
                       'assets/emotion/emotion_text/m_${emotions.emotion}_t.png',
-                      height: 120,
-                      width: 120,
+                    ),
+                    Text(
+                      emotions.detail.length > 30
+                          ? '${emotions.detail.substring(0, 30)}...'
+                          : emotions.detail,
+                      textAlign: TextAlign.center,
+                      style:
+                         FontTheme.body2,
                     ),
                     const SizedBox(
-                      height: 20,
+                      height: 16,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -118,7 +122,6 @@ class EmotionDetailsDialog {
                             Navigator.of(context).pop();
                           },
                           foregroundColor: ColorTheme.errorAction,
-                          backgroundColor: ColorTheme.WhiteColor,
                           borderColor: ColorTheme.errorAction,
                         )
                       ],

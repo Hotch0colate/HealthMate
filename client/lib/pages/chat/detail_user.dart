@@ -57,7 +57,9 @@ class _DetailUserPageState extends State<DetailUserPage> {
                               color: Colors.black38,
                               size: 30, // Customize the icon color
                             ),
-                            onPressed: () {},
+                            onPressed: () {          
+                              Navigator.pop(context);
+                              },
                           ),
                         ],
                       ),

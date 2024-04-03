@@ -1,3 +1,4 @@
+import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
 //page import
@@ -7,6 +8,7 @@ import 'package:client/theme/color.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class ConversationBox extends StatefulWidget {
@@ -70,6 +72,24 @@ class ConversationBox extends StatefulWidget {
 class _ConversationBoxState extends State<ConversationBox> {
   @override
   Widget build(BuildContext context) {
+
+   String time = ''; // Initialize an empty string to hold the formatted time
+
+    // Check if the date string is not empty
+    if (widget.date.isNotEmpty) {
+      // Split the date string into date and time parts using space as the separator
+      List<String> parts = widget.date.split(' ');
+      
+      // Check if the parts contain time
+      if (parts.length == 2) {
+        // Extract the time part
+        String timePart = parts[1];
+        // Extract only the HH:mm part from the time
+        time = timePart.split(':')[0] + ':' + timePart.split(':')[1];
+      }
+    }
+
+
     return GestureDetector(
       onTap: () async {
         final result = await Navigator.push(
@@ -82,7 +102,7 @@ class _ConversationBoxState extends State<ConversationBox> {
       },
       child: Container(
         padding:
-            const EdgeInsets.only(left: 16, right: 16, top: 10, bottom: 10),
+            const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
         child: Row(
           children: <Widget>[
             Expanded(
@@ -103,19 +123,28 @@ class _ConversationBoxState extends State<ConversationBox> {
                         children: <Widget>[
                           Text(
                             widget.name,
-                            style: const TextStyle(fontSize: 16),
+                            style: FontTheme.body1,
                           ),
                           const SizedBox(
-                            height: 6,
+                            height: 4,
                           ),
-                          Text(
-                            widget.lastmessage,
-                            style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.grey.shade600,
-                                fontWeight: widget.seen
-                                    ? FontWeight.bold
-                                    : FontWeight.normal),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(widget.lastmessage,
+                                  style: FontTheme.body2.copyWith(
+                                      fontWeight: widget.seen
+                                          ? FontWeight.bold
+                                          : FontWeight.normal)),
+                              Text(
+                                time,
+                                style: FontTheme.caption.copyWith(
+                                  fontWeight: widget.seen
+                                      ? FontWeight.bold
+                                      : FontWeight.normal,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
@@ -123,13 +152,6 @@ class _ConversationBoxState extends State<ConversationBox> {
                   ),
                 ],
               ),
-            ),
-            Text(
-              widget.date,
-              style: TextStyle(
-                  fontSize: 12,
-                  fontWeight:
-                      widget.seen ? FontWeight.bold : FontWeight.normal),
             ),
           ],
         ),

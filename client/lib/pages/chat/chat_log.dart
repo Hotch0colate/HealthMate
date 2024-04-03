@@ -1,3 +1,5 @@
+import 'package:client/theme/color.dart';
+import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
@@ -94,18 +96,17 @@ class _ChatLogState extends State<ChatLog> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            const SafeArea(
+            SafeArea(
               child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 16, top: 10),
+                padding: EdgeInsets.only(left: 20, right: 20, top: 10),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     Text(
                       "กล่องข้อความ",
                       style:
-                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                          FontTheme.h4.copyWith(color: ColorTheme.primaryColor),
                     ),
                   ],
                 ),
@@ -118,7 +119,6 @@ class _ChatLogState extends State<ChatLog> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return
                         //  const CircularProgressIndicator();
-
                         Container(
                       color: Colors.white,
                       child: Center(
@@ -176,7 +176,7 @@ class _ChatLogState extends State<ChatLog> {
                           lastsender: chatlogs[index].lastsender,
                           // messages: [],
                           // mil: 0,
-                          imageURL: "###",
+                          imageURL: "assets/images/avatar/md_11",
                           date: chatlogs[index].date,
                         );
                       },

@@ -13,9 +13,9 @@ class TalkPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.only(top: 36,right: 20,left: 20),
             child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
@@ -26,7 +26,7 @@ class TalkPage extends StatelessWidget {
                             .copyWith(color: ColorTheme.primaryColor),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 24,
                       ),
                       CustomCard(
                         onPressed: () {},
@@ -37,7 +37,7 @@ class TalkPage extends StatelessWidget {
                             'assets/images/Psychiatrist tool glasses.png',
                       ),
                       const SizedBox(
-                        height: 31,
+                        height: 32,
                       ),
                       CustomCard(
                         onPressed: () {
