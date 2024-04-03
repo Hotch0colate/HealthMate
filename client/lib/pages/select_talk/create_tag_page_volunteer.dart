@@ -5,6 +5,7 @@ import 'package:client/pages/psychiar_register/register.dart';
 import 'package:client/pages/volunteer_register/volunteer_register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateTagPage extends StatefulWidget {
@@ -37,7 +38,7 @@ class _CreateTagPageState extends State<CreateTagPage> {
               MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 1)),
             );
           },
-          child: Image.asset('assets/icons/back_new.png'),
+          child: Icon(CupertinoIcons.back,size: 35,)
         ),
       ),
       body: SingleChildScrollView(
@@ -50,7 +51,7 @@ class _CreateTagPageState extends State<CreateTagPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: screenHeight * 0.02),
-                Image.asset('assets/images/Volunteer scarf.png'),
+                Image.asset('assets/images/volunteer_scarf.png'),
                 Text(
                   'อาสาสมัคร',
                   style: FontTheme.subtitle1.copyWith(color: Colors.black),

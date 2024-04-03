@@ -8,7 +8,6 @@ import 'package:client/services/ip_variable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
-import 'package:client/Pages/select_talk/talk_page.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/component/navigation.dart';
 import 'package:client/theme/color.dart';
@@ -261,7 +260,7 @@ Widget buildWaitingContent() {
           alignment: Alignment.center,
           children: [
             const AnimatedBackground(), // This will display the animation
-            Image.asset('assets/images/Volunteer scarf.png',
+            Image.asset('assets/images/volunteer_scarf.png',
                 width: 100,
                 fit: BoxFit.contain), // This will stay static on top
           ],
@@ -269,15 +268,7 @@ Widget buildWaitingContent() {
         const SizedBox(
           height: 20,
         ),
-        Text(
-          'การพูดคุยกับอาสาสมัครหรือจิตแพทย์',
-          style: FontTheme.body1.copyWith(color: Colors.black.withOpacity(0.8)),
-        ),
-        Text(
-          'ไม่มีการเปิดเผยตัวตนทั้งสองฝ่าย',
-          style: FontTheme.body1
-              .copyWith(color: ColorTheme.warningAction.withOpacity(0.6)),
-        ),
+        
         const SizedBox(
           height: 65,
         ),

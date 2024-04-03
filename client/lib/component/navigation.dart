@@ -1,4 +1,3 @@
-import 'package:client/Pages/emotion_calendar/calendar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -9,9 +8,10 @@ import 'package:client/services/ip_variable.dart';
 
 import 'package:client/theme/color.dart';
 
-import 'package:client/Pages/select_talk/talk_page.dart';
 import 'package:client/pages/profile/profile.dart';
 import 'package:client/pages/chat/chat_log.dart';
+import 'package:client/Pages/emotion_calendar/calendar.dart';
+import 'package:client/pages/select_talk/select_talk_page.dart';
 
 void main() => runApp(MainApp(SelectedPage: 0));
 

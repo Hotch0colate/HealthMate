@@ -1,6 +1,7 @@
+import 'package:client/pages/select_talk/create_tag_page_volunteer.dart';
 import 'package:client/pages/select_talk/find_volunteer_page.dart';
 
-import 'package:client/pages/select_talk/talk_page.dart';
+import 'package:client/pages/select_talk/select_talk_page.dart';
 import 'package:client/pages/volunteer_register/volunteer_congrats.dart';
 import 'package:client/pages/volunteer_register/volunteer_register.dart';
 import 'package:client/pages/volunteer_register/volunteer_test_1.dart';
@@ -19,7 +20,6 @@ import 'pages/splash_screen/splash_screen.dart';
 import 'component/navigation.dart';
 import 'pages/home.dart';
 import 'pages/authentication/first_login/first_login_1.dart';
-import 'pages/select_talk/create_tag_page.dart';
 
 // test branch talk_gunn
 void main() async {

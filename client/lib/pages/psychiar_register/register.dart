@@ -2,7 +2,7 @@ import 'package:client/component/buttons.dart';
 import 'package:client/component/navigation.dart';
 import 'package:client/component/select_box.dart';
 import 'package:client/pages/psychiar_register/attach_cert.dart';
-import 'package:client/pages/select_talk/talk_page.dart';
+import 'package:client/pages/select_talk/select_talk_page.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';

@@ -105,10 +105,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
                             size: 30, // Customize the icon color
                           ),
                           onPressed: () {
-                            Navigator.push(
+                            Navigator.pop(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProfilePage()),
                             );
                           },
                         ),
@@ -121,7 +119,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       child: Stack(
                         children: [
                           Image.asset(
-                            'assets/avatar/av1.png',
+                            'assets/avatar/md_11.png',
                             width: 80,
                           ),
                           Positioned(

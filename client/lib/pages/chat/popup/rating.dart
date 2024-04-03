@@ -1,6 +1,5 @@
 import 'package:client/component/buttons.dart';
-import 'package:client/pages/chat/call_page.dart';
-import 'package:client/pages/select_talk/create_tag_page.dart';
+import 'package:client/pages/select_talk/select_talk_page.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
@@ -83,7 +82,7 @@ Widget dialogContent(BuildContext context) {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => CreateTagPage()),
+                MaterialPageRoute(builder: (context) => TalkPage()),
               );
             },
           ),

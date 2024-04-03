@@ -106,7 +106,7 @@ class _ChatLogState extends State<ChatLog> {
                     Text(
                       "กล่องข้อความ",
                       style:
-                          FontTheme.h4.copyWith(color: ColorTheme.primaryColor),
+                          FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
                     ),
                   ],
                 ),
@@ -176,7 +176,7 @@ class _ChatLogState extends State<ChatLog> {
                           lastsender: chatlogs[index].lastsender,
                           // messages: [],
                           // mil: 0,
-                          imageURL: "assets/images/avatar/md_11",
+                          imageURL: "assets/avatar/md_11",
                           date: chatlogs[index].date,
                         );
                       },

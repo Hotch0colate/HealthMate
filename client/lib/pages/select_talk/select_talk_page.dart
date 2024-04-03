@@ -1,6 +1,4 @@
-import 'package:client/pages/select_talk/create_tag_page.dart';
-import 'package:client/pages/select_talk/find_volunteer_page.dart';
-import 'package:client/component/navigation.dart';
+import 'package:client/pages/select_talk/create_tag_page_volunteer.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +50,7 @@ class TalkPage extends StatelessWidget {
                         backgroundColor:
                             ColorTheme.primary2Color.withOpacity(0.4),
                         text: 'อาสาสมัคร',
-                        imageName: 'assets/images/Volunteer scarf.png',
+                        imageName: 'assets/images/volunteer_scarf.png',
                       ),
                     ],
                   )

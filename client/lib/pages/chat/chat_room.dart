@@ -196,7 +196,7 @@ class ChatRoomBody extends State<ChatRoom> {
                       );
                 },
                 child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/images/avatar/md_11.png'),
+                  backgroundImage: AssetImage('assets/avatar/md_11.png'),
                 ),
               ),
               const SizedBox(width: 8.0),
