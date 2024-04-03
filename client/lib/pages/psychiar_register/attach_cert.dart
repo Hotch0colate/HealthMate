@@ -1,3 +1,10 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
+import 'package:http/http.dart' as http;
+
 import 'package:client/component/buttons.dart';
 import 'package:client/component/text_field/date_picker.dart';
 import 'package:client/component/text_field/text_field.dart';
@@ -10,25 +17,56 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class AttachCertificate extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HealthMate',
-      home: AttachCertificate(),
-    );
-  }
+  _AttachCertificateState createState() => _AttachCertificateState();
 }
 
-class AttachCertificate extends StatelessWidget {
+class _AttachCertificateState extends State<AttachCertificate> {
   final TextEditingController _firstnameController = TextEditingController();
   final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _licenseController = TextEditingController();
   final TextEditingController _dateController = TextEditingController();
+
+  File? _selectedImage;
+
+  void _handleImageSelection(File? image) {
+    setState(() {
+      _selectedImage = image;
+    });
+  }
+
+  void _createPsychiatrist() async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
+
+      var uri = Uri.parse('http://${fixedIp}:3000/psychiatrist/create_data');
+      var request = http.MultipartRequest('POST', uri)
+        ..fields['firstname'] = _firstnameController.text
+        ..fields['lastname'] = _lastnameController.text
+        ..fields['numbercertificate'] = _licenseController.text
+        ..fields['datecertificate'] = _dateController.text
+        ..headers['Authorization'] = 'Bearer $token';
+
+      if (_selectedImage != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'certificateimage', // This is the field name that the server expects for the file
+          _selectedImage!.path,
+        ));
+        print("_selectedImage != null");
+      }
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception('Failed to load emotions');
+      }
+    } catch (error) {
+      throw Exception('Failed to load emotions: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +127,9 @@ class AttachCertificate extends StatelessWidget {
                     style: FontTheme.body2,
                   ),
                   SizedBox(height: 10),
-                  ImageUploadScreen(),
+                  ImageUploadScreen(
+                    onFileSelected: _handleImageSelection,
+                  ),
                   SizedBox(height: 10),
                   Row(
                     children: [
@@ -132,11 +172,12 @@ class AttachCertificate extends StatelessWidget {
                             builder: (context) => const LoadingPsyRegister()),
                       );
                       Future.delayed(const Duration(seconds: 3), () {
-                         Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const FinishRegisterPsy()),
-                      );// Navigate back after 3 seconds
+                        _createPsychiatrist();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const FinishRegisterPsy()),
+                        ); // Navigate back after 3 seconds
                       });
                     },
                     foregroundColor: Colors.white, // Change text color

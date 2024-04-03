@@ -7,10 +7,6 @@ import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
 class PsyRegister extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

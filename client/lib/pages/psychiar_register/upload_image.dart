@@ -7,6 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageUploadScreen extends StatefulWidget {
+  final Function(File?) onFileSelected;
+
+  ImageUploadScreen({Key? key, required this.onFileSelected}) : super(key: key);
+
   @override
   _ImageUploadScreenState createState() => _ImageUploadScreenState();
 }
@@ -22,6 +26,7 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
       setState(() {
         _image = File(pickedImage.path);
       });
+      widget.onFileSelected(_image);
     }
   }
 
@@ -35,7 +40,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        _getImage(ImageSource.gallery); // Change to ImageSource.camera for camera
+        _getImage(
+            ImageSource.gallery); // Change to ImageSource.camera for camera
       },
       child: Container(
         height: 150,
@@ -43,8 +49,8 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(color: ColorTheme.secondaryColor),
-            borderRadius: BorderRadius.circular(
-                24),          ),
+            borderRadius: BorderRadius.circular(24),
+          ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
@@ -68,7 +74,10 @@ class _ImageUploadScreenState extends State<ImageUploadScreen> {
               else
                 Column(
                   children: [
-                    Icon(Icons.cloud_upload,color: ColorTheme.secondaryColor,), // Add upload icon
+                    Icon(
+                      Icons.cloud_upload,
+                      color: ColorTheme.secondaryColor,
+                    ), // Add upload icon
                     Text(
                       'อัพโหลดรูปภาพ',
                       style: FontTheme.body2,

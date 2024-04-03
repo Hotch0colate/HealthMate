@@ -1,22 +1,9 @@
+import 'package:client/component/navigation.dart';
 import 'package:client/pages/emotion_calendar/calendar.dart';
 import 'package:client/pages/psychiar_register/register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HealthMate',
-      home: FinishRegisterPsy(),
-    );
-  }
-}
 
 class FinishRegisterPsy extends StatefulWidget {
   const FinishRegisterPsy({super.key});
@@ -85,7 +72,8 @@ class _FinishRegisterPsyState extends State<FinishRegisterPsy> {
                     //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Calendar()),
+                      MaterialPageRoute(
+                          builder: (context) => MainApp(SelectedPage: 0)),
                     );
                   },
                 )
