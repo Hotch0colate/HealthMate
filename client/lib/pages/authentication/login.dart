@@ -13,20 +13,6 @@ import 'package:client/component/text_field/grey_text_field.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 
-
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HealthMate',
-      home: LoginPage(),
-    );
-  }
-}
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 

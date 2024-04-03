@@ -1,16 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously, file_names
 
 import 'package:client/component/select_box.dart';
-import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
-import 'package:client/pages/authentication/login.dart';
+import 'package:client/pages/emotion_calendar/calendar.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
-import 'package:client/component/text_field/grey_text_field.dart';
 import 'package:client/component/buttons.dart';
-import 'package:client/component/text_field/password_field.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,7 +39,6 @@ class _FirstLogin3State extends State<FirstLogin1> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Container(
-          padding: const EdgeInsets.only(top: 50, left: 16, right: 16),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,7 +47,7 @@ class _FirstLogin3State extends State<FirstLogin1> {
                 height: 51,
                 width: MediaQuery.of(context).size.width - 32,
               ),
-              Image.asset('assets/logos/big_app_name.png'),
+              Image.asset('assets/logos/medium_app_name.png'),
               const SizedBox(
                 height: 37,
               ),

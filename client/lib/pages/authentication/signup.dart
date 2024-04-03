@@ -16,20 +16,6 @@ import 'package:client/component/text_field/white_text_field.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HealthMate',
-      home: SignupPage(),
-    );
-  }
-}
-
 class SignupPage extends StatefulWidget {
   const SignupPage({super.key});
 
