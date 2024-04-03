@@ -72,14 +72,13 @@ class ConversationBox extends StatefulWidget {
 class _ConversationBoxState extends State<ConversationBox> {
   @override
   Widget build(BuildContext context) {
-
-   String time = ''; // Initialize an empty string to hold the formatted time
+    String time = ''; // Initialize an empty string to hold the formatted time
 
     // Check if the date string is not empty
     if (widget.date.isNotEmpty) {
       // Split the date string into date and time parts using space as the separator
       List<String> parts = widget.date.split(' ');
-      
+
       // Check if the parts contain time
       if (parts.length == 2) {
         // Extract the time part
@@ -88,7 +87,6 @@ class _ConversationBoxState extends State<ConversationBox> {
         time = timePart.split(':')[0] + ':' + timePart.split(':')[1];
       }
     }
-
 
     return GestureDetector(
       onTap: () async {
@@ -102,56 +100,65 @@ class _ConversationBoxState extends State<ConversationBox> {
       },
       child: Container(
         padding:
-            const EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(widget.imageURL),
-                    maxRadius: 30,
-                  ),
-                  const SizedBox(
-                    width: 14,
-                  ),
-                  Expanded(
-                    child: Container(
-                      color: Colors.transparent,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            widget.name,
-                            style: FontTheme.body1,
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(widget.lastmessage,
-                                  style: FontTheme.body2.copyWith(
+            const EdgeInsets.only(left: 20, right: 20),
+        child: Column(
+          children: [
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: Row(
+                    children: <Widget>[
+                      CircleAvatar(
+                        backgroundImage: NetworkImage(widget.imageURL),
+                        maxRadius: 30,
+                      ),
+                      const SizedBox(
+                        width: 14,
+                      ),
+                      Expanded(
+                        child: Container(
+                          color: Colors.transparent,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                widget.name,
+                                style: FontTheme.body1,
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(widget.lastmessage,
+                                      style: FontTheme.body2.copyWith(
+                                          fontWeight: widget.seen
+                                              ? FontWeight.bold
+                                              : FontWeight.normal)),
+                                  Text(
+                                    time,
+                                    style: FontTheme.caption.copyWith(
                                       fontWeight: widget.seen
                                           ? FontWeight.bold
-                                          : FontWeight.normal)),
-                              Text(
-                                time,
-                                style: FontTheme.caption.copyWith(
-                                  fontWeight: widget.seen
-                                      ? FontWeight.bold
-                                      : FontWeight.normal,
-                                ),
+                                          : FontWeight.normal,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
+            ),
+            Divider(
+              color: Colors.grey,
+              thickness: 1,
             ),
           ],
         ),

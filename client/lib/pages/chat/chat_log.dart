@@ -93,13 +93,11 @@ class _ChatLogState extends State<ChatLog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: <Widget>[
-            SafeArea(
-              child: Padding(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+      appBar: 
+        AppBar(
+          automaticallyImplyLeading: false,
+              title: Padding(
+                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -112,6 +110,11 @@ class _ChatLogState extends State<ChatLog> {
                 ),
               ),
             ),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          children: <Widget>[
+            SizedBox(height: 24,),
             StreamBuilder<List<ConversationBox>>(
                 stream: _chatlogStreamController.stream,
                 key: _streamBuilderKey,
@@ -161,7 +164,7 @@ class _ChatLogState extends State<ChatLog> {
                     return ListView.builder(
                       itemCount: chatlogs.length,
                       shrinkWrap: true,
-                      padding: const EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.only(top: 2),
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return ConversationBox(
@@ -176,7 +179,7 @@ class _ChatLogState extends State<ChatLog> {
                           lastsender: chatlogs[index].lastsender,
                           // messages: [],
                           // mil: 0,
-                          imageURL: "assets/avatar/md_11",
+                          imageURL: "assets/avatar/md_11.png",
                           date: chatlogs[index].date,
                         );
                       },

@@ -1,4 +1,5 @@
 import 'package:client/component/navigation.dart';
+import 'package:client/pages/chat/chat_log.dart';
 import 'package:client/pages/chat/detail_user.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -162,232 +163,250 @@ class ChatRoomBody extends State<ChatRoom> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(64.0),
-        child: AppBar(
-          backgroundColor: ColorTheme.primaryColor,
-          elevation: 10.0,
-          shape: const ContinuousRectangleBorder(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(48.0),
-              bottomRight: Radius.circular(48.0),
-            ),
-          ),
-          leading: IconButton(
-            icon: const Icon(
-              CupertinoIcons.back,
-              size: 35,
-            ),
-            color: Colors.white,
-            onPressed: () {
-              onBackPress(context);
-              // Navigator.pop(context, true);
-            },
-          ),
-          title: Row(
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => DetailUserPage(), // Replace NextPage() with the actual page you want to navigate to
-                        ),
-                      );
-                },
-                child: CircleAvatar(
-                  backgroundImage: AssetImage('assets/avatar/md_11.png'),
-                ),
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(64.0),
+          child: AppBar(
+            backgroundColor: ColorTheme.primaryColor.withOpacity(0.8),
+            elevation: 10.0,
+            shape: const ContinuousRectangleBorder(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(48.0),
+                bottomRight: Radius.circular(48.0),
               ),
-              const SizedBox(width: 8.0),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Volunteer A25',
-                    style: FontTheme.subtitle2
-                        .copyWith(color: ColorTheme.WhiteColor),
+            ),
+            leading: IconButton(
+              icon: const Icon(
+                CupertinoIcons.back,
+                size: 35,
+              ),
+              color: Colors.white,
+              onPressed: () {
+                // onBackPress(context);
+                Navigator.pop(context);
+              },
+            ),
+            title: Row(
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            DetailUserPage(), // Replace NextPage() with the actual page you want to navigate to
+                      ),
+                    );
+                  },
+                  child: CircleAvatar(
+                    backgroundImage: AssetImage('assets/avatar/md_11.png'),
                   ),
-                ],
-              ),
-              const SizedBox(width: 4.0),
-              Container(
-                width: 10.0,
-                height: 10.0,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: ColorTheme
-                      .successAction, // Use the appropriate color for online
                 ),
-              ),
-              const Expanded(
-                child: SizedBox(), // Spacer
-              ),
-              IconButton(
-                onPressed: () {
-                  //call page
-                },
-                icon: Icon(
-                  CupertinoIcons.phone_fill,
-                  size: 35,
-                  color: Colors.white,
+                const SizedBox(width: 8.0),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Volunteer A25',
+                      style: FontTheme.subtitle2
+                          .copyWith(color: ColorTheme.WhiteColor),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+                const SizedBox(width: 4.0),
+                Container(
+                  width: 10.0,
+                  height: 10.0,
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: ColorTheme
+                        .successAction, // Use the appropriate color for online
+                  ),
+                ),
+                const Expanded(
+                  child: SizedBox(), // Spacer
+                ),
+                IconButton(
+                  onPressed: () {
+                    //call page
+                  },
+                  icon: Icon(
+                    CupertinoIcons.phone_fill,
+                    size: 35,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: Stack(
-              children: <Widget>[
-                StreamBuilder<List<Message>>(
-                  stream: _messageStreamController.stream,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting &&
-                        snapshot.data == null) {
-                      return
-                          // const CircularProgressIndicator();
-                          Container(
-                        color: Colors.white,
-                        child: const Center(
-                          child: Text('ยังไม่มีข้อความในแชท',
-                              style: FontTheme.body1),
-                        ),
-                      );
-                    } else if (snapshot.hasError) {
-                      return Text("Error: ${snapshot.error}");
-                    } else {
-                      List<Message> messages = snapshot.data ?? [];
-                      messages.sort((a, b) {
-                        return a.date.compareTo(b.date);
-                      });
+        body: Stack(children: [
+          // Background image container
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                    'assets/images/background_chat.png'), // Replace with your image path
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Column(
+            children: <Widget>[
+              Expanded(
+                child: Stack(
+                  children: <Widget>[
+                    StreamBuilder<List<Message>>(
+                      stream: _messageStreamController.stream,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                                ConnectionState.waiting &&
+                            snapshot.data == null) {
+                          return
+                              // const CircularProgressIndicator();
+                              Container(
+                            color: Colors.white,
+                            child: const Center(
+                              child: Text('ยังไม่มีข้อความในแชท',
+                                  style: FontTheme.body1),
+                            ),
+                          );
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else {
+                          List<Message> messages = snapshot.data ?? [];
+                          messages.sort((a, b) {
+                            return a.date.compareTo(b.date);
+                          });
 
-                      _scrollToBottom();
+                          _scrollToBottom();
 
-                      return SingleChildScrollView(
-                          controller: _scrollController,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: <Widget>[
-                              for (int index = 0;
-                                  index < messages.length;
-                                  index++)
-                                Column(
-                                  crossAxisAlignment:
-                                      (messages[index].sender != widget.uid
-                                          ? CrossAxisAlignment.start
-                                          : CrossAxisAlignment.end),
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.only(
-                                          left: 14,
-                                          right: 14,
-                                          top: 10,
-                                          bottom: 10),
-                                      child: ConstrainedBox(
-                                        constraints:
-                                            const BoxConstraints(maxWidth: 300),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            color: (messages[index].sender !=
-                                                    widget.uid
-                                                ? Colors.grey.shade200
-                                                : ColorTheme.primaryColor),
-                                          ),
-                                          padding: const EdgeInsets.all(16),
-                                          child: Text(
-                                            messages[index].text,
-                                            style: TextStyle(
-                                              fontSize: 16,
+                          return SingleChildScrollView(
+                            controller: _scrollController,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: <Widget>[
+                                for (int index = 0;
+                                    index < messages.length;
+                                    index++)
+                                  Column(
+                                    crossAxisAlignment:
+                                        (messages[index].sender != widget.uid
+                                            ? CrossAxisAlignment.start
+                                            : CrossAxisAlignment.end),
+                                    children: [
+                                      Container(
+                                        padding: const EdgeInsets.only(
+                                            left: 14,
+                                            right: 14,
+                                            top: 10,
+                                            bottom: 10),
+                                        child: ConstrainedBox(
+                                          constraints: const BoxConstraints(
+                                              maxWidth: 300),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
                                               color: (messages[index].sender !=
                                                       widget.uid
-                                                  ? Colors.black
-                                                  : Colors.white),
+                                                  ? Colors.grey.shade200
+                                                  : ColorTheme.primaryColor),
+                                            ),
+                                            padding: const EdgeInsets.all(16),
+                                            child: Text(
+                                              messages[index].text,
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                color:
+                                                    (messages[index].sender !=
+                                                            widget.uid
+                                                        ? Colors.black
+                                                        : Colors.white),
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(
-                                          left: 20, right: 20, bottom: 10),
-                                      child: Text(
-                                        DateFormat("HH:mm").format(
-                                          DateFormat("dd/MM/yyyy HH:mm:ss")
-                                              .parse(messages[index].date),
-                                        ),
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.grey,
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 20, right: 20, bottom: 10),
+                                        child: Text(
+                                          DateFormat("HH:mm").format(
+                                            DateFormat("dd/MM/yyyy HH:mm:ss")
+                                                .parse(
+                                              messages[index].date,
+                                            ),
+                                          ),
+                                          style: const TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.grey,
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                            ],
-                          ));
-                    }
-                  },
-                ),
-              ],
-            ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(221, 255, 255, 255),
-              border: Border.all(color: const Color.fromARGB(81, 34, 33, 33)),
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0),
-              ),
-            ),
-            padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
-            height: 80,
-            child: Row(
-              children: <Widget>[
-                GestureDetector(
-                  onTap: () {},
-                  child: Container(
-                    height: 30,
-                    width: 30,
-                  ),
-                ),
-                const SizedBox(width: 15),
-                Expanded(
-                  child: TextField(
-                    controller: _textEditingController,
-                    decoration: const InputDecoration(
-                      hintText: "Type here ...",
-                      hintStyle: TextStyle(
-                        color: Color.fromARGB(98, 34, 33, 33),
-                      ),
-                      border: InputBorder.none,
+                                    ],
+                                  )
+                              ],
+                            ),
+                          );
+                        }
+                      },
                     ),
+                  ],
+                ),
+              ),
+              Container(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(221, 255, 255, 255),
+                  border:
+                      Border.all(color: const Color.fromARGB(81, 34, 33, 33)),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20.0),
+                    topRight: Radius.circular(20.0),
                   ),
                 ),
-                FloatingActionButton(
-                  onPressed: () {
-                    sendMessage(_textEditingController.text);
-                    _textEditingController.clear();
-                  },
-                  elevation: 0,
-                  backgroundColor: Colors.white,
-                  child: const Icon(
-                    Icons.send,
-                    size: 30,
-                    color: ColorTheme.primaryColor,
-                  ),
+                padding: const EdgeInsets.only(left: 10, bottom: 10, top: 10),
+                height: 80,
+                child: Row(
+                  children: <Widget>[
+                    GestureDetector(
+                      onTap: () {},
+                      child: Container(
+                        height: 30,
+                        width: 30,
+                      ),
+                    ),
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: TextField(
+                        controller: _textEditingController,
+                        decoration: const InputDecoration(
+                          hintText: "Type here ...",
+                          hintStyle: TextStyle(
+                            color: Color.fromARGB(98, 34, 33, 33),
+                          ),
+                          border: InputBorder.none,
+                        ),
+                      ),
+                    ),
+                    FloatingActionButton(
+                      onPressed: () {
+                        sendMessage(_textEditingController.text);
+                        _textEditingController.clear();
+                      },
+                      elevation: 0,
+                      backgroundColor: Colors.white,
+                      child: const Icon(
+                        Icons.send,
+                        size: 30,
+                        color: ColorTheme.primaryColor,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    );
+        ]));
   }
 }
 

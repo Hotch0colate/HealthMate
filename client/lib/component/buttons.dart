@@ -210,9 +210,9 @@ class MdPrimaryButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        minimumSize: Size(minWidth, 40),
+        minimumSize: Size(minWidth, 0),
       ),
-      child: Text(text, style: FontTheme.body1),
+      child: Text(text, style: FontTheme.btn_medium),
     );
   }
 }
@@ -309,13 +309,21 @@ class LgSecondaryButton extends StatelessWidget {
 }
 
 class MdSecondaryButton extends StatelessWidget {
-  final String text;
+   final String text;
   final VoidCallback onPressed;
+  final Color foregroundColor;
+  final Color backgroundColor;
+  final Color borderColor;
+  final double minWidth;
 
   const MdSecondaryButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.foregroundColor = ColorTheme.primaryColor,
+    this.backgroundColor = Colors.white,
+    this.borderColor = ColorTheme.primaryColor,
+    this.minWidth = 120,
   });
 
   @override
@@ -327,9 +335,10 @@ class MdSecondaryButton extends StatelessWidget {
         backgroundColor: ColorTheme.WhiteColor,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(4),
           side: BorderSide(color: ColorTheme.primaryColor, width: 1),
         ),
+        minimumSize: Size(minWidth, 0),
       ),
       child: Text(text, style: FontTheme.btn_medium),
     );
@@ -363,7 +372,7 @@ class SmSecondaryButton extends StatelessWidget {
         backgroundColor: backgroundColor,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: borderColor, width: 1),
         ),
         minimumSize: Size(minWidth, 0),

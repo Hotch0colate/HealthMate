@@ -1,5 +1,9 @@
 import 'package:client/Pages/volunteer_register/volunteer_test_1.dart';
 import 'package:client/Pages/volunteer_register/volunteer_test_2.dart';
+import 'package:client/component/navigation.dart';
+import 'package:client/component/select_box.dart';
+import 'package:client/pages/volunteer_register/volunteer_congrats.dart';
+import 'package:client/pages/volunteer_register/volunteer_test_waiting.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -29,188 +33,177 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
     'suggestSolutions': false,
   };
 
-  Future<void> sendUserDataToBackend(String gender) async {
-    var _auth_service = AuthService();
-    String? token = await _auth_service.getIdToken();
-    var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
-    var response = await http.post(
-      url,
-      body: json.encode({'gender': gender}),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-    );
+  // Future<void> sendUserDataToBackend(String gender) async {
+  //   var _auth_service = AuthService();
+  //   String? token = await _auth_service.getIdToken();
+  //   var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
+  //   var response = await http.post(
+  //     url,
+  //     body: json.encode({'gender': gender}),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer $token',
+  //     },
+  //   );
 
-    if (response.statusCode == 200) {
-      print("Gender submitted successfully");
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const FirstLogin2(),
-        ),
-      );
-    } else {
-      print("Failed to submit gender: ${response.body}");
-    }
-  }
+  //   if (response.statusCode == 200) {
+  //     print("Gender submitted successfully");
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //         builder: (context) => const FirstLogin2(),
+  //       ),
+  //     );
+  //   } else {
+  //     print("Failed to submit gender: ${response.body}");
+  //   }
+  // }
+
+  void _createPsychiatrist() async {}
 
   @override
   Widget build(BuildContext context) {
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
-      appBar: AppBar(
-        leading: Column(
-          children: [
-            const SizedBox(
-              height: 10,
-            ),
-            Image.asset('assets/icons/back_new.png',
-                width: 35, fit: BoxFit.contain),
-          ],
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.only(left: 16, right: 16),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              RichText(
-                text: TextSpan(
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'ลงทะเบียน',
-                      style: FontTheme.h3.copyWith(color: ColorTheme.baseColor),
+        body: Padding(
+            padding: EdgeInsets.all(20),
+            child: Center(
+                child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: MediaQuery.of(context).size.height,
                     ),
-                    TextSpan(
-                      text: 'อาสาสมัคร',
-                      style: FontTheme.h3
-                          .copyWith(color: ColorTheme.primary2Color),
-                    ),
-                  ],
-                ),
-              ),
-              Image.asset('assets/images/Volunteer hat.png'),
-              SizedBox(height: screenHeight * 0.01), // 5% of screen height
-              Text(
-                'ข้อตกลงการเป็นอาสาสมัคร',
-                style: FontTheme.body1.copyWith(color: ColorTheme.baseColor),
-              ),
-              Image.asset('assets/logos/medium_app_name.png'),
-              SizedBox(height: screenHeight * 0.01),
-              Container(
-                padding: const EdgeInsets.only(left: 35),
-                child: Column(
-                  children: [
-                    ListTile(
-                      title: const Text(
-                        'บอกให้หยุดร้องไห้',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Checkbox(
-                        value: selectedOptions['stopCrying'],
-                        onChanged: (bool? value) {
-                          setState(() {
-                            selectedOptions['stopCrying'] = value!;
-                          });
-                        },
-                        activeColor: ColorTheme.primaryColor,
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text(
-                        'ปลอบโยนหรือให้กำลังใจ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Checkbox(
-                        value: selectedOptions['comfortEncourage'],
-                        onChanged: (bool? value) {
-                          setState(() {
-                            selectedOptions['comfortEncourage'] = value!;
-                          });
-                        },
-                        activeColor: ColorTheme.primaryColor,
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text(
-                        'เงียบแล้วรอให้ผู้มาปรึกษาสงบลง',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Checkbox(
-                        value: selectedOptions['waitSilently'],
-                        onChanged: (bool? value) {
-                          setState(() {
-                            selectedOptions['waitSilently'] = value!;
-                          });
-                        },
-                        activeColor: ColorTheme.primaryColor,
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text(
-                        'แนะนำวิธีแก้ปัญหาให้ผู้มาปรึกษา',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                          fontFamily: 'Poppins',
-                        ),
-                      ),
-                      leading: Checkbox(
-                        value: selectedOptions['suggestSolutions'],
-                        onChanged: (bool? value) {
-                          setState(() {
-                            selectedOptions['suggestSolutions'] = value!;
-                          });
-                        },
-                        activeColor: ColorTheme.primaryColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            LgPrimaryButton(
-              text: "เริ่มทำแบบทดสอบ",
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const VolunteerTest1(),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              IconButton(
+                                icon: const Icon(
+                                  Icons
+                                      .arrow_back_ios, // Replace with your custom icon
+                                  color: Colors.black38,
+                                  size: 30, // Customize the icon color
+                                ),
+                                onPressed: () {
+                                  //กลับไปหน้า Select talk
+                                  //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            MainApp(SelectedPage: 1)),
+                                    (Route<dynamic> route) =>
+                                        false, // Remove all routes below
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                          RichText(
+                            text: TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: 'ลงทะเบียน',
+                                  style: FontTheme.h4.copyWith(
+                                      color: ColorTheme
+                                          .baseColor), // Black color for the first part of the text
+                                ),
+                                TextSpan(
+                                  text: 'อาสาสมัคร',
+                                  style: FontTheme.h4.copyWith(
+                                      color: ColorTheme
+                                          .primary2Color), // Secondary color for the second part of the text
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 30),
+                          Image.asset(
+                            'assets/images/volunteer_scarf.png',
+                            height: 120,
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            'ข้อตกลงการเป็นอาสาสมัคร',
+                            style: FontTheme.subtitle2,
+                          ),
+                          Image.asset(
+                            'assets/logos/small_app_name.png',
+                          ),
+                          SizedBox(height: 20),
+                          ColorChangingCheckbox(
+                            key: UniqueKey(),
+                            text:
+                                'ข้าพเจ้าจะปฏิบัติหน้าที่อาสาสมัครอย่างเต็มที่',
+                            onChanged: (bool value) {
+                              // Callback when checkbox state changes
+                              print('Checkbox state changed: $value');
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          ColorChangingCheckbox(
+                            key: UniqueKey(),
+                            text:
+                                'ข้าพเจ้าจะเก็บรักษาความลับของอีกฝ่าย\nอย่างเคร่งครัด',
+                            onChanged: (bool value) {
+                              // Callback when checkbox state changes
+                              print('Checkbox state changed: $value');
+                            },
+                          ),
+                          SizedBox(height: 10),
+                          ColorChangingCheckbox(
+                            key: UniqueKey(),
+                            text:
+                                'ข้าพเจ้าจะให้เกียรติอีกฝ่ายและให้คำปรึกษา\nแบบเชิงบวก',
+                            onChanged: (bool value) {
+                              // Callback when checkbox state changes
+                              print('Checkbox state changed: $value');
+                            },
+                          ),
+                          SizedBox(height: 50),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: MdPrimaryButton(
+                    text: 'ลงทะเบียน',
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoadingVolunteerRegister()),
+                      );
+                      Future.delayed(const Duration(seconds: 3), () {
+                        _createPsychiatrist();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const VolunteerCongrats()),
+                        ); // Navigate back after 3 seconds
+                      });
+                    },
+                    foregroundColor: Colors.white, // Change text color
+                    backgroundColor: ColorTheme.successAction,
                   ),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
+                            // child: ForwardButton(
+                            //   onPressed: () {
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //           builder: (context) =>
+                            //               const LoadingVolunteerRegister()),
+                            //     );
+                            //     Future.delayed(const Duration(seconds: 3), () {
+                            //       _createPsychiatrist();
+                            //       Navigator.push(
+                            //         context,
+                            //         MaterialPageRoute(
+                            //             builder: (context) =>
+                            //                 const VolunteerCongrats()),
+                            //       ); // Navigate back after 3 seconds
+                            //     });
+                            //   },
+                            // ),
+                          ),
+                        ])))));
   }
 }

@@ -82,7 +82,7 @@ class PsyRegister extends StatelessWidget {
                           ColorChangingCheckbox(
                             key: UniqueKey(),
                             text:
-                                'ข้าพเจ้าจะปฏิบัติหน้าที่อาสาสมัครอย่างเต็มที่',
+                                'ข้าพเจ้าจะปฏิบัติหน้าที่จิตแพทย์อย่างเต็มที่',
                             onChanged: (bool value) {
                               // Callback when checkbox state changes
                               print('Checkbox state changed: $value');

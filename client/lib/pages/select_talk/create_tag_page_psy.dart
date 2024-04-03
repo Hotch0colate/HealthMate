@@ -1,22 +1,23 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
 import 'package:client/component/navigation.dart';
+import 'package:client/component/text_field/long_text_field.dart';
 import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/psychiar_register/register.dart';
-import 'package:client/pages/volunteer_register/volunteer_register.dart';
+import 'package:client/pages/select_talk/find_psy_page.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CreateTagVolunteerPage extends StatefulWidget {
-  const CreateTagVolunteerPage({Key? key});
+class CreateTagPsyPage extends StatefulWidget {
+  const CreateTagPsyPage({Key? key});
 
   @override
-  _CreateTagVolunteerPageState createState() => _CreateTagVolunteerPageState();
+  _CreateTagPsyPageState createState() => _CreateTagPsyPageState();
 }
 
-class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
+class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
   int selectedIndex = -1;
   final _formKey = GlobalKey<FormState>();
 
@@ -50,9 +51,9 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height: screenHeight * 0.02),
-                Image.asset('assets/images/volunteer_scarf.png'),
+                Image.asset('assets/images/psychiatrist_tool_glasses.png'),
                 Text(
-                  'อาสาสมัคร',
+                  'จิตแพทย์',
                   style: FontTheme.subtitle1.copyWith(color: Colors.black),
                 ),
                 SizedBox(height: 24),
@@ -134,28 +135,19 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                 SizedBox(height: 28),
                 MdPrimaryButton(
                   minWidth: 200,
-                  text: 'ค้นหาอาสาสมัคร',
+                  text: 'ค้นหาจิตแพทย์',
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FindVolunteerPage(
-                          selectedTag: _tagOptions()[selectedIndex],
-                          text: descriptionTextController.text,
-                        ),
-                      ),
-                    );
                   },
                 ),
                 SizedBox(height: 12),
                 MdSecondaryButton(
                   minWidth: 200,
-                  text: 'สมัครอาสาสมัคร',
+                  text: 'สมัครจิตแพทย์',
                   onPressed: () {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VolunteerRegister(),
+                          builder: (context) => PsyRegister(),
                         ));
                   },
                 ),

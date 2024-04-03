@@ -144,7 +144,8 @@ class _PasswordInputTextFieldState extends State<PasswordInputTextField> {
             ),
             Text(
               ' *',
-              style: FontTheme.subtitle2.copyWith(color: ColorTheme.errorAction),
+              style:
+                  FontTheme.subtitle2.copyWith(color: ColorTheme.errorAction),
             ),
           ],
         ),
@@ -261,7 +262,7 @@ class _InputLongTextFieldState extends State<InputTextField> {
           height: 50,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color:  Colors.white,
+            color: Colors.white,
             border: Border.all(
               color: Colors.black12, // Adjusted border color
               width: 1,
@@ -331,4 +332,68 @@ class ConfirmPasswordTextField extends StatelessWidget {
       labelText: 'ยืนยันรหัสผ่าน',
     );
   }
+}
+
+class MultilineInputTextField extends StatefulWidget {
+  final TextEditingController controller;
+  final String hintText;
+
+  const MultilineInputTextField({
+    Key? key,
+    required this.controller,
+    required this.hintText,
+  }) : super(key: key);
+
+  @override
+  _MultilineInputTextFieldState createState() =>
+      _MultilineInputTextFieldState();
+}
+
+class _MultilineInputTextFieldState extends State<MultilineInputTextField> {
+  late FocusNode _focusNode; // Declare a single FocusNode
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode = FocusNode(); // Initialize the FocusNode
+  }
+
+  @override
+  void dispose() {
+    _focusNode.dispose(); // Dispose the FocusNode when not needed
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Container(
+        height: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(
+            color: _focusNode.hasFocus
+                ? ColorTheme.primaryColor // Adjusted focused border color
+                : Colors.black12, // Adjusted border color
+            width: 1,
+          ),
+        ),
+        child: TextField(
+          controller: widget.controller,
+          focusNode: _focusNode, // Use the same focus node instance
+          maxLines: null, // Enable multiline
+          decoration: InputDecoration(
+            hintText: widget.hintText,
+            hintStyle: FontTheme.body2,
+            contentPadding: const EdgeInsets.symmetric(
+                horizontal: 24, vertical: 12), // Adjusted padding
+            border: InputBorder.none, // Remove default border
+          ),
+        ),
+      ),
+    ],
+  );
+}
 }

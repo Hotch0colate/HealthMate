@@ -1,151 +1,51 @@
-import 'package:client/component/buttons.dart';
+import 'package:client/pages/psychiar_register/finish_register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class VolunteerTestWating extends StatelessWidget {
-  const VolunteerTestWating({super.key});
-
-  // This function is used to show the dialog when the button is pressed
-  void _showCancelDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 132,
-          width: 296,
-          child: AlertDialog(
-            title: Column(
-              children: [
-                Text(
-                  'คุณแน่ใจหรือไม่',
-                  style: FontTheme.body1.copyWith(color: Colors.black),
-                ),
-                Text(
-                  'กรุณายืนยันการยกเลิก?',
-                  style: FontTheme.body1.copyWith(color: Colors.black),
-                ),
-              ],
-            ),
-            actions: const <Widget>[
-              ConfirmDelete(),
-            ],
-          ),
-        );
-      },
-    );
-  }
+class LoadingVolunteerRegister extends StatelessWidget {
+  const LoadingVolunteerRegister({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          leading: Column(
-            children: [
-              const SizedBox(
-                height: 10,
-              ),
-              Image.asset('assets/icons/back_new.png',
-                  width: 35, fit: BoxFit.contain),
-            ],
-          ),
-          flexibleSpace: Image.asset(
-            'assets/images/Vector.png',
-            fit: BoxFit.cover,
-          ),
-          backgroundColor: Colors.transparent,
-          toolbarHeight: 170,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.only(left: 40, right: 40),
+      body: Center(
+        child: Container(
           child: Center(
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,// Center content horizontally
               children: [
-                SizedBox(
-                  height: 40,
+                Text(
+                  'กำลังตรวจสอบ',
+                  style: FontTheme.h3.copyWith(color: ColorTheme.primaryColor),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    const AnimatedBackground(), // This will display the animation
+                    Image.asset(
+                      'assets/images/volunteer_scarf.png',
+                      width: 60,
+                      fit: BoxFit.fill,
+                    ), // This will stay static on top
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 Text(
-                  'กำลังตรวจสอบคำตอบของคุณ',
-                  style: FontTheme.h3.copyWith(color: ColorTheme.primaryColor),
-                  textAlign: TextAlign.center,
+                  'กรุณารอซักครู่ . . .',
+                  style: FontTheme.subtitle1.copyWith(color: ColorTheme.secondaryColor),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Image.asset('assets/images/Volunteer hat.png'),
-                const SizedBox(
-                  height: 35,
-                ),
-                const LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.orange),
-                  minHeight: 10,
-                  borderRadius: BorderRadius.all(Radius.circular(
-                      10)), // This makes the progress bar orange
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Center(
-                  child: Text(
-                    'กรุณารอซักครู่',
-                    style: FontTheme.subtitle1
-                        .copyWith(color: ColorTheme.primaryColor),
-                  ),
-                )
               ],
             ),
           ),
-        ));
-  }
-}
-
-class ConfirmDelete extends StatelessWidget {
-  const ConfirmDelete({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 296,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              // Call the function to close the dialog
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: ColorTheme.baseColor.withOpacity(0.8),
-              backgroundColor: ColorTheme.WhiteColor,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(
-                    color: ColorTheme.baseColor.withOpacity(0.2), width: 2),
-              ),
-            ),
-            child: const Text('ยกเลิก', style: FontTheme.btn_small),
-          ),
-          SingleChildScrollView(
-            child: ElevatedButton(
-              onPressed: () {
-                // Call the function to close the dialog
-                Navigator.of(context).pop();
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: ColorTheme.WhiteColor,
-                backgroundColor: ColorTheme.errorAction,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(color: Colors.transparent),
-                ),
-              ),
-              child: const Text('ใช่ ยกเลิกเลย', style: FontTheme.btn_small),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -168,7 +68,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 2000), // Duration for each image
+      duration: const Duration(milliseconds: 1000), // Duration for each image
       vsync: this,
     )..addListener(() {
         final newIndex = (_controller.value * _frames.length).floor();
@@ -183,13 +83,13 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
 
     _frames = [
       Image.asset('assets/loading_screen/loading_1.png',
-          width: 300, fit: BoxFit.contain),
+          width: 200, fit: BoxFit.contain),
       Image.asset('assets/loading_screen/loading_2.png',
-          width: 300, fit: BoxFit.contain),
+          width: 200, fit: BoxFit.contain),
       Image.asset('assets/loading_screen/loading_3.png',
-          width: 300, fit: BoxFit.contain),
+          width: 200, fit: BoxFit.contain),
       Image.asset('assets/loading_screen/loading_4.png',
-          width: 300, fit: BoxFit.contain),
+          width: 200, fit: BoxFit.contain),
     ];
   }
 
@@ -203,7 +103,7 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration:
-          const Duration(milliseconds: 3000), // Duration of fade between images
+          const Duration(milliseconds: 2500), // Duration of fade between images
       child: _frames[_currentIndex % _frames.length],
       transitionBuilder: (Widget child, Animation<double> animation) {
         return FadeTransition(opacity: animation, child: child);

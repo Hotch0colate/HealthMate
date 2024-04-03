@@ -1,4 +1,5 @@
 import 'package:client/Pages/emotion_calendar/calendar_table.dart';
+import 'package:client/theme/font.dart';
 import 'package:get/get.dart';
 import '../emotion_calendar/add_emotion_widget.dart';
 
@@ -8,8 +9,6 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(Calendar());
 }
-
-
 
 class Calendar extends StatelessWidget {
   const Calendar({super.key});
@@ -49,19 +48,14 @@ class CalendarPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Scaffold(
+        body: Column(
       children: [
-        const SizedBox(
-          height: 20,
-        ),
-        Image.asset(
-              'assets/logos/medium_app_name.png',
-              width: MediaQuery.of(context).size.width *
-                  2, // Adjust the factor as needed
-            ),
+        SizedBox(height: 40,),
+        Image.asset('assets/logos/medium_app_name.png'),
         Expanded(
           child: Container(
-            padding: const EdgeInsets.only(left:20.0, right:20.0),
+            padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: Center(
               child: ThaiCalendarWithTable(key: calendarKey),
             ),
@@ -89,6 +83,6 @@ class CalendarPage extends StatelessWidget {
           ),
         ),
       ],
-    );
+    ));
   }
 }

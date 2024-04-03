@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
         '/first_login': (context) => FirstLogin1(),
         '/main': (context) => MainApp(SelectedPage: 0),
         '/home': (context) => const HomePage(),
-        '/create_tag_page': (context) => const CreateTagPage(),
+        // '/create_tag_page': (context) => const CreateTagPage(),
         // '/find_volunteer_page': (context) => const FindVolunteerPage(),
       },
     );

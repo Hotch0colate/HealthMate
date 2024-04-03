@@ -1,4 +1,5 @@
 import 'package:client/component/buttons.dart';
+import 'package:client/component/navigation.dart';
 import 'package:client/pages/select_talk/select_talk_page.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -82,7 +83,7 @@ Widget dialogContent(BuildContext context) {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => TalkPage()),
+                MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 2)),
               );
             },
           ),

@@ -1,3 +1,4 @@
+import 'package:client/pages/select_talk/create_tag_page_psy.dart';
 import 'package:client/pages/select_talk/create_tag_page_volunteer.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -11,10 +12,9 @@ class TalkPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            padding: const EdgeInsets.only(top: 36,right: 20,left: 20),
+            padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Column(
                     children: [
@@ -27,12 +27,19 @@ class TalkPage extends StatelessWidget {
                         height: 24,
                       ),
                       CustomCard(
-                        onPressed: () {},
+                        onPressed: () { 
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CreateTagPsyPage(), // Example: Navigate to a specific screen
+                            ),
+                          );},
                         backgroundColor:
                             ColorTheme.secondaryColor.withOpacity(0.3),
                         text: 'จิตแพทย์',
                         imageName:
-                            'assets/images/Psychiatrist tool glasses.png',
+                            'assets/images/psychiatrist_tool_glasses.png',
                       ),
                       const SizedBox(
                         height: 32,
@@ -43,7 +50,7 @@ class TalkPage extends StatelessWidget {
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  const CreateTagPage(), // Example: Navigate to a specific screen
+                                  const CreateTagVolunteerPage(), // Example: Navigate to a specific screen
                             ),
                           );
                         },
