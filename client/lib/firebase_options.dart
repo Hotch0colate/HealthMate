@@ -54,6 +54,7 @@ class DefaultFirebaseOptions {
     authDomain: 'health-9cd54.firebaseapp.com',
     databaseURL: 'https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'health-9cd54.appspot.com',
+    measurementId: 'G-57XP275XST',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -72,6 +73,8 @@ class DefaultFirebaseOptions {
     projectId: 'health-9cd54',
     databaseURL: 'https://health-9cd54-default-rtdb.asia-southeast1.firebasedatabase.app',
     storageBucket: 'health-9cd54.appspot.com',
+    androidClientId: '281295884415-2lm7otsk568uugn6u61pd5jo05fijvq1.apps.googleusercontent.com',
+    iosClientId: '281295884415-6rp18uud7ckmhu5fmbhgruhgm2asq3r4.apps.googleusercontent.com',
     iosBundleId: 'com.example.client',
   );
 }

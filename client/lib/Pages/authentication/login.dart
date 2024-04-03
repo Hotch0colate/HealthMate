@@ -84,31 +84,12 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  Future<void> _loginWithGoogle() async {
+  void _handleGoogleSignIn() {
     try {
-      final GoogleSignIn googleSignIn = GoogleSignIn();
-      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-
-      if (googleUser != null) {
-        final GoogleSignInAuthentication googleAuth =
-            await googleUser.authentication;
-        final AuthCredential credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
-
-        // Sign in to Firebase with the Google user credentials
-        final UserCredential userCredential =
-            await _auth.signInWithCredential(credential);
-        User? user = userCredential.user;
-
-        if (user != null) {
-          // Successful login with Google, proceed to your app
-          Navigator.pushReplacementNamed(context, '/main');
-        }
-      }
-    } catch (e) {
-      print('Error during Google login: $e');
+      GoogleAuthProvider _googleAuthProvider = GoogleAuthProvider();
+      _auth.signInWithProvider(_googleAuthProvider);
+    } catch (error) {
+      print(error);
     }
   }
 
@@ -371,7 +352,7 @@ class _LoginPageState extends State<LoginPage> {
                               children: [
                                 LoginWithButton(
                                   imagePath: 'assets/icons/google.png',
-                                  onPressed: _loginWithGoogle,
+                                  onPressed: _handleGoogleSignIn,
                                 ),
                                 SizedBox(width: screenHeight * 0.016),
                                 LoginWithButton(
