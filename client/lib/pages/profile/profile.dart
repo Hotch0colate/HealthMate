@@ -47,19 +47,19 @@ class ProfilePage extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons
-                                .arrow_back_ios, // Replace with your custom icon
-                            color: Colors.black38,
-                            size: 30, // Customize the icon color
-                          ),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                        ),
-                      ],
+                      // children: [
+                      //   IconButton(
+                      //     icon: const Icon(
+                      //       Icons
+                      //           .arrow_back_ios, // Replace with your custom icon
+                      //       color: Colors.black38,
+                      //       size: 30, // Customize the icon color
+                      //     ),
+                      //     onPressed: () {
+                      //       Navigator.pop(context);
+                      //     },
+                      //   ),
+                      // ],
                     ),
                     SizedBox(
                       height: 24,

@@ -1,5 +1,6 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/component/navigation.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,16 @@ class _CreateTagPageState extends State<CreateTagPage> {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Image.asset('assets/icons/back_new.png'),
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 1)),
+            );
+          },
+          child: Image.asset('assets/icons/back_new.png'),
+        ),
       ),
       body: SingleChildScrollView(
         child: Center(
