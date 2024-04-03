@@ -1,4 +1,5 @@
 import 'package:client/Pages/emotion_calendar/calendar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -118,28 +119,28 @@ class BottomNavigationBarApp extends StatelessWidget {
       items: const [
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.calendar_month,
+            Icons.calendar_today_rounded,
             size: 35,
           ),
           label: 'อารมณ์',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.people,
+            CupertinoIcons.person_2_fill,
             size: 35,
           ),
           label: 'ปรึกษา',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.message,
+            CupertinoIcons.chat_bubble_fill,
             size: 35,
           ),
           label: 'ข้อความ',
         ),
         BottomNavigationBarItem(
           icon: Icon(
-            Icons.person,
+            CupertinoIcons.person_fill,
             size: 35,
           ),
           label: 'โปรไฟล์',

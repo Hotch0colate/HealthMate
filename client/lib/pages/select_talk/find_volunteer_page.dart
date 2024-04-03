@@ -5,6 +5,7 @@ import 'package:client/Pages/chat/chat_room.dart';
 import 'package:client/models/volunteer_response.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:client/Pages/select_talk/talk_page.dart';
@@ -180,9 +181,9 @@ class FindVolunteerPage extends StatelessWidget {
               onTap: () {
                 Navigator.pop(context);
               },
-              child: Image.asset(
-                'assets/icons/back_new.png',
-              ),
+              child: Icon(
+                CupertinoIcons.back
+              )
             ),
           ],
         ),

@@ -10,68 +10,53 @@ class TalkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(double.infinity, 60),
-        child: AppBar(
-          // leading: GestureDetector(
-          //   onTap: () {
-          //     Navigator.pop(context);
-          //     Navigator.push(
-          //       context,
-          //       MaterialPageRoute(
-          //           builder: (context) => MainApp(SelectedPage: 1)),
-          //     );
-          //   },
-          //   child: Image.asset('assets/icons/back_new.png',
-          //       width: 100, fit: BoxFit.contain),
-          // ),
-          leadingWidth: 40,
-          // title: Image.asset('assets/logos/small_app_name.png'),
-          elevation: 0,
-        ),
-      ),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            padding: const EdgeInsets.only(left: 13, right: 13),
-            child:
-                Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-              Column(
+            padding: const EdgeInsets.all(20),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    'พูดคุย',
-                    style:
-                        FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  CustomCard(
-                    onPressed: () {},
-                    backgroundColor: ColorTheme.secondaryColor.withOpacity(0.3),
-                    text: 'จิตแพทย์',
-                    imageName: 'assets/images/Psychiatrist tool glasses.png',
-                  ),
-                  const SizedBox(
-                    height: 31,
-                  ),
-                  CustomCard(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const CreateTagPage(), // Example: Navigate to a specific screen
-                        ),
-                      );
-                    },
-                    backgroundColor: ColorTheme.primary2Color.withOpacity(0.4),
-                    text: 'อาสาสมัคร',
-                    imageName: 'assets/images/Volunteer scarf.png',
-                  ),
-                ],
-              )
-            ]),
+                  Column(
+                    children: [
+                      Text(
+                        'พูดคุย',
+                        style: FontTheme.h2
+                            .copyWith(color: ColorTheme.primaryColor),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      CustomCard(
+                        onPressed: () {},
+                        backgroundColor:
+                            ColorTheme.secondaryColor.withOpacity(0.3),
+                        text: 'จิตแพทย์',
+                        imageName:
+                            'assets/images/Psychiatrist tool glasses.png',
+                      ),
+                      const SizedBox(
+                        height: 31,
+                      ),
+                      CustomCard(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  const CreateTagPage(), // Example: Navigate to a specific screen
+                            ),
+                          );
+                        },
+                        backgroundColor:
+                            ColorTheme.primary2Color.withOpacity(0.4),
+                        text: 'อาสาสมัคร',
+                        imageName: 'assets/images/Volunteer scarf.png',
+                      ),
+                    ],
+                  )
+                ]),
           ),
         ),
       ),
@@ -146,8 +131,7 @@ class _CustomCardState extends State<CustomCard> {
               ),
               Text(
                 widget.text,
-                style:
-                    TextStyle(fontSize: cardWidth * 0.07, color: Colors.black),
+                style: FontTheme.subtitle2,
               ),
             ],
           ),

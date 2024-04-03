@@ -189,15 +189,14 @@ class _LoginPageState extends State<LoginPage> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text('เข้า', style: FontTheme.caption),
                                   Text(' Health',
-                                      style: FontTheme.caption.copyWith(
+                                      style: FontTheme.body2.copyWith(
                                           color: ColorTheme.primaryColor)),
                                   Text('Mate ',
-                                      style: FontTheme.caption.copyWith(
+                                      style: FontTheme.body2.copyWith(
                                           color: ColorTheme.secondaryColor)),
                                   Text('ครั้งแรกใช่ไหม?',
-                                      style: FontTheme.caption),
+                                      style: FontTheme.body2),
                                   const SizedBox(width: 3),
                                   InkWell(
                                     onTap: () {
@@ -210,7 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                                     },
                                     // Set the color when hover
                                     child: Text('สมัครใหม่',
-                                        style: FontTheme.caption.copyWith(
+                                        style: FontTheme.body1.copyWith(
                                             color: ColorTheme.primaryColor)),
                                   ),
                                 ],

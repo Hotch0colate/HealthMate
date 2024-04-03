@@ -71,6 +71,7 @@ class _CreateTagPageState extends State<CreateTagPage> {
                 ),
                 SizedBox(height: screenHeight * 0.01),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     TagButton(
                       text: 'ภาระหน้าที่',
@@ -82,7 +83,6 @@ class _CreateTagPageState extends State<CreateTagPage> {
                         });
                       },
                     ),
-                    SizedBox(width: screenWidth * 0.005),
                     TagButton(
                       text: 'ความสัมพันธ์',
                       index: 1,
@@ -93,7 +93,6 @@ class _CreateTagPageState extends State<CreateTagPage> {
                         });
                       },
                     ),
-                    SizedBox(width: screenWidth * 0.005),
                     TagButton(
                       text: 'สุขภาพ',
                       index: 2,
@@ -104,7 +103,6 @@ class _CreateTagPageState extends State<CreateTagPage> {
                         });
                       },
                     ),
-                    SizedBox(width: screenWidth * 0.005),
                     TagButton(
                       text: 'ทั่วไป',
                       index: 3,
