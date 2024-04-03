@@ -6,10 +6,6 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-
-
-
 class TalkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -17,15 +13,20 @@ class TalkPage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size(double.infinity, 60),
         child: AppBar(
-          leading: GestureDetector(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Image.asset('assets/icons/back_new.png',
-                width: 100, fit: BoxFit.contain),
-          ),
+          // leading: GestureDetector(
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //     Navigator.push(
+          //       context,
+          //       MaterialPageRoute(
+          //           builder: (context) => MainApp(SelectedPage: 1)),
+          //     );
+          //   },
+          //   child: Image.asset('assets/icons/back_new.png',
+          //       width: 100, fit: BoxFit.contain),
+          // ),
           leadingWidth: 40,
-          title: Image.asset('assets/logos/small_app_name.png'),
+          // title: Image.asset('assets/logos/small_app_name.png'),
           elevation: 0,
         ),
       ),

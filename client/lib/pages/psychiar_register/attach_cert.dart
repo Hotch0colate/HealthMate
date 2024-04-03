@@ -1,10 +1,10 @@
 import 'package:client/component/buttons.dart';
 import 'package:client/component/text_field/date_picker.dart';
 import 'package:client/component/text_field/text_field.dart';
-import 'package:client/pages/psychiar/finish_register.dart';
-import 'package:client/pages/psychiar/loading_register.dart';
-import 'package:client/pages/psychiar/register.dart';
-import 'package:client/pages/psychiar/upload_image.dart';
+import 'package:client/pages/psychiar_register/finish_register.dart';
+import 'package:client/pages/psychiar_register/loading_register.dart';
+import 'package:client/pages/psychiar_register/register.dart';
+import 'package:client/pages/psychiar_register/upload_image.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';

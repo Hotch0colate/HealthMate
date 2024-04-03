@@ -1,4 +1,4 @@
-import 'package:client/pages/psychiar/finish_register.dart';
+import 'package:client/pages/psychiar_register/finish_register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';

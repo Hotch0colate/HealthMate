@@ -158,41 +158,42 @@ class _SignupPageState extends State<SignupPage> {
                                           ),
                                           SizedBox(height: 20),
                                           Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            SpecialButton(
-                                                onPressed: () {
-                                                  _signup();
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              SpecialButton(
+                                                  onPressed: () {
+                                                    _signup();
+                                                  },
+                                                  buttonText: 'สร้างบัญชี')
+                                            ],
+                                          ),
+                                          SizedBox(height: 20),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Text('มับัญชีอยู่แล้วใช่หรือไม่?',
+                                                  style: FontTheme.body2),
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const LoginPage()),
+                                                  );
                                                 },
-                                                buttonText: 'สร้างบัญชี')
-                                          ],
-                                        ),
-                                        SizedBox(height: 20),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text('มับัญชีอยู่แล้วใช่หรือไม่?',
-                                                style: FontTheme.body2),
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          const LoginPage()),
-                                                );
-                                              },
-                                              // Set the color when hover
-                                              child: Text(' เข้าสู่ระบบที่นี่',
-                                                  style: FontTheme.body1
-                                                      .copyWith(
-                                                          color: ColorTheme
-                                                              .primaryColor)),
-                                            ),
-                                          ],
-                                        ),
+                                                // Set the color when hover
+                                                child: Text(
+                                                    ' เข้าสู่ระบบที่นี่',
+                                                    style: FontTheme.body1
+                                                        .copyWith(
+                                                            color: ColorTheme
+                                                                .primaryColor)),
+                                              ),
+                                            ],
+                                          ),
                                           SizedBox(height: screenHeight * 0.02)
                                         ],
                                       ),

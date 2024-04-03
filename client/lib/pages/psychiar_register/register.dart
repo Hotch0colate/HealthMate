@@ -1,6 +1,7 @@
 import 'package:client/component/buttons.dart';
+import 'package:client/component/navigation.dart';
 import 'package:client/component/select_box.dart';
-import 'package:client/pages/psychiar/attach_cert.dart';
+import 'package:client/pages/psychiar_register/attach_cert.dart';
 import 'package:client/pages/select_talk/talk_page.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -8,16 +9,6 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HealthMate',
-      home: PsyRegister(),
-    );
-  }
 }
 
 class PsyRegister extends StatelessWidget {
@@ -48,10 +39,13 @@ class PsyRegister extends StatelessWidget {
                                 onPressed: () {
                                   //กลับไปหน้า Select talk
                                   //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
-                                  Navigator.push(
+                                  Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => TalkPage()),
+                                        builder: (context) =>
+                                            MainApp(SelectedPage: 1)),
+                                    (Route<dynamic> route) =>
+                                        false, // Remove all routes below
                                   );
                                 },
                               ),
