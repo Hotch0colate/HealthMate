@@ -81,7 +81,6 @@ class _ChatLogState extends State<ChatLog> {
               })
               .whereType<ConversationBox>()
               .toList();
-
           _chatlogStreamController.add(validConversations);
         });
       } else {
@@ -150,12 +149,24 @@ class _ChatLogState extends State<ChatLog> {
 
                       // 2. If "seen" values are both false, compare "date" values (newer dates should come first)
                       if (seenComparison == 0 && !a.seen) {
-                        return b.date.compareTo(a.date);
+                        DateTime dateA =
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a.date);
+                        DateTime dateB =
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b.date);
+
+                        // Reverse the comparison to make newer dates come first
+                        return dateB.compareTo(dateA);
                       }
 
                       // 3. If "seen" values are both true, compare "date" values (newer dates should come first)
                       if (seenComparison == 0 && a.seen) {
-                        return b.date.compareTo(a.date);
+                        DateTime dateA =
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(a.date);
+                        DateTime dateB =
+                            DateFormat("dd/MM/yyyy HH:mm:ss").parse(b.date);
+
+                        // Reverse the comparison to make newer dates come first
+                        return dateB.compareTo(dateA);
                       }
 
                       return seenComparison;
