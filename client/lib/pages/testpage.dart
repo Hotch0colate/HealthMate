@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, avoid_print, use_build_context_synchronously, file_names
 
 import 'package:client/component/select_box.dart';
+import 'package:client/component/selected_card.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
 import 'package:client/pages/emotion_calendar/calendar.dart';
 import 'package:client/theme/color.dart';
@@ -31,116 +32,84 @@ class FirstLogin1 extends StatefulWidget {
 }
 
 class _FirstLogin3State extends State<FirstLogin1> {
-  bool agreedToTerms = false;
-  String selectedGender = ''; // Variable to store selected gender
+  bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 51,
-                width: MediaQuery.of(context).size.width - 32,
-              ),
-              Image.asset('assets/logos/medium_app_name.png'),
-              const SizedBox(
-                height: 37,
-              ),
-              const SizedBox(
-                height: 86,
-                child: Image(
-                  image: AssetImage(
-                    'assets/logos/main_mascot.png',
-                  ),
-                ),
-              ),
-              const SizedBox(height: 18),
-              Text(
-                'เพศของคุณคืออะไร ?',
-                style: FontTheme.subtitle1.copyWith(color: ColorTheme.primaryColor)
-              ),
-              const SizedBox(height: 26.5),
-              Text(
-                'คำตอบของคุณ: ',
-                style: FontTheme.body1
-              ),
-              const SizedBox(height: 30),
-              Container(
-                padding: const EdgeInsets.only(left: 35),
-                child: Column(
-                  children: [
-                    ColorChangingRadio(
-                      text: 'หญิง', 
-                      value: 'Female', 
-                      groupValue: selectedGender, 
-                      onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
+        child: Center(
+          child: Container(
+            padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          IconButton(
+                            icon: const Icon(
+                              Icons
+                                  .arrow_back_ios, // Replace with your custom icon
+                              color: Colors.black38,
+                              size: 30, // Customize the icon color
+                            ),
+                            onPressed: () {},
+                          ),
+                        ],
                       ),
-                      ColorChangingRadio(
-                      text: 'ชาย', 
-                      value: 'Male', 
-                      groupValue: selectedGender, 
-                      onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
+                      Image.asset(
+                        'assets/images/psychiatrist_tool_glasses.png',
+                        width: 100,
                       ),
-                      ColorChangingRadio(
-                      text: 'อื่น ๆ', 
-                      value: 'Others', 
-                      groupValue: selectedGender, 
-                      onChanged: (String? value) {
-                          setState(() {
-                            selectedGender = value!;
-                          });
-                        },
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Row(
+                        children: [
+                          SelectableCard(
+                            isSelected: isSelected,
+                            onTap: () {
+                              setState(() {
+                                isSelected = !isSelected;
+                              });
+                            },
+                            child: Text(
+                              'ภาระหน้าที่',
+                              style: FontTheme.body1.copyWith(
+                                fontSize: 20.0,
+                                color: isSelected ? Colors.white : Colors.black,
+                              ),
+                            ),
+                            borderColor: Colors.grey,
+                          ),
+                          SizedBox(width: 16,),
+                           SelectableCard(
+                            isSelected: isSelected,
+                            onTap: () {
+                              setState(() {
+                                isSelected = !isSelected;
+                              });
+                            },
+                            child: Text(
+                              'ความสัมพันธ์',
+                              style: FontTheme.body1.copyWith(
+                                fontSize: 20.0,
+                                color: isSelected ? Colors.white : Colors.black,
+                              ),
+                            ),
+                            borderColor: Colors.grey,
+                          ),
+                        ],
                       )
-                  ],
-                ),
-              ),
-              // const SizedBox(height: 60),
-            ],
+                    ],
+                  )
+                ]),
           ),
-        ),
-      ),
-      bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const SizedBox(
-              height: 40,
-              width: 118,
-            ),
-            ForwardButton(
-              onPressed: () {
-                if (selectedGender.isNotEmpty) {
-                  sendUserDataToBackend(selectedGender);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FirstLogin2()),
-                  );
-                } else {
-                  // Prompt user to select a gender or handle this case accordingly
-                  print("Please select a gender");
-                }
-              },
-            ),
-          ],
         ),
       ),
     );
   }
-  
-  void sendUserDataToBackend(String selectedGender) {}
 }
