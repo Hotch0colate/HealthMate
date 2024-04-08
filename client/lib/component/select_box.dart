@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 
 class ColorChangingCheckbox extends StatefulWidget {
   final String text;
+  final bool value;
   final ValueChanged<bool> onChanged;
 
   const ColorChangingCheckbox({
     required Key key,
     required this.text,
+    required this.value,
     required this.onChanged,
   }) : super(key: key);
 
@@ -17,8 +19,6 @@ class ColorChangingCheckbox extends StatefulWidget {
 }
 
 class _ColorChangingCheckboxState extends State<ColorChangingCheckbox> {
-  bool isChecked = false;
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -26,28 +26,25 @@ class _ColorChangingCheckboxState extends State<ColorChangingCheckbox> {
         Transform.scale(
           scale: 1.3, // Change the scale factor to adjust checkbox size
           child: Checkbox(
-            value: isChecked,
+            value: widget.value,
             onChanged: (value) {
               setState(() {
-                isChecked = value!;
+                widget.onChanged(value!);
               });
-              widget.onChanged(value!);
             },
             activeColor: ColorTheme.primaryColor, // Change checkbox color to orange
           ),
         ),
-        Text(widget.text,
-            style: FontTheme.caption.copyWith(
-                color: isChecked
-                    ? ColorTheme.primaryColor
-                    : ColorTheme
-                        .baseColor // Change text color to orange when checked
-                )),
+        Text(
+          widget.text,
+          style: FontTheme.caption.copyWith(
+            color: widget.value ? ColorTheme.primaryColor : ColorTheme.baseColor,
+          ),
+        ),
       ],
     );
   }
 }
-
 
 class ColorChangingRadio extends StatefulWidget {
   final String text;

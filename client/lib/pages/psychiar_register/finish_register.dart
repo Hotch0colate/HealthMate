@@ -25,7 +25,7 @@ class _FinishRegisterPsyState extends State<FinishRegisterPsy> {
                   CrossAxisAlignment.center, // Center content horizontally
               children: [
                 Image.asset(
-                  'assets/psy/finish_register_psy.png',
+                  'assets/images/finish_register_psy.png',
                   width: 250,
                 ),
                 Text(

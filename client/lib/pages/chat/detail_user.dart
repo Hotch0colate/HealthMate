@@ -57,9 +57,9 @@ class _DetailUserPageState extends State<DetailUserPage> {
                               color: Colors.black38,
                               size: 30, // Customize the icon color
                             ),
-                            onPressed: () {          
+                            onPressed: () {
                               Navigator.pop(context);
-                              },
+                            },
                           ),
                         ],
                       ),
@@ -114,7 +114,13 @@ class _DetailUserPageState extends State<DetailUserPage> {
             bottom: 20,
             child: GestureDetector(
               onTap: () {
-                showReportDialog(context);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    // Return the instance of MyDialog widget
+                    return ReportDialog();
+                  },
+                );
               },
               child: Text(
                 'รายงานผู้ใช้ ?',

@@ -9,7 +9,6 @@ import 'package:client/pages/authentication/signup.dart';
 //component import
 import 'package:client/component/buttons.dart';
 import 'package:client/component/text_field/text_field.dart';
-import 'package:client/component/text_field/grey_text_field.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 

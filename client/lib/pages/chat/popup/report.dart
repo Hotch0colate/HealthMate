@@ -8,15 +8,24 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-String currentSelectedEmotion = '';
-TextEditingController descriptionController = TextEditingController();
+class ReportDialog extends StatefulWidget {
+  const ReportDialog({super.key});
 
-void showReportDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return Center(
-        child: Dialog(
+  @override
+  State<ReportDialog> createState() => _ReportDialogState();
+}
+
+class _ReportDialogState extends State<ReportDialog> {
+  bool bullying_and_harassment = false;
+  bool hate_speech = false;
+  bool spam = false;
+  bool private_benefit = false;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Dialog(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(16.0),
           ),
@@ -24,13 +33,9 @@ void showReportDialog(BuildContext context) {
           backgroundColor: Colors.transparent,
           child: dialogContent(context),
         ),
-      );
-    },
-  );
-}
-
-Widget dialogContent(BuildContext context) {
-  // Get the current date
+    );
+  }
+  Widget dialogContent(BuildContext context) {
 
   return Container(
     padding: EdgeInsets.all(16.0),
@@ -73,36 +78,44 @@ Widget dialogContent(BuildContext context) {
           key: UniqueKey(),
           text: 'กลั่นแกล้งและคุกคาม',
           onChanged: (bool value) {
-            // Callback when checkbox state changes
-            print('Checkbox state changed: $value');
-          },
+            setState(() {
+                bullying_and_harassment = value; // Update the state when the checkbox state changes
+                            });
+          }, 
+          value: bullying_and_harassment,
         ),
         SizedBox(height: 4,),
         ColorChangingCheckbox(
           key: UniqueKey(),
           text: 'คำพูดแสดงความเกลียดชัง',
           onChanged: (bool value) {
-            // Callback when checkbox state changes
-            print('Checkbox state changed: $value');
-          },
+            setState(() {
+                hate_speech = value; // Update the state when the checkbox state changes
+                            });
+          }, 
+          value: hate_speech,
         ),
         SizedBox(height: 4,),
         ColorChangingCheckbox(
           key: UniqueKey(),
           text: 'สแปม',
           onChanged: (bool value) {
-            // Callback when checkbox state changes
-            print('Checkbox state changed: $value');
-          },
+            setState(() {
+                spam = value; // Update the state when the checkbox state changes
+                            });
+          }, 
+          value: spam,
         ),
         SizedBox(height: 4,),
         ColorChangingCheckbox(
           key: UniqueKey(),
           text: 'แสวงหาผลประโยชน์ส่วนตัว',
           onChanged: (bool value) {
-            // Callback when checkbox state changes
-            print('Checkbox state changed: $value');
-          },
+            setState(() {
+                private_benefit = value; // Update the state when the checkbox state changes
+                            });
+          }, 
+          value: private_benefit,
         ),
         Padding(
           padding: EdgeInsets.all(8.0),
@@ -116,4 +129,8 @@ Widget dialogContent(BuildContext context) {
       ],
     ),
   );
+}
+
+
+
 }

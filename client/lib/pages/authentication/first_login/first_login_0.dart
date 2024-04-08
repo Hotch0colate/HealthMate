@@ -1,4 +1,3 @@
-import 'package:client/component/select_box.dart';
 import 'package:client/component/text_field/text_field.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:client/theme/color.dart';
@@ -41,32 +40,32 @@ class _FirstLogin0State extends State<FirstLogin0> {
   TextEditingController UsernameTextController = TextEditingController();
 
   // Function to submit the gender to the backend
-  // Future<void> sendUserDataToBackend(String gender) async {
-  //   var _auth_service = AuthService();
-  //   String? token = await _auth_service.getIdToken();
-  //   var url = Uri.parse(
-  //       'http://${fixedIp}:3000/user/update_data'); // Change to your actual endpoint
-  //   var response = await http.post(url,
-  //       body: json.encode({'gender': gender}),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer $token'
-  //       });
+  Future<void> sendUserDataToBackend(String gender) async {
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+    var url = Uri.parse(
+        'http://${fixedIp}:3000/user/update_data'); // Change to your actual endpoint
+    var response = await http.post(url,
+        body: json.encode({'gender': gender}),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token'
+        });
 
-  //   if (response.statusCode == 200) {
-  //     // Handle successful request
-  //     print("Gender submitted successfully");
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => const FirstLogin2(),
-  //       ),
-  //     );
-  //   } else {
-  //     // Handle error
-  //     print("Failed to submit gender: ${response.body}");
-  //   }
-  // }
+    if (response.statusCode == 200) {
+      // Handle successful request
+      print("Gender submitted successfully");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const FirstLogin2(),
+        ),
+      );
+    } else {
+      // Handle error
+      print("Failed to submit gender: ${response.body}");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -7,10 +7,7 @@ import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
-import 'package:client/component/text_field/grey_text_field.dart';
 import 'package:client/component/buttons.dart';
-import 'package:client/component/text_field/password_field.dart';
-import 'package:client/component/text_field/white_text_field.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';

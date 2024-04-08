@@ -29,7 +29,7 @@ class LoadingPsyRegister extends StatelessWidget {
                   children: [
                     const AnimatedBackground(), // This will display the animation
                     Image.asset(
-                      'assets/psy/psy_cat.png',
+                      'assets/images/psychiatrist_glasses.png',
                       width: 60,
                       fit: BoxFit.fill,
                     ), // This will stay static on top
