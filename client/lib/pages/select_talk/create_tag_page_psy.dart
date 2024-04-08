@@ -216,7 +216,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => VolunteerRegister(),
+                        builder: (context) => PsyRegister(),
                       ));
                 },
                 borderColor: ColorTheme.secondaryColor,

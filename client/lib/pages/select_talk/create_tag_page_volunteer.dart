@@ -74,7 +74,7 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                   ),
                 ],
               ),
-
+              SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

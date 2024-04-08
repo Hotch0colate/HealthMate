@@ -84,6 +84,7 @@ class GoBackButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed, // Use the onPressed function passed as parameter
       style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -94,7 +95,6 @@ class GoBackButton extends StatelessWidget {
         ),
       ),
       child: const SizedBox(
-        height: 40,
         width: 100,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,7 +106,7 @@ class GoBackButton extends StatelessWidget {
             ),
             Text(
               'ก่อนหน้า',
-              style: FontTheme.body1
+              style: FontTheme.btn_medium
             ),
           ],
         ),
@@ -125,6 +125,7 @@ class ForwardButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed, // Use the onPressed function passed as parameter
       style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
@@ -134,13 +135,12 @@ class ForwardButton extends StatelessWidget {
       ),
       child: const SizedBox(
         width: 100,
-        height: 40,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               'ต่อไป',
-              style: FontTheme.body1
+              style: FontTheme.btn_medium
             ),
             SizedBox(
               height: 28,

@@ -136,12 +136,14 @@ class _SignupPageState extends State<SignupPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          //ลบตรงนี้จ้าาา ><
                                           InputTextField(
                                             controller: _usernameController,
                                             hintText: 'กรอกชื่อผู้ใช้',
                                             labelText: 'ชื่อผู้ใช้',
                                           ),
                                           SizedBox(height: 5),
+                                          //ถึงตรงนี้จ้าาา ><
                                           InputTextField(
                                             controller: _emailController,
                                             hintText: 'กรอกอีเมล',
