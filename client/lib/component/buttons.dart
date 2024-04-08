@@ -331,12 +331,12 @@ class MdSecondaryButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        foregroundColor: ColorTheme.primaryColor,
-        backgroundColor: ColorTheme.WhiteColor,
+        foregroundColor: foregroundColor,
+        backgroundColor: backgroundColor,
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4),
-          side: BorderSide(color: ColorTheme.primaryColor, width: 1),
+          side: BorderSide(color: borderColor, width: 1),
         ),
         minimumSize: Size(minWidth, 0),
       ),
