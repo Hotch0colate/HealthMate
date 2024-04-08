@@ -1,3 +1,7 @@
+import 'package:client/pages/authentication/first_login/first_login_2.dart';
+import 'package:client/pages/authentication/first_login/first_login_3.dart';
+import 'package:client/pages/authentication/first_login/first_login_4.dart';
+import 'package:client/pages/authentication/first_login/first_login_5.dart';
 import 'package:client/pages/select_talk/create_tag_page_volunteer.dart';
 import 'package:client/pages/select_talk/find_volunteer_page.dart';
 
@@ -44,6 +48,10 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginPage(),
         '/signup': (context) => SignupPage(),
         '/first_login': (context) => FirstLogin1(),
+        '/first_login_2': (context) => FirstLogin2(),
+        '/first_login_3': (context) => FirstLogin3(),
+        '/first_login_4': (context) => FirstLogin4(),
+        '/first_login_5': (context) => FirstLogin5(),
         '/main': (context) => MainApp(SelectedPage: 0),
         '/home': (context) => const HomePage(),
         // '/create_tag_page': (context) => const CreateTagPage(),

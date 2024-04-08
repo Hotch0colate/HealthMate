@@ -10,6 +10,8 @@ import 'package:client/services/auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:client/services/save_state_first_login.dart';
+
 class FirstLogin3 extends StatefulWidget {
   const FirstLogin3({Key? key}) : super(key: key);
 
@@ -32,7 +34,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token'
       },
-      body: jsonEncode({"career": career}),
+      body: jsonEncode({"career": career, 'firstloginstage': 4}),
     );
 
     if (response.statusCode == 200) {
@@ -161,12 +163,13 @@ class _FirstLogin3State extends State<FirstLogin3> {
           children: [
             GoBackButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FirstLogin2(),
-                  ),
-                );
+                setStateFirstLogin(context, 2, FirstLogin2());
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const FirstLogin2(),
+                //   ),
+                // );
               },
             ),
             ForwardButton(

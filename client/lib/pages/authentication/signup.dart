@@ -3,9 +3,13 @@
 import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/authentication/login.dart';
 import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 import 'package:client/component/text_field/grey_text_field.dart';
 import 'package:client/component/buttons.dart';
@@ -75,8 +79,22 @@ class _SignupPageState extends State<SignupPage> {
       // Note: In a real app, you'd handle the response from your backend to confirm token verification was successful
       AuthService().saveToken(idToken.toString());
       Navigator.of(context).pop(); // Close the loading indicator
-      Navigator.pushReplacementNamed(context,
-          '/first_login'); // Navigate to home.dart or use your preferred method
+
+      final response = await http.post(
+        Uri.parse('http://${fixedIp}:3000/volunteer/create_data'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $idToken', // ส่ง token ใน header
+        },
+        body: jsonEncode({"firstloginstage": 1}),
+      );
+
+      if (response.statusCode == 200) {
+        Navigator.pushReplacementNamed(context,
+            '/first_login'); // Navigate to home.dart or use your preferred method
+      } else {
+        Navigator.of(context).pop();
+      }
     } catch (e) {
       print('Signup failed: $e');
       Navigator.of(context).pop(); // Close the loading indicator

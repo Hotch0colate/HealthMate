@@ -44,7 +44,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
     var url = Uri.parse(
         'http://${fixedIp}:3000/user/update_data'); // Change to your actual endpoint
     var response = await http.post(url,
-        body: json.encode({'gender': gender}),
+        body: json.encode({'gender': gender, 'firstloginstage': 2}),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'

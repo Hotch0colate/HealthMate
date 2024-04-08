@@ -166,7 +166,7 @@ class FindVolunteerPage extends StatelessWidget {
       return jsonResponse['uid']; // ตัวอย่างการดึง uid จาก response
     } else {
       // หากการตอบกลับไม่สำเร็จ, โยน exception
-      throw Exception('Failed to load uid from token');
+      throw Exception('Failed to load uid from token, find volunteer page');
     }
   }
 
@@ -177,13 +177,10 @@ class FindVolunteerPage extends StatelessWidget {
         leading: Column(
           children: [
             GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                CupertinoIcons.back
-              )
-            ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(CupertinoIcons.back)),
           ],
         ),
         leadingWidth: 40,
@@ -268,7 +265,7 @@ Widget buildWaitingContent() {
         const SizedBox(
           height: 20,
         ),
-        
+
         const SizedBox(
           height: 65,
         ),

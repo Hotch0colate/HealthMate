@@ -12,6 +12,8 @@ import 'package:client/pages/authentication/first_login/first_login_1.dart';
 import 'package:client/pages/authentication/first_login/first_login_3.dart';
 import '../../../component/buttons.dart';
 
+import 'package:client/services/save_state_first_login.dart';
+
 class FirstLogin2 extends StatefulWidget {
   const FirstLogin2({Key? key}) : super(key: key);
 
@@ -29,7 +31,8 @@ class _FirstLogin2State extends State<FirstLogin2> {
     var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
     var response = await http.post(
       url,
-      body: json.encode({'birthday': birthDateController.text}),
+      body: json
+          .encode({'birthday': birthDateController.text, 'firstloginstage': 3}),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -118,12 +121,13 @@ class _FirstLogin2State extends State<FirstLogin2> {
           children: [
             GoBackButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const FirstLogin1(),
-                  ),
-                );
+                setStateFirstLogin(context, 1, FirstLogin1());
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => const FirstLogin1(),
+                //   ),
+                // );
               },
             ),
             ForwardButton(

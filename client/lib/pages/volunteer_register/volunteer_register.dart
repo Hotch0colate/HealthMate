@@ -47,7 +47,7 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
       String? token = await _auth_service.getIdToken();
 
       final response = await http.post(
-          Uri.parse('http://${fixedIp}:3000/chatroom/create_data'),
+          Uri.parse('http://${fixedIp}:3000/volunteer/create_data'),
           headers: <String, String>{
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token', // ส่ง token ใน header
@@ -188,25 +188,6 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
                                   Colors.white, // Change text color
                               backgroundColor: ColorTheme.successAction,
                             ),
-                            // child: ForwardButton(
-                            //   onPressed: () {
-                            //     Navigator.push(
-                            //       context,
-                            //       MaterialPageRoute(
-                            //           builder: (context) =>
-                            //               const LoadingVolunteerRegister()),
-                            //     );
-                            //     Future.delayed(const Duration(seconds: 3), () {
-                            //       _createPsychiatrist();
-                            //       Navigator.push(
-                            //         context,
-                            //         MaterialPageRoute(
-                            //             builder: (context) =>
-                            //                 const VolunteerCongrats()),
-                            //       ); // Navigate back after 3 seconds
-                            //     });
-                            //   },
-                            // ),
                           ),
                         ])))));
   }

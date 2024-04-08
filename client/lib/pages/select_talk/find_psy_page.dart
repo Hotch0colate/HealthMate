@@ -18,8 +18,7 @@ class FindPsyPage extends StatelessWidget {
   final String selectedTag;
   final String text;
 
-  const FindPsyPage(
-      {Key? key, required this.selectedTag, required this.text})
+  const FindPsyPage({Key? key, required this.selectedTag, required this.text})
       : super(key: key);
 
   // This function is used to show the dialog when the button is pressed
@@ -166,7 +165,7 @@ class FindPsyPage extends StatelessWidget {
       return jsonResponse['uid']; // ตัวอย่างการดึง uid จาก response
     } else {
       // หากการตอบกลับไม่สำเร็จ, โยน exception
-      throw Exception('Failed to load uid from token');
+      throw Exception('Failed to load uid from token, find psyhiatrist page');
     }
   }
 
@@ -177,13 +176,10 @@ class FindPsyPage extends StatelessWidget {
         leading: Column(
           children: [
             GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                CupertinoIcons.back
-              )
-            ),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(CupertinoIcons.back)),
           ],
         ),
         leadingWidth: 40,
@@ -268,7 +264,7 @@ Widget buildWaitingContent() {
         const SizedBox(
           height: 20,
         ),
-        
+
         const SizedBox(
           height: 65,
         ),

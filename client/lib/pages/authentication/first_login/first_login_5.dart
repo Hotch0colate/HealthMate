@@ -7,6 +7,8 @@ import 'package:client/component/buttons.dart';
 import 'package:client/pages/authentication/first_login/first_login_4.dart';
 import 'package:client/component/navigation.dart';
 
+import 'package:client/services/save_state_first_login.dart';
+
 class FirstLogin5 extends StatefulWidget {
   const FirstLogin5({Key? key});
 
@@ -86,25 +88,27 @@ class _FirstLogin5State extends State<FirstLogin5> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GoBackButton(onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FirstLogin4(),
-                ),
-              );
+              setStateFirstLogin(context, 4, FirstLogin4());
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => FirstLogin4(),
+              //   ),
+              // );
             }),
             MdPrimaryButton(
               text: 'ดำเนินการต่อ',
               onPressed: () {
                 if (acceptedTermValue.isNotEmpty) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MainApp(
-                        SelectedPage: 0,
-                      ),
-                    ),
-                  );
+                  setStateFirstLogin(context, 99, MainApp(SelectedPage: 0));
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => MainApp(
+                  //       SelectedPage: 0,
+                  //     ),
+                  //   ),
+                  // );
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(

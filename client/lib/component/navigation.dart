@@ -69,7 +69,7 @@ class _MainAppState extends State<MainApp> {
       return jsonResponse['uid']; // ตัวอย่างการดึง uid จาก response
     } else {
       // หากการตอบกลับไม่สำเร็จ, โยน exception
-      throw Exception('Failed to load uid from token');
+      throw Exception('Failed to load uid from token, navigation page');
     }
   }
 

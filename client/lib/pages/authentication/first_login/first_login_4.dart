@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:client/services/save_state_first_login.dart';
+
 class FirstLogin4 extends StatefulWidget {
   const FirstLogin4({Key? key});
 
@@ -33,7 +35,7 @@ class _FirstLogin4State extends State<FirstLogin4> {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       },
-      body: jsonEncode({"martialstatus": martial_status}),
+      body: jsonEncode({"martialstatus": martial_status, 'firstloginstage': 5}),
     );
 
     if (response.statusCode == 200) {
@@ -191,12 +193,13 @@ class _FirstLogin4State extends State<FirstLogin4> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GoBackButton(onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => FirstLogin3(),
-                ),
-              );
+              setStateFirstLogin(context, 3, FirstLogin3());
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => FirstLogin3(),
+              //   ),
+              // );
             }),
             ForwardButton(onPressed: () {
               if (selectedMartialStatusValue.isNotEmpty) {

@@ -34,7 +34,8 @@ router.post('/create_data', async (req, res) => {
             martialstatus: "unknow",
             chatgroup: [],
             mil: new Date().getTime(),
-            date: formatDate(new Date())
+            date: formatDate(new Date()),
+            firstloginstage: 0
         });
         return res.status(200).json({
             RespCode: 200,
@@ -53,8 +54,8 @@ router.post('/create_data', async (req, res) => {
 
 //ดึงข้อมูลจาก user
 //fetch  userdata
-router.post('/read_data', authenticate, async (req, res) => {
-    var uid = req.body.uid;
+router.get('/read_data', authenticate, async (req, res) => {
+    var uid = req.user.uid;
 
     try {
         firebasedb.get(ref(db, 'users/' + uid))
@@ -64,7 +65,7 @@ router.post('/read_data', authenticate, async (req, res) => {
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessge: "Fetch data success",
-                        Dae: snapshot.val()
+                        Data: snapshot.val()
                     });
                 }
                 else {
@@ -97,6 +98,8 @@ router.post('/update_data', authenticate, (req, res) => {
     var birthday = req.body.birthday;
     var career = req.body.career;
     var martialstatus = req.body.martialstatus;
+
+    var firstloginstage = req.body.firstloginstage;
     //check attribute in database
     try {
         get(ref(db, 'users/' + uid))
@@ -133,6 +136,7 @@ router.post('/update_data', authenticate, (req, res) => {
                     }
                     career && (updateData.career = career);
                     martialstatus && (updateData.martialstatus = martialstatus);
+                    firstloginstage && (updateData.firstloginstage = firstloginstage);
 
                     update(ref(db, 'users/' + uid), updateData);
 
@@ -190,6 +194,50 @@ router.post('/delete_data', (req, res) => {
         });
     }
 });
+
+// อัพเดทข้อมูล ถ้ามีการกรอกเฉพาะบางข้อมูลก็อัพเดทได้
+// feature first login and edit profile
+router.post('/save_state_first_login', authenticate, (req, res) => {
+    var uid = req.user.uid;
+
+    var firstloginstage = req.body.firstloginstage;
+    //check attribute in database
+    try {
+        get(ref(db, 'users/' + uid))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const updateData = {
+                        mil: new Date().getTime(),
+                        date: formatDate(new Date())
+                    };
+
+                    // Optional Chaining
+                    firstloginstage && (updateData.firstloginstage = firstloginstage);
+                    update(ref(db, 'users/' + uid), updateData);
+
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: "Update successfully !"
+                    });
+                }
+                else {
+                    console.log("No data available");
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: "No data available"
+                    });
+                }
+            })
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            RespCode: 500,
+            RespMessage: "Error : " + error.message + "/nPath API : /user/save_state_first_login"
+        });
+    }
+});
+
 
 module.exports = router;
 
