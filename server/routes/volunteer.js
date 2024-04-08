@@ -16,6 +16,8 @@ const formatDate = require('../service');
 router.post('/create_data', authenticate, async (req, res) => {
     var uid = req.user.uid;
 
+    var tags = req.body.tags;
+
     try {
         firebasedb.set(ref(db, 'volunteers/' + uid), {
             uid: uid,
@@ -26,6 +28,15 @@ router.post('/create_data', authenticate, async (req, res) => {
             mil: new Date().getTime(),
             date: formatDate(new Date())
         });
+
+        const updateData = {
+            mil: new Date().getTime(),
+            date: formatDate(new Date())
+        };
+        // Optional Chaining
+        tags && (updateData.tags = tags);
+        update(ref(db, 'volunteers/' + uid), updateData);
+
         return res.status(200).json({
             RespCode: 200,
             RespMessage: "Register volunteer succesfully !"

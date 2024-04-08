@@ -33,33 +33,34 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
     'suggestSolutions': false,
   };
 
-  // Future<void> sendUserDataToBackend(String gender) async {
-  //   var _auth_service = AuthService();
-  //   String? token = await _auth_service.getIdToken();
-  //   var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
-  //   var response = await http.post(
-  //     url,
-  //     body: json.encode({'gender': gender}),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer $token',
-  //     },
-  //   );
+  void _createVolunteerWithToken(BuildContext context) async {
+    // สมมติว่าคุณมีฟังก์ชัน `getToken` ที่สามารถดึง token ของผู้ใช้
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+    await _createVolunteer(token);
+    // print(refreshEmotionsCallback);
+  }
 
-  //   if (response.statusCode == 200) {
-  //     print("Gender submitted successfully");
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => const FirstLogin2(),
-  //       ),
-  //     );
-  //   } else {
-  //     print("Failed to submit gender: ${response.body}");
-  //   }
-  // }
+  Future<void> _createVolunteer(String? token) async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
 
-  void _createPsychiatrist() async {}
+      final response = await http.post(
+          Uri.parse('http://${fixedIp}:3000/chatroom/create_data'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token', // ส่ง token ใน header
+          });
+
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception('Failed to load emotions');
+      }
+    } catch (error) {
+      throw Exception('Failed to load emotions: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,25 +166,28 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
                           Align(
                             alignment: Alignment.bottomRight,
                             child: MdPrimaryButton(
-                    text: 'ลงทะเบียน',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoadingVolunteerRegister()),
-                      );
-                      Future.delayed(const Duration(seconds: 3), () {
-                        _createPsychiatrist();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const VolunteerCongrats()),
-                        ); // Navigate back after 3 seconds
-                      });
-                    },
-                    foregroundColor: Colors.white, // Change text color
-                    backgroundColor: ColorTheme.successAction,
-                  ),
+                              text: 'ลงทะเบียน',
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoadingVolunteerRegister()),
+                                );
+                                Future.delayed(const Duration(seconds: 3), () {
+                                  _createVolunteerWithToken(context);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const VolunteerCongrats()),
+                                  ); // Navigate back after 3 seconds
+                                });
+                              },
+                              foregroundColor:
+                                  Colors.white, // Change text color
+                              backgroundColor: ColorTheme.successAction,
+                            ),
                             // child: ForwardButton(
                             //   onPressed: () {
                             //     Navigator.push(
