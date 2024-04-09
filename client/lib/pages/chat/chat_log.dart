@@ -8,10 +8,11 @@ import 'package:intl/intl.dart';
 //component import
 import 'package:client/component/conversation_list.dart';
 
-void main() {
-  runApp(ChatLog(uid: '',));
-}
-
+// void main() {
+//   runApp(ChatLog(
+//     uid: '',
+//   ));
+// }
 
 typedef UpdateTriggerCallback = void Function(bool updateTrigger);
 
@@ -24,7 +25,7 @@ class ChatLog extends StatefulWidget {
 }
 
 class _ChatLogState extends State<ChatLog> {
-  Key _streamBuilderKey = UniqueKey();
+  // Key _streamBuilderKey = UniqueKey();
   StreamController<List<ConversationBox>> _chatlogStreamController =
       StreamController<List<ConversationBox>>();
   final _database = FirebaseDatabase.instance.reference();
@@ -44,6 +45,55 @@ class _ChatLogState extends State<ChatLog> {
     super.dispose();
   }
 
+  // void _activeListeners() {
+  //   print(widget.uid);
+  //   _database
+  //       .child('users/' + widget.uid + '/chatgroup')
+  //       .onValue
+  //       .listen((event) {
+  //     var snapshotValue = event.snapshot.value;
+  //     if (snapshotValue != null && snapshotValue is List<dynamic>) {
+  //       List<String> parsedChatgroup = List<String>.from(snapshotValue);
+
+  //       List<Future<dynamic>> chatFutures = parsedChatgroup.map((cid) {
+  //         return _database
+  //             .child('chats/$cid')
+  //             .get()
+  //             .then((DataSnapshot snapshot) {
+  //           if (snapshot.value != null) {
+  //             print("SNAPSHOTVALUE AYO: " + snapshot.value.toString());
+  //             return snapshot.value;
+  //           }
+  //           return null;
+  //         });
+  //       }).toList();
+
+  //       Future.wait(chatFutures).then((List<dynamic> conversations) {
+  //         var validConversations = conversations
+  //             .where((conversation) => conversation != null)
+  //             .map((conversation) {
+  //               Map<String, dynamic> conversationMap;
+  //               try {
+  //                 conversationMap = Map<String, dynamic>.from(conversation);
+  //                 return ConversationBox.fromMap(conversationMap);
+  //               } catch (e) {
+  //                 print("Error converting conversation data: $e");
+  //                 return null;
+  //               }
+  //             })
+  //             .whereType<ConversationBox>()
+  //             .toList();
+  //         _chatlogStreamController.add(validConversations);
+  //       }).catchError((error) {
+  //         // Handle any errors that occurred during fetching or parsing
+  //         print("Error in Future.wait: $error");
+  //       });
+  //     } else {
+  //       print('Invalid snapshot value or format chatlog');
+  //     }
+  //   });
+  // }
+
   void _activeListeners() {
     print(widget.uid);
     _database
@@ -54,35 +104,31 @@ class _ChatLogState extends State<ChatLog> {
       if (snapshotValue != null && snapshotValue is List<dynamic>) {
         List<String> parsedChatgroup = List<String>.from(snapshotValue);
 
-        List<Future<dynamic>> chatFutures = parsedChatgroup.map((cid) {
-          return _database
-              .child('chats/$cid')
-              .get()
-              .then((DataSnapshot snapshot) {
-            if (snapshot.value != null) {
-              return snapshot.value;
-            }
-            return null;
-          });
-        }).toList();
+        // This map will hold the current state of all conversations
+        Map<String, ConversationBox> conversationsMap = {};
 
-        Future.wait(chatFutures).then((List<dynamic> conversations) {
-          var validConversations = conversations
-              .where((conversation) => conversation != null)
-              .map((conversation) {
-                Map<String, dynamic> conversationMap;
-                try {
-                  conversationMap = Map<String, dynamic>.from(conversation);
-                  return ConversationBox.fromMap(conversationMap);
-                } catch (e) {
-                  print("Error converting conversation data: $e");
-                  return null;
-                }
-              })
-              .whereType<ConversationBox>()
-              .toList();
-          _chatlogStreamController.add(validConversations);
-        });
+        for (String cid in parsedChatgroup) {
+          _database.child('chats/$cid').onValue.listen((event) {
+            var conversationData = event.snapshot.value;
+            if (conversationData != null) {
+              try {
+                Map<String, dynamic> conversationMap =
+                    Map<String, dynamic>.from(conversationData as Map);
+
+                ConversationBox conversation =
+                    ConversationBox.fromMap(conversationMap);
+
+                // Update the conversation in the map
+                conversationsMap[cid] = conversation;
+
+                // Convert the map to a list and add it to the stream
+                _chatlogStreamController.add(conversationsMap.values.toList());
+              } catch (e) {
+                print("Error converting conversation data: $e");
+              }
+            }
+          });
+        }
       } else {
         print('Invalid snapshot value or format chatlog');
       }
@@ -92,31 +138,31 @@ class _ChatLogState extends State<ChatLog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: 
-        AppBar(
-          automaticallyImplyLeading: false,
-              title: Padding(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      "กล่องข้อความ",
-                      style:
-                          FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
-                    ),
-                  ],
-                ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                "กล่องข้อความ",
+                style: FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
               ),
-            ),
+            ],
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: Column(
           children: <Widget>[
-            SizedBox(height: 24,),
+            SizedBox(
+              height: 24,
+            ),
             StreamBuilder<List<ConversationBox>>(
                 stream: _chatlogStreamController.stream,
-                key: _streamBuilderKey,
+                // key: _streamBuilderKey,
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return
