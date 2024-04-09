@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:client/Pages/chat/chat_room.dart';
+import 'package:client/component/dialog.dart';
 import 'package:client/models/volunteer_response.dart';
+import 'package:client/pages/select_talk/create_tag_page_psy.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,36 +22,6 @@ class FindPsyPage extends StatelessWidget {
 
   const FindPsyPage({Key? key, required this.selectedTag, required this.text})
       : super(key: key);
-
-  // This function is used to show the dialog when the button is pressed
-  void _showCancelDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return SizedBox(
-          height: 132,
-          width: 296,
-          child: AlertDialog(
-            title: Column(
-              children: [
-                Text(
-                  'คุณแน่ใจหรือไม่',
-                  style: FontTheme.body1.copyWith(color: Colors.black),
-                ),
-                Text(
-                  'กรุณายืนยันการยกเลิก?',
-                  style: FontTheme.body1.copyWith(color: Colors.black),
-                ),
-              ],
-            ),
-            actions: const <Widget>[
-              ConfirmDelete(),
-            ],
-          ),
-        );
-      },
-    );
-  }
 
   Future<VolunteerQueryResponse?> findVolunteer() async {
     await Future.delayed(Duration(seconds: 3));
@@ -182,13 +154,7 @@ class FindPsyPage extends StatelessWidget {
                 child: Icon(CupertinoIcons.back)),
           ],
         ),
-        leadingWidth: 40,
-        flexibleSpace: Image.asset(
-          'assets/loading_screen/Vector.png',
-          fit: BoxFit.cover,
-        ),
-        backgroundColor: Colors.transparent,
-        toolbarHeight: 170,
+        toolbarHeight: 120,
       ),
       body: FutureBuilder(
         future: findVolunteer(), // Replace with your actual API call
@@ -219,16 +185,25 @@ class FindPsyPage extends StatelessWidget {
         },
       ),
       bottomNavigationBar: Padding(
-        padding: const EdgeInsets.only(bottom: 20),
+        padding: const EdgeInsets.only(bottom: 50),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MdPrimaryButtonRed(
+            MdPrimaryButton(
               onPressed: () {
                 // Call the function to show the dialog
-                _showCancelDialog(context);
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return ConfirmDialogWithNoDetail(
+                      title: 'ต้องการยกเลิกค้นหาใช่หรือไม่',
+                      destination: CreateTagPsyPage(),
+                    );
+                  },
+                );
               },
               text: 'ยกเลิก',
+              backgroundColor: ColorTheme.errorAction,
             ),
           ],
         ),
@@ -256,7 +231,7 @@ Widget buildWaitingContent() {
           alignment: Alignment.center,
           children: [
             const AnimatedBackground(), // This will display the animation
-            Image.asset('assets/images/psychiatrist_tool_glasses.png',
+            Image.asset('assets/images/psychiatrist_glasses.png',
                 width: 100,
                 fit: BoxFit.contain), // This will stay static on top
           ],
@@ -271,61 +246,6 @@ Widget buildWaitingContent() {
       ],
     ),
   );
-}
-
-class ConfirmDelete extends StatelessWidget {
-  const ConfirmDelete({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: 296,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              // Call the function to close the dialog
-              Navigator.of(context).pop();
-            },
-            style: ElevatedButton.styleFrom(
-              foregroundColor: ColorTheme.baseColor.withOpacity(0.8),
-              backgroundColor: ColorTheme.WhiteColor,
-              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-                side: BorderSide(
-                    color: ColorTheme.baseColor.withOpacity(0.2), width: 2),
-              ),
-            ),
-            child: const Text('ยกเลิก', style: FontTheme.btn_small),
-          ),
-          SingleChildScrollView(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => MainApp(SelectedPage: 1)),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                foregroundColor: ColorTheme.WhiteColor,
-                backgroundColor: ColorTheme.errorAction,
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                  side: BorderSide(color: Colors.transparent),
-                ),
-              ),
-              child: const Text('ใช่ ยกเลิกเลย', style: FontTheme.btn_small),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
 
 class AnimatedBackground extends StatefulWidget {

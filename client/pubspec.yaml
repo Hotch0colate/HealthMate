@@ -93,7 +93,6 @@ flutter:
     - assets/icons/
     - assets/avatar/
     - assets/images/
-    - assets/psy/
     - assets/emotion/emotion_text/
     - assets/emotion/emotion_calendar/
     - assets/loading_screen/

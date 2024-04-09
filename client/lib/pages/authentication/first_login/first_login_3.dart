@@ -22,6 +22,7 @@ class FirstLogin3 extends StatefulWidget {
 class _FirstLogin3State extends State<FirstLogin3> {
   bool agreedToTerms = false;
   String selectedCareerValue = '';
+  String? selectedCareer;
 
   Future<void> sendDataToBackend(String career) async {
     var _auth_service = AuthService();
@@ -49,7 +50,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
     }
   }
 
-  String? selectedCareer;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +65,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
               SizedBox(
                 width: MediaQuery.of(context).size.width - 32,
               ),
-              Image.asset('assets/logos/big_app_name.png'),
+              Image.asset('assets/logos/large_app_name.png'),
               const SizedBox(height: 24),
               const SizedBox(
                 height: 72,
@@ -185,7 +186,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
-                      content: Text("Please select an occupation"),
+                      content: Text("Please select an Occupation"),
                     ),
                   );
                 }

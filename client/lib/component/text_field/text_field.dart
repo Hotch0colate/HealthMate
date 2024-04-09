@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 
+
 class InputTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
-  final String labelText; // New property for the label text
+  final String labelText; 
+  final bool showLabel;// New property for the label text
 
   const InputTextField({
     Key? key,
     required this.controller,
-    required this.hintText,
-    required this.labelText, // Updated constructor
+    this.hintText = 'hint text',
+    this.labelText = 'hint text',
+    this.showLabel = true, // Default to true
+ // Updated constructor
   }) : super(key: key);
 
   @override
@@ -39,6 +43,7 @@ class _InputTextFieldState extends State<InputTextField> {
       // Wrap with Column
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+         if (widget.showLabel) // Conditionally render label
         Row(
           // Row to display label text and asterisk
           children: [
@@ -95,6 +100,8 @@ class _InputTextFieldState extends State<InputTextField> {
     );
   }
 }
+
+
 
 class PasswordInputTextField extends StatefulWidget {
   final TextEditingController controller;

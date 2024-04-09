@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:client/pages/psychiar_register/psy_select_tag.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:http/http.dart' as http;
@@ -163,30 +164,39 @@ class _AttachCertificateState extends State<AttachCertificate> {
                     labelText: 'วันที่ออกใบอนุญาต',
                   ),
                   SizedBox(height: 20),
-                  MdPrimaryButton(
-                    text: 'ลงทะเบียน',
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoadingPsyRegister()),
-                      );
-                      Future.delayed(const Duration(seconds: 3), () {
-                        _createPsychiatrist();
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const FinishRegisterPsy()),
-                        ); // Navigate back after 3 seconds
-                      });
-                    },
-                    foregroundColor: Colors.white, // Change text color
-                    backgroundColor: ColorTheme.successAction,
-                  ),
                 ],
               ),
             ),
           ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GoBackButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PsyRegister(),
+                  ),
+                );
+              },
+            ),
+            ForwardButton(
+              // Disable the button if not all checkboxes are checked
+              onPressed: () {
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const PsySelectTag(),
+                  ),
+                );
+              }
+            ),
+          ],
         ),
       ),
     );

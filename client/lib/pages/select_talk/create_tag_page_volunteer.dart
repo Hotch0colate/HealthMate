@@ -1,6 +1,8 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/component/dialog.dart';
 import 'package:client/component/navigation.dart';
+import 'package:client/component/selected_card.dart';
 import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/psychiar_register/register.dart';
 import 'package:client/pages/volunteer_register/volunteer_register.dart';
@@ -8,6 +10,19 @@ import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// void main() {
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: CreateTagVolunteerPage(),
+//     );
+//   }
+// }
 
 class CreateTagVolunteerPage extends StatefulWidget {
   const CreateTagVolunteerPage({Key? key});
@@ -17,13 +32,18 @@ class CreateTagVolunteerPage extends StatefulWidget {
 }
 
 class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
-  int selectedIndex = -1;
+  // Track Volonteer status
+  bool isVolonteer = false;
+  // Track Volonteer status
+
+  int selectedCardIndex = -1; // -1 indicates no card selected
+
   final _formKey = GlobalKey<FormState>();
 
   TextEditingController descriptionTextController = TextEditingController();
 
   List<String> _tagOptions() =>
-      ["Responbility", "Relation", "Health", "Generic"];
+      ["Generic", "Responbility", "Relation", "Health"];
 
   @override
   Widget build(BuildContext context) {
@@ -31,186 +51,196 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MainApp(SelectedPage: 1)),
-              );
-            },
-            child: Icon(
-              CupertinoIcons.back,
-              size: 35,
-            )),
-      ),
       body: SingleChildScrollView(
-        child: Center(
-          child: Padding(
-            padding: EdgeInsets.all(20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: screenHeight * 0.02),
-                Image.asset('assets/images/volunteer_scarf.png'),
-                Text(
-                  'อาสาสมัคร',
-                  style: FontTheme.subtitle1.copyWith(color: Colors.black),
-                ),
-                SizedBox(height: 24),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: screenWidth * 0.003),
-                      child: Text(
-                        'คุณเครียดเรื่องอะไร ?',
-                        style:
-                            FontTheme.subtitle2.copyWith(color: Colors.black),
-                      ),
-                    )
-                  ],
-                ),
-                SizedBox(height: 8),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TagButton(
-                      text: 'ภาระหน้าที่',
-                      index: 0,
-                      isSelected: selectedIndex == 0,
-                      onSelect: () {
-                        setState(() {
-                          selectedIndex = 0;
-                        });
-                      },
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios, // Replace with your custom icon
+                      color: Colors.black38,
+                      size: 30, // Customize the icon color
                     ),
-                    TagButton(
-                      text: 'ความสัมพันธ์',
-                      index: 1,
-                      isSelected: selectedIndex == 1,
-                      onSelect: () {
-                        setState(() {
-                          selectedIndex = 1;
-                        });
-                      },
-                    ),
-                    TagButton(
-                      text: 'สุขภาพ',
-                      index: 2,
-                      isSelected: selectedIndex == 2,
-                      onSelect: () {
-                        setState(() {
-                          selectedIndex = 2;
-                        });
-                      },
-                    ),
-                    TagButton(
-                      text: 'ทั่วไป',
-                      index: 3,
-                      isSelected: selectedIndex == 3,
-                      onSelect: () {
-                        setState(() {
-                          selectedIndex = 3;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 12),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: screenWidth * 0.01),
-                      child: Text('รายละเอียด',
-                          style: FontTheme.subtitle2
-                              .copyWith(color: Colors.black)),
-                    )
-                  ],
-                ),
-                SizedBox(height: screenHeight * 0.005),
-                MultilineInputTextField(
-                  controller: descriptionTextController,
-                  hintText: 'ใส่รายละเอียด',
-                ),
-                SizedBox(height: 28),
-                MdPrimaryButton(
-                  minWidth: 200,
-                  text: 'ค้นหาอาสาสมัคร',
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FindVolunteerPage(
-                          selectedTag: _tagOptions()[selectedIndex],
-                          text: descriptionTextController.text,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                SizedBox(height: 12),
-                MdSecondaryButton(
-                  minWidth: 200,
-                  text: 'สมัครอาสาสมัคร',
-                  onPressed: () {
-                    Navigator.push(
+                    onPressed: () {
+                      //กลับไปหน้า Select talk
+                      //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VolunteerRegister(),
-                        ));
-                  },
-                ),
-              ],
-            ),
+                            builder: (context) => MainApp(SelectedPage: 1)),
+                        (Route<dynamic> route) =>
+                            false, // Remove all routes below
+                      );
+                    },
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Image.asset(
+                    'assets/images/volunteer_scarf.png',
+                    width: 100,
+                    height: 100,
+                  ),
+                  Text(
+                    'เลือกเรื่องที่จะปรึกษา\nได้เลย เมี๊ยววว...',
+                    style: FontTheme.subtitle1
+                        .copyWith(color: ColorTheme.primary2Color),
+                  )
+                ],
+              ),
+              SizedBox(height: 36),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SelectedCard(
+                        text: 'ทั่วไป',
+                        icon: Icons.emoji_emotions,
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
+                        },
+                        isSelected: false,
+                        mainColor: ColorTheme.primary2Color,
+                      ),
+                      SelectedCard(
+                        text: 'ภาระหน้าที่',
+                        icon: Icons.work,
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
+                        },
+                        isSelected: false,
+                        mainColor: ColorTheme.primary2Color,
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      SelectedCard(
+                        text: 'ความสัมพันธ์',
+                        icon: CupertinoIcons.person_3_fill,
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
+                        },
+                        isSelected: false,
+                        mainColor: ColorTheme.primary2Color,
+                      ),
+                      SelectedCard(
+                        text: 'สุขภาพ',
+                        icon: CupertinoIcons.heart_fill,
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
+                        },
+                        isSelected: false,
+                        mainColor: ColorTheme.primary2Color,
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: screenWidth * 0.01),
+                    child: Text('รายละเอียด',
+                        style:
+                            FontTheme.subtitle2.copyWith(color: Colors.black)),
+                  )
+                ],
+              ),
+              SizedBox(height: screenHeight * 0.005),
+              MultilineInputTextField(
+                controller: descriptionTextController,
+                hintText: 'ใส่รายละเอียด',
+              ),
+              SizedBox(height: 28),
+              MdPrimaryButton(
+                minWidth: 400,
+                text: 'ค้นหาอาสาสมัคร',
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => FindVolunteerPage(
+                        selectedTag: _tagOptions()[selectedCardIndex],
+                        text: descriptionTextController.text,
+                        // selectedTag: '',
+                      ),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: 15),
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      thickness: 1.5,
+                      color: ColorTheme.primary2Color,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      'มาเป็นอาสาสมัครด้วยกันไหมครับ',
+                      style: FontTheme.body1
+                          .copyWith(color: ColorTheme.primary2Color),
+                    ),
+                  ),
+                  Expanded(
+                    child: Divider(
+                      thickness: 1.5,
+                      color: ColorTheme.primary2Color,
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+              isVolonteer
+                  ? MdSecondaryButton(
+                      minWidth: 400,
+                      text: 'เปลี่ยน/ยกเลิกอาสาสมัคร', // Change button text
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CancleRoleDialog(
+                              textRole: 'ยกเลิกการเป็นอาสาสมัคร',
+                            );
+                          },
+                        );
+                      },
+                      borderColor: ColorTheme.errorAction,
+                      foregroundColor: ColorTheme.errorAction,
+                    )
+                  : MdSecondaryButton(
+                      minWidth: 400,
+                      text: 'ลงทะเบียนอาสาสมัคร', // Original button text
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VolunteerRegister(),
+                          ),
+                        );
+                      },
+                      borderColor: ColorTheme.primary2Color,
+                      foregroundColor: ColorTheme.primary2Color,
+                    ),
+            ],
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class TagButton extends StatelessWidget {
-  final String text;
-  final int index;
-  final bool isSelected;
-  final VoidCallback onSelect;
-
-  const TagButton({
-    required this.text,
-    required this.index,
-    required this.isSelected,
-    required this.onSelect,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    return GestureDetector(
-      onTap: onSelect,
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.02,
-          vertical: screenWidth * 0.010,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: isSelected ? ColorTheme.primaryColor : Colors.transparent,
-          border: Border.all(
-            color: isSelected
-                ? Colors.transparent
-                : ColorTheme.baseColor.withOpacity(0.4),
-          ),
-        ),
-        child: Text(
-          text,
-          style: FontTheme.btn_small.copyWith(
-              color: isSelected
-                  ? Colors.white
-                  : ColorTheme.baseColor.withOpacity(0.4)),
         ),
       ),
     );

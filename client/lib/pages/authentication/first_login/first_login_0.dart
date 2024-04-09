@@ -1,4 +1,4 @@
-import 'package:client/component/select_box.dart';
+import 'package:client/component/text_field/text_field.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -21,21 +21,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'HealthMate',
-      home: FirstLogin1(),
+      home: FirstLogin0(),
     );
   }
 }
 
-class FirstLogin1 extends StatefulWidget {
-  const FirstLogin1({Key? key}) : super(key: key);
+class FirstLogin0 extends StatefulWidget {
+  FirstLogin0({Key? key}) : super(key: key);
+
 
   @override
-  _FirstLogin1State createState() => _FirstLogin1State();
+  _FirstLogin0State createState() => _FirstLogin0State();
 }
 
-class _FirstLogin1State extends State<FirstLogin1> {
+class _FirstLogin0State extends State<FirstLogin0> {
   bool agreedToTerms = false;
-  String selectedGender = ''; // Variable to store selected gender
+  
+  TextEditingController UsernameTextController = TextEditingController();
 
   // Function to submit the gender to the backend
   Future<void> sendUserDataToBackend(String gender) async {
@@ -44,7 +46,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
     var url = Uri.parse(
         'http://${fixedIp}:3000/user/update_data'); // Change to your actual endpoint
     var response = await http.post(url,
-        body: json.encode({'gender': gender, 'firstloginstage': 2}),
+        body: json.encode({'gender': gender}),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token'
@@ -87,50 +89,14 @@ class _FirstLogin1State extends State<FirstLogin1> {
                 ),
               ),
               const SizedBox(height: 18),
-              Text('เพศของคุณคืออะไร ?',
+              Text('มาตั้ง"ชื่อผู้ใช้"ของคุุณกันน!',
                   style: FontTheme.subtitle1
                       .copyWith(color: ColorTheme.primaryColor)),
               const SizedBox(height: 24),
               Text('คำตอบของคุณ: ', style: FontTheme.body1),
               const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.only(left: 35),
-                child: Column(
-                  children: [
-                    ColorChangingRadio(
-                      text: 'หญิง',
-                      value: 'Female',
-                      groupValue: selectedGender,
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedGender = value!;
-                        });
-                      },
-                    ),
-                    ColorChangingRadio(
-                      text: 'ชาย',
-                      value: 'Male',
-                      groupValue: selectedGender,
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedGender = value!;
-                        });
-                      },
-                    ),
-                    ColorChangingRadio(
-                      text: 'อื่น ๆ',
-                      value: 'Others',
-                      groupValue: selectedGender,
-                      onChanged: (String? value) {
-                        setState(() {
-                          selectedGender = value!;
-                        });
-                      },
-                    )
-                  ],
-                ),
-              ),
-              // const SizedBox(height: 60),
+              InputTextField(
+                controller: UsernameTextController, hintText: 'ชื่อผู้ใช้', showLabel: false,)
             ],
           ),
         ),
@@ -146,20 +112,17 @@ class _FirstLogin1State extends State<FirstLogin1> {
             ),
             ForwardButton(
               onPressed: () {
-                if (selectedGender.isNotEmpty) {
-                  sendUserDataToBackend(selectedGender);
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FirstLogin2()),
-                  );
-                } else {
-                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Please select an gender"),
-                    ),
-                  );
-                }
+                // if (selectedGender.isNotEmpty) {
+                //   sendUserDataToBackend(selectedGender);
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //       builder: (context) => const FirstLogin2()),
+                  // );
+                // } else {
+                //   // Prompt user to select a gender or handle this case accordingly
+                //   print("Please select a gender");
+                // }
               },
             ),
           ],

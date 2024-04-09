@@ -11,10 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:client/component/text_field/grey_text_field.dart';
 import 'package:client/component/buttons.dart';
-import 'package:client/component/text_field/password_field.dart';
-import 'package:client/component/text_field/white_text_field.dart';
 
 // ignore: depend_on_referenced_packages
 import 'package:firebase_auth/firebase_auth.dart';
@@ -81,7 +78,7 @@ class _SignupPageState extends State<SignupPage> {
       Navigator.of(context).pop(); // Close the loading indicator
 
       final response = await http.post(
-        Uri.parse('http://${fixedIp}:3000/volunteer/create_data'),
+        Uri.parse('http://${fixedIp}:3000/user/create_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $idToken', // ส่ง token ใน header
@@ -154,12 +151,14 @@ class _SignupPageState extends State<SignupPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          //ลบตรงนี้จ้าาา ><
                                           InputTextField(
                                             controller: _usernameController,
                                             hintText: 'กรอกชื่อผู้ใช้',
                                             labelText: 'ชื่อผู้ใช้',
                                           ),
                                           SizedBox(height: 5),
+                                          //ถึงตรงนี้จ้าาา ><
                                           InputTextField(
                                             controller: _emailController,
                                             hintText: 'กรอกอีเมล',
