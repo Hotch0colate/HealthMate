@@ -33,7 +33,7 @@ class CreateTagVolunteerPage extends StatefulWidget {
 
 class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
   // Track Volonteer status
-  bool isVolonteer = true;
+  bool isVolonteer = false;
   // Track Volonteer status
 
   int selectedCardIndex = -1; // -1 indicates no card selected
@@ -175,7 +175,8 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                     MaterialPageRoute(
                       builder: (context) => FindVolunteerPage(
                         selectedTag: _tagOptions()[selectedCardIndex],
-                        text: descriptionTextController.text,
+                        text: descriptionTextController.text, 
+                        // selectedTag: '',
                       ),
                     ),
                   );

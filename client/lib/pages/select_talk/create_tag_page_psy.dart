@@ -5,6 +5,7 @@ import 'package:client/component/navigation.dart';
 import 'package:client/component/selected_card.dart';
 import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/psychiar_register/register.dart';
+import 'package:client/pages/select_talk/find_psy_page.dart';
 import 'package:client/pages/volunteer_register/volunteer_register.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -169,9 +170,9 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => FindVolunteerPage(
-                        selectedTag: _tagOptions()[selectedCardIndex],
-                        text: descriptionTextController.text,
+                      builder: (context) => FindPsyPage(
+                        // selectedTag: _tagOptions()[selectedCardIndex],
+                        text: descriptionTextController.text, selectedTag: '',
                       ),
                     ),
                   );
@@ -212,7 +213,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                           context: context,
                           builder: (BuildContext context) {
                             return CancleRoleDialog(
-                              textRole: '',
+                              textRole: 'ยกเลิกการเป็นจิตแพทย์',
                             );
                           },
                         );

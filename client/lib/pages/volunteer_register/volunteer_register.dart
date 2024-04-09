@@ -77,7 +77,7 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
   //   }
   // }
 
-  void _createPsychiatrist() async {}
+  void _createVolunteer() async {}
 
   @override
   Widget build(BuildContext context) {
@@ -233,18 +233,18 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            GoBackButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const CreateTagVolunteerPage(),
-                  ),
-                );
-              },
-            ),
+            // GoBackButton(
+            //   onPressed: () {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => const CreateTagVolunteerPage(),
+            //       ),
+            //     );
+            //   },
+            // ),
             ForwardButton(
               // Disable the button if not all checkboxes are checked
               onPressed: () {

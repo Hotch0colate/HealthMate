@@ -7,6 +7,7 @@ import 'package:client/pages/volunteer_register/volunteer_register.dart';
 import 'package:client/pages/volunteer_register/volunteer_test_1.dart';
 import 'package:client/pages/volunteer_register/volunteer_test_2.dart';
 import 'package:client/pages/volunteer_register/volunteer_test_waiting.dart';
+import 'package:client/theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(     
+         backgroundColor: ColorTheme.WhiteColor,
+         ),
       debugShowCheckedModeBanner: false,
       home: SplashScreen(),
       routes: {

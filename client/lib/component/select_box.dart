@@ -24,7 +24,7 @@ class _ColorChangingCheckboxState extends State<ColorChangingCheckbox> {
     return Row(
       children: <Widget>[
         Transform.scale(
-          scale: 1.3, // Change the scale factor to adjust checkbox size
+          scale: 1.2, // Change the scale factor to adjust checkbox size
           child: Checkbox(
             value: widget.value,
             onChanged: (value) {
@@ -38,7 +38,7 @@ class _ColorChangingCheckboxState extends State<ColorChangingCheckbox> {
         Text(
           widget.text,
           style: FontTheme.caption.copyWith(
-            color: widget.value ? ColorTheme.primaryColor : ColorTheme.baseColor,
+            fontWeight: FontWeight.w500,color: widget.value ? ColorTheme.primaryColor : ColorTheme.baseColor,
           ),
         ),
       ],

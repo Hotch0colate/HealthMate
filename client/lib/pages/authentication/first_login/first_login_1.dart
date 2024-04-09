@@ -78,7 +78,7 @@ class _FirstLogin1State extends State<FirstLogin1> {
               SizedBox(
                 width: MediaQuery.of(context).size.width - 32,
               ),
-              Image.asset('assets/logos/big_app_name.png'),
+              Image.asset('assets/logos/large_app_name.png'),
               const SizedBox(height: 24),
               const SizedBox(
                 height: 72,
@@ -154,8 +154,11 @@ class _FirstLogin1State extends State<FirstLogin1> {
                         builder: (context) => const FirstLogin2()),
                   );
                 } else {
-                  // Prompt user to select a gender or handle this case accordingly
-                  print("Please select a gender");
+                   ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Please select an gender"),
+                    ),
+                  );
                 }
               },
             ),
