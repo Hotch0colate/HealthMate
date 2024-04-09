@@ -1,5 +1,6 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/component/dialog.dart';
 import 'package:client/component/navigation.dart';
 import 'package:client/component/selected_card.dart';
 import 'package:client/component/text_field/text_field.dart';
@@ -17,7 +18,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: CreateTagPsyPage(),
     );
   }
@@ -31,6 +32,7 @@ class CreateTagPsyPage extends StatefulWidget {
 }
 
 class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
+  bool isPsychiatrist = true; // Track psychiatrist status
   int selectedCardIndex = -1; // -1 indicates no card selected
 
   final _formKey = GlobalKey<FormState>();
@@ -48,7 +50,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           child: Column(
             children: [
               Row(
@@ -61,8 +63,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                       size: 30, // Customize the icon color
                     ),
                     onPressed: () {
-                      //กลับไปหน้า Select talk
-                      //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
+                      // Navigate back to the previous screen
                       Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(
@@ -89,7 +90,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                   )
                 ],
               ),
-              SizedBox(height: 36),
+              const SizedBox(height: 36),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -99,66 +100,59 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                       SelectedCard(
                         text: 'ทั่วไป',
                         icon: Icons.emoji_emotions,
-                        onPressed: () {
-                          setState(() {
-                            selectedCardIndex = 0;
-                          });
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
                         },
-                        isSelected: selectedCardIndex == 0,
+                        isSelected: false,
                         mainColor: ColorTheme.secondaryColor,
                       ),
                       SelectedCard(
                         text: 'ภาระหน้าที่',
                         icon: Icons.work,
-                        onPressed: () {
-                          setState(() {
-                            selectedCardIndex = 1;
-                          });
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
                         },
-                        isSelected: selectedCardIndex == 1,
+                        isSelected: false,
                         mainColor: ColorTheme.secondaryColor,
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SelectedCard(
                         text: 'ความสัมพันธ์',
                         icon: CupertinoIcons.person_3_fill,
-                        onPressed: () {
-                          setState(() {
-                            selectedCardIndex = 2;
-                          });
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
                         },
-                        isSelected: selectedCardIndex == 2,
+                        isSelected: false,
                         mainColor: ColorTheme.secondaryColor,
                       ),
                       SelectedCard(
                         text: 'สุขภาพ',
                         icon: CupertinoIcons.heart_fill,
-                        onPressed: () {
-                          setState(() {
-                            selectedCardIndex = 3;
-                          });
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
                         },
-                        isSelected: selectedCardIndex == 3,
+                        isSelected: false,
                         mainColor: ColorTheme.secondaryColor,
                       ),
                     ],
                   ),
                 ],
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.only(left: screenWidth * 0.01),
-                    child: Text('รายละเอียด',
-                        style:
-                            FontTheme.subtitle2.copyWith(color: Colors.black)),
+                    child: Text(
+                      'รายละเอียด',
+                      style: FontTheme.subtitle2.copyWith(color: Colors.black),
+                    ),
                   )
                 ],
               ),
@@ -167,10 +161,10 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                 controller: descriptionTextController,
                 hintText: 'ใส่รายละเอียด',
               ),
-              SizedBox(height: 28),
+              const SizedBox(height: 28),
               MdPrimaryButton(
                 minWidth: 400,
-                text: 'ค้นหาอาสาสมัคร',
+                text: 'ค้นหาจิตแพทย์',
                 onPressed: () {
                   Navigator.push(
                     context,
@@ -183,24 +177,24 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                   );
                 },
               ),
-              SizedBox(height: 15),
+              const SizedBox(height: 15),
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       thickness: 1.5,
                       color: ColorTheme.secondaryColor,
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
                     child: Text(
                       'มาเป็นจิตแพทย์ด้วยกันไหมครับ',
                       style: FontTheme.body1
                           .copyWith(color: ColorTheme.secondaryColor),
                     ),
                   ),
-                  Expanded(
+                  const Expanded(
                     child: Divider(
                       thickness: 1.5,
                       color: ColorTheme.secondaryColor,
@@ -208,20 +202,38 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 8),
-              MdSecondaryButton(
-                minWidth: 400,
-                text: 'ลงทะเบียนจิตแพทย์',
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => PsyRegister(),
-                      ));
-                },
-                borderColor: ColorTheme.secondaryColor,
-                foregroundColor: ColorTheme.secondaryColor,
-              ),
+              const SizedBox(height: 8),
+              isPsychiatrist
+                  ? MdSecondaryButton(
+                      minWidth: 400,
+                      text: 'เปลี่ยน/ยกเลิกจิตแพทย์', // Change button text
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CancleRoleDialog(
+                              textRole: '',
+                            );
+                          },
+                        );
+                      },
+                      borderColor: ColorTheme.errorAction,
+                      foregroundColor: ColorTheme.errorAction,
+                    )
+                  : MdSecondaryButton(
+                      minWidth: 400,
+                      text: 'ลงทะเบียนจิตแพทย์', // Original button text
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const PsyRegister(),
+                          ),
+                        );
+                      },
+                      borderColor: ColorTheme.secondaryColor,
+                      foregroundColor: ColorTheme.secondaryColor,
+                    ),
             ],
           ),
         ),
@@ -229,48 +241,3 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
     );
   }
 }
-
-// class TagButton extends StatelessWidget {
-//   final String text;
-//   final int index;
-//   final bool isSelected;
-//   final VoidCallback onSelect;
-
-//   const TagButton({
-//     required this.text,
-//     required this.index,
-//     required this.isSelected,
-//     required this.onSelect,
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     double screenWidth = MediaQuery.of(context).size.width;
-//     return GestureDetector(
-//       onTap: onSelect,
-//       child: Container(
-//         padding: EdgeInsets.symmetric(
-//           horizontal: screenWidth * 0.02,
-//           vertical: screenWidth * 0.010,
-//         ),
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(16),
-//           color: isSelected ? ColorTheme.primaryColor : Colors.transparent,
-//           border: Border.all(
-//             color: isSelected
-//                 ? Colors.transparent
-//                 : ColorTheme.baseColor.withOpacity(0.4),
-//           ),
-//         ),
-//         child: Text(
-//           text,
-//           style: FontTheme.btn_small.copyWith(
-//               color: isSelected
-//                   ? Colors.white
-//                   : ColorTheme.baseColor.withOpacity(0.4)),
-//         ),
-//       ),
-//     );
-//   }
-// }

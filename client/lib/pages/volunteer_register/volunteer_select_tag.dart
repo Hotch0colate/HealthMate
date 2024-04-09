@@ -143,23 +143,19 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                                 SelectedCard(
                                   text: 'ทั่วไป',
                                   icon: Icons.emoji_emotions,
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedCardIndex = 0;
-                                    });
+                                  onPressed: (isSelected) {
+                                    print('Card 1 is selected: $isSelected');
                                   },
-                                  isSelected: selectedCardIndex == 0,
+                                  isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
                                 ),
                                 SelectedCard(
                                   text: 'ภาระหน้าที่',
                                   icon: Icons.work,
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedCardIndex = 1;
-                                    });
+                                  onPressed: (isSelected) {
+                                    print('Card 1 is selected: $isSelected');
                                   },
-                                  isSelected: selectedCardIndex == 1,
+                                  isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
                                 ),
                               ],
@@ -171,23 +167,19 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                                 SelectedCard(
                                   text: 'ความสัมพันธ์',
                                   icon: CupertinoIcons.person_3_fill,
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedCardIndex = 2;
-                                    });
+                                  onPressed: (isSelected) {
+                                    print('Card 1 is selected: $isSelected');
                                   },
-                                  isSelected: selectedCardIndex == 2,
+                                  isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
                                 ),
                                 SelectedCard(
                                   text: 'สุขภาพ',
                                   icon: CupertinoIcons.heart_fill,
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedCardIndex = 3;
-                                    });
+                                  onPressed: (isSelected) {
+                                    print('Card 1 is selected: $isSelected');
                                   },
-                                  isSelected: selectedCardIndex == 3,
+                                  isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
                                 ),
                               ],
@@ -200,51 +192,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                             )
                           ],
                         ),
-                        // Align(
-                        //   alignment: Alignment.bottomRight,
-                        //   child: MdPrimaryButton(
-                        //     text: 'ลงทะเบียน',
-                        //     onPressed: () {
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (context) =>
-                        //                 const LoadingVolunteerRegister()),
-                        //       );
-                        //       Future.delayed(const Duration(seconds: 3), () {
-                        //         _createVolunteer();
-                        //         Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: (context) =>
-                        //                   const VolunteerCongrats()),
-                        //         ); // Navigate back after 3 seconds
-                        //       });
-                        //     },
-                        //     foregroundColor:
-                        //         Colors.white, // Change text color
-                        //     backgroundColor: ColorTheme.successAction,
-                        //   ),
-                        //   child: ForwardButton(
-                        //     onPressed: () {
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (context) =>
-                        //                 const LoadingVolunteerSelectTag()),
-                        //       );
-                        //       Future.delayed(const Duration(seconds: 3), () {
-                        //         _createVolunteer();
-                        //         Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: (context) =>
-                        //                   const VolunteerCongrats()),
-                        //         ); // Navigate back after 3 seconds
-                        //       });
-                        //     },
-                        //   ),
-                        // ),
+                        
                       ])))),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),

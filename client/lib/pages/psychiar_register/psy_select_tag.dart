@@ -43,33 +43,6 @@ class _PsySelectTagState extends State<PsySelectTag> {
 
   List<String> _tagOptions() =>
       ["Generic", "Responbility", "Relation", "Health"];
-
-  // Future<void> sendUserDataToBackend(String gender) async {
-  //   var _auth_service = AuthService();
-  //   String? token = await _auth_service.getIdToken();
-  //   var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
-  //   var response = await http.post(
-  //     url,
-  //     body: json.encode({'gender': gender}),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer $token',
-  //     },
-  //   );
-
-  //   if (response.statusCode == 200) {
-  //     print("Gender submitted successfully");
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => const FirstLogin2(),
-  //       ),
-  //     );
-  //   } else {
-  //     print("Failed to submit gender: ${response.body}");
-  //   }
-  // }
-
   void _createPsy() async {}
 
   @override
@@ -147,23 +120,19 @@ class _PsySelectTagState extends State<PsySelectTag> {
                                 SelectedCard(
                                   text: 'ทั่วไป',
                                   icon: Icons.emoji_emotions,
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedCardIndex = 0;
-                                    });
+                                  onPressed: (isSelected) {
+                                    print('Generic is selected: $isSelected');
                                   },
-                                  isSelected: selectedCardIndex == 0,
+                                  isSelected: false,
                                   mainColor: ColorTheme.secondaryColor,
                                 ),
                                 SelectedCard(
                                   text: 'ภาระหน้าที่',
                                   icon: Icons.work,
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedCardIndex = 1;
-                                    });
+                                  onPressed: (isSelected) {
+                                    print('Responsibility is selected: $isSelected');
                                   },
-                                  isSelected: selectedCardIndex == 1,
+                                  isSelected: false,
                                   mainColor: ColorTheme.secondaryColor,
                                 ),
                               ],
@@ -174,24 +143,20 @@ class _PsySelectTagState extends State<PsySelectTag> {
                               children: [
                                 SelectedCard(
                                   text: 'ความสัมพันธ์',
-                                  icon: CupertinoIcons.person_3_fill,
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedCardIndex = 2;
-                                    });
+                                  icon: CupertinoIcons.heart_fill,
+                                  onPressed: (isSelected) {
+                                    print('Relation is selected: $isSelected');
                                   },
-                                  isSelected: selectedCardIndex == 2,
+                                  isSelected: false,
                                   mainColor: ColorTheme.secondaryColor,
                                 ),
-                                SelectedCard(
+                                 SelectedCard(
                                   text: 'สุขภาพ',
                                   icon: CupertinoIcons.heart_fill,
-                                  onPressed: () {
-                                    setState(() {
-                                      selectedCardIndex = 3;
-                                    });
+                                  onPressed: (isSelected) {
+                                    print('Health is selected: $isSelected');
                                   },
-                                  isSelected: selectedCardIndex == 3,
+                                  isSelected: false,
                                   mainColor: ColorTheme.secondaryColor,
                                 ),
                               ],
@@ -204,51 +169,6 @@ class _PsySelectTagState extends State<PsySelectTag> {
                             )
                           ],
                         ),
-                        // Align(
-                        //   alignment: Alignment.bottomRight,
-                        //   child: MdPrimaryButton(
-                        //     text: 'ลงทะเบียน',
-                        //     onPressed: () {
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (context) =>
-                        //                 const LoadingPsyRegister()),
-                        //       );
-                        //       Future.delayed(const Duration(seconds: 3), () {
-                        //         _createPsy();
-                        //         Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: (context) =>
-                        //                   const PsyCongrats()),
-                        //         ); // Navigate back after 3 seconds
-                        //       });
-                        //     },
-                        //     foregroundColor:
-                        //         Colors.white, // Change text color
-                        //     backgroundColor: ColorTheme.successAction,
-                        //   ),
-                        //   child: ForwardButton(
-                        //     onPressed: () {
-                        //       Navigator.push(
-                        //         context,
-                        //         MaterialPageRoute(
-                        //             builder: (context) =>
-                        //                 const LoadingPsySelectTag()),
-                        //       );
-                        //       Future.delayed(const Duration(seconds: 3), () {
-                        //         _createPsy();
-                        //         Navigator.push(
-                        //           context,
-                        //           MaterialPageRoute(
-                        //               builder: (context) =>
-                        //                   const PsyCongrats()),
-                        //         ); // Navigate back after 3 seconds
-                        //       });
-                        //     },
-                        //   ),
-                        // ),
                       ])))),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),

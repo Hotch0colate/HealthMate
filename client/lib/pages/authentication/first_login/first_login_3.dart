@@ -20,6 +20,7 @@ class FirstLogin3 extends StatefulWidget {
 class _FirstLogin3State extends State<FirstLogin3> {
   bool agreedToTerms = false;
   String selectedCareerValue = '';
+  String? selectedCareer;
 
   Future<void> sendDataToBackend(String career) async {
     var _auth_service = AuthService();
@@ -47,7 +48,7 @@ class _FirstLogin3State extends State<FirstLogin3> {
     }
   }
 
-  String? selectedCareer;
+  
 
   @override
   Widget build(BuildContext context) {

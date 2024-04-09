@@ -91,7 +91,7 @@ class _PsyRegisterState extends State<PsyRegister> {
                             'assets/logos/small_app_name.png',
                           ),
                           SizedBox(height: 20),
-                                                  ColorChangingCheckbox(
+                        ColorChangingCheckbox(
                           key: UniqueKey(),
                           text: 'ข้าพเจ้าจะปฏิบัติหน้าที่อาสาสมัครอย่างเต็มที่',
                           onChanged: (bool value) {

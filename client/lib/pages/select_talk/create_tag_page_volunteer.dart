@@ -1,5 +1,6 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/component/dialog.dart';
 import 'package:client/component/navigation.dart';
 import 'package:client/component/selected_card.dart';
 import 'package:client/component/text_field/text_field.dart';
@@ -31,6 +32,10 @@ class CreateTagVolunteerPage extends StatefulWidget {
 }
 
 class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
+  // Track Volonteer status
+  bool isVolonteer = true;
+  // Track Volonteer status
+
   int selectedCardIndex = -1; // -1 indicates no card selected
 
   final _formKey = GlobalKey<FormState>();
@@ -100,23 +105,19 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                       SelectedCard(
                         text: 'ทั่วไป',
                         icon: Icons.emoji_emotions,
-                        onPressed: () {
-                          setState(() {
-                            selectedCardIndex = 0;
-                          });
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
                         },
-                        isSelected: selectedCardIndex == 0,
+                        isSelected: false,
                         mainColor: ColorTheme.primary2Color,
                       ),
                       SelectedCard(
                         text: 'ภาระหน้าที่',
                         icon: Icons.work,
-                        onPressed: () {
-                          setState(() {
-                            selectedCardIndex = 1;
-                          });
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
                         },
-                        isSelected: selectedCardIndex == 1,
+                        isSelected: false,
                         mainColor: ColorTheme.primary2Color,
                       ),
                     ],
@@ -128,23 +129,19 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                       SelectedCard(
                         text: 'ความสัมพันธ์',
                         icon: CupertinoIcons.person_3_fill,
-                        onPressed: () {
-                          setState(() {
-                            selectedCardIndex = 2;
-                          });
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
                         },
-                        isSelected: selectedCardIndex == 2,
+                        isSelected: false,
                         mainColor: ColorTheme.primary2Color,
                       ),
                       SelectedCard(
                         text: 'สุขภาพ',
                         icon: CupertinoIcons.heart_fill,
-                        onPressed: () {
-                          setState(() {
-                            selectedCardIndex = 3;
-                          });
+                        onPressed: (isSelected) {
+                          print('Card 1 is selected: $isSelected');
                         },
-                        isSelected: selectedCardIndex == 3,
+                        isSelected: false,
                         mainColor: ColorTheme.primary2Color,
                       ),
                     ],
@@ -210,19 +207,37 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                 ],
               ),
               SizedBox(height: 8),
-              MdSecondaryButton(
-                minWidth: 400,
-                text: 'ลงทะเบียนอาสาสมัคร',
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VolunteerRegister(),
-                      ));
-                },
-                borderColor: ColorTheme.primary2Color,
-                foregroundColor: ColorTheme.primary2Color,
-              ),
+              isVolonteer
+                  ? MdSecondaryButton(
+                      minWidth: 400,
+                      text: 'เปลี่ยน/ยกเลิกอาสาสมัคร', // Change button text
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CancleRoleDialog(
+                              textRole: 'ยกเลิกการเป็นอาสาสมัคร',
+                            );
+                          },
+                        );
+                      },
+                      borderColor: ColorTheme.errorAction,
+                      foregroundColor: ColorTheme.errorAction,
+                    )
+                  : MdSecondaryButton(
+                      minWidth: 400,
+                      text: 'ลงทะเบียนอาสาสมัคร', // Original button text
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => VolunteerRegister(),
+                          ),
+                        );
+                      },
+                      borderColor: ColorTheme.primary2Color,
+                      foregroundColor: ColorTheme.primary2Color,
+                    ),
             ],
           ),
         ),
@@ -230,48 +245,3 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
     );
   }
 }
-
-// class TagButton extends StatelessWidget {
-//   final String text;
-//   final int index;
-//   final bool isSelected;
-//   final VoidCallback onSelect;
-
-//   const TagButton({
-//     required this.text,
-//     required this.index,
-//     required this.isSelected,
-//     required this.onSelect,
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     double screenWidth = MediaQuery.of(context).size.width;
-//     return GestureDetector(
-//       onTap: onSelect,
-//       child: Container(
-//         padding: EdgeInsets.symmetric(
-//           horizontal: screenWidth * 0.02,
-//           vertical: screenWidth * 0.010,
-//         ),
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(16),
-//           color: isSelected ? ColorTheme.primaryColor : Colors.transparent,
-//           border: Border.all(
-//             color: isSelected
-//                 ? Colors.transparent
-//                 : ColorTheme.baseColor.withOpacity(0.4),
-//           ),
-//         ),
-//         child: Text(
-//           text,
-//           style: FontTheme.btn_small.copyWith(
-//               color: isSelected
-//                   ? Colors.white
-//                   : ColorTheme.baseColor.withOpacity(0.4)),
-//         ),
-//       ),
-//     );
-//   }
-// }
