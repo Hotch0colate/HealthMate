@@ -181,8 +181,8 @@ class ChatRoomBody extends State<ChatRoom> {
               ),
               color: Colors.white,
               onPressed: () {
-                // onBackPress(context);
-                Navigator.pop(context);
+                onBackPress(context);
+                // Navigator.pop(context);
               },
             ),
             title: Row(
@@ -270,24 +270,23 @@ class ChatRoomBody extends State<ChatRoom> {
                                   style: FontTheme.body1),
                             ),
                           );
-                        // } else if (snapshot.hasError) {
-                        //   return Text("Error: ${snapshot.error}");
-                        // } else {
-                        //   List<Message> messages = snapshot.data ?? [];
-                        //   messages.sort((a, b) {
-                        //     return a.date.compareTo(b.date);
-                        //   });
-
-                        }else if (snapshot.hasError) {
-                        return Text("Error: ${snapshot.error}");
-                      } else {
-                        List<Message> messages = snapshot.data ?? [];
-                        messages.sort((a, b) {
-                          return a.mil.compareTo(b.mil); // Sort by milliseconds
-                        });
+                          // } else if (snapshot.hasError) {
+                          //   return Text("Error: ${snapshot.error}");
+                          // } else {
+                          //   List<Message> messages = snapshot.data ?? [];
+                          //   messages.sort((a, b) {
+                          //     return a.date.compareTo(b.date);
+                          //   });
+                        } else if (snapshot.hasError) {
+                          return Text("Error: ${snapshot.error}");
+                        } else {
+                          List<Message> messages = snapshot.data ?? [];
+                          messages.sort((a, b) {
+                            return a.mil
+                                .compareTo(b.mil); // Sort by milliseconds
+                          });
 
                           _scrollToBottom();
-
 
                           return SingleChildScrollView(
                             controller: _scrollController,
