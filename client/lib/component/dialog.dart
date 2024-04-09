@@ -140,7 +140,7 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
                   builder: (BuildContext context) {
                     return ConfirmDialogWithDetail(
                       title: 'คุณต้องการยกเลิกเพราะเหตุใด',
-                      destination: MainApp(SelectedPage: 2),
+                      destination: MainApp(SelectedPage: 1),
                     );
                   },
                 );
