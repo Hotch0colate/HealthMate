@@ -1,15 +1,21 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:async';
+import 'dart:convert';
 import 'package:client/component/buttons.dart';
 import 'package:client/pages/profile/edit_profile.dart';
 import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
+import 'package:http/http.dart' as http;
 
 //page import
 import '../authentication/login.dart';
+
+String userName = '';
 
 void main() {
   runApp(MyApp());
@@ -25,8 +31,55 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  String userName = '';
+
+  @override
+  void initState() {
+    super.initState();
+    // Call the function to fetch the username when the widget is initialized
+    readUserName();
+  }
+
+  Future<void> readUserName() async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
+
+      final response = await http.post(
+        Uri.parse('http://${fixedIp}:3000/user/read_data'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+      print(token);
+
+      if (response.statusCode == 200) {
+        dynamic responseData = json.decode(response.body);
+        print(responseData['Data']);
+        if (responseData != null && responseData is Map<String, dynamic>) {
+          Map<String, dynamic> data = json.decode(response.body)['Data'];
+          setState(() {
+            userName = data['username'];
+          });
+        } else {
+          throw Exception('Invalid snapshot value or format');
+        }
+      } else {
+        throw Exception('Failed to load username: ${response.statusCode}');
+      }
+    } catch (error) {
+      throw Exception('Failed to load username: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,21 +123,15 @@ class ProfilePage extends StatelessWidget {
                           'assets/avatar/md_10.png',
                           width: 80,
                         ),
-                        SizedBox(
-                          width: 20,
-                        ),
+                        SizedBox(width: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Leothecat11',
-                              style: FontTheme.subtitle1
-                                  .copyWith(color: ColorTheme.baseColor),
-                            ),
-                            Text(
-                              'Leothecat11@gmail.com',
-                              style: FontTheme.body2
-                                  .copyWith(color: ColorTheme.baseColor),
+                              userName, // Use the updated userName here
+                              style: FontTheme.subtitle1.copyWith(
+                                color: ColorTheme.baseColor,
+                              ),
                             ),
                           ],
                         ),

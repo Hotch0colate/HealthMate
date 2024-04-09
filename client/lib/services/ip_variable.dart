@@ -4,3 +4,5 @@ library globals;
 String fixedIp = "192.168.1.3";
 
 //Phat IP Home 192.168.1.3
+
+//Hor Pong IP 192.168.1.121
