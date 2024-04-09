@@ -54,7 +54,7 @@ router.post('/create_data', async (req, res) => {
 //ดึงข้อมูลจาก user
 //fetch  userdata
 router.post('/read_data', authenticate, async (req, res) => {
-    var uid = req.body.uid;
+    var uid = req.user.uid;
 
     try {
         firebasedb.get(ref(db, 'users/' + uid))
@@ -64,7 +64,7 @@ router.post('/read_data', authenticate, async (req, res) => {
                     return res.status(200).json({
                         RespCode: 200,
                         RespMessge: "Fetch data success",
-                        Dae: snapshot.val()
+                        Data: snapshot.val()
                     });
                 }
                 else {

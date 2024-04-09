@@ -138,7 +138,6 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
           DateTime(widget.date.year, widget.date.month, widget.date.day);
       return emotionDate.isAtSameMomentAs(widgetDate);
     }).toList();
-    
 
     formattedEmotion.sort((a, b) => a.dateTime.compareTo(b.dateTime));
 
@@ -185,7 +184,6 @@ class _EmotionDetailPageState extends State<EmotionDetailPage> {
               ),
             ),
           ),
-         
         ],
       ),
     );
