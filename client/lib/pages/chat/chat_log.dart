@@ -1,16 +1,10 @@
-import 'package:client/theme/color.dart';
-import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'dart:async';
 import 'package:intl/intl.dart';
 
 //component import
-import 'package:client/component/conversation_list.dart';
-
-void main() {
-  runApp(ChatLog(uid: '',));
-}
+import '../../component/conversation_list.dart';
 
 
 typedef UpdateTriggerCallback = void Function(bool updateTrigger);
@@ -45,46 +39,37 @@ class _ChatLogState extends State<ChatLog> {
   }
 
   void _activeListeners() {
-    print(widget.uid);
     _database
         .child('users/' + widget.uid + '/chatgroup')
         .onValue
         .listen((event) {
       var snapshotValue = event.snapshot.value;
       if (snapshotValue != null && snapshotValue is List<dynamic>) {
-        List<String> parsedChatgroup = List<String>.from(snapshotValue);
+        List<dynamic> snapshotList = snapshotValue;
 
-        List<Future<dynamic>> chatFutures = parsedChatgroup.map((cid) {
-          return _database
-              .child('chats/$cid')
-              .get()
-              .then((DataSnapshot snapshot) {
-            if (snapshot.value != null) {
-              return snapshot.value;
+        List<String> parsedChatgroup = snapshotList.cast<String>();
+
+        _database.child('chats/').onValue.listen((event) {
+          var snapshotValue = event.snapshot.value;
+          if (snapshotValue != null && snapshotValue is Map<String, dynamic>) {
+            Map<String, dynamic> snapshotMap = snapshotValue;
+
+            // ตัวอย่างการเข้าถึงข้อมูลใน messages
+            dynamic chatData = snapshotMap;
+            if (chatData != null) {
+              Map<String, dynamic>? chatMap = chatData as Map<String, dynamic>?;
+              if (chatMap != null) {
+                List<ConversationBox> parsedChat = chatMap.values
+                    .where((chat) => parsedChatgroup.contains(chat['cid']))
+                    .map((chat) => ConversationBox.fromMap(chat))
+                    .toList();
+                _chatlogStreamController.add(parsedChat);
+              }
             }
-            return null;
-          });
-        }).toList();
-
-        Future.wait(chatFutures).then((List<dynamic> conversations) {
-          var validConversations = conversations
-              .where((conversation) => conversation != null)
-              .map((conversation) {
-                Map<String, dynamic> conversationMap;
-                try {
-                  conversationMap = Map<String, dynamic>.from(conversation);
-                  return ConversationBox.fromMap(conversationMap);
-                } catch (e) {
-                  print("Error converting conversation data: $e");
-                  return null;
-                }
-              })
-              .whereType<ConversationBox>()
-              .toList();
-          _chatlogStreamController.add(validConversations);
+          }
         });
       } else {
-        print('Invalid snapshot value or format chatlog');
+        print('Invalid snapshot value or format');
       }
     });
   }
@@ -92,28 +77,26 @@ class _ChatLogState extends State<ChatLog> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: 
-        AppBar(
-          automaticallyImplyLeading: false,
-              title: Padding(
-                padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SafeArea(
+              child: Padding(
+                padding: EdgeInsets.only(left: 16, right: 16, top: 10),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
                       "กล่องข้อความ",
                       style:
-                          FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
+                          TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
               ),
             ),
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 24,),
             StreamBuilder<List<ConversationBox>>(
                 stream: _chatlogStreamController.stream,
                 key: _streamBuilderKey,
@@ -121,6 +104,7 @@ class _ChatLogState extends State<ChatLog> {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return
                         //  const CircularProgressIndicator();
+
                         Container(
                       color: Colors.white,
                       child: Center(
@@ -175,7 +159,7 @@ class _ChatLogState extends State<ChatLog> {
                     return ListView.builder(
                       itemCount: chatlogs.length,
                       shrinkWrap: true,
-                      padding: const EdgeInsets.only(top: 2),
+                      padding: const EdgeInsets.only(top: 16),
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         return ConversationBox(
@@ -190,7 +174,7 @@ class _ChatLogState extends State<ChatLog> {
                           lastsender: chatlogs[index].lastsender,
                           // messages: [],
                           // mil: 0,
-                          imageURL: "assets/avatar/md_11.png",
+                          imageURL: "###",
                           date: chatlogs[index].date,
                         );
                       },

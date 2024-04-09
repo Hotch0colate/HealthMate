@@ -1,17 +1,39 @@
 // ignore_for_file: use_build_context_synchronously
+import 'dart:async';
+import 'dart:convert';
 import 'package:client/component/buttons.dart';
 import 'package:client/component/dropdown.dart';
 import 'package:client/component/text_field/date_picker.dart';
 import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/profile/profile.dart';
+import 'package:client/services/ip_variable.dart';
+import 'package:client/services/auth_service.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth
+import 'package:http/http.dart' as http;
 // Import Firebase Auth
 
 //page import
+Map<String, String> Mymap = {
+  'Student' : 'นักเรียน/นิสิตนักศึกษา',
+  'OfficeWorker' : 'พนักงานบริษัทเอกชน',
+  'PublicServant': 'พนักงานข้าราชการ',
+  'StateEnterpriseEmployee' : 'พนักงานรัฐวิสาหกิจ',
+  'IndustryWorker' : 'พนักงานโรงงานอุตสาหกรรม',
+  'PrivateBusiness' : 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว' ,
+  'Single' : 'โสด' ,
+  'Partnered' : 'มีแฟนแล้ว',
+  'Married' : 'หมั้นแล้ว / แต่งงานแล้ว',
+  'Divorced' : 'ม่าย / หย่าร้าง / แยกกันอยู่',
+  'NonBindingRelationship': 'อยู่ในความสัมพันธ์แบบไม่ผูกมัด' ,
+  'Complicated': 'ค่อนข้างอธิบายยาก',
+  'Female' : 'หญิง',
+  'Male' : 'ชาย'
+};
 
 void main() {
   runApp(MyApp());
@@ -35,6 +57,18 @@ class EditProfilePage extends StatefulWidget {
 }
 
 class _EditProfilePageState extends State<EditProfilePage> {
+  String userName = '';
+  String birthDay = '';
+  String gender = '';
+  String career = '';
+  String status = '';
+  String genderdict = '';
+  String careerdict = '';
+  String statusdict = '';
+  String gendershow = '';
+  String careershow = '';
+  String statusshow = '';
+
   TextEditingController _usernameController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   TextEditingController _birthDateController = TextEditingController();
@@ -43,12 +77,61 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? _chosenJob;
   String? _chosenStatus;
 
+  @override
+  void initState() {
+    super.initState();
+    // Call the function to fetch the username when the widget is initialized
+    readUserData();
+  }
+
   Future<void> _selectImage(BuildContext context) async {
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       // Handle uploading the selected image here
       print('Selected image path: ${image.path}');
+    }
+  }
+
+  Future<void> readUserData() async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
+
+      final response = await http.post(
+        Uri.parse('http://${fixedIp}:3000/user/read_data'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode == 200) {
+        dynamic responseData = json.decode(response.body);
+        print(responseData['Data']);
+        if (responseData != null && responseData is Map<String, dynamic>) {
+          Map<String, dynamic> data = json.decode(response.body)['Data'];
+          String gender = data['gender'];
+          career = data['career'];
+          status = data['martial_status'];
+          String? genderdict = Mymap[gender];
+          String? careerdict = Mymap[career];
+          String? statusdict = Mymap[status];
+          setState(() {
+            userName = data['username'] ?? '';
+            birthDay = data['birthday'] ?? '';
+            gendershow = genderdict ?? '';
+            careershow = careerdict ?? '';
+            statusshow = statusdict ?? '';
+          });
+        } else {
+          throw Exception('Invalid snapshot value or format');
+        }
+      } else {
+        throw Exception('Failed to load username: ${response.statusCode}');
+      }
+    } catch (error) {
+      throw Exception('Failed to load username: $error');
     }
   }
 
@@ -62,11 +145,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
           child: AlertDialog(
             title: Column(
               children: [
-                Text(
-                  'คุณแน่ใจหรือไม่ \n กรุณายืนยันการบันทึกการแก้ไข',
-                  style: FontTheme.body1.copyWith(color: Colors.black),
-                  textAlign: TextAlign.center
-                ),
+                Text('คุณแน่ใจหรือไม่ \n กรุณายืนยันการบันทึกการแก้ไข',
+                    style: FontTheme.body1.copyWith(color: Colors.black),
+                    textAlign: TextAlign.center),
               ],
             ),
             actions: const <Widget>[
@@ -137,7 +218,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     SizedBox(height: 10),
                     InputTextField(
                         controller: _usernameController,
-                        hintText: 'Leothecat11',
+                        hintText: userName,
                         labelText: 'ชื่อผู้ใช้'),
                     SizedBox(height: 10),
                     ReusableDropdown(
@@ -152,13 +233,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           _chosenGender = newValue;
                         });
                       },
-                      hintText: "หญิง",
+                      hintText: gendershow,
                       label: 'เพศ',
                     ),
                     SizedBox(height: 10),
                     CupertinoDatePickerField(
                       controller: _birthDateController,
-                      hintText: '2003-05-12',
+                      hintText: birthDay,
                       labelText: 'วันเกิด',
                     ),
                     SizedBox(height: 10),
@@ -177,7 +258,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           _chosenJob = newValue;
                         });
                       },
-                      hintText: "พนักงานบริษัทเอกชน",
+                      hintText: careershow,
                       label: 'อาชีพ',
                     ),
                     SizedBox(height: 10),
@@ -196,7 +277,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           _chosenStatus = newValue;
                         });
                       },
-                      hintText: "โสด",
+                      hintText: statusshow,
                       label: 'สถานะ',
                     ),
                     SizedBox(
