@@ -53,7 +53,7 @@ class _ProfilePageState extends State<ProfilePage> {
       var _auth_service = AuthService();
       String? token = await _auth_service.getIdToken();
 
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('http://${fixedIp}:3000/user/read_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',

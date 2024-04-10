@@ -19,20 +19,20 @@ import 'package:http/http.dart' as http;
 
 //page import
 Map<String, String> Mymap = {
-  'Student' : 'นักเรียน/นิสิตนักศึกษา',
-  'OfficeWorker' : 'พนักงานบริษัทเอกชน',
+  'Student': 'นักเรียน/นิสิตนักศึกษา',
+  'OfficeWorker': 'พนักงานบริษัทเอกชน',
   'PublicServant': 'พนักงานข้าราชการ',
-  'StateEnterpriseEmployee' : 'พนักงานรัฐวิสาหกิจ',
-  'IndustryWorker' : 'พนักงานโรงงานอุตสาหกรรม',
-  'PrivateBusiness' : 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว' ,
-  'Single' : 'โสด' ,
-  'Partnered' : 'มีแฟนแล้ว',
-  'Married' : 'หมั้นแล้ว / แต่งงานแล้ว',
-  'Divorced' : 'ม่าย / หย่าร้าง / แยกกันอยู่',
-  'NonBindingRelationship': 'อยู่ในความสัมพันธ์แบบไม่ผูกมัด' ,
+  'StateEnterpriseEmployee': 'พนักงานรัฐวิสาหกิจ',
+  'IndustryWorker': 'พนักงานโรงงานอุตสาหกรรม',
+  'PrivateBusiness': 'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
+  'Single': 'โสด',
+  'Partnered': 'มีแฟนแล้ว',
+  'Married': 'หมั้นแล้ว / แต่งงานแล้ว',
+  'Divorced': 'ม่าย / หย่าร้าง / แยกกันอยู่',
+  'NonBindingRelationship': 'อยู่ในความสัมพันธ์แบบไม่ผูกมัด',
   'Complicated': 'ค่อนข้างอธิบายยาก',
-  'Female' : 'หญิง',
-  'Male' : 'ชาย'
+  'Female': 'หญิง',
+  'Male': 'ชาย'
 };
 
 void main() {
@@ -98,7 +98,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       var _auth_service = AuthService();
       String? token = await _auth_service.getIdToken();
 
-      final response = await http.post(
+      final response = await http.get(
         Uri.parse('http://${fixedIp}:3000/user/read_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
@@ -117,6 +117,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
           String? genderdict = Mymap[gender];
           String? careerdict = Mymap[career];
           String? statusdict = Mymap[status];
+          print(careerdict);
+          print(genderdict);
+          print(statusdict);
+          print(data['username']);
+          print(data['birthday']);
           setState(() {
             userName = data['username'] ?? '';
             birthDay = data['birthday'] ?? '';
@@ -136,41 +141,40 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   Future<void> updateUserData() async {
-  try {
-    var _auth_service = AuthService();
-    String? token = await _auth_service.getIdToken();
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
 
-    // Assuming you have an API endpoint URL for updating user data
-    String url = 'http://${fixedIp}:3000/user/update_data';
+      // Assuming you have an API endpoint URL for updating user data
+      String url = 'http://${fixedIp}:3000/user/update_data';
 
-    Map<String, dynamic> updatedData = {
-      'username': _usernameController,
-      'birthday': _birthDateController,
-      'gender': _chosenGender,
-      'career': _chosenJob,
-      'martial_status': _chosenStatus,
-    };
+      Map<String, dynamic> updatedData = {
+        'username': _usernameController,
+        'birthday': _birthDateController,
+        'gender': _chosenGender,
+        'career': _chosenJob,
+        'martial_status': _chosenStatus,
+      };
 
-    final response = await http.post(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
-      },
-      body: json.encode(updatedData),
-    );
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(updatedData),
+      );
 
-    if (response.statusCode == 200) {
-      print('User data updated successfully');
-      // Handle successful update here, maybe navigate or show a success message
-    } else {
-      throw Exception('Failed to update user data: ${response.statusCode}');
+      if (response.statusCode == 200) {
+        print('User data updated successfully');
+        // Handle successful update here, maybe navigate or show a success message
+      } else {
+        throw Exception('Failed to update user data: ${response.statusCode}');
+      }
+    } catch (error) {
+      throw Exception('Failed to update user data: $error');
     }
-  } catch (error) {
-    throw Exception('Failed to update user data: $error');
   }
-}
-
 
   void _showConfirmDialog(BuildContext context) {
     showDialog(
@@ -305,7 +309,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         'โสด',
                         'มีแฟนแล้ว',
                         'หมั้นแล้ว / แต่งงานแล้ว ',
-                        'ม่าย / หย่าร้าง / แยกกันอ ',
+                        'ม่าย / หย่าร้าง / แยกกันอยู่ ',
                         'อยู่ในความสัมพันธ์แบบไม่ผูกมัด ',
                         'ค่อนข้างอธิบายยาก',
                       ],
