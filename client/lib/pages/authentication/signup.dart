@@ -78,7 +78,7 @@ class _SignupPageState extends State<SignupPage> {
       Navigator.of(context).pop(); // Close the loading indicator
 
       final response = await http.post(
-        Uri.parse('http://${fixedIp}:3000/user/create_data'),
+        Uri.parse('http://${fixedIp}:3000/user/save_state_first_login'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $idToken', // ส่ง token ใน header
