@@ -34,6 +34,11 @@ Map<String, String> Mymap = {
   'Female': 'หญิง',
   'Male': 'ชาย'
 };
+String? sendUserName = '';
+String? sendBirthDay = '';
+String? sendGender = '';
+String? sendCareer = '';
+String? sendStatus = '';
 
 void main() {
   runApp(MyApp());
@@ -76,6 +81,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? _chosenGender;
   String? _chosenJob;
   String? _chosenStatus;
+
 
   @override
   void initState() {
@@ -140,40 +146,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
   }
 
-  Future<void> updateUserData() async {
-    try {
-      var _auth_service = AuthService();
-      String? token = await _auth_service.getIdToken();
-
-      // Assuming you have an API endpoint URL for updating user data
-      String url = 'http://${fixedIp}:3000/user/update_data';
-
-      Map<String, dynamic> updatedData = {
-        'username': _usernameController,
-        'birthday': _birthDateController,
-        'gender': _chosenGender,
-        'career': _chosenJob,
-        'martial_status': _chosenStatus,
-      };
-
-      final response = await http.post(
-        Uri.parse(url),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode(updatedData),
-      );
-
-      if (response.statusCode == 200) {
-        print('User data updated successfully');
-        // Handle successful update here, maybe navigate or show a success message
-      } else {
-        throw Exception('Failed to update user data: ${response.statusCode}');
-      }
-    } catch (error) {
-      throw Exception('Failed to update user data: $error');
-    }
+  Future<void> SaveUserData() async {
+    setState(() {
+      sendUserName = _usernameController.text;
+      sendBirthDay = _birthDateController.text;
+      sendGender = _chosenGender;
+      sendCareer = _chosenJob;
+      sendStatus = _chosenStatus;
+    });
   }
 
   void _showConfirmDialog(BuildContext context) {
@@ -332,8 +312,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         MdPrimaryButton(
                           text: 'บันทึก',
                           onPressed: () {
-                            updateUserData();
                             _showConfirmDialog(context);
+                            SaveUserData();
+                            print(sendUserName);
+                            print(sendBirthDay);
+                            print(sendGender);
+                            print(sendCareer);
+                            print(sendStatus);
                           },
                           foregroundColor: ColorTheme.WhiteColor,
                         ),
@@ -358,6 +343,42 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
 class Confirm extends StatelessWidget {
   const Confirm({super.key});
+
+   Future<void> updateUserData() async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
+
+      // Assuming you have an API endpoint URL for updating user data
+      String url = 'http://${fixedIp}:3000/user/update_data';
+
+      Map<String, dynamic> updatedData = {
+        'username': sendUserName,
+        'birthday': sendBirthDay,
+        'gender': sendGender,
+        'career': sendCareer,
+        'martial_status': sendStatus,
+      };
+
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(updatedData),
+      );
+
+      if (response.statusCode == 200) {
+        print('User data updated successfully');
+        // Handle successful update here, maybe navigate or show a success message
+      } else {
+        throw Exception('Failed to update user data: ${response.statusCode}');
+      }
+    } catch (error) {
+      throw Exception('Failed to update user data: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -385,10 +406,11 @@ class Confirm extends StatelessWidget {
           SingleChildScrollView(
             child: ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => TalkPage()),
-                // );
+                updateUserData();
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                );
               },
               style: ElevatedButton.styleFrom(
                 foregroundColor: ColorTheme.WhiteColor,
