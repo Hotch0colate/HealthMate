@@ -36,20 +36,20 @@ Map<String, String> Mymap = {
   'Male': 'ชาย'
 };
 Map<String, String> Sendmap = {
-  'นักเรียน/นิสิตนักศึกษา' : 'Student',
-  'พนักงานบริษัทเอกชน' : 'OfficeWorker',
-  'พนักงานข้าราชการ' : 'PublicServant',
-  'พนักงานรัฐวิสาหกิจ' : 'StateEnterpriseEmployee',
-  'พนักงานโรงงานอุตสาหกรรม' : 'IndustryWorker',
-  'เจ้าของธุรกิจ/ธุรกิจส่วนตัว' : 'PrivateBusiness',
-  'โสด' : 'Single',
-  'มีแฟนแล้ว' : 'Partnered',
-  'หมั้นแล้ว / แต่งงานแล้ว' : 'Married',
-  'ม่าย / หย่าร้าง / แยกกันอยู่' : 'Divorced',
-  'อยู่ในความสัมพันธ์แบบไม่ผูกมัด' : 'NonBindingRelationship',
-  'ค่อนข้างอธิบายยาก' : 'Complicated',
-  'หญิง' : 'Female',
-  'ชาย' : 'Male'
+  'นักเรียน/นิสิตนักศึกษา': 'Student',
+  'พนักงานบริษัทเอกชน': 'OfficeWorker',
+  'พนักงานข้าราชการ': 'PublicServant',
+  'พนักงานรัฐวิสาหกิจ': 'StateEnterpriseEmployee',
+  'พนักงานโรงงานอุตสาหกรรม': 'IndustryWorker',
+  'เจ้าของธุรกิจ/ธุรกิจส่วนตัว': 'PrivateBusiness',
+  'โสด': 'Single',
+  'มีแฟนแล้ว': 'Partnered',
+  'หมั้นแล้ว/แต่งงานแล้ว': 'Married',
+  'ม่าย/หย่าร้าง/แยกกันอยู่': 'Divorced',
+  'อยู่ในความสัมพันธ์แบบไม่ผูกมัด': 'NonBindingRelationship',
+  'ค่อนข้างอธิบายยาก': 'Complicated',
+  'หญิง': 'Female',
+  'ชาย': 'Male'
 };
 
 String? sendUserName = '';
@@ -140,7 +140,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
           String? genderdict = Mymap[gender];
           String? careerdict = Mymap[career];
           String? statusdict = Mymap[status];
-           print(careerdict);
+          print('from read data');
+          print(careerdict);
           print(genderdict);
           print(statusdict);
           print(data['username']);
@@ -266,9 +267,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         'ชาย',
                         'อื่นๆ ',
                       ],
-                      onChanged: (String? newValue) {
+                      onChanged: (String? Gendervalue) {
                         setState(() {
-                          _chosenGender = newValue;
+                          _chosenGender = Gendervalue;
                         });
                       },
                       hintText: gendershow,
@@ -286,14 +287,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       items: [
                         'นักเรียน/นิสิตนักศึกษา',
                         'พนักงานบริษัทเอกชน',
-                        'พนักงานข้าราชการ ',
-                        'พนักงานรัฐวิสาหกิจ ',
-                        'พนักงานโรงงานอุตสาหกรรม ',
-                        'เจ้าของธุรกิจ/ธุรกิจส่วนตัว ',
+                        'พนักงานข้าราชการ',
+                        'พนักงานรัฐวิสาหกิจ',
+                        'พนักงานโรงงานอุตสาหกรรม',
+                        'เจ้าของธุรกิจ/ธุรกิจส่วนตัว',
                       ],
-                      onChanged: (String? newValue) {
+                      onChanged: (String? JobValue) {
                         setState(() {
-                          _chosenJob = newValue;
+                          _chosenJob = JobValue;
                         });
                       },
                       hintText: careershow,
@@ -305,14 +306,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                       items: [
                         'โสด',
                         'มีแฟนแล้ว',
-                        'หมั้นแล้ว / แต่งงานแล้ว ',
-                        'ม่าย / หย่าร้าง / แยกกันอยู่ ',
-                        'อยู่ในความสัมพันธ์แบบไม่ผูกมัด ',
+                        'หมั้นแล้ว/แต่งงานแล้ว',
+                        'ม่าย/หย่าร้าง/แยกกันอยู่',
+                        'อยู่ในความสัมพันธ์แบบไม่ผูกมัด',
                         'ค่อนข้างอธิบายยาก',
                       ],
-                      onChanged: (String? newValue) {
+                      onChanged: (String? StatusValue) {
                         setState(() {
-                          _chosenStatus = newValue;
+                          _chosenStatus = StatusValue;
                         });
                       },
                       hintText: statusshow,
@@ -331,6 +332,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           onPressed: () {
                             _showConfirmDialog(context);
                             SaveUserData();
+                            print('from SaveUserData');
                             print(sendUserName);
                             print(sendBirthDay);
                             print(sendGender);
@@ -368,18 +370,26 @@ class Confirm extends StatelessWidget {
 
       // Assuming you have an API endpoint URL for updating user data
       String url = 'http://${fixedIp}:3000/user/update_data';
+      print('from send data');
       print(sendUserName);
       print(sendBirthDay);
       print(sendGender);
       print(sendCareer);
       print(sendStatus);
+      print("1");
+      String? genderdict = Sendmap[sendGender];
+      String? careerdict = Sendmap[sendCareer];
+      String? statusdict = Sendmap[sendStatus];
+      print(genderdict);
+      print(careerdict);
+      print(statusdict);
 
       Map<String, dynamic> updatedData = {
         'username': sendUserName,
         'birthday': sendBirthDay,
-        'gender': Sendmap[sendGender],
-        'career': Sendmap[sendCareer],
-        'martialstatus': Sendmap[sendStatus],
+        'gender': genderdict,
+        'career': careerdict,
+        'martialstatus': statusdict,
       };
 
       final response = await http.post(
@@ -431,7 +441,8 @@ class Confirm extends StatelessWidget {
                 updateUserData();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 3)),
+                  MaterialPageRoute(
+                      builder: (context) => MainApp(SelectedPage: 3)),
                 );
               },
               style: ElevatedButton.styleFrom(
