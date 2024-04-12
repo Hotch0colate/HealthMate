@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:client/component/buttons.dart';
 import 'package:client/component/dropdown.dart';
+import 'package:client/component/navigation.dart';
 import 'package:client/component/text_field/date_picker.dart';
 import 'package:client/component/text_field/text_field.dart';
 import 'package:client/pages/profile/profile.dart';
@@ -430,7 +431,7 @@ class Confirm extends StatelessWidget {
                 updateUserData();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ProfilePage()),
+                  MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 3)),
                 );
               },
               style: ElevatedButton.styleFrom(
