@@ -34,6 +34,23 @@ Map<String, String> Mymap = {
   'Female': 'หญิง',
   'Male': 'ชาย'
 };
+Map<String, String> Sendmap = {
+  'นักเรียน/นิสิตนักศึกษา' : 'Student',
+  'พนักงานบริษัทเอกชน' : 'OfficeWorker',
+  'พนักงานข้าราชการ' : 'PublicServant',
+  'พนักงานรัฐวิสาหกิจ' : 'StateEnterpriseEmployee',
+  'พนักงานโรงงานอุตสาหกรรม' : 'IndustryWorker',
+  'เจ้าของธุรกิจ/ธุรกิจส่วนตัว' : 'PrivateBusiness',
+  'โสด' : 'Single',
+  'มีแฟนแล้ว' : 'Partnered',
+  'หมั้นแล้ว / แต่งงานแล้ว' : 'Married',
+  'ม่าย / หย่าร้าง / แยกกันอยู่' : 'Divorced',
+  'อยู่ในความสัมพันธ์แบบไม่ผูกมัด' : 'NonBindingRelationship',
+  'ค่อนข้างอธิบายยาก' : 'Complicated',
+  'หญิง' : 'Female',
+  'ชาย' : 'Male'
+};
+
 String? sendUserName = '';
 String? sendBirthDay = '';
 String? sendGender = '';
@@ -82,7 +99,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   String? _chosenJob;
   String? _chosenStatus;
 
-
   @override
   void initState() {
     super.initState();
@@ -119,11 +135,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
           Map<String, dynamic> data = json.decode(response.body)['Data'];
           String gender = data['gender'];
           career = data['career'];
-          status = data['martial_status'];
+          status = data['martialstatus'];
           String? genderdict = Mymap[gender];
           String? careerdict = Mymap[career];
           String? statusdict = Mymap[status];
-          print(careerdict);
+           print(careerdict);
           print(genderdict);
           print(statusdict);
           print(data['username']);
@@ -344,20 +360,25 @@ class _EditProfilePageState extends State<EditProfilePage> {
 class Confirm extends StatelessWidget {
   const Confirm({super.key});
 
-   Future<void> updateUserData() async {
+  Future<void> updateUserData() async {
     try {
       var _auth_service = AuthService();
       String? token = await _auth_service.getIdToken();
 
       // Assuming you have an API endpoint URL for updating user data
       String url = 'http://${fixedIp}:3000/user/update_data';
+      print(sendUserName);
+      print(sendBirthDay);
+      print(sendGender);
+      print(sendCareer);
+      print(sendStatus);
 
       Map<String, dynamic> updatedData = {
         'username': sendUserName,
         'birthday': sendBirthDay,
-        'gender': sendGender,
-        'career': sendCareer,
-        'martial_status': sendStatus,
+        'gender': Sendmap[sendGender],
+        'career': Sendmap[sendCareer],
+        'martialstatus': Sendmap[sendStatus],
       };
 
       final response = await http.post(
