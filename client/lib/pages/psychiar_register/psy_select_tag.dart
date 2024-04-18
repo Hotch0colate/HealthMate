@@ -117,7 +117,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                SelectedCard(
+                                MultipleSelectedCard(
                                   text: 'ทั่วไป',
                                   icon: Icons.emoji_emotions,
                                   onPressed: (isSelected) {
@@ -126,7 +126,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
                                   isSelected: false,
                                   mainColor: ColorTheme.secondaryColor,
                                 ),
-                                SelectedCard(
+                                MultipleSelectedCard(
                                   text: 'ภาระหน้าที่',
                                   icon: Icons.work,
                                   onPressed: (isSelected) {
@@ -141,7 +141,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                SelectedCard(
+                                MultipleSelectedCard(
                                   text: 'ความสัมพันธ์',
                                   icon: CupertinoIcons.heart_fill,
                                   onPressed: (isSelected) {
@@ -150,7 +150,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
                                   isSelected: false,
                                   mainColor: ColorTheme.secondaryColor,
                                 ),
-                                 SelectedCard(
+                                 MultipleSelectedCard(
                                   text: 'สุขภาพ',
                                   icon: CupertinoIcons.heart_fill,
                                   onPressed: (isSelected) {

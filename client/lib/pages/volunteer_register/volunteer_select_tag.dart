@@ -140,7 +140,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                SelectedCard(
+                                MultipleSelectedCard(
                                   text: 'ทั่วไป',
                                   icon: Icons.emoji_emotions,
                                   onPressed: (isSelected) {
@@ -149,7 +149,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                                   isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
                                 ),
-                                SelectedCard(
+                                MultipleSelectedCard(
                                   text: 'ภาระหน้าที่',
                                   icon: Icons.work,
                                   onPressed: (isSelected) {
@@ -164,7 +164,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                SelectedCard(
+                                MultipleSelectedCard(
                                   text: 'ความสัมพันธ์',
                                   icon: CupertinoIcons.person_3_fill,
                                   onPressed: (isSelected) {
@@ -173,7 +173,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                                   isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
                                 ),
-                                SelectedCard(
+                                MultipleSelectedCard(
                                   text: 'สุขภาพ',
                                   icon: CupertinoIcons.heart_fill,
                                   onPressed: (isSelected) {

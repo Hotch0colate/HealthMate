@@ -156,10 +156,6 @@ class _ConversationBoxState extends State<ConversationBox> {
                 ),
               ],
             ),
-            Divider(
-              color: Colors.grey,
-              thickness: 1,
-            ),
           ],
         ),
       ),

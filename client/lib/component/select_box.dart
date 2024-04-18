@@ -21,27 +21,35 @@ class ColorChangingCheckbox extends StatefulWidget {
 class _ColorChangingCheckboxState extends State<ColorChangingCheckbox> {
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: <Widget>[
-        Transform.scale(
-          scale: 1.2, // Change the scale factor to adjust checkbox size
-          child: Checkbox(
-            value: widget.value,
-            onChanged: (value) {
-              setState(() {
-                widget.onChanged(value!);
-              });
-            },
-            activeColor: ColorTheme.primaryColor, // Change checkbox color to orange
+    return GestureDetector( // Wrap the row in GestureDetector
+      onTap: () {
+        setState(() {
+          widget.onChanged(!widget.value);
+        });
+      },
+      child: Row(
+        children: <Widget>[
+          Transform.scale(
+            scale: 1.2, // Change the scale factor to adjust checkbox size
+            child: Checkbox(
+              value: widget.value,
+              onChanged: (value) {
+                setState(() {
+                  widget.onChanged(value!);
+                });
+              },
+              activeColor: ColorTheme.primaryColor, // Change checkbox color to orange
+            ),
           ),
-        ),
-        Text(
-          widget.text,
-          style: FontTheme.caption.copyWith(
-            fontWeight: FontWeight.w500,color: widget.value ? ColorTheme.primaryColor : ColorTheme.baseColor,
+          Text(
+            widget.text,
+            style: FontTheme.caption.copyWith(
+              fontWeight: FontWeight.w500,
+              color: widget.value ? ColorTheme.primaryColor : ColorTheme.baseColor,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -67,26 +75,33 @@ class ColorChangingRadio extends StatefulWidget {
 class _ColorChangingRadioState extends State<ColorChangingRadio> {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 0.0), // Adjust vertical spacing here
-      child: ListTile(
-        contentPadding: EdgeInsets.zero, // Remove default ListTile padding
-        title: Text(
-          widget.text,
-          style: TextStyle(
-            color: widget.groupValue == widget.value
-                ? ColorTheme.primaryColor
-                : ColorTheme.baseColor,
-            fontSize: 18,
-            fontWeight: FontWeight.w400,
-            fontFamily: 'Athiti',
+     return GestureDetector( // Wrap the ListTile in GestureDetector
+      onTap: () {
+        setState(() {
+          widget.onChanged(widget.value);
+        });
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 0.0), // Adjust vertical spacing here
+        child: ListTile(
+          contentPadding: EdgeInsets.zero, // Remove default ListTile padding
+          title: Text(
+            widget.text,
+            style: TextStyle(
+              color: widget.groupValue == widget.value
+                  ? ColorTheme.primaryColor
+                  : ColorTheme.baseColor,
+              fontSize: 18,
+              fontWeight: FontWeight.w400,
+              fontFamily: 'Athiti',
+            ),
           ),
-        ),
-        leading: Radio<String>(
-          value: widget.value,
-          groupValue: widget.groupValue,
-          onChanged: widget.onChanged,
-          activeColor: Colors.orange,
+          leading: Radio<String>(
+            value: widget.value,
+            groupValue: widget.groupValue,
+            onChanged: widget.onChanged,
+            activeColor: ColorTheme.primaryColor,
+          ),
         ),
       ),
     );

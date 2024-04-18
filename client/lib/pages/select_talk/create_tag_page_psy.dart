@@ -98,47 +98,55 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      SelectedCard(
+                       SelectedCard(
                         text: 'ทั่วไป',
                         icon: Icons.emoji_emotions,
-                        onPressed: (isSelected) {
-                          print('Card 1 is selected: $isSelected');
+                        onPressed: () {
+                          setState(() {
+                            selectedCardIndex = 0;
+                          });
                         },
-                        isSelected: false,
-                        mainColor: ColorTheme.secondaryColor,
+                        isSelected: selectedCardIndex == 0,
+                        mainColor: ColorTheme.primary2Color,
                       ),
                       SelectedCard(
                         text: 'ภาระหน้าที่',
                         icon: Icons.work,
-                        onPressed: (isSelected) {
-                          print('Card 1 is selected: $isSelected');
+                        onPressed: () {
+                          setState(() {
+                            selectedCardIndex = 1;
+                          });
                         },
-                        isSelected: false,
-                        mainColor: ColorTheme.secondaryColor,
+                        isSelected: selectedCardIndex == 1,
+                        mainColor: ColorTheme.primary2Color,
                       ),
                     ],
                   ),
-                  const SizedBox(height: 20),
+                  SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       SelectedCard(
                         text: 'ความสัมพันธ์',
                         icon: CupertinoIcons.person_3_fill,
-                        onPressed: (isSelected) {
-                          print('Card 1 is selected: $isSelected');
+                        onPressed: () {
+                          setState(() {
+                            selectedCardIndex = 2;
+                          });
                         },
-                        isSelected: false,
-                        mainColor: ColorTheme.secondaryColor,
+                        isSelected: selectedCardIndex == 2,
+                        mainColor: ColorTheme.primary2Color,
                       ),
                       SelectedCard(
                         text: 'สุขภาพ',
                         icon: CupertinoIcons.heart_fill,
-                        onPressed: (isSelected) {
-                          print('Card 1 is selected: $isSelected');
+                        onPressed: () {
+                          setState(() {
+                            selectedCardIndex = 3;
+                          });
                         },
-                        isSelected: false,
-                        mainColor: ColorTheme.secondaryColor,
+                        isSelected: selectedCardIndex == 3,
+                        mainColor: ColorTheme.primary2Color,
                       ),
                     ],
                   ),

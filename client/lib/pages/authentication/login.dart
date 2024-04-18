@@ -216,46 +216,46 @@ class _LoginPageState extends State<LoginPage> {
                               const SizedBox(
                                 height: 36,
                               ),
-                              Row(children: [
-                                Expanded(
-                                  child: Container(
-                                    margin: const EdgeInsets.only(right: 8),
-                                    height: 1,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                              Text(
-                                'เข้าสู่ระบบด้วย',
-                                style: FontTheme.body1
-                              ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: screenHeight * 0.008),
-                                  height: 1,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ]),
-                            SizedBox(height: screenHeight * 0.019),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                // LoginWithButton(
-                                //   imagePath: 'assets/icons/google.png',
-                                //   onPressed: _loginWithGoogle,
-                                // ),
-                                SizedBox(width: screenHeight * 0.016),
-                                LoginWithButton(
-                                  imagePath: 'assets/icons/apple.png',
-                                  onPressed: () {},
-                                ),
-                                SizedBox(width: screenHeight * 0.024),
-                                LoginWithButton(
-                                    imagePath: 'assets/icons/facebook.png',
-                                    onPressed: () {}),
-                              ],
-                            ),
+                            //   Row(children: [
+                            //     Expanded(
+                            //       child: Container(
+                            //         margin: const EdgeInsets.only(right: 8),
+                            //         height: 1,
+                            //         color: Colors.grey,
+                            //       ),
+                            //     ),
+                            //   Text(
+                            //     'เข้าสู่ระบบด้วย',
+                            //     style: FontTheme.body1
+                            //   ),
+                            //   Expanded(
+                            //     child: Container(
+                            //       margin: EdgeInsets.only(
+                            //           left: screenHeight * 0.008),
+                            //       height: 1,
+                            //       color: Colors.grey,
+                            //     ),
+                            //   ),
+                            // ]),
+                            // SizedBox(height: screenHeight * 0.019),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     // LoginWithButton(
+                            //     //   imagePath: 'assets/icons/google.png',
+                            //     //   onPressed: _loginWithGoogle,
+                            //     // ),
+                            //     SizedBox(width: screenHeight * 0.016),
+                            //     LoginWithButton(
+                            //       imagePath: 'assets/icons/apple.png',
+                            //       onPressed: () {},
+                            //     ),
+                            //     SizedBox(width: screenHeight * 0.024),
+                            //     LoginWithButton(
+                            //         imagePath: 'assets/icons/facebook.png',
+                            //         onPressed: () {}),
+                            //   ],
+                            // ),
                             SizedBox(height: screenHeight * 0.041),
                           ],
                         ),

@@ -1,6 +1,5 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
-import 'package:client/component/dialog.dart';
 import 'package:client/component/navigation.dart';
 import 'package:client/component/selected_card.dart';
 import 'package:client/component/text_field/text_field.dart';
@@ -11,18 +10,18 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// void main() {
-//   runApp(MyApp());
-// }
+void main() {
+  runApp(MyApp());
+}
 
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: CreateTagVolunteerPage(),
-//     );
-//   }
-// }
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: CreateTagVolunteerPage(),
+    );
+  }
+}
 
 class CreateTagVolunteerPage extends StatefulWidget {
   const CreateTagVolunteerPage({Key? key});
@@ -32,10 +31,6 @@ class CreateTagVolunteerPage extends StatefulWidget {
 }
 
 class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
-  // Track Volonteer status
-  bool isVolonteer = false;
-  // Track Volonteer status
-
   int selectedCardIndex = -1; // -1 indicates no card selected
 
   final _formKey = GlobalKey<FormState>();
@@ -79,7 +74,7 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -105,19 +100,23 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                       SelectedCard(
                         text: 'ทั่วไป',
                         icon: Icons.emoji_emotions,
-                        onPressed: (isSelected) {
-                          print('Card 1 is selected: $isSelected');
+                        onPressed: () {
+                          setState(() {
+                            selectedCardIndex = 0;
+                          });
                         },
-                        isSelected: false,
+                        isSelected: selectedCardIndex == 0,
                         mainColor: ColorTheme.primary2Color,
                       ),
                       SelectedCard(
                         text: 'ภาระหน้าที่',
                         icon: Icons.work,
-                        onPressed: (isSelected) {
-                          print('Card 1 is selected: $isSelected');
+                        onPressed: () {
+                          setState(() {
+                            selectedCardIndex = 1;
+                          });
                         },
-                        isSelected: false,
+                        isSelected: selectedCardIndex == 1,
                         mainColor: ColorTheme.primary2Color,
                       ),
                     ],
@@ -129,19 +128,23 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                       SelectedCard(
                         text: 'ความสัมพันธ์',
                         icon: CupertinoIcons.person_3_fill,
-                        onPressed: (isSelected) {
-                          print('Card 1 is selected: $isSelected');
+                        onPressed: () {
+                          setState(() {
+                            selectedCardIndex = 2;
+                          });
                         },
-                        isSelected: false,
+                        isSelected: selectedCardIndex == 2,
                         mainColor: ColorTheme.primary2Color,
                       ),
                       SelectedCard(
                         text: 'สุขภาพ',
                         icon: CupertinoIcons.heart_fill,
-                        onPressed: (isSelected) {
-                          print('Card 1 is selected: $isSelected');
+                        onPressed: () {
+                          setState(() {
+                            selectedCardIndex = 3;
+                          });
                         },
-                        isSelected: false,
+                        isSelected: selectedCardIndex == 3,
                         mainColor: ColorTheme.primary2Color,
                       ),
                     ],
@@ -176,7 +179,6 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                       builder: (context) => FindVolunteerPage(
                         selectedTag: _tagOptions()[selectedCardIndex],
                         text: descriptionTextController.text,
-                        // selectedTag: '',
                       ),
                     ),
                   );
@@ -208,37 +210,19 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                 ],
               ),
               SizedBox(height: 8),
-              isVolonteer
-                  ? MdSecondaryButton(
-                      minWidth: 400,
-                      text: 'เปลี่ยน/ยกเลิกอาสาสมัคร', // Change button text
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return CancleRoleDialog(
-                              textRole: 'ยกเลิกการเป็นอาสาสมัคร',
-                            );
-                          },
-                        );
-                      },
-                      borderColor: ColorTheme.errorAction,
-                      foregroundColor: ColorTheme.errorAction,
-                    )
-                  : MdSecondaryButton(
-                      minWidth: 400,
-                      text: 'ลงทะเบียนอาสาสมัคร', // Original button text
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => VolunteerRegister(),
-                          ),
-                        );
-                      },
-                      borderColor: ColorTheme.primary2Color,
-                      foregroundColor: ColorTheme.primary2Color,
-                    ),
+              MdSecondaryButton(
+                minWidth: 400,
+                text: 'ลงทะเบียนอาสาสมัคร',
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => VolunteerRegister(),
+                      ));
+                },
+                borderColor: ColorTheme.primary2Color,
+                foregroundColor: ColorTheme.primary2Color,
+              ),
             ],
           ),
         ),
