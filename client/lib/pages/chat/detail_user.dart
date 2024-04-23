@@ -31,6 +31,7 @@ class _DetailUserPageState extends State<DetailUserPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: Stack(
         children: [
           SingleChildScrollView(

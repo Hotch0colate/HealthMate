@@ -121,6 +121,7 @@ class _SignupPageState extends State<SignupPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
         body: SingleChildScrollView(
             child: Container(
                 padding: const EdgeInsets.only(

@@ -83,6 +83,7 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: Padding(
           padding: EdgeInsets.all(20),
           child: Center(

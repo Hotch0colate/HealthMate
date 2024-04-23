@@ -119,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.all(30),

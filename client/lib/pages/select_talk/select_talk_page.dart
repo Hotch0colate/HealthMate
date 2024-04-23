@@ -9,10 +9,11 @@ class TalkPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         child: Center(
           child: Container(
-            padding: const EdgeInsets.only(top: 20,right: 20,left: 20),
+            padding: const EdgeInsets.only(top: 20, right: 20, left: 20),
             child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -27,14 +28,15 @@ class TalkPage extends StatelessWidget {
                         height: 24,
                       ),
                       CustomCard(
-                        onPressed: () { 
+                        onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
                                   const CreateTagPsyPage(), // Example: Navigate to a specific screen
                             ),
-                          );},
+                          );
+                        },
                         backgroundColor:
                             ColorTheme.secondaryColor.withOpacity(0.3),
                         text: 'จิตแพทย์',

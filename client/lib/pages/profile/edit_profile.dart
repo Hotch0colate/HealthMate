@@ -58,20 +58,6 @@ String? sendGender = '';
 String? sendCareer = '';
 String? sendStatus = '';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HealthMate',
-      home: EditProfilePage(),
-    );
-  }
-}
-
 class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 
@@ -201,6 +187,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         child: Padding(

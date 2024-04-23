@@ -108,6 +108,7 @@ class _ChatLogState extends State<ChatLog> {
     });
 
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Padding(

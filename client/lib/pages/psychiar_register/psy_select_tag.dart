@@ -18,19 +18,6 @@ import 'package:client/services/ip_variable.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
 import '../../../component/buttons.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PsySelectTag(),
-    );
-  }
-}
-
 class PsySelectTag extends StatefulWidget {
   const PsySelectTag({Key? key}) : super(key: key);
 
@@ -48,6 +35,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: Padding(
           padding: EdgeInsets.all(20),
           child: Center(

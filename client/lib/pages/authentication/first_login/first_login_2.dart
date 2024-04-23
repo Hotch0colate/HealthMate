@@ -75,6 +75,7 @@ class _FirstLogin2State extends State<FirstLogin2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         child: Container(
           padding: const EdgeInsets.only(top: 50, left: 16, right: 16),

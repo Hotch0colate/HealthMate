@@ -9,6 +9,7 @@ class SelectEmotionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       appBar: AppBar(
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(10),

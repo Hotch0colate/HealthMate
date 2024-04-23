@@ -8,6 +8,7 @@ import 'package:client/pages/select_talk/create_tag_page_psy.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:client/component/buttons.dart';
@@ -144,6 +145,7 @@ class FindPsyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       appBar: AppBar(
         leading: Column(
           children: [
@@ -230,7 +232,11 @@ Widget buildWaitingContent() {
         Stack(
           alignment: Alignment.center,
           children: [
-            const AnimatedBackground(), // This will display the animation
+             SpinKitFadingCircle( // FadingCircle loading animation
+                  size: 280, // Adjust size as needed
+                  color: ColorTheme.primaryColor,
+                  duration: Durations.extralong4, 
+                ), // This will display the animation
             Image.asset('assets/images/psychiatrist_glasses.png',
                 width: 100,
                 fit: BoxFit.contain), // This will stay static on top
@@ -248,63 +254,63 @@ Widget buildWaitingContent() {
   );
 }
 
-class AnimatedBackground extends StatefulWidget {
-  const AnimatedBackground({Key? key}) : super(key: key);
+// class AnimatedBackground extends StatefulWidget {
+//   const AnimatedBackground({Key? key}) : super(key: key);
 
-  @override
-  _AnimatedBackgroundState createState() => _AnimatedBackgroundState();
-}
+//   @override
+//   _AnimatedBackgroundState createState() => _AnimatedBackgroundState();
+// }
 
-class _AnimatedBackgroundState extends State<AnimatedBackground>
-    with SingleTickerProviderStateMixin {
-  late final AnimationController _controller;
-  late final List<Widget> _frames;
-  int _currentIndex = 0;
+// class _AnimatedBackgroundState extends State<AnimatedBackground>
+//     with SingleTickerProviderStateMixin {
+//   late final AnimationController _controller;
+//   late final List<Widget> _frames;
+//   int _currentIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 1000), // Duration for each image
-      vsync: this,
-    )..addListener(() {
-        final newIndex = (_controller.value * _frames.length).floor();
-        if (newIndex != _currentIndex) {
-          setState(() {
-            _currentIndex = newIndex;
-          });
-        }
-      });
+//   @override
+//   void initState() {
+//     super.initState();
+//     _controller = AnimationController(
+//       duration: const Duration(milliseconds: 1000), // Duration for each image
+//       vsync: this,
+//     )..addListener(() {
+//         final newIndex = (_controller.value * _frames.length).floor();
+//         if (newIndex != _currentIndex) {
+//           setState(() {
+//             _currentIndex = newIndex;
+//           });
+//         }
+//       });
 
-    _controller.repeat(reverse: false); // Do not reverse the animation
+//     _controller.repeat(reverse: false); // Do not reverse the animation
 
-    _frames = [
-      Image.asset('assets/loading_screen/loading_1.png',
-          width: 300, fit: BoxFit.contain),
-      Image.asset('assets/loading_screen/loading_2.png',
-          width: 300, fit: BoxFit.contain),
-      Image.asset('assets/loading_screen/loading_3.png',
-          width: 300, fit: BoxFit.contain),
-      Image.asset('assets/loading_screen/loading_4.png',
-          width: 300, fit: BoxFit.contain),
-    ];
-  }
+//     _frames = [
+//       Image.asset('assets/loading_screen/loading_1.png',
+//           width: 300, fit: BoxFit.contain),
+//       Image.asset('assets/loading_screen/loading_2.png',
+//           width: 300, fit: BoxFit.contain),
+//       Image.asset('assets/loading_screen/loading_3.png',
+//           width: 300, fit: BoxFit.contain),
+//       Image.asset('assets/loading_screen/loading_4.png',
+//           width: 300, fit: BoxFit.contain),
+//     ];
+//   }
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+//   @override
+//   void dispose() {
+//     _controller.dispose();
+//     super.dispose();
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration:
-          const Duration(milliseconds: 2500), // Duration of fade between images
-      child: _frames[_currentIndex % _frames.length],
-      transitionBuilder: (Widget child, Animation<double> animation) {
-        return FadeTransition(opacity: animation, child: child);
-      },
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return AnimatedSwitcher(
+//       duration:
+//           const Duration(milliseconds: 2500), // Duration of fade between images
+//       child: _frames[_currentIndex % _frames.length],
+//       transitionBuilder: (Widget child, Animation<double> animation) {
+//         return FadeTransition(opacity: animation, child: child);
+//       },
+//     );
+//   }
+// }

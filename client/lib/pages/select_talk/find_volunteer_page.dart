@@ -9,6 +9,7 @@ import 'package:client/pages/select_talk/select_talk_page.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:client/component/buttons.dart';
@@ -148,6 +149,7 @@ class FindVolunteerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       appBar: AppBar(
         leading: Column(
           children: [
@@ -237,7 +239,11 @@ Widget buildWaitingContent() {
         Stack(
           alignment: Alignment.center,
           children: [
-            const AnimatedBackground(), // This will display the animation
+            SpinKitFadingCircle( // FadingCircle loading animation
+                  size: 280, // Adjust size as needed
+                  color: ColorTheme.primaryColor,
+                  duration: Durations.extralong4, 
+                ), // This will display the animation
             Image.asset('assets/images/volunteer_scarf.png',
                 width: 100,
                 fit: BoxFit.contain), // This will stay static on top
