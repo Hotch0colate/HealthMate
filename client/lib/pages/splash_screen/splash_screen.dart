@@ -1,5 +1,6 @@
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
+import 'package:client/theme/color.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:client/Pages/authentication/login.dart';
 import 'package:client/pages/authentication/signup.dart';
@@ -91,6 +92,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: Container(
         decoration: BoxDecoration(color: Color.fromARGB(255, 255, 253, 247)),
         child: Center(

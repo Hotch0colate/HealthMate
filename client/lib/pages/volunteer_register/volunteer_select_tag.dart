@@ -15,19 +15,6 @@ import 'package:client/services/ip_variable.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
 import '../../../component/buttons.dart';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: VolunteerSelectTag(),
-    );
-  }
-}
-
 class VolunteerSelectTag extends StatefulWidget {
   const VolunteerSelectTag({Key? key}) : super(key: key);
 
@@ -78,6 +65,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: Padding(
           padding: EdgeInsets.all(20),
           child: Center(

@@ -17,19 +17,6 @@ import '../authentication/login.dart';
 
 String userName = '';
 
-void main() {
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'HealthMate',
-      home: ProfilePage(),
-    );
-  }
-}
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -84,6 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         // Wrap with SingleChildScrollView

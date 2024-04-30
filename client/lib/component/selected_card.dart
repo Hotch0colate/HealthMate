@@ -1,3 +1,4 @@
+import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 
@@ -51,10 +52,10 @@ class _MultipleSelectedCardState extends State<MultipleSelectedCard> {
         ),
         label: Text(
           widget.text,
-          style: FontTheme.body2
+          style: FontTheme.caption
         ),
         style: ElevatedButton.styleFrom(
-          primary: _isSelected ? widget.mainColor : Colors.white,
+          primary: _isSelected ? widget.mainColor : ColorTheme.WhiteColor,
           onPrimary: _isSelected ? Colors.white : Colors.black54,
           elevation: 2,
           shape: RoundedRectangleBorder(
@@ -91,8 +92,8 @@ class SelectedCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color iconColor = isSelected ? Colors.white : Colors.black;
-    Color textColor = isSelected ? Colors.white : Colors.black;
+    Color iconColor = isSelected ? ColorTheme.WhiteColor : Colors.black;
+    Color textColor = isSelected ? ColorTheme.WhiteColor : Colors.black;
 
     return SizedBox(
       width: 168,
@@ -105,11 +106,11 @@ class SelectedCard extends StatelessWidget {
         ),
         label: Text(
           text,
-          style: FontTheme.body2.copyWith(color: textColor),
+          style: FontTheme.caption.copyWith(color: textColor),
         ),
         style: ElevatedButton.styleFrom(
-          primary: isSelected ? mainColor: Colors.white,
-          onPrimary: isSelected ? Colors.grey : Colors.black,
+          foregroundColor: isSelected ? Colors.grey : Colors.black, 
+          backgroundColor: isSelected ? mainColor: ColorTheme.WhiteColor,
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

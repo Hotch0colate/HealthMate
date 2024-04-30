@@ -9,6 +9,7 @@ import 'package:client/pages/select_talk/select_talk_page.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:client/component/buttons.dart';
@@ -148,6 +149,7 @@ class FindVolunteerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       appBar: AppBar(
         leading: Column(
           children: [
@@ -237,7 +239,11 @@ Widget buildWaitingContent() {
         Stack(
           alignment: Alignment.center,
           children: [
-            const AnimatedBackground(), // This will display the animation
+            SpinKitFadingCircle( // FadingCircle loading animation
+                  size: 280, // Adjust size as needed
+                  color: ColorTheme.primaryColor,
+                  duration: Durations.extralong4, 
+                ), // This will display the animation
             Image.asset('assets/images/volunteer_scarf.png',
                 width: 100,
                 fit: BoxFit.contain), // This will stay static on top
@@ -254,61 +260,6 @@ Widget buildWaitingContent() {
     ),
   );
 }
-
-// class ConfirmDelete extends StatelessWidget {
-//   const ConfirmDelete({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       width: 296,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           ElevatedButton(
-//             onPressed: () {
-//               // Call the function to close the dialog
-//               Navigator.of(context).pop();
-//             },
-//             style: ElevatedButton.styleFrom(
-//               foregroundColor: ColorTheme.baseColor.withOpacity(0.8),
-//               backgroundColor: ColorTheme.WhiteColor,
-//               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(8),
-//                 side: BorderSide(
-//                     color: ColorTheme.baseColor.withOpacity(0.2), width: 2),
-//               ),
-//             ),
-//             child: const Text('ยกเลิก', style: FontTheme.btn_small),
-//           ),
-//           SingleChildScrollView(
-//             child: ElevatedButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) => MainApp(SelectedPage: 1)),
-//                 );
-//               },
-//               style: ElevatedButton.styleFrom(
-//                 foregroundColor: ColorTheme.WhiteColor,
-//                 backgroundColor: ColorTheme.errorAction,
-//                 padding:
-//                     const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-//                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(8),
-//                   side: BorderSide(color: Colors.transparent),
-//                 ),
-//               ),
-//               child: const Text('ใช่ ยกเลิกเลย', style: FontTheme.btn_small),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
 
 class AnimatedBackground extends StatefulWidget {
   const AnimatedBackground({Key? key}) : super(key: key);

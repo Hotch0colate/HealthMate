@@ -16,6 +16,7 @@ class _FinishRegisterPsyState extends State<FinishRegisterPsy> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: Center(
         child: Container(
           child: Center(

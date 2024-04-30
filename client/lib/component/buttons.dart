@@ -187,6 +187,8 @@ class MdPrimaryButton extends StatelessWidget {
   final Color foregroundColor;
   final Color backgroundColor;
   final double minWidth;
+  final double minHeight;
+
 
   MdPrimaryButton({
     Key? key,
@@ -195,6 +197,8 @@ class MdPrimaryButton extends StatelessWidget {
     this.foregroundColor = ColorTheme.WhiteColor,
     this.backgroundColor = ColorTheme.primaryColor,
     this.minWidth = 120,
+    this.minHeight = 48,
+
     
      // Set your desired minimum width
   }) : super(key: key);
@@ -210,7 +214,7 @@ class MdPrimaryButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),
-        minimumSize: Size(minWidth, 0),
+        minimumSize: Size(minWidth, minHeight),
       ),
       child: Text(text, style: FontTheme.btn_medium),
     );
@@ -250,6 +254,8 @@ class SmPrimaryButton extends StatelessWidget {
   final Color backgroundColor;
   final Color borderColor;
   final double minWidth;
+  final double minHeight;
+
 
   const SmPrimaryButton({
     Key? key,
@@ -258,7 +264,8 @@ class SmPrimaryButton extends StatelessWidget {
     this.foregroundColor = ColorTheme.WhiteColor,
     this.backgroundColor = ColorTheme.primaryColor,
     this.borderColor = ColorTheme.primaryColor,
-    this.minWidth = 120, // Set your desired minimum width
+    this.minWidth = 120,
+    this.minHeight = 48,
   }) : super(key: key);
 
   @override
@@ -273,7 +280,7 @@ class SmPrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           side: BorderSide(color: borderColor, width: 2),
         ),
-        minimumSize: Size(minWidth, 0),
+        minimumSize: Size(minWidth, minHeight),
       ),
       child: Text(text, style: FontTheme.btn_small),
     );
@@ -315,6 +322,8 @@ class MdSecondaryButton extends StatelessWidget {
   final Color backgroundColor;
   final Color borderColor;
   final double minWidth;
+  final double minHeight;
+
 
   const MdSecondaryButton({
     super.key,
@@ -324,6 +333,7 @@ class MdSecondaryButton extends StatelessWidget {
     this.backgroundColor = Colors.white,
     this.borderColor = ColorTheme.primaryColor,
     this.minWidth = 120,
+    this.minHeight = 48,
   });
 
   @override
@@ -338,7 +348,7 @@ class MdSecondaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(4),
           side: BorderSide(color: borderColor, width: 1),
         ),
-        minimumSize: Size(minWidth, 0),
+        minimumSize: Size(minWidth, minHeight),
       ),
       child: Text(text, style: FontTheme.btn_medium),
     );
@@ -352,6 +362,8 @@ class SmSecondaryButton extends StatelessWidget {
   final Color backgroundColor;
   final Color borderColor;
   final double minWidth;
+  final double minHeight;
+
 
   const SmSecondaryButton({
     Key? key,
@@ -361,6 +373,8 @@ class SmSecondaryButton extends StatelessWidget {
     this.backgroundColor = Colors.white,
     this.borderColor = ColorTheme.primaryColor,
     this.minWidth = 120, // Set your desired minimum width
+    this.minHeight = 48, // Set your desired minimum width
+
   }) : super(key: key);
 
   @override
@@ -375,7 +389,7 @@ class SmSecondaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           side: BorderSide(color: borderColor, width: 1),
         ),
-        minimumSize: Size(minWidth, 0),
+        minimumSize: Size(minWidth, minHeight),
       ),
       child: Text(text, style: FontTheme.btn_small),
     );

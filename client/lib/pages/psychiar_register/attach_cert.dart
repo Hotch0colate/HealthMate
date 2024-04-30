@@ -40,6 +40,7 @@ class _AttachCertificateState extends State<AttachCertificate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
         // Wrap with SingleChildScrollView

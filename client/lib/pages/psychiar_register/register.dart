@@ -22,6 +22,7 @@ class _PsyRegisterState extends State<PsyRegister> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
         body: Padding(
             padding: EdgeInsets.all(20),
             child: Center(

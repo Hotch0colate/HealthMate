@@ -46,6 +46,7 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(20),

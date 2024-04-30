@@ -120,30 +120,30 @@ class BottomNavigationBarApp extends StatelessWidget {
         BottomNavigationBarItem(
           icon: Icon(
             Icons.calendar_today_rounded,
-            size: 35,
+            size: 36,
           ),
-          label: 'อารมณ์',
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             CupertinoIcons.person_2_fill,
-            size: 35,
+            size: 36,
           ),
-          label: 'ปรึกษา',
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             CupertinoIcons.chat_bubble_fill,
-            size: 35,
+            size: 36,
           ),
-          label: 'ข้อความ',
+          label: '',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             CupertinoIcons.person_fill,
-            size: 35,
+            size: 36,
           ),
-          label: 'โปรไฟล์',
+          label: '',
         ),
       ],
     );

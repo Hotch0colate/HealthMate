@@ -29,6 +29,11 @@ class ConversationBox extends StatefulWidget {
   @override
   _ConversationBoxState createState() => _ConversationBoxState();
 
+  void deleteConversation(BuildContext context) {
+    // Implement your logic to delete the conversation here
+    // For example, you can show a confirmation dialog and delete the conversation if confirmed
+  }
+
   ConversationBox(
       {required this.name,
       required this.cid,
@@ -98,58 +103,67 @@ class _ConversationBoxState extends State<ConversationBox> {
           ),
         );
       },
+      onLongPress: () {
+        showDeleteConfirmationDialog(context);
+      },
       child: Container(
-        padding:
-            const EdgeInsets.only(left: 20, right: 20),
+        padding: const EdgeInsets.only(left: 20, right: 20),
         child: Column(
           children: [
             Row(
               children: <Widget>[
                 Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(widget.imageURL),
-                        maxRadius: 30,
-                      ),
-                      const SizedBox(
-                        width: 14,
-                      ),
-                      Expanded(
-                        child: Container(
-                          color: Colors.transparent,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                widget.name,
-                                style: FontTheme.body1,
-                              ),
-                              const SizedBox(
-                                height: 4,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(widget.lastmessage,
-                                      style: FontTheme.body2.copyWith(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: <Widget>[
+                          CircleAvatar(
+                            backgroundImage: NetworkImage(widget.imageURL),
+                            maxRadius: 30,
+                          ),
+                          const SizedBox(
+                            width: 14,
+                          ),
+                          Expanded(
+                            child: Container(
+                              color: Colors.transparent,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    widget.name,
+                                    style: FontTheme.body1,
+                                  ),
+                                  const SizedBox(
+                                    height: 4,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(widget.lastmessage,
+                                          style: FontTheme.body2.copyWith(
+                                              fontWeight: widget.seen
+                                                  ? FontWeight.bold
+                                                  : FontWeight.normal)),
+                                      Text(
+                                        time,
+                                        style: FontTheme.caption.copyWith(
                                           fontWeight: widget.seen
                                               ? FontWeight.bold
-                                              : FontWeight.normal)),
-                                  Text(
-                                    time,
-                                    style: FontTheme.caption.copyWith(
-                                      fontWeight: widget.seen
-                                          ? FontWeight.bold
-                                          : FontWeight.normal,
-                                    ),
+                                              : FontWeight.normal,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 16,
                                   ),
                                 ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
@@ -159,6 +173,34 @@ class _ConversationBoxState extends State<ConversationBox> {
           ],
         ),
       ),
+    );
+  }
+
+  void showDeleteConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("ลบบทสนทนา",style: FontTheme.body1,),
+          content: Text("คุณต้องการลบบทสนทนาใช่หรือไม่?",style: FontTheme.body2,),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("ยกเลิก" ,style: FontTheme.caption,),
+            ),
+            TextButton(
+              onPressed: () {
+                // Call the deleteConversation method from the parent widget
+                widget.deleteConversation(context);
+                Navigator.of(context).pop();
+              },
+              child: Text("ยืนยัน",style: FontTheme.caption,),
+            ),
+          ],
+        );
+      },
     );
   }
 }

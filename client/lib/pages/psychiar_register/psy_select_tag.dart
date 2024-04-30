@@ -106,6 +106,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: Padding(
           padding: EdgeInsets.all(20),
           child: Center(

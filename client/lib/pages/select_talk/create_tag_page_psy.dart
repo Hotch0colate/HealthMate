@@ -101,6 +101,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
     double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
+      backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -159,7 +160,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                           });
                         },
                         isSelected: selectedCardIndex == 0,
-                        mainColor: ColorTheme.primary2Color,
+                        mainColor: ColorTheme.secondaryColor,
                       ),
                       SelectedCard(
                         text: 'ภาระหน้าที่',
@@ -170,7 +171,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                           });
                         },
                         isSelected: selectedCardIndex == 1,
-                        mainColor: ColorTheme.primary2Color,
+                        mainColor: ColorTheme.secondaryColor,
                       ),
                     ],
                   ),
@@ -187,7 +188,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                           });
                         },
                         isSelected: selectedCardIndex == 2,
-                        mainColor: ColorTheme.primary2Color,
+                        mainColor: ColorTheme.secondaryColor,
                       ),
                       SelectedCard(
                         text: 'สุขภาพ',
@@ -198,7 +199,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                           });
                         },
                         isSelected: selectedCardIndex == 3,
-                        mainColor: ColorTheme.primary2Color,
+                        mainColor: ColorTheme.secondaryColor,
                       ),
                     ],
                   ),

@@ -50,7 +50,7 @@ class EmotionCard extends StatelessWidget {
                       ? '${emotions.detail.substring(0, 30)}...'
                       : emotions.detail,
                   textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 14, fontFamily: 'Athiti'),
+                  style: const TextStyle(fontSize: 14, fontFamily: 'Anuphan'),
                 ),
               ],
             ),
