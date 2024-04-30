@@ -51,35 +51,6 @@ class _VolunteerRegisterState extends State<VolunteerRegister> {
   //   'suggestSolutions': false,
   // };
 
-  void _createVolunteerWithToken(BuildContext context) async {
-    // สมมติว่าคุณมีฟังก์ชัน `getToken` ที่สามารถดึง token ของผู้ใช้
-    var _auth_service = AuthService();
-    String? token = await _auth_service.getIdToken();
-    await _createVolunteer(token);
-    // print(refreshEmotionsCallback);
-  }
-
-  Future<void> _createVolunteer(String? token) async {
-    try {
-      var _auth_service = AuthService();
-      String? token = await _auth_service.getIdToken();
-
-      final response = await http.post(
-          Uri.parse('http://${fixedIp}:3000/volunteer/create_data'),
-          headers: <String, String>{
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $token', // ส่ง token ใน header
-          });
-
-      if (response.statusCode == 200) {
-      } else {
-        throw Exception('Failed to load emotions');
-      }
-    } catch (error) {
-      throw Exception('Failed to load emotions: $error');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

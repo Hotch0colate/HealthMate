@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:client/component/navigation.dart';
 import 'package:client/component/selected_card.dart';
 import 'package:client/pages/psychiar_register/attach_cert.dart';
@@ -18,32 +20,88 @@ import 'package:client/services/ip_variable.dart';
 import 'package:client/pages/authentication/first_login/first_login_2.dart';
 import '../../../component/buttons.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: PsySelectTag(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: PsySelectTag(),
+//     );
+//   }
+// }
 
 class PsySelectTag extends StatefulWidget {
-  const PsySelectTag({Key? key}) : super(key: key);
+  final String firstnameText;
+  final String lastnameText;
+  final String licenseText;
+  final String dateText;
+  final File? selectedImage;
 
   @override
   _PsySelectTagState createState() => _PsySelectTagState();
+
+  PsySelectTag(
+      {Key? key,
+      required this.firstnameText,
+      required this.lastnameText,
+      required this.licenseText,
+      required this.dateText,
+      required this.selectedImage})
+      : super(key: key);
 }
 
 class _PsySelectTagState extends State<PsySelectTag> {
   int selectedCardIndex = -1; // -1 indicates no card selected
+  bool _selectedGeneric = false;
+  bool _selectedWork = false;
+  bool _selectedRelationship = false;
+  bool _selectedHealth = false;
 
-  List<String> _tagOptions() =>
-      ["Generic", "Responbility", "Relation", "Health"];
-  void _createPsy() async {}
+  void _createPsychiatrist() async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
+
+      List<String> selectedTags = [];
+      if (_selectedGeneric) selectedTags.add('generic');
+      if (_selectedWork) selectedTags.add('work');
+      if (_selectedRelationship) selectedTags.add('relationship');
+      if (_selectedHealth) selectedTags.add('health');
+
+      var uri = Uri.parse('http://${fixedIp}:3000/psychiatrist/create_data');
+      var request = http.MultipartRequest('POST', uri)
+        ..fields['firstname'] = widget.firstnameText
+        ..fields['lastname'] = widget.lastnameText
+        ..fields['numbercertificate'] = widget.licenseText
+        ..fields['datecertificate'] = widget.dateText
+        ..fields['tags'] = jsonEncode(selectedTags)
+        ..headers['Authorization'] = 'Bearer $token';
+
+      if (widget.selectedImage != null) {
+        request.files.add(await http.MultipartFile.fromPath(
+          'certificateimage', // This is the field name that the server expects for the file
+          widget.selectedImage!.path,
+        ));
+        print("_selectedImage != null");
+      }
+
+      var response = await request.send();
+
+      if (response.statusCode == 200) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const FinishRegisterPsy()),
+        ); // Navigate back after 3 seconds
+      } else {
+        throw Exception('Failed to load emotions');
+      }
+    } catch (error) {
+      throw Exception('Failed to load emotions: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +168,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'เลือกได้เพียง 1 หัวข้อเท่านั้น',
+                              'เลือกได้มากกว่า 1 หัวข้อ',
                               style: FontTheme.body1,
                             ),
                             SizedBox(height: 20),
@@ -121,6 +179,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
                                   text: 'ทั่วไป',
                                   icon: Icons.emoji_emotions,
                                   onPressed: (isSelected) {
+                                    _selectedGeneric = isSelected;
                                     print('Generic is selected: $isSelected');
                                   },
                                   isSelected: false,
@@ -130,7 +189,9 @@ class _PsySelectTagState extends State<PsySelectTag> {
                                   text: 'ภาระหน้าที่',
                                   icon: Icons.work,
                                   onPressed: (isSelected) {
-                                    print('Responsibility is selected: $isSelected');
+                                    _selectedWork = isSelected;
+                                    print(
+                                        'Responsibility is selected: $isSelected');
                                   },
                                   isSelected: false,
                                   mainColor: ColorTheme.secondaryColor,
@@ -145,15 +206,17 @@ class _PsySelectTagState extends State<PsySelectTag> {
                                   text: 'ความสัมพันธ์',
                                   icon: CupertinoIcons.heart_fill,
                                   onPressed: (isSelected) {
+                                    _selectedRelationship = isSelected;
                                     print('Relation is selected: $isSelected');
                                   },
                                   isSelected: false,
                                   mainColor: ColorTheme.secondaryColor,
                                 ),
-                                 MultipleSelectedCard(
+                                MultipleSelectedCard(
                                   text: 'สุขภาพ',
                                   icon: CupertinoIcons.heart_fill,
                                   onPressed: (isSelected) {
+                                    _selectedHealth = isSelected;
                                     print('Health is selected: $isSelected');
                                   },
                                   isSelected: false,
@@ -194,12 +257,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
                       builder: (context) => const LoadingPsyRegister()),
                 );
                 Future.delayed(const Duration(seconds: 3), () {
-                  _createPsy();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const FinishRegisterPsy()),
-                  ); // Navigate back after 3 seconds
+                  _createPsychiatrist();
                 });
               },
               foregroundColor: Colors.white, // Change text color

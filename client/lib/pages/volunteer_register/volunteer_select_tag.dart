@@ -37,37 +37,43 @@ class VolunteerSelectTag extends StatefulWidget {
 
 class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
   int selectedCardIndex = -1; // -1 indicates no card selected
+  bool _selectedGeneric = false;
+  bool _selectedWork = false;
+  bool _selectedRelationship = false;
+  bool _selectedHealth = false;
 
   List<String> _tagOptions() =>
       ["Generic", "Responbility", "Relation", "Health"];
 
-  // Future<void> sendUserDataToBackend(String gender) async {
-  //   var _auth_service = AuthService();
-  //   String? token = await _auth_service.getIdToken();
-  //   var url = Uri.parse('http://${fixedIp}:3000/user/update_data');
-  //   var response = await http.post(
-  //     url,
-  //     body: json.encode({'gender': gender}),
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer $token',
-  //     },
-  //   );
+  Future<void> _createVolunteer() async {
+    try {
+      var _auth_service = AuthService();
+      String? token = await _auth_service.getIdToken();
 
-  //   if (response.statusCode == 200) {
-  //     print("Gender submitted successfully");
-  //     Navigator.push(
-  //       context,
-  //       MaterialPageRoute(
-  //         builder: (context) => const FirstLogin2(),
-  //       ),
-  //     );
-  //   } else {
-  //     print("Failed to submit gender: ${response.body}");
-  //   }
-  // }
+      List<String> selectedTags = [];
+      if (_selectedGeneric) selectedTags.add('generic');
+      if (_selectedWork) selectedTags.add('work');
+      if (_selectedRelationship) selectedTags.add('relationship');
+      if (_selectedHealth) selectedTags.add('health');
 
-  void _createVolunteer() async {}
+      var body = jsonEncode({'tags': selectedTags});
+
+      final response = await http.post(
+          Uri.parse('http://${fixedIp}:3000/volunteer/create_data'),
+          headers: <String, String>{
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token', // ส่ง token ใน header
+          },
+          body: body);
+
+      if (response.statusCode == 200) {
+      } else {
+        throw Exception('Failed to load emotions');
+      }
+    } catch (error) {
+      throw Exception('Failed to load emotions: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -133,7 +139,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'เลือกได้เพียง 1 หัวข้อเท่านั้น',
+                              'เลือกได้มากกว่า 1 หัวข้อ',
                               style: FontTheme.body1,
                             ),
                             SizedBox(height: 20),
@@ -145,6 +151,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                                   icon: Icons.emoji_emotions,
                                   onPressed: (isSelected) {
                                     print('Card 1 is selected: $isSelected');
+                                    _selectedGeneric = isSelected;
                                   },
                                   isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
@@ -153,7 +160,8 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                                   text: 'ภาระหน้าที่',
                                   icon: Icons.work,
                                   onPressed: (isSelected) {
-                                    print('Card 1 is selected: $isSelected');
+                                    print('Card 2 is selected: $isSelected');
+                                    _selectedWork = isSelected;
                                   },
                                   isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
@@ -168,7 +176,8 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                                   text: 'ความสัมพันธ์',
                                   icon: CupertinoIcons.person_3_fill,
                                   onPressed: (isSelected) {
-                                    print('Card 1 is selected: $isSelected');
+                                    print('Card 3 is selected: $isSelected');
+                                    _selectedRelationship = isSelected;
                                   },
                                   isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
@@ -177,7 +186,8 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                                   text: 'สุขภาพ',
                                   icon: CupertinoIcons.heart_fill,
                                   onPressed: (isSelected) {
-                                    print('Card 1 is selected: $isSelected');
+                                    print('Card 4 is selected: $isSelected');
+                                    _selectedHealth = isSelected;
                                   },
                                   isSelected: false,
                                   mainColor: ColorTheme.primary2Color,
@@ -192,7 +202,6 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                             )
                           ],
                         ),
-                        
                       ])))),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(bottom: 50, left: 27, right: 27),

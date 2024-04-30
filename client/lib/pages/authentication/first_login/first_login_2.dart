@@ -89,7 +89,7 @@ class _FirstLogin2State extends State<FirstLogin2> {
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 32,
                 ),
-              Image.asset('assets/logos/large_app_name.png'),
+                Image.asset('assets/logos/large_app_name.png'),
                 const SizedBox(height: 24),
                 const SizedBox(
                   height: 72,
@@ -122,12 +122,6 @@ class _FirstLogin2State extends State<FirstLogin2> {
             GoBackButton(
               onPressed: () {
                 setStateFirstLogin(context, 1, FirstLogin1());
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => const FirstLogin1(),
-                //   ),
-                // );
               },
             ),
             ForwardButton(

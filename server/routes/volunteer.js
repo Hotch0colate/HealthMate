@@ -54,7 +54,7 @@ router.post('/create_data', authenticate, async (req, res) => {
 //ดึงข้อมูลจาก volunteer
 //fetch volunteer data
 router.post('/read_data', authenticate, (req, res) => {
-    var uid = req.body.uid;
+    var uid = req.user.uid;
 
     try {
         firebasedb.get(ref(db, 'volunteers/' + uid))
@@ -87,7 +87,7 @@ router.post('/read_data', authenticate, (req, res) => {
 
 //update volunteer data
 router.post('/update_data', authenticate, (req, res) => {
-    var uid = req.body.uid;
+    var uid = req.user.uid;
 
     var tags = req.body.tags;
     var rating_score = req.body.rating_score;
@@ -130,7 +130,7 @@ router.post('/update_data', authenticate, (req, res) => {
 //ลบข้อมูล volunteer
 //feature delete volunteer
 router.post('/delete_data', authenticate, (req, res) => {
-    var uid = req.body.uid;
+    var uid = req.user.uid;
 
     try {
         get(ref(db, 'volunteers/' + uid))
@@ -174,7 +174,7 @@ router.post('/query_volunteers', authenticate, async (req, res) => {
                 uid,
                 ...details,
                 tagMatch: details.tags && details.tags.includes(tag),
-                hasGeneric: details.tags && details.tags.includes("Generic")
+                hasGeneric: details.tags && details.tags.includes("generic")
             }));
 
             // Filter out volunteers without matching or generic tag
@@ -229,7 +229,55 @@ router.post('/query_volunteers', authenticate, async (req, res) => {
     }
 });
 
+router.post('/check_data', authenticate, (req, res) => {
+    var uid = req.user.uid;
 
+    try {
+        firebasedb.get(ref(db, 'volunteers'))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const psychiatrists = snapshot.val();
+                    let found = false;
+                    for (let _uid in psychiatrists) {
+                        if (psychiatrists[_uid].uid === uid) {
+                            found = true;
+                            return res.status(200).json({
+                                RespCode: 200,
+                                RespMessage: "Success",
+                            });
+                        }
+                    }
+                    if (!found) {
+                        return res.status(404).json({
+                            RespCode: 404,
+                            RespMessage: "No psychiatrist found with the provided uid"
+                        });
+                    }
+                }
+                else {
+                    console.log("No data available from fetch data");
+                    return res.status(200).json({
+                        RespCode: 200,
+                        RespMessage: "No data available" + "/nPath API : /check_psychiatrist"
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                return res.status(500).json({
+                    RespCode: 500,
+                    RespMessage: error.message + "/nPath API : /check_psychiatrist"
+                });
+            });
+    }
+    catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            RespCode: 500,
+            RespMessage: "Error while fetching psychiatrist: " + error.message
+        });
+    }
+});
 
 module.exports = router;
 

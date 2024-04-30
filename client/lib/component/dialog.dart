@@ -8,10 +8,18 @@ import 'package:client/component/select_box.dart';
 import 'package:client/theme/color.dart'; // Import your color theme
 import 'package:client/theme/font.dart'; // Import your font theme
 
+import 'dart:convert';
+import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
+import 'package:http/http.dart' as http;
+
 class CancleRoleDialog extends StatefulWidget {
   final String textRole;
+  final String apiLine;
+  final String roleId;
 
-  CancleRoleDialog({required this.textRole});
+  CancleRoleDialog(
+      {required this.textRole, required this.apiLine, required this.roleId});
 
   @override
   _CancleRoleDialogState createState() => _CancleRoleDialogState();
@@ -25,6 +33,37 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
   bool responsibilityConsult = false;
   bool relationConsult = false;
   bool healthConsult = false;
+
+  Future<void> updateTags() async {
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+
+    List<String> selectedTags = [];
+    if (genericConsult) selectedTags.add('generic');
+    if (responsibilityConsult) selectedTags.add('work');
+    if (relationConsult) selectedTags.add('relationship');
+    if (healthConsult) selectedTags.add('health');
+
+    var body = '';
+    if (widget.apiLine == "psychiatrist") {
+      body = jsonEncode({'tags': selectedTags, 'pid': widget.roleId});
+    }
+
+    var url = Uri.parse('http://${fixedIp}:3000/${widget.apiLine}/update_data');
+    var response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+
+    if (response.statusCode == 200) {
+    } else if (response.statusCode == 404) {
+      print("Not psychiatrist: ${response.body}");
+    } else {
+      print("Failed to submit data: ${response.body}");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -116,6 +155,7 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
                   text: 'บันทึก',
                   onPressed: () {
                     Navigator.pop(context);
+                    updateTags();
                   }),
               SmPrimaryButton(
                 text: 'ยกเลิก',
@@ -141,6 +181,8 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
                     return ConfirmDialogWithDetail(
                       title: 'คุณต้องการยกเลิกเพราะเหตุใด',
                       destination: MainApp(SelectedPage: 1),
+                      apiLine: widget.apiLine,
+                      roleId: widget.roleId,
                     );
                   },
                 );
@@ -160,12 +202,15 @@ class ConfirmDialogWithDetail extends StatefulWidget {
   final String title;
   final Color backgroundColor;
   final Widget destination;
+  final String apiLine;
+  final String roleId;
 
-  ConfirmDialogWithDetail({
-    required this.title,
-    this.backgroundColor = ColorTheme.successAction,
-    required this.destination,
-  });
+  ConfirmDialogWithDetail(
+      {required this.title,
+      this.backgroundColor = ColorTheme.successAction,
+      required this.destination,
+      required this.apiLine,
+      required this.roleId});
 
   @override
   _ConfirmDialogWithDetailState createState() =>
@@ -174,6 +219,29 @@ class ConfirmDialogWithDetail extends StatefulWidget {
 
 class _ConfirmDialogWithDetailState extends State<ConfirmDialogWithDetail> {
   TextEditingController descriptionTextController = TextEditingController();
+
+  Future<void> deleteRole() async {
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+
+    var body = '';
+    if (widget.apiLine == "psychiatrist") {
+      body = jsonEncode({'pid': widget.roleId});
+    }
+
+    var url = Uri.parse('http://${fixedIp}:3000/${widget.apiLine}/delete_data');
+    var response = await http.post(url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: body);
+
+    if (response.statusCode == 200) {
+    } else {
+      print("No Data: ${response.body}");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -217,6 +285,7 @@ class _ConfirmDialogWithDetailState extends State<ConfirmDialogWithDetail> {
                     context,
                     MaterialPageRoute(builder: (context) => widget.destination),
                   );
+                  deleteRole();
                 },
                 backgroundColor: widget.backgroundColor,
                 borderColor: widget.backgroundColor,

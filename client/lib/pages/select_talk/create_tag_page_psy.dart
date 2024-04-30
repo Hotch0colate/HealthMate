@@ -12,18 +12,23 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'dart:convert';
+import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
+import 'package:http/http.dart' as http;
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: CreateTagPsyPage(),
-    );
-  }
-}
+// void main() {
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       home: CreateTagPsyPage(),
+//     );
+//   }
+// }
 
 class CreateTagPsyPage extends StatefulWidget {
   const CreateTagPsyPage({Key? key});
@@ -33,7 +38,9 @@ class CreateTagPsyPage extends StatefulWidget {
 }
 
 class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
-  bool isPsychiatrist = true; // Track psychiatrist status
+  bool isPsychiatrist = false; // Track psychiatrist status
+  String pid = '';
+
   int selectedCardIndex = -1; // -1 indicates no card selected
 
   final _formKey = GlobalKey<FormState>();
@@ -42,6 +49,51 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
 
   List<String> _tagOptions() =>
       ["Generic", "Responbility", "Relation", "Health"];
+
+  void _fetchAndSetPid() async {
+    String _pid = await checkIfPsychiatrist();
+    print(_pid);
+    if (_pid != '' && isPsychiatrist == true) {
+      setState(() {
+        pid = _pid;
+        print(pid);
+      });
+    }
+  }
+
+  Future<String> checkIfPsychiatrist() async {
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+    var url = Uri.parse('http://${fixedIp}:3000/psychiatrist/check_data');
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      String respMessage = jsonDecode(response.body)['RespMessage'];
+      if (respMessage == "Success") {
+        isPsychiatrist = true;
+        return respMessage = jsonDecode(response.body)['pid'];
+      }
+      return '';
+    } else if (response.statusCode == 404) {
+      print("Not psychiatrist: ${response.body}");
+      return '';
+    } else {
+      print("Failed to submit data: ${response.body}");
+      return '';
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchAndSetPid();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +150,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                       SelectedCard(
+                      SelectedCard(
                         text: 'ทั่วไป',
                         icon: Icons.emoji_emotions,
                         onPressed: () {
@@ -222,6 +274,8 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                           builder: (BuildContext context) {
                             return CancleRoleDialog(
                               textRole: 'ยกเลิกการเป็นจิตแพทย์',
+                              apiLine: 'psychiatrist',
+                              roleId: pid,
                             );
                           },
                         );
