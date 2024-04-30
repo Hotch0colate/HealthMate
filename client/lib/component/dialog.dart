@@ -47,6 +47,8 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
     var body = '';
     if (widget.apiLine == "psychiatrist") {
       body = jsonEncode({'tags': selectedTags, 'pid': widget.roleId});
+    } else if (widget.apiLine == "volunteer") {
+      body = jsonEncode({'tags': selectedTags});
     }
 
     var url = Uri.parse('http://${fixedIp}:3000/${widget.apiLine}/update_data');
@@ -100,7 +102,9 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
                 },
                 value: genericConsult,
               )),
-              SizedBox(width: 5,),
+              SizedBox(
+                width: 5,
+              ),
               Expanded(
                   child: ColorChangingCheckbox(
                 key: UniqueKey(),
@@ -131,7 +135,9 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
                 },
                 value: relationConsult,
               )),
-              SizedBox(width: 5,),
+              SizedBox(
+                width: 5,
+              ),
               Expanded(
                   child: ColorChangingCheckbox(
                 key: UniqueKey(),

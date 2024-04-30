@@ -1,5 +1,6 @@
 import 'package:client/Pages/select_talk/find_volunteer_page.dart';
 import 'package:client/component/buttons.dart';
+import 'package:client/component/dialog.dart';
 import 'package:client/component/navigation.dart';
 import 'package:client/component/selected_card.dart';
 import 'package:client/component/text_field/text_field.dart';
@@ -10,18 +11,23 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'dart:convert';
+import 'package:client/services/auth_service.dart';
+import 'package:client/services/ip_variable.dart';
+import 'package:http/http.dart' as http;
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: CreateTagVolunteerPage(),
-    );
-  }
-}
+// void main() {
+//   runApp(MyApp());
+// }
+
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: CreateTagVolunteerPage(),
+//     );
+//   }
+// }
 
 class CreateTagVolunteerPage extends StatefulWidget {
   const CreateTagVolunteerPage({Key? key});
@@ -32,6 +38,7 @@ class CreateTagVolunteerPage extends StatefulWidget {
 
 class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
   int selectedCardIndex = -1; // -1 indicates no card selected
+  bool isVolunteer = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -39,6 +46,41 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
 
   List<String> _tagOptions() =>
       ["Generic", "Responbility", "Relation", "Health"];
+
+  void _fetchUidVolunteer() async {
+    await checkIfVolunteer();
+  }
+
+  Future<void> checkIfVolunteer() async {
+    var _auth_service = AuthService();
+    String? token = await _auth_service.getIdToken();
+    var url = Uri.parse('http://${fixedIp}:3000/volunteer/check_data');
+    var response = await http.post(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      String respMessage = jsonDecode(response.body)['RespMessage'];
+      if (respMessage == "Success") {
+        isVolunteer = true;
+        setState(() {});
+      }
+    } else if (response.statusCode == 404) {
+      print("Not volunteer: ${response.body}");
+    } else {
+      print("Failed to submit data: ${response.body}");
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUidVolunteer();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +117,6 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                   ),
                 ],
               ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -211,19 +252,38 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                 ],
               ),
               SizedBox(height: 8),
-              MdSecondaryButton(
-                minWidth: 400,
-                text: 'ลงทะเบียนอาสาสมัคร',
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => VolunteerRegister(),
-                      ));
-                },
-                borderColor: ColorTheme.primary2Color,
-                foregroundColor: ColorTheme.primary2Color,
-              ),
+              isVolunteer
+                  ? MdSecondaryButton(
+                      minWidth: 400,
+                      text: 'เปลี่ยน/ยกเลิกอาสาสมัคร', // Change button text
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return CancleRoleDialog(
+                              textRole: 'ยกเลิกการเป็นอาสาสมัคร',
+                              apiLine: 'volunteer',
+                              roleId: '',
+                            );
+                          },
+                        );
+                      },
+                      borderColor: ColorTheme.errorAction,
+                      foregroundColor: ColorTheme.errorAction,
+                    )
+                  : MdSecondaryButton(
+                      minWidth: 400,
+                      text: 'ลงทะเบียนอาสาสมัคร',
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => VolunteerRegister(),
+                            ));
+                      },
+                      borderColor: ColorTheme.primary2Color,
+                      foregroundColor: ColorTheme.primary2Color,
+                    )
             ],
           ),
         ),
