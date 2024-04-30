@@ -99,12 +99,12 @@ flutter:
 
     
   fonts:
-    - family: Athiti
+    - family: Anuphan
       fonts:
-        - asset: fonts/Athiti-Bold.ttf
-        - asset: fonts/Athiti-SemiBold.ttf
-        - asset: fonts/Athiti-Regular.ttf
-        - asset: fonts/Athiti-Light.ttf
+        - asset: fonts/Anuphan-Bold.ttf
+        - asset: fonts/Anuphan-SemiBold.ttf
+        - asset: fonts/Anuphan-Regular.ttf
+        - asset: fonts/Anuphan-Light.ttf
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

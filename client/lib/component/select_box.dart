@@ -93,7 +93,7 @@ class _ColorChangingRadioState extends State<ColorChangingRadio> {
                   : ColorTheme.baseColor,
               fontSize: 18,
               fontWeight: FontWeight.w400,
-              fontFamily: 'Athiti',
+              fontFamily: 'Anuphan',
             ),
           ),
           leading: Radio<String>(

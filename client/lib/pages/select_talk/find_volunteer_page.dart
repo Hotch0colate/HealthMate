@@ -261,61 +261,6 @@ Widget buildWaitingContent() {
   );
 }
 
-// class ConfirmDelete extends StatelessWidget {
-//   const ConfirmDelete({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SizedBox(
-//       width: 296,
-//       child: Row(
-//         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//         children: [
-//           ElevatedButton(
-//             onPressed: () {
-//               // Call the function to close the dialog
-//               Navigator.of(context).pop();
-//             },
-//             style: ElevatedButton.styleFrom(
-//               foregroundColor: ColorTheme.baseColor.withOpacity(0.8),
-//               backgroundColor: ColorTheme.WhiteColor,
-//               padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(8),
-//                 side: BorderSide(
-//                     color: ColorTheme.baseColor.withOpacity(0.2), width: 2),
-//               ),
-//             ),
-//             child: const Text('ยกเลิก', style: FontTheme.btn_small),
-//           ),
-//           SingleChildScrollView(
-//             child: ElevatedButton(
-//               onPressed: () {
-//                 Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) => MainApp(SelectedPage: 1)),
-//                 );
-//               },
-//               style: ElevatedButton.styleFrom(
-//                 foregroundColor: ColorTheme.WhiteColor,
-//                 backgroundColor: ColorTheme.errorAction,
-//                 padding:
-//                     const EdgeInsets.symmetric(vertical: 12, horizontal: 24),
-//                 shape: RoundedRectangleBorder(
-//                   borderRadius: BorderRadius.circular(8),
-//                   side: BorderSide(color: Colors.transparent),
-//                 ),
-//               ),
-//               child: const Text('ใช่ ยกเลิกเลย', style: FontTheme.btn_small),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class AnimatedBackground extends StatefulWidget {
   const AnimatedBackground({Key? key}) : super(key: key);
 

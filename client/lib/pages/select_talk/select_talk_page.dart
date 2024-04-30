@@ -10,6 +10,20 @@ class TalkPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorTheme.WhiteColor,
+      appBar: AppBar(
+        toolbarHeight: 80,
+        automaticallyImplyLeading: false,
+        title: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "พูดคุย",
+                style: FontTheme.h4.copyWith(color: ColorTheme.primaryColor),
+              ),
+              
+            ],
+          ),
+        ),
       body: SingleChildScrollView(
         child: Center(
           child: Container(
@@ -19,15 +33,7 @@ class TalkPage extends StatelessWidget {
                 children: [
                   Column(
                     children: [
-                      Text(
-                        'พูดคุย',
-                        style: FontTheme.h2
-                            .copyWith(color: ColorTheme.primaryColor),
-                      ),
-                      const SizedBox(
-                        height: 24,
-                      ),
-                      CustomCard(
+                      SelectTalkCard(
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -46,7 +52,7 @@ class TalkPage extends StatelessWidget {
                       const SizedBox(
                         height: 32,
                       ),
-                      CustomCard(
+                      SelectTalkCard(
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -71,13 +77,13 @@ class TalkPage extends StatelessWidget {
   }
 }
 
-class CustomCard extends StatefulWidget {
+class SelectTalkCard extends StatefulWidget {
   final String text;
   final String imageName;
   final Color backgroundColor;
   final VoidCallback onPressed;
 
-  const CustomCard({
+  const SelectTalkCard({
     Key? key,
     required this.text,
     required this.imageName,
@@ -86,10 +92,10 @@ class CustomCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<CustomCard> createState() => _CustomCardState();
+  State<SelectTalkCard> createState() => _SelectTalkCardState();
 }
 
-class _CustomCardState extends State<CustomCard> {
+class _SelectTalkCardState extends State<SelectTalkCard> {
   double scale = 1.0;
 
   void _onTapDown(TapDownDetails details) {

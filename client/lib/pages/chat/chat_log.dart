@@ -110,23 +110,22 @@ class _ChatLogState extends State<ChatLog> {
     return Scaffold(
       backgroundColor: ColorTheme.WhiteColor,
       appBar: AppBar(
+        toolbarHeight: 80,
         automaticallyImplyLeading: false,
-        title: Padding(
-          padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
-          child: Row(
+        title: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 "กล่องข้อความ",
-                style: FontTheme.h2.copyWith(color: ColorTheme.primaryColor),
+                style: FontTheme.h4.copyWith(color: ColorTheme.primaryColor),
               ),
+              
             ],
           ),
         ),
-      ),
       body: chatlogs.isEmpty
           ? Center(
-              child: Text('No chats',
+              child: Text('ไม่พบบทสนทนา',
                   style: TextStyle(fontSize: 18, color: Colors.black26)))
           : ListView.builder(
               itemCount: chatlogs.length,

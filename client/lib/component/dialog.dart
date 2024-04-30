@@ -61,6 +61,7 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
                 },
                 value: genericConsult,
               )),
+              SizedBox(width: 5,),
               Expanded(
                   child: ColorChangingCheckbox(
                 key: UniqueKey(),
@@ -91,6 +92,7 @@ class _CancleRoleDialogState extends State<CancleRoleDialog> {
                 },
                 value: relationConsult,
               )),
+              SizedBox(width: 5,),
               Expanded(
                   child: ColorChangingCheckbox(
                 key: UniqueKey(),
