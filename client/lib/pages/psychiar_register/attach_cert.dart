@@ -94,7 +94,7 @@ class _AttachCertificateState extends State<AttachCertificate> {
                   ),
                   Text(
                     'แนบใบประกอบวิชาชีพและกรอกข้อมูลด้านล่าง',
-                    style: FontTheme.body2,
+                    style: FontTheme.caption,
                   ),
                   SizedBox(height: 10),
                   ImageUploadScreen(

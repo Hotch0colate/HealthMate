@@ -1,5 +1,6 @@
 import 'package:client/component/buttons.dart';
 import 'package:client/component/calendar/emotion_scroll.dart';
+import 'package:client/component/navigation.dart';
 import 'package:client/pages/chat/popup/rating.dart';
 import 'package:client/theme/color.dart';
 import 'package:client/theme/font.dart';
@@ -66,7 +67,10 @@ Widget dialogContent(BuildContext context) {
             SmPrimaryButton(
                 text: 'ยืนยัน',
                 onPressed: () {
-                  showRatingDialog(context);
+                   Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 2)),
+              );
                   },
                 backgroundColor: ColorTheme.successAction,
                 borderColor: ColorTheme.successAction,

@@ -1,6 +1,7 @@
 import 'package:client/component/navigation.dart';
 import 'package:client/pages/chat/chat_log.dart';
 import 'package:client/pages/chat/detail_user.dart';
+import 'package:client/pages/chat/popup/end_conversation.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:firebase_database/firebase_database.dart';
 // import 'package:client/Pages/chatlog.dart';
@@ -197,20 +198,9 @@ class ChatRoomBody extends State<ChatRoom> {
             ),
             title: Row(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            DetailUserPage(), // Replace NextPage() with the actual page you want to navigate to
-                      ),
-                    );
-                  },
-                  child: CircleAvatar(
-                    backgroundImage: AssetImage('assets/avatar/md_11.png'),
-                  ),
-                ),
+                //  CircleAvatar(
+                //     backgroundImage: AssetImage('assets/avatar/md_11.png'),
+                //   ),
                 const SizedBox(width: 8.0),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -236,24 +226,24 @@ class ChatRoomBody extends State<ChatRoom> {
                   ],
                 ),
                 const SizedBox(width: 4.0),
-                Container(
-                  width: 10.0,
-                  height: 10.0,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: ColorTheme
-                        .successAction, // Use the appropriate color for online
-                  ),
-                ),
+                // Container(
+                //   width: 10.0,
+                //   height: 10.0,
+                //   decoration: const BoxDecoration(
+                //     shape: BoxShape.circle,
+                //     color: ColorTheme
+                //         .successAction, // Use the appropriate color for online
+                //   ),
+                // ),
                 const Expanded(
                   child: SizedBox(), // Spacer
                 ),
                 IconButton(
                   onPressed: () {
-                    //call page
+                    showEndcConvarsationDialog(context);
                   },
                   icon: Icon(
-                    CupertinoIcons.phone_fill,
+                    CupertinoIcons.square_arrow_right_fill,
                     size: 35,
                     color: Colors.white,
                   ),

@@ -122,28 +122,28 @@ class BottomNavigationBarApp extends StatelessWidget {
             Icons.calendar_today_rounded,
             size: 36,
           ),
-          label: '',
+          label: 'ปฏิทินอารมณ์',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             CupertinoIcons.person_2_fill,
             size: 36,
           ),
-          label: '',
+          label: 'ปรึกษา',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             CupertinoIcons.chat_bubble_fill,
             size: 36,
           ),
-          label: '',
+          label: 'แชท',
         ),
         BottomNavigationBarItem(
           icon: Icon(
             CupertinoIcons.person_fill,
             size: 36,
           ),
-          label: '',
+          label: 'โปรไฟล์',
         ),
       ],
     );

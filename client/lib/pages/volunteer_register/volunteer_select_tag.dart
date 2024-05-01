@@ -110,7 +110,7 @@ class _VolunteerSelectTagState extends State<VolunteerSelectTag> {
                             children: [
                               TextSpan(
                                 text: 'เลือกหัวข้อที่จะให้คำปรึกษา',
-                                style: FontTheme.h4.copyWith(
+                                style: FontTheme.subtitle1.copyWith(
                                     color: ColorTheme
                                         .primary2Color), // Black color for the first part of the text
                               ),
