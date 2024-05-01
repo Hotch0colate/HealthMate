@@ -182,13 +182,19 @@ class FindPsyPage extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             // If we have data, use it to create a chatroom and send a message
-            final data = snapshot.data;
-            if (data != null) {
+            final data = snapshot.data!;
+            if (data.data != null) {
               // If the `findVolunteer` future is complete and has a volunteer UID, proceed to create chat room
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _CreateChatRoomAndSendFirstMessage(context, data.data!);
               });
             } else {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NotFoundPsy()),
+                );
+              });
               return Center(child: Text('No data found inner'));
             }
             // Return a temporary placeholder widget if needed

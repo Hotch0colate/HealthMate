@@ -228,6 +228,7 @@ router.post('/query_data', authenticate, async (req, res) => {
 
             // Check if a match is found
             if (matchingVolunteers.length === 0 || matchingVolunteers[0].weekly_quota === 0 || matchingVolunteers[0].help_quota === 0) {
+                console.log('data == null');
                 return res.status(200).json({
                     RespCode: 200,
                     RespMessage: "No match found",
@@ -236,12 +237,14 @@ router.post('/query_data', authenticate, async (req, res) => {
             }
 
             // Return the uid of the best match
+            console.log('query successful');
             return res.status(200).json({
                 RespCode: 200,
                 RespMessage: "Query successful",
                 Data: matchingVolunteers[0].uid
             });
         } else {
+            console.log('404 not found');
             return res.status(404).json({
                 RespCode: 404,
                 RespMessage: "No psychiatrists found"

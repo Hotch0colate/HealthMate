@@ -186,7 +186,14 @@ class FindVolunteerPage extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return buildWaitingContent();
           } else if (snapshot.hasError) {
-            // If the Future completes with an error, show an error message
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotFoundVolunteer()),
+              );
+            });
+
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             // If we have data, use it to create a chatroom and send a message
