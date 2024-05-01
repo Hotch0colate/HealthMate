@@ -5,6 +5,7 @@ import 'package:client/Pages/chat/chat_room.dart';
 import 'package:client/component/dialog.dart';
 import 'package:client/models/volunteer_response.dart';
 import 'package:client/pages/select_talk/create_tag_page_psy.dart';
+import 'package:client/pages/select_talk/not_found_psy.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
 import 'package:flutter/cupertino.dart';
@@ -193,7 +194,13 @@ class FindPsyPage extends StatelessWidget {
             // Return a temporary placeholder widget if needed
             return Container();
           } else {
-            // If no data and no error, you can show a default message
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const NotFoundPsy()),
+              );
+            });
+
             return Center(child: Text('No data found outer'));
           }
         },
