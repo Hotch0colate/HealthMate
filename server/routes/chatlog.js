@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const firebasedb = require('firebase/database');
 const db = require('../database/firebase.js');
-const { get, set, ref } = require("firebase/database");
+const { get, set, ref, update } = require("firebase/database");
 var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
@@ -209,15 +209,22 @@ router.post('/read_data_all', async (req, res) => {
 
 // อัพเดทข้อมูล
 // Seen in chatlog update
-router.post('/update_data', (req, res) => {
+router.post('/update_data', authenticate, (req, res) => {
+    var uid = req.user.uid;
+
     var cid = req.body.cid;
+    var _complete = req.body.complete;
+    console.log(cid);
+    console.log(_complete);
 
     try {
-        get(ref(db, 'psychiatrist/' + uid))
+        get(ref(db, 'chats/' + cid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
+
                     const updateData = {
-                        seen: true
+                        seen: false,
+                        complete: _complete,
                     };
 
                     update(ref(db, 'chats/' + cid), updateData);

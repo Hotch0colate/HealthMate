@@ -31,6 +31,7 @@ class ChatRoom extends StatefulWidget {
   final String anonVolunteerName;
   final List<Map<String, dynamic>> messages;
   final bool psychiatristChat;
+  final bool complete;
 
   // ChatRoom({required this.cid, required this.uid, required this.messages});
 
@@ -45,7 +46,8 @@ class ChatRoom extends StatefulWidget {
       required this.volunteerUid,
       required this.anonUserName,
       required this.anonVolunteerName,
-      required this.psychiatristChat});
+      required this.psychiatristChat,
+      required this.complete});
 }
 
 class ChatRoomBody extends State<ChatRoom> {
@@ -259,7 +261,7 @@ class ChatRoomBody extends State<ChatRoom> {
                 ),
                 IconButton(
                   onPressed: () {
-                    showEndcConvarsationDialog(context);
+                    showEndcConvarsationDialog(context, widget.cid);
                   },
                   icon: Icon(
                     CupertinoIcons.square_arrow_right_fill,
@@ -416,31 +418,40 @@ class ChatRoomBody extends State<ChatRoom> {
                       ),
                     ),
                     const SizedBox(width: 15),
-                    Expanded(
-                      child: TextField(
-                        controller: _textEditingController,
-                        decoration: const InputDecoration(
-                          hintText: "Type here ...",
-                          hintStyle: TextStyle(
-                            color: Color.fromARGB(98, 34, 33, 33),
+                    !widget.complete
+                        ? Expanded(
+                            child: TextField(
+                              controller: _textEditingController,
+                              decoration: const InputDecoration(
+                                hintText: "Type here ...",
+                                hintStyle: TextStyle(
+                                  color: Color.fromARGB(98, 34, 33, 33),
+                                ),
+                                border: InputBorder.none,
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: Text('คุณจบบทสนทนานี้แล้ว',
+                                style: TextStyle(
+                                  color: Color.fromARGB(98, 34, 33, 33),
+                                )),
                           ),
-                          border: InputBorder.none,
-                        ),
-                      ),
-                    ),
-                    FloatingActionButton(
-                      onPressed: () {
-                        sendMessage(_textEditingController.text);
-                        _textEditingController.clear();
-                      },
-                      elevation: 0,
-                      backgroundColor: Colors.white,
-                      child: const Icon(
-                        Icons.send,
-                        size: 30,
-                        color: ColorTheme.primaryColor,
-                      ),
-                    ),
+                    !widget.complete
+                        ? FloatingActionButton(
+                            onPressed: () {
+                              sendMessage(_textEditingController.text);
+                              _textEditingController.clear();
+                            },
+                            elevation: 0,
+                            backgroundColor: Colors.white,
+                            child: const Icon(
+                              Icons.send,
+                              size: 30,
+                              color: ColorTheme.primaryColor,
+                            ),
+                          )
+                        : SizedBox.shrink(),
                   ],
                 ),
               ),

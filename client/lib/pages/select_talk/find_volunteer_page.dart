@@ -92,6 +92,7 @@ class FindVolunteerPage extends StatelessWidget {
         String anonymousUserName = jsonResponse['anonymoususername'];
         String anonymousVolunteerName = jsonResponse['anonymousvolunteername'];
         bool psychiatristChat = jsonResponse['psychiatristchat'];
+        bool complete = jsonResponse['complete'];
 
         if (cid != null) {
           String? token = await _auth_service.getIdToken();
@@ -127,6 +128,7 @@ class FindVolunteerPage extends StatelessWidget {
                 anonUserName: anonymousUserName,
                 anonVolunteerName: anonymousVolunteerName,
                 psychiatristChat: psychiatristChat,
+                complete: complete,
               ),
             ),
           );

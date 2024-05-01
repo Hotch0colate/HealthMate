@@ -98,7 +98,7 @@ class _DetailUserPageState extends State<DetailUserPage> {
                       MdPrimaryButton(
                           text: 'จบการสนทนา',
                           onPressed: () {
-                            showEndcConvarsationDialog(context);
+                            // showEndcConvarsationDialog(context);
                           }),
                       SizedBox(
                         height: 20,

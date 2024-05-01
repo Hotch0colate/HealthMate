@@ -116,6 +116,7 @@ class _ConversationBoxState extends State<ConversationBox> {
               anonUserName: widget.anonymoususername,
               anonVolunteerName: widget.anonymousvolunteername,
               psychiatristChat: widget.psychiatristchat,
+              complete: widget.complete,
             ),
           ),
         );
