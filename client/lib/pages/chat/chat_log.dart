@@ -113,16 +113,15 @@ class _ChatLogState extends State<ChatLog> {
         toolbarHeight: 80,
         automaticallyImplyLeading: false,
         title: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "กล่องข้อความ",
-                style: FontTheme.h4.copyWith(color: ColorTheme.primaryColor),
-              ),
-              
-            ],
-          ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "กล่องข้อความ",
+              style: FontTheme.h4.copyWith(color: ColorTheme.primaryColor),
+            ),
+          ],
         ),
+      ),
       body: chatlogs.isEmpty
           ? Center(
               child: Text('ไม่พบบทสนทนา',
@@ -130,21 +129,64 @@ class _ChatLogState extends State<ChatLog> {
           : ListView.builder(
               itemCount: chatlogs.length,
               itemBuilder: (context, index) {
-                return ConversationBox(
-                  name: "ช่องแชท",
-                  cid: chatlogs[index].cid,
-                  uid: widget.uid,
-                  // user: chatlogs[index].user,
-                  // volunteer: chatlogs[index].volunteer,
-                  complete: chatlogs[index].complete,
-                  seen: chatlogs[index].seen,
-                  lastmessage: chatlogs[index].lastmessage,
-                  lastsender: chatlogs[index].lastsender,
-                  // messages: [],
-                  // mil: 0,
-                  imageURL: "assets/avatar/md_11.png",
-                  date: chatlogs[index].date,
-                );
+                if (widget.uid == chatlogs[index].user) {
+                  return ConversationBox(
+                    name: chatlogs[index].anonymousvolunteername,
+                    cid: chatlogs[index].cid,
+                    uid: widget.uid,
+                    user: chatlogs[index].user,
+                    volunteer: chatlogs[index].volunteer,
+                    complete: chatlogs[index].complete,
+                    seen: chatlogs[index].seen,
+                    lastmessage: chatlogs[index].lastmessage,
+                    lastsender: chatlogs[index].lastsender,
+                    anonymoususername: chatlogs[index].anonymoususername,
+                    anonymousvolunteername:
+                        chatlogs[index].anonymousvolunteername,
+                    // messages: [],
+                    // mil: 0,
+                    imageURL: "assets/avatar/md_11.png",
+                    date: chatlogs[index].date,
+                  );
+                } else if (widget.uid == chatlogs[index].volunteer) {
+                  return ConversationBox(
+                    name: chatlogs[index].anonymoususername,
+                    cid: chatlogs[index].cid,
+                    uid: widget.uid,
+                    user: chatlogs[index].user,
+                    volunteer: chatlogs[index].volunteer,
+                    complete: chatlogs[index].complete,
+                    seen: chatlogs[index].seen,
+                    lastmessage: chatlogs[index].lastmessage,
+                    lastsender: chatlogs[index].lastsender,
+                    anonymoususername: chatlogs[index].anonymoususername,
+                    anonymousvolunteername:
+                        chatlogs[index].anonymousvolunteername,
+                    // messages: [],
+                    // mil: 0,
+                    imageURL: "assets/avatar/md_11.png",
+                    date: chatlogs[index].date,
+                  );
+                } else {
+                  return ConversationBox(
+                    name: 'ช่องแชทน้อน',
+                    cid: chatlogs[index].cid,
+                    uid: widget.uid,
+                    user: chatlogs[index].user,
+                    volunteer: chatlogs[index].volunteer,
+                    complete: chatlogs[index].complete,
+                    seen: chatlogs[index].seen,
+                    lastmessage: chatlogs[index].lastmessage,
+                    lastsender: chatlogs[index].lastsender,
+                    anonymoususername: chatlogs[index].anonymoususername,
+                    anonymousvolunteername:
+                        chatlogs[index].anonymousvolunteername,
+                    // messages: [],
+                    // mil: 0,
+                    imageURL: "assets/avatar/md_11.png",
+                    date: chatlogs[index].date,
+                  );
+                }
               },
             ),
     );

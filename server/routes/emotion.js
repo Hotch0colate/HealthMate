@@ -8,7 +8,7 @@ const cors = require('cors');
 var app = express();
 const authenticate = require('../token');
 app.use(cors());
-const formatDate = require('../service');
+const { formatDate } = require('../service');
 
 // สร้าง emotion ด้วยอีเมล
 // feature signup

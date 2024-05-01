@@ -83,6 +83,10 @@ class FindPsyPage extends StatelessWidget {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         String cid = jsonResponse['Data'];
+        String userUid = jsonResponse['userUid'];
+        String volunteerUid = jsonResponse['volunteerUid'];
+        String anonymousUserName = jsonResponse['anonymoususername'];
+        String anonymousVolunteerName = jsonResponse['anonymousvolunteername'];
 
         if (cid != null) {
           String? token = await _auth_service.getIdToken();
@@ -109,7 +113,15 @@ class FindPsyPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ChatRoom(cid: cid, uid: uid, messages: []),
+              builder: (context) => ChatRoom(
+                cid: cid,
+                uid: uid,
+                messages: [],
+                userUid: userUid,
+                volunteerUid: volunteerUid,
+                anonUserName: anonymousUserName,
+                anonVolunteerName: anonymousVolunteerName,
+              ),
             ),
           );
         } else {
@@ -232,11 +244,12 @@ Widget buildWaitingContent() {
         Stack(
           alignment: Alignment.center,
           children: [
-             SpinKitFadingCircle( // FadingCircle loading animation
-                  size: 280, // Adjust size as needed
-                  color: ColorTheme.primaryColor,
-                  duration: Durations.extralong4, 
-                ), // This will display the animation
+            SpinKitFadingCircle(
+              // FadingCircle loading animation
+              size: 280, // Adjust size as needed
+              color: ColorTheme.primaryColor,
+              duration: Durations.extralong4,
+            ), // This will display the animation
             Image.asset('assets/images/psychiatrist_glasses.png',
                 width: 100,
                 fit: BoxFit.contain), // This will stay static on top

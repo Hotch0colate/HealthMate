@@ -5,6 +5,7 @@ import 'package:client/Pages/chat/chat_room.dart';
 import 'package:client/component/dialog.dart';
 import 'package:client/models/volunteer_response.dart';
 import 'package:client/pages/select_talk/create_tag_page_volunteer.dart';
+import 'package:client/pages/select_talk/not_found_vol.dart';
 import 'package:client/pages/select_talk/select_talk_page.dart';
 import 'package:client/services/auth_service.dart';
 import 'package:client/services/ip_variable.dart';
@@ -87,6 +88,10 @@ class FindVolunteerPage extends StatelessWidget {
       if (response.statusCode == 200) {
         final jsonResponse = jsonDecode(response.body);
         String cid = jsonResponse['Data'];
+        String userUid = jsonResponse['userUid'];
+        String volunteerUid = jsonResponse['volunteerUid'];
+        String anonymousUserName = jsonResponse['anonymoususername'];
+        String anonymousVolunteerName = jsonResponse['anonymousvolunteername'];
 
         if (cid != null) {
           String? token = await _auth_service.getIdToken();
@@ -113,7 +118,15 @@ class FindVolunteerPage extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => ChatRoom(cid: cid, uid: uid, messages: []),
+              builder: (context) => ChatRoom(
+                cid: cid,
+                uid: uid,
+                messages: [],
+                userUid: userUid,
+                volunteerUid: volunteerUid,
+                anonUserName: anonymousUserName,
+                anonVolunteerName: anonymousVolunteerName,
+              ),
             ),
           );
         } else {
@@ -176,20 +189,37 @@ class FindVolunteerPage extends StatelessWidget {
             return Center(child: Text('Error: ${snapshot.error}'));
           } else if (snapshot.hasData) {
             // If we have data, use it to create a chatroom and send a message
-            final data = snapshot.data;
-            if (data != null) {
+            final data = snapshot.data!;
+            // print(data);
+            if (data.data != null) {
+              // print('data!=null');
               // If the `findVolunteer` future is complete and has a volunteer UID, proceed to create chat room
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _CreateChatRoomAndSendFirstMessage(context, data.data!);
               });
             } else {
-              return Center(child: Text('No data found'));
+              // print('data==null');
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const NotFoundVolunteer()),
+                );
+              });
             }
             // Return a temporary placeholder widget if needed
+            // print('else of else conditions');
             return Container();
           } else {
-            // If no data and no error, you can show a default message
-            return Center(child: Text('No data found'));
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const NotFoundVolunteer()),
+              );
+            });
+
+            return Container();
           }
         },
       ),
@@ -239,11 +269,12 @@ Widget buildWaitingContent() {
         Stack(
           alignment: Alignment.center,
           children: [
-            SpinKitFadingCircle( // FadingCircle loading animation
-                  size: 280, // Adjust size as needed
-                  color: ColorTheme.primaryColor,
-                  duration: Durations.extralong4, 
-                ), // This will display the animation
+            SpinKitFadingCircle(
+              // FadingCircle loading animation
+              size: 280, // Adjust size as needed
+              color: ColorTheme.primaryColor,
+              duration: Durations.extralong4,
+            ), // This will display the animation
             Image.asset('assets/images/volunteer_scarf.png',
                 width: 100,
                 fit: BoxFit.contain), // This will stay static on top

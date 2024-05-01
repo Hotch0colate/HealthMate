@@ -8,7 +8,7 @@ const cors = require('cors');
 var app = express();
 const authenticate = require('../token');
 app.use(cors());
-const formatDate = require('../service');
+const { formatDate, anonymouseNames } = require('../service');
 
 //create chatlog
 //feature create chatlog
@@ -16,6 +16,15 @@ router.post('/create_data', authenticate, async (req, res) => {
     var user = req.user.uid;
     var volunteer = req.body.volunteer;
     var cid = firebaseadmin.firestore().collection('chats').doc().id;
+
+    const randomIndexForUser = Math.floor(Math.random() * anonymouseNames.length);
+    const randomIndexForVolunteer = Math.floor(Math.random() * anonymouseNames.length);
+
+    var userAnon = anonymouseNames[randomIndexForUser];
+    var volunteerAnon = anonymouseNames[randomIndexForVolunteer];
+
+    // console.log("Anonymous User:", userAnon);
+    // console.log("Anonymous Volunteer:", volunteerAnon);
 
     // console.log("cid", cid);
     // console.log(typeof (cid));
@@ -29,6 +38,8 @@ router.post('/create_data', authenticate, async (req, res) => {
             lastmessage: "",
             seen: false,
             complete: false,
+            anonymoususername: userAnon,
+            anonymousvolunteername: volunteerAnon,
             mil: new Date().getTime(),
             date: formatDate(new Date())
         });
@@ -63,7 +74,11 @@ router.post('/create_data', authenticate, async (req, res) => {
         return res.status(200).json({
             RespCode: 200,
             RespMessage: "Create Chatlog Successfully !",
-            Data: cid
+            Data: cid,
+            userUid: user,
+            volunteerUid: volunteer,
+            anonymoususername: userAnon,
+            anonymousvolunteername: volunteerAnon
         });
     }
     catch (error) {

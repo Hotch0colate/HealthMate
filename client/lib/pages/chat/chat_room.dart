@@ -13,17 +13,21 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 
-void main() {
-  runApp(ChatRoom(
-    cid: '',
-    uid: '',
-    messages: [],
-  ));
-}
+// void main() {
+//   runApp(ChatRoom(
+//     cid: '',
+//     uid: '',
+//     messages: [],
+//   ));
+// }
 
 class ChatRoom extends StatefulWidget {
   final String cid;
   final String uid;
+  final String userUid;
+  final String volunteerUid;
+  final String anonUserName;
+  final String anonVolunteerName;
   final List<Map<String, dynamic>> messages;
 
   // ChatRoom({required this.cid, required this.uid, required this.messages});
@@ -31,11 +35,14 @@ class ChatRoom extends StatefulWidget {
   @override
   ChatRoomBody createState() => ChatRoomBody();
 
-  ChatRoom({
-    required this.cid,
-    required this.uid,
-    required this.messages,
-  });
+  ChatRoom(
+      {required this.cid,
+      required this.uid,
+      required this.messages,
+      required this.userUid,
+      required this.volunteerUid,
+      required this.anonUserName,
+      required this.anonVolunteerName});
 }
 
 class ChatRoomBody extends State<ChatRoom> {
@@ -148,14 +155,17 @@ class ChatRoomBody extends State<ChatRoom> {
 
   void onBackPress(BuildContext context) {
     Navigator.popUntil(context, (route) {
+      print(route.settings.name);
       if (route.settings.name == '/main') {
-        // Assuming the MainApp route is the root ('/')
+        print(route.settings.name);
         final state = mainAppKey.currentState;
         if (state != null) {
           state.goToChatLog();
         }
+        print('on back press return true');
         return true;
       }
+      print('on back press return false');
       return false;
     });
   }
@@ -205,11 +215,24 @@ class ChatRoomBody extends State<ChatRoom> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Volunteer A25',
-                      style: FontTheme.subtitle2
-                          .copyWith(color: ColorTheme.WhiteColor),
-                    ),
+                    if (widget.uid == widget.userUid)
+                      Text(
+                        widget.anonVolunteerName,
+                        style: FontTheme.subtitle2
+                            .copyWith(color: ColorTheme.WhiteColor),
+                      )
+                    else if (widget.uid == widget.volunteerUid)
+                      Text(
+                        widget.anonUserName,
+                        style: FontTheme.subtitle2
+                            .copyWith(color: ColorTheme.WhiteColor),
+                      )
+                    else
+                      Text(
+                        'Volunteer A25',
+                        style: FontTheme.subtitle2
+                            .copyWith(color: ColorTheme.WhiteColor),
+                      )
                   ],
                 ),
                 const SizedBox(width: 4.0),

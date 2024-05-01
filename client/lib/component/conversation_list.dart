@@ -15,12 +15,14 @@ class ConversationBox extends StatefulWidget {
   String name;
   final String cid;
   final String uid;
-  // final String user;
-  // final String volunteer;
+  final String user;
+  final String volunteer;
   final bool complete;
   final bool seen;
   final String lastmessage;
   final String lastsender;
+  final String anonymoususername;
+  final String anonymousvolunteername;
   // final List<Message> messages;
   // final int mil;
   final String imageURL;
@@ -38,12 +40,14 @@ class ConversationBox extends StatefulWidget {
       {required this.name,
       required this.cid,
       required this.uid,
-      // required this.user,
-      // required this.volunteer,
+      required this.user,
+      required this.volunteer,
       required this.complete,
       required this.seen,
       required this.lastmessage,
       required this.lastsender,
+      required this.anonymoususername,
+      required this.anonymousvolunteername,
       // required this.messages,
       // required this.mil,
       required this.imageURL,
@@ -55,13 +59,15 @@ class ConversationBox extends StatefulWidget {
           '', // ตรวจสอบและกำหนดค่าเริ่มต้นให้เป็น '' หากไม่มีค่าใน map
       cid: map['cid'] ?? '',
       uid: map['uid'] ?? '',
-      // user: map['user'] ?? '',
-      // volunteer: map['volunteer'] ?? '',
+      user: map['user'] ?? '',
+      volunteer: map['volunteer'] ?? '',
       complete: map['complete'] ??
           false, // ตรวจสอบและกำหนดค่าเริ่มต้นให้เป็น false หากไม่มีค่าใน map
       seen: map['seen'] ?? false,
       lastmessage: map['lastmessage'] ?? '',
       lastsender: map['lastsender'] ?? '',
+      anonymoususername: map['anonymoususername'] ?? '',
+      anonymousvolunteername: map['anonymousvolunteername'] ?? '',
       // messages: (map['messages'] as List<dynamic>?)
       //         ?.map((msg) => Message.fromMap(msg))
       //         ?.toList() ??
@@ -98,8 +104,15 @@ class _ConversationBoxState extends State<ConversationBox> {
         final result = await Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>
-                ChatRoom(cid: widget.cid, uid: widget.uid, messages: []),
+            builder: (context) => ChatRoom(
+              cid: widget.cid,
+              uid: widget.uid,
+              messages: [],
+              userUid: widget.user,
+              volunteerUid: widget.volunteer,
+              anonUserName: widget.anonymoususername,
+              anonVolunteerName: widget.anonymousvolunteername,
+            ),
           ),
         );
       },
@@ -141,15 +154,28 @@ class _ConversationBoxState extends State<ConversationBox> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(widget.lastmessage,
-                                          style: FontTheme.body2.copyWith(
-                                              fontWeight: widget.seen
-                                                  ? FontWeight.bold
-                                                  : FontWeight.normal)),
+                                      if (widget.lastsender == widget.uid)
+                                        Text("คุณ : " + widget.lastmessage,
+                                            style: FontTheme.body2.copyWith(
+                                                fontWeight: !widget.seen &&
+                                                        (widget.lastsender !=
+                                                            widget.uid)
+                                                    ? FontWeight.bold
+                                                    : FontWeight.normal))
+                                      else
+                                        Text(widget.lastmessage,
+                                            style: FontTheme.body2.copyWith(
+                                                fontWeight: !widget.seen &&
+                                                        (widget.lastsender !=
+                                                            widget.uid)
+                                                    ? FontWeight.bold
+                                                    : FontWeight.normal)),
                                       Text(
                                         time,
                                         style: FontTheme.caption.copyWith(
-                                          fontWeight: widget.seen
+                                          fontWeight: !widget.seen &&
+                                                  (widget.lastsender !=
+                                                      widget.uid)
                                               ? FontWeight.bold
                                               : FontWeight.normal,
                                         ),
@@ -181,14 +207,23 @@ class _ConversationBoxState extends State<ConversationBox> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text("ลบบทสนทนา",style: FontTheme.body1,),
-          content: Text("คุณต้องการลบบทสนทนาใช่หรือไม่?",style: FontTheme.body2,),
+          title: Text(
+            "ลบบทสนทนา",
+            style: FontTheme.body1,
+          ),
+          content: Text(
+            "คุณต้องการลบบทสนทนาใช่หรือไม่?",
+            style: FontTheme.body2,
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("ยกเลิก" ,style: FontTheme.caption,),
+              child: Text(
+                "ยกเลิก",
+                style: FontTheme.caption,
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -196,7 +231,10 @@ class _ConversationBoxState extends State<ConversationBox> {
                 widget.deleteConversation(context);
                 Navigator.of(context).pop();
               },
-              child: Text("ยืนยัน",style: FontTheme.caption,),
+              child: Text(
+                "ยืนยัน",
+                style: FontTheme.caption,
+              ),
             ),
           ],
         );

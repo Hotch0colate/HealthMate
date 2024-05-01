@@ -12,7 +12,7 @@ var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
 app.use(cors());
-const formatDate = require('../service');
+const { formatDate } = require('../service');
 const authenticate = require('../token');
 
 app.use(bodyParser.json());

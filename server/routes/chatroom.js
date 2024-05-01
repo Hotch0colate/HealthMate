@@ -7,13 +7,16 @@ var firebaseadmin = require("firebase-admin");
 const cors = require('cors');
 var app = express();
 app.use(cors());
-const formatDate = require('../service');
+const { formatDate } = require('../service');
 
 // สร้าง message และส่ง message ไปหาคู่สนทนา
 // feature signup
 router.post('/create_data', async (req, res) => {
     var cid = req.body.cid;
+    // var seen = req.body.seen;
+    var seen = false;
     var mid = firebaseadmin.firestore().collection('chats').doc().id;
+
 
     var sender = req.body.sender;
     var text = req.body.text;
@@ -25,14 +28,14 @@ router.post('/create_data', async (req, res) => {
                         mid: mid,
                         sender: sender,
                         text: text,
-                        seen: false,
+                        seen: seen,
                         mil: new Date().getTime(),
                         date: formatDate(new Date())
                     });
                     const updateData = {
                         lastmessage: text,
                         lastsender: sender,
-                        seen: false,
+                        seen: seen,
                         mil: new Date().getTime(),
                         date: formatDate(new Date())
                     };

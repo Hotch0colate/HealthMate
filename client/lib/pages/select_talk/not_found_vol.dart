@@ -46,19 +46,24 @@ class _NotFoundVolunteerState extends State<NotFoundVolunteer> {
                 style: FontTheme.body1,
               ),
               Text(
-                'ไม่พบจิตแพทย์เลยย',
+                'ไม่พบอาสาสมัครเลยย',
                 style:
                     FontTheme.subtitle2.copyWith(color: ColorTheme.errorAction),
               ),
-              SizedBox(height: 50,),
-              MdPrimaryButton(text: 'กลับไปยังหน้าเลือกหัวข้อ', onPressed: () {
-                    //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => CreateTagVolunteerPage()),
-                    );
-                  },)
+              SizedBox(
+                height: 50,
+              ),
+              MdPrimaryButton(
+                text: 'กลับไปยังหน้าเลือกหัวข้อ',
+                onPressed: () {
+                  //เปลี่ยน flow ตรงนี้ ตั้งเพื่อทดสอบการรันเฉยๆ
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateTagVolunteerPage()),
+                  );
+                },
+              )
             ],
           ),
         ),

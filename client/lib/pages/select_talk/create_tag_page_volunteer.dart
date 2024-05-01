@@ -87,6 +87,11 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
+    bool tagChoice1 = false;
+    bool tagChoice2 = false;
+    bool tagChoice3 = false;
+    bool tagChoice4 = false;
+
     return Scaffold(
       backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
@@ -215,15 +220,38 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
                 minWidth: 400,
                 text: 'ค้นหาอาสาสมัคร',
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FindVolunteerPage(
-                        selectedTag: _tagOptions()[selectedCardIndex],
-                        text: descriptionTextController.text,
+                  if (selectedCardIndex != -1 &&
+                      selectedCardIndex >= 0 &&
+                      descriptionTextController.text.length > 0) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FindVolunteerPage(
+                          selectedTag: _tagOptions()[selectedCardIndex],
+                          text: descriptionTextController.text,
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content: Text(
+                              "กรุณาเลือกหัวข้อที่จะปรึกษาและกรอกรายละเอียดก่อนกดค้นหา"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
               ),
               SizedBox(height: 15),

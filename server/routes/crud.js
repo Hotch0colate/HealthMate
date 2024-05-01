@@ -8,7 +8,7 @@ const cors = require('cors');
 const authenticate = require('../token');
 var app = express();
 app.use(cors());
-const formatDate = require('../service');
+const { formatDate } = require('../service');
 
 //ใส่ชื่อฟังก์ชันด้วยทุกครั้ง
 router.post('/api/create', (req, res) => {

@@ -228,15 +228,38 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                 minWidth: 400,
                 text: 'ค้นหาจิตแพทย์',
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FindPsyPage(
-                        // selectedTag: _tagOptions()[selectedCardIndex],
-                        text: descriptionTextController.text, selectedTag: '',
+                  if (selectedCardIndex != 1 &&
+                      selectedCardIndex >= 0 &&
+                      descriptionTextController.text.length > 0) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => FindPsyPage(
+                          // selectedTag: _tagOptions()[selectedCardIndex],
+                          text: descriptionTextController.text, selectedTag: '',
+                        ),
                       ),
-                    ),
-                  );
+                    );
+                  } else {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Error"),
+                          content: Text(
+                              "กรุณาเลือกหัวข้อที่จะปรึกษาและกรอกรายละเอียดก่อนกดค้นหา"),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Text("OK"),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
                 },
               ),
               const SizedBox(height: 15),
