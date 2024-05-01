@@ -91,6 +91,8 @@ router.post('/update_data', authenticate, (req, res) => {
 
     var tags = req.body.tags;
     var rating_score = req.body.rating_score;
+    var weekly_quota = req.body.weekly_quota;
+    var help_quota = req.body.help_quota;
 
     try {
         get(ref(db, 'volunteers/' + uid))
@@ -103,6 +105,8 @@ router.post('/update_data', authenticate, (req, res) => {
                     // Optional Chaining
                     tags && (updateData.tags = tags);
                     rating_score && (updateData.rating_score = rating_score);
+                    weekly_quota && (updateData.weekly_quota = weekly_quota);
+                    help_quota && (updateData.help_quota = help_quota);
                     update(ref(db, 'volunteers/' + uid), updateData);
                     return res.status(200).json({
                         RespCode: 200,
