@@ -16,18 +16,32 @@ router.post('/create_data', authenticate, async (req, res) => {
     var user = req.user.uid;
     var volunteer = req.body.volunteer;
     var cid = firebaseadmin.firestore().collection('chats').doc().id;
+    var psychiatristchat = req.body.psychiatristchat;
 
     const randomIndexForUser = Math.floor(Math.random() * anonymouseNames.length);
     const randomIndexForVolunteer = Math.floor(Math.random() * anonymouseNames.length);
 
+    var volunteerAnon;
+
     var userAnon = anonymouseNames[randomIndexForUser];
-    var volunteerAnon = anonymouseNames[randomIndexForVolunteer];
+    if (!psychiatristchat) {
+        volunteerAnon = anonymouseNames[randomIndexForVolunteer];
+    }
+    else {
+        try {
+            const _snapshot = await firebasedb.get(ref(db, 'psychiatrists/' + volunteer + '/firstname'));
+            if (_snapshot.exists()) {
+                volunteerAnon = _snapshot.val();
+            } else {
+                console.log("No psychiatrist data available");
+                volunteerAnon = anonymouseNames[randomIndexForVolunteer];
+            }
+        } catch (error) {
+            console.log("Failed to fetch psychiatrist data:", error);
+            volunteerAnon = anonymouseNames[randomIndexForVolunteer];
+        }
+    }
 
-    // console.log("Anonymous User:", userAnon);
-    // console.log("Anonymous Volunteer:", volunteerAnon);
-
-    // console.log("cid", cid);
-    // console.log(typeof (cid));
     try {
         set(ref(db, 'chats/' + cid), {
             cid: cid,
@@ -38,6 +52,7 @@ router.post('/create_data', authenticate, async (req, res) => {
             lastmessage: "",
             seen: false,
             complete: false,
+            psychiatristchat: psychiatristchat,
             anonymoususername: userAnon,
             anonymousvolunteername: volunteerAnon,
             mil: new Date().getTime(),

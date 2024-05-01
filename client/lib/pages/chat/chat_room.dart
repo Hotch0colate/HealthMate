@@ -155,17 +155,18 @@ class ChatRoomBody extends State<ChatRoom> {
 
   void onBackPress(BuildContext context) {
     Navigator.popUntil(context, (route) {
-      print(route.settings.name);
+      // print(route.settings.name);
       if (route.settings.name == '/main') {
-        print(route.settings.name);
+        // print(route.settings.name);
         final state = mainAppKey.currentState;
         if (state != null) {
+          // print(state);
           state.goToChatLog();
         }
-        print('on back press return true');
+        // print('on back press return true');
         return true;
       }
-      print('on back press return false');
+      // print('on back press return false');
       return false;
     });
   }
@@ -229,7 +230,7 @@ class ChatRoomBody extends State<ChatRoom> {
                       )
                     else
                       Text(
-                        'Volunteer A25',
+                        'ช่องแชทน้อน',
                         style: FontTheme.subtitle2
                             .copyWith(color: ColorTheme.WhiteColor),
                       )

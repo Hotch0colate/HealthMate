@@ -129,7 +129,8 @@ class _ChatLogState extends State<ChatLog> {
           : ListView.builder(
               itemCount: chatlogs.length,
               itemBuilder: (context, index) {
-                if (widget.uid == chatlogs[index].user) {
+                if (widget.uid == chatlogs[index].user &&
+                    !chatlogs[index].psychiatristchat) {
                   return ConversationBox(
                     name: chatlogs[index].anonymousvolunteername,
                     cid: chatlogs[index].cid,
@@ -143,14 +144,16 @@ class _ChatLogState extends State<ChatLog> {
                     anonymoususername: chatlogs[index].anonymoususername,
                     anonymousvolunteername:
                         chatlogs[index].anonymousvolunteername,
+                    psychiatristchat: chatlogs[index].psychiatristchat,
                     // messages: [],
                     // mil: 0,
                     imageURL: "assets/avatar/md_11.png",
                     date: chatlogs[index].date,
                   );
-                } else if (widget.uid == chatlogs[index].volunteer) {
+                } else if (widget.uid == chatlogs[index].user &&
+                    chatlogs[index].psychiatristchat) {
                   return ConversationBox(
-                    name: chatlogs[index].anonymoususername,
+                    name: "จิตแพทย์" + chatlogs[index].anonymousvolunteername,
                     cid: chatlogs[index].cid,
                     uid: widget.uid,
                     user: chatlogs[index].user,
@@ -162,6 +165,49 @@ class _ChatLogState extends State<ChatLog> {
                     anonymoususername: chatlogs[index].anonymoususername,
                     anonymousvolunteername:
                         chatlogs[index].anonymousvolunteername,
+                    psychiatristchat: chatlogs[index].psychiatristchat,
+                    // messages: [],
+                    // mil: 0,
+                    imageURL: "assets/avatar/md_11.png",
+                    date: chatlogs[index].date,
+                  );
+                } else if (widget.uid == chatlogs[index].volunteer &&
+                    !chatlogs[index].psychiatristchat) {
+                  return ConversationBox(
+                    name: chatlogs[index].anonymoususername + "(อาสาสมัคร)",
+                    cid: chatlogs[index].cid,
+                    uid: widget.uid,
+                    user: chatlogs[index].user,
+                    volunteer: chatlogs[index].volunteer,
+                    complete: chatlogs[index].complete,
+                    seen: chatlogs[index].seen,
+                    lastmessage: chatlogs[index].lastmessage,
+                    lastsender: chatlogs[index].lastsender,
+                    anonymoususername: chatlogs[index].anonymoususername,
+                    anonymousvolunteername:
+                        chatlogs[index].anonymousvolunteername,
+                    psychiatristchat: chatlogs[index].psychiatristchat,
+                    // messages: [],
+                    // mil: 0,
+                    imageURL: "assets/avatar/md_11.png",
+                    date: chatlogs[index].date,
+                  );
+                } else if (widget.uid == chatlogs[index].volunteer &&
+                    chatlogs[index].psychiatristchat) {
+                  return ConversationBox(
+                    name: chatlogs[index].anonymoususername + "(จิตแพทย์)",
+                    cid: chatlogs[index].cid,
+                    uid: widget.uid,
+                    user: chatlogs[index].user,
+                    volunteer: chatlogs[index].volunteer,
+                    complete: chatlogs[index].complete,
+                    seen: chatlogs[index].seen,
+                    lastmessage: chatlogs[index].lastmessage,
+                    lastsender: chatlogs[index].lastsender,
+                    anonymoususername: chatlogs[index].anonymoususername,
+                    anonymousvolunteername:
+                        chatlogs[index].anonymousvolunteername,
+                    psychiatristchat: chatlogs[index].psychiatristchat,
                     // messages: [],
                     // mil: 0,
                     imageURL: "assets/avatar/md_11.png",
@@ -181,6 +227,7 @@ class _ChatLogState extends State<ChatLog> {
                     anonymoususername: chatlogs[index].anonymoususername,
                     anonymousvolunteername:
                         chatlogs[index].anonymousvolunteername,
+                    psychiatristchat: chatlogs[index].psychiatristchat,
                     // messages: [],
                     // mil: 0,
                     imageURL: "assets/avatar/md_11.png",

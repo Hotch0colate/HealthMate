@@ -49,7 +49,7 @@ class FindVolunteerPage extends StatelessWidget {
       String? token = await _auth_service.getIdToken();
 
       final response = await http.post(
-        Uri.parse('http://${fixedIp}:3000/volunteer/query_volunteers'),
+        Uri.parse('http://${fixedIp}:3000/volunteer/query_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -80,9 +80,8 @@ class FindVolunteerPage extends StatelessWidget {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({
-          "volunteer": volunteerUid,
-        }),
+        body:
+            jsonEncode({"volunteer": volunteerUid, "psychiatristchat": false}),
       );
 
       if (response.statusCode == 200) {

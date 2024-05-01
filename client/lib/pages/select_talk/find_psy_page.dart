@@ -24,7 +24,7 @@ class FindPsyPage extends StatelessWidget {
   const FindPsyPage({Key? key, required this.selectedTag, required this.text})
       : super(key: key);
 
-  Future<VolunteerQueryResponse?> findVolunteer() async {
+  Future<VolunteerQueryResponse?> findPsychiatrist() async {
     await Future.delayed(Duration(seconds: 3));
     try {
       final result = await _tagMatchQuery(selectedTag);
@@ -44,7 +44,7 @@ class FindPsyPage extends StatelessWidget {
       String? token = await _auth_service.getIdToken();
 
       final response = await http.post(
-        Uri.parse('http://${fixedIp}:3000/volunteer/query_volunteers'),
+        Uri.parse('http://${fixedIp}:3000/psychiatrist/query_data'),
         headers: <String, String>{
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -56,15 +56,15 @@ class FindPsyPage extends StatelessWidget {
         final jsonResponse = jsonDecode(response.body);
         return VolunteerQueryResponse.fromJson(jsonResponse);
       } else {
-        throw Exception('Failed to load volunteers');
+        throw Exception('Failed to load psychiatrists');
       }
     } catch (error) {
-      throw Exception('Failed to load volunteers: $error');
+      throw Exception('Failed to load psychiatrists: $error');
     }
   }
 
   Future<void> _CreateChatRoomAndSendFirstMessage(
-      BuildContext context, String volunteerUid) async {
+      BuildContext context, String psychiatristUid) async {
     try {
       var _auth_service = AuthService();
       String? token = await _auth_service.getIdToken();
@@ -75,9 +75,8 @@ class FindPsyPage extends StatelessWidget {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: jsonEncode({
-          "volunteer": volunteerUid,
-        }),
+        body: jsonEncode(
+            {"volunteer": psychiatristUid, "psychiatristchat": true}),
       );
 
       if (response.statusCode == 200) {
@@ -171,7 +170,7 @@ class FindPsyPage extends StatelessWidget {
         toolbarHeight: 120,
       ),
       body: FutureBuilder(
-        future: findVolunteer(), // Replace with your actual API call
+        future: findPsychiatrist(), // Replace with your actual API call
         builder: (context, snapshot) {
           // While waiting for the API, show the animation and other content
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -188,13 +187,13 @@ class FindPsyPage extends StatelessWidget {
                 _CreateChatRoomAndSendFirstMessage(context, data.data!);
               });
             } else {
-              return Center(child: Text('No data found'));
+              return Center(child: Text('No data found inner'));
             }
             // Return a temporary placeholder widget if needed
             return Container();
           } else {
             // If no data and no error, you can show a default message
-            return Center(child: Text('No data found'));
+            return Center(child: Text('No data found outer'));
           }
         },
       ),

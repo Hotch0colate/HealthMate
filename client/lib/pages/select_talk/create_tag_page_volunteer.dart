@@ -44,8 +44,7 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
 
   TextEditingController descriptionTextController = TextEditingController();
 
-  List<String> _tagOptions() =>
-      ["Generic", "Responbility", "Relation", "Health"];
+  List<String> _tagOptions() => ["generic", "work", "relationship", "health"];
 
   void _fetchUidVolunteer() async {
     await checkIfVolunteer();
@@ -86,11 +85,6 @@ class _CreateTagVolunteerPageState extends State<CreateTagVolunteerPage> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-
-    bool tagChoice1 = false;
-    bool tagChoice2 = false;
-    bool tagChoice3 = false;
-    bool tagChoice4 = false;
 
     return Scaffold(
       backgroundColor: ColorTheme.WhiteColor,

@@ -23,6 +23,7 @@ class ConversationBox extends StatefulWidget {
   final String lastsender;
   final String anonymoususername;
   final String anonymousvolunteername;
+  final bool psychiatristchat;
   // final List<Message> messages;
   // final int mil;
   final String imageURL;
@@ -48,6 +49,7 @@ class ConversationBox extends StatefulWidget {
       required this.lastsender,
       required this.anonymoususername,
       required this.anonymousvolunteername,
+      required this.psychiatristchat,
       // required this.messages,
       // required this.mil,
       required this.imageURL,
@@ -68,6 +70,7 @@ class ConversationBox extends StatefulWidget {
       lastsender: map['lastsender'] ?? '',
       anonymoususername: map['anonymoususername'] ?? '',
       anonymousvolunteername: map['anonymousvolunteername'] ?? '',
+      psychiatristchat: map['psychiatristchat'] ?? '',
       // messages: (map['messages'] as List<dynamic>?)
       //         ?.map((msg) => Message.fromMap(msg))
       //         ?.toList() ??

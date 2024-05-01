@@ -30,16 +30,16 @@ router.post('/create_data', authenticate, upload.single('certificateimage'), asy
 
     const tags = JSON.parse(req.body.tags);
 
-    var pid = firebaseadmin.firestore().collection('psychiatrists').doc().id;
-
     try {
-        firebasedb.set(ref(db, 'psychiatrists/' + pid), {
-            pid: pid,
+        firebasedb.set(ref(db, 'psychiatrists/' + uid), {
             uid: uid,
             firstname: firstname,
             lastname: lastname,
             numbercertificate: numbercertificate,
             datecertificate: datecertificate,
+            help_quota: 3,
+            weekly_quota: 5,
+            rating_score: 100,
             tags: tags,
             mil: new Date().getTime(),
             date: formatDate(new Date())
@@ -64,10 +64,8 @@ router.post('/create_data', authenticate, upload.single('certificateimage'), asy
 router.post('/read_data', authenticate, (req, res) => {
     var uid = req.user.uid;
 
-    var pid = req.body.pid;
-
     try {
-        firebasedb.get(ref(db, 'psychiatrists/' + pid))
+        firebasedb.get(ref(db, 'psychiatrists/' + uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     // console.log(snapshot.val());
@@ -99,7 +97,6 @@ router.post('/read_data', authenticate, (req, res) => {
 // feature first login and edit profile
 router.post('/update_data', (req, res) => {
     console.log(req.body);
-    var pid = req.body.pid;
 
 
     var firstname = req.body.firstname;
@@ -109,12 +106,11 @@ router.post('/update_data', (req, res) => {
         var datecertificate = formatDate(req.body.datecertificate);
     }
 
-
     var tags = req.body.tags;
     var rating_score = req.body.rating_score;
 
     try {
-        get(ref(db, 'psychiatrists/' + pid))
+        get(ref(db, 'psychiatrists/' + uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     const updateData = {
@@ -129,8 +125,10 @@ router.post('/update_data', (req, res) => {
                     datecertificate && (updateData.datecertificate = datecertificate);
                     tags && (updateData.tags = tags);
                     rating_score && (updateData.rating_score = rating_score);
+                    tags && (updateData.tags = tags);
+                    rating_score && (updateData.rating_score = rating_score);
 
-                    update(ref(db, 'psychiatrists/' + pid), updateData);
+                    update(ref(db, 'psychiatrists/' + uid), updateData);
 
                     return res.status(200).json({
                         RespCode: 200,
@@ -157,14 +155,15 @@ router.post('/update_data', (req, res) => {
 
 // ลบข้อมูล psychiatrist
 // feature delete psychiatrist
-router.post('/delete_data', (req, res) => {
-    var pid = req.body.pid;
+router.post('/delete_data', authenticate, (req, res) => {
+    var uid = req.user.uid
+
 
     try {
-        get(ref(db, 'psychiatrists/' + pid))
+        get(ref(db, 'psychiatrists/' + uid))
             .then((snapshot) => {
                 if (snapshot.exists()) {
-                    remove(ref(db, 'psychiatrists/' + pid));
+                    remove(ref(db, 'psychiatrists/' + uid));
 
                     return res.status(200).json({
                         RespCode: 200,
@@ -188,6 +187,75 @@ router.post('/delete_data', (req, res) => {
     }
 });
 
+router.post('/query_data', authenticate, async (req, res) => {
+    var uid = req.user.uid;
+    const { tag } = req.body;
+
+    try {
+        const snapshot = await get(ref(db, 'psychiatrists'));
+        if (snapshot.exists()) {
+            let volunteers = snapshot.val();
+
+            // Convert object to array and include uid in each item
+            volunteers = Object.entries(volunteers).map(([uid, details]) => ({
+                uid,
+                ...details,
+                tagMatch: details.tags && details.tags.includes(tag),
+                hasGeneric: details.tags && details.tags.includes("generic")
+            }));
+
+            // Filter out volunteers without matching or generic tag
+            let matchingVolunteers = volunteers.filter(v => v.uid !== uid && (v.tagMatch || v.hasGeneric));
+
+            // Sort by tag match, then by quotas and score
+            matchingVolunteers.sort((a, b) => {
+                // Prioritize tag match over "Generic"
+                if (a.tagMatch && !b.tagMatch) {
+                    if (a.weekly_quota === 0 || a.help_quota === 0) return 1;
+                    return -1;
+                }
+                if (!a.tagMatch && b.tagMatch) {
+                    if (b.weekly_quota === 0 || b.help_quota === 0) return -1;
+                    return 1;
+                }
+                if (a.hasGeneric !== b.hasGeneric && a.tagMatch !== b.tagMatch) return b.hasGeneric - a.hasGeneric;
+
+                // Then sort by weekly_quota, help_quota, rating_score
+                if (a.weekly_quota !== b.weekly_quota) return b.weekly_quota - a.weekly_quota;
+                if (a.help_quota !== b.help_quota) return b.help_quota - a.help_quota;
+                return b.rating_score - a.rating_score;
+            });
+
+            // Check if a match is found
+            if (matchingVolunteers.length === 0 || matchingVolunteers[0].weekly_quota === 0 || matchingVolunteers[0].help_quota === 0) {
+                return res.status(200).json({
+                    RespCode: 200,
+                    RespMessage: "No match found",
+                    Data: null
+                });
+            }
+
+            // Return the uid of the best match
+            return res.status(200).json({
+                RespCode: 200,
+                RespMessage: "Query successful",
+                Data: matchingVolunteers[0].uid
+            });
+        } else {
+            return res.status(404).json({
+                RespCode: 404,
+                RespMessage: "No psychiatrists found"
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            RespCode: 500,
+            RespMessage: `Error: ${error.message}\nPath API: /query_data`
+        });
+    }
+});
+
 router.post('/check_data', authenticate, (req, res) => {
     var uid = req.user.uid;
 
@@ -203,7 +271,7 @@ router.post('/check_data', authenticate, (req, res) => {
                             return res.status(200).json({
                                 RespCode: 200,
                                 RespMessage: "Success",
-                                pid: pid
+                                uid: uid
                             });
                         }
                     }

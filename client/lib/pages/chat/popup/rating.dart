@@ -81,10 +81,21 @@ Widget dialogContent(BuildContext context) {
           child: SmPrimaryButton(
             text: 'บันทึก',
             onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 2)),
-              );
+              Navigator.popUntil(context, (route) {
+                // print(route.settings.name);
+                if (route.settings.name == '/main') {
+                  // print(route.settings.name);
+                  final state = mainAppKey.currentState;
+                  if (state != null) {
+                    // print(state);
+                    state.goToChatLog();
+                  }
+                  // print('on back press return true');
+                  return true;
+                }
+                // print('on back press return false');
+                return false;
+              });
             },
           ),
         ),

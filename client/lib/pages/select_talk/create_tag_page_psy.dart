@@ -39,7 +39,7 @@ class CreateTagPsyPage extends StatefulWidget {
 
 class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
   bool isPsychiatrist = false; // Track psychiatrist status
-  String pid = '';
+  String psychiatristUid = '';
 
   int selectedCardIndex = -1; // -1 indicates no card selected
 
@@ -47,16 +47,15 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
 
   TextEditingController descriptionTextController = TextEditingController();
 
-  List<String> _tagOptions() =>
-      ["Generic", "Responbility", "Relation", "Health"];
+  List<String> _tagOptions() => ["generic", "work", "relationship", "health"];
 
-  void _fetchAndSetPid() async {
-    String _pid = await checkIfPsychiatrist();
-    print(_pid);
-    if (_pid != '' && isPsychiatrist == true) {
+  void _fetchAndSetPUid() async {
+    String _PyschiatristUid = await checkIfPsychiatrist();
+    print(_PyschiatristUid);
+    if (_PyschiatristUid != '' && isPsychiatrist == true) {
       setState(() {
-        pid = _pid;
-        print(pid);
+        psychiatristUid = _PyschiatristUid;
+        print(psychiatristUid);
       });
     }
   }
@@ -77,7 +76,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
       String respMessage = jsonDecode(response.body)['RespMessage'];
       if (respMessage == "Success") {
         isPsychiatrist = true;
-        return respMessage = jsonDecode(response.body)['pid'];
+        return respMessage = jsonDecode(response.body)['uid'];
       }
       return '';
     } else if (response.statusCode == 404) {
@@ -92,7 +91,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
   @override
   void initState() {
     super.initState();
-    _fetchAndSetPid();
+    _fetchAndSetPUid();
   }
 
   @override
@@ -228,7 +227,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                 minWidth: 400,
                 text: 'ค้นหาจิตแพทย์',
                 onPressed: () {
-                  if (selectedCardIndex != 1 &&
+                  if (selectedCardIndex != -1 &&
                       selectedCardIndex >= 0 &&
                       descriptionTextController.text.length > 0) {
                     Navigator.push(
@@ -236,7 +235,8 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                       MaterialPageRoute(
                         builder: (context) => FindPsyPage(
                           // selectedTag: _tagOptions()[selectedCardIndex],
-                          text: descriptionTextController.text, selectedTag: '',
+                          text: descriptionTextController.text,
+                          selectedTag: _tagOptions()[selectedCardIndex],
                         ),
                       ),
                     );
@@ -299,7 +299,7 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                             return CancleRoleDialog(
                               textRole: 'ยกเลิกการเป็นจิตแพทย์',
                               apiLine: 'psychiatrist',
-                              roleId: pid,
+                              roleId: psychiatristUid,
                             );
                           },
                         );

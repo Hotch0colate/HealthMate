@@ -160,7 +160,7 @@ router.post('/delete_data', authenticate, (req, res) => {
     }
 });
 
-router.post('/query_volunteers', authenticate, async (req, res) => {
+router.post('/query_data', authenticate, async (req, res) => {
     var uid = req.user.uid;
     const { tag } = req.body;
 
@@ -224,7 +224,7 @@ router.post('/query_volunteers', authenticate, async (req, res) => {
         console.log(error);
         return res.status(500).json({
             RespCode: 500,
-            RespMessage: `Error: ${error.message}\nPath API: /query_volunteers`
+            RespMessage: `Error: ${error.message}\nPath API: /query_data`
         });
     }
 });
