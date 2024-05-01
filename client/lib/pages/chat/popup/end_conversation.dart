@@ -7,7 +7,6 @@ import 'package:client/theme/font.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
 void showEndcConvarsationDialog(BuildContext context) {
   showDialog(
     context: context,
@@ -19,8 +18,7 @@ void showEndcConvarsationDialog(BuildContext context) {
           ),
           elevation: 0,
           backgroundColor: Colors.transparent,
-          child: dialogContent(context
-          ),
+          child: dialogContent(context),
         ),
       );
     },
@@ -29,7 +27,7 @@ void showEndcConvarsationDialog(BuildContext context) {
 
 Widget dialogContent(BuildContext context) {
   // Get the current date
- 
+
   return Container(
     padding: EdgeInsets.all(16.0),
     decoration: BoxDecoration(
@@ -65,23 +63,34 @@ Widget dialogContent(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SmPrimaryButton(
-                text: 'ยืนยัน',
-                onPressed: () {
-                   Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => MainApp(SelectedPage: 2)),
-              );
-                  },
-                backgroundColor: ColorTheme.successAction,
-                borderColor: ColorTheme.successAction,
+              text: 'ยืนยัน',
+              onPressed: () {
+                Navigator.popUntil(context, (route) {
+                  // print(route.settings.name);
+                  if (route.settings.name == '/main') {
+                    // print(route.settings.name);
+                    final state = mainAppKey.currentState;
+                    if (state != null) {
+                      // print(state);
+                      state.goToChatLog();
+                    }
+                    // print('on back press return true');
+                    return true;
+                  }
+                  // print('on back press return false');
+                  return false;
+                });
+              },
+              backgroundColor: ColorTheme.successAction,
+              borderColor: ColorTheme.successAction,
             ),
             SmPrimaryButton(
-                text: 'ยกเลิก',
-                onPressed: () {
+              text: 'ยกเลิก',
+              onPressed: () {
                 Navigator.of(context).pop();
-                },
-                backgroundColor: ColorTheme.errorAction,
-                borderColor: ColorTheme.errorAction,
+              },
+              backgroundColor: ColorTheme.errorAction,
+              borderColor: ColorTheme.errorAction,
             ),
           ],
         ),
