@@ -86,6 +86,7 @@ class FindPsyPage extends StatelessWidget {
         String volunteerUid = jsonResponse['volunteerUid'];
         String anonymousUserName = jsonResponse['anonymoususername'];
         String anonymousVolunteerName = jsonResponse['anonymousvolunteername'];
+        bool psychiatristChat = jsonResponse['psychiatristchat'];
 
         if (cid != null) {
           String? token = await _auth_service.getIdToken();
@@ -113,14 +114,14 @@ class FindPsyPage extends StatelessWidget {
             context,
             MaterialPageRoute(
               builder: (context) => ChatRoom(
-                cid: cid,
-                uid: uid,
-                messages: [],
-                userUid: userUid,
-                volunteerUid: volunteerUid,
-                anonUserName: anonymousUserName,
-                anonVolunteerName: anonymousVolunteerName,
-              ),
+                  cid: cid,
+                  uid: uid,
+                  messages: [],
+                  userUid: userUid,
+                  volunteerUid: volunteerUid,
+                  anonUserName: anonymousUserName,
+                  anonVolunteerName: anonymousVolunteerName,
+                  psychiatristChat: psychiatristChat),
             ),
           );
         } else {

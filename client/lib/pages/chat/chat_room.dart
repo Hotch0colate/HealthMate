@@ -29,6 +29,7 @@ class ChatRoom extends StatefulWidget {
   final String anonUserName;
   final String anonVolunteerName;
   final List<Map<String, dynamic>> messages;
+  final bool psychiatristChat;
 
   // ChatRoom({required this.cid, required this.uid, required this.messages});
 
@@ -42,7 +43,8 @@ class ChatRoom extends StatefulWidget {
       required this.userUid,
       required this.volunteerUid,
       required this.anonUserName,
-      required this.anonVolunteerName});
+      required this.anonVolunteerName,
+      required this.psychiatristChat});
 }
 
 class ChatRoomBody extends State<ChatRoom> {
@@ -216,15 +218,31 @@ class ChatRoomBody extends State<ChatRoom> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    if (widget.uid == widget.userUid)
+                    if (widget.uid == widget.userUid &&
+                        !widget.psychiatristChat)
                       Text(
                         widget.anonVolunteerName,
                         style: FontTheme.subtitle2
                             .copyWith(color: ColorTheme.WhiteColor),
                       )
-                    else if (widget.uid == widget.volunteerUid)
+                    else if (widget.uid == widget.userUid &&
+                        widget.psychiatristChat)
                       Text(
-                        widget.anonUserName,
+                        'จิตแพทย์' + widget.anonVolunteerName,
+                        style: FontTheme.subtitle2
+                            .copyWith(color: ColorTheme.WhiteColor),
+                      )
+                    else if (widget.uid == widget.volunteerUid &&
+                        !widget.psychiatristChat)
+                      Text(
+                        widget.anonUserName + ' (อาสาสมัคร)',
+                        style: FontTheme.subtitle2
+                            .copyWith(color: ColorTheme.WhiteColor),
+                      )
+                    else if (widget.uid == widget.volunteerUid &&
+                        widget.psychiatristChat)
+                      Text(
+                        widget.anonUserName + ' (จิตแพทย์)',
                         style: FontTheme.subtitle2
                             .copyWith(color: ColorTheme.WhiteColor),
                       )

@@ -174,7 +174,7 @@ class _ChatLogState extends State<ChatLog> {
                 } else if (widget.uid == chatlogs[index].volunteer &&
                     !chatlogs[index].psychiatristchat) {
                   return ConversationBox(
-                    name: chatlogs[index].anonymoususername + "(อาสาสมัคร)",
+                    name: chatlogs[index].anonymoususername + " (อาสาสมัคร)",
                     cid: chatlogs[index].cid,
                     uid: widget.uid,
                     user: chatlogs[index].user,
@@ -195,7 +195,7 @@ class _ChatLogState extends State<ChatLog> {
                 } else if (widget.uid == chatlogs[index].volunteer &&
                     chatlogs[index].psychiatristchat) {
                   return ConversationBox(
-                    name: chatlogs[index].anonymoususername + "(จิตแพทย์)",
+                    name: chatlogs[index].anonymoususername + " (จิตแพทย์)",
                     cid: chatlogs[index].cid,
                     uid: widget.uid,
                     user: chatlogs[index].user,
