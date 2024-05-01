@@ -219,28 +219,29 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         ),
                       ],
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        _selectImage(context);
-                      },
-                      child: Stack(
-                        children: [
-                          Image.asset(
-                            'assets/avatar/md_11.png',
-                            width: 80,
-                          ),
-                          Positioned(
-                            bottom: 10,
-                            right: 0,
-                            child: Icon(
-                              CupertinoIcons.pencil_circle_fill,
-                              color: Colors.black87,
-                              size: 30,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                    // GestureDetector(
+                    //   onTap: () {
+                    //     _selectImage(context);
+                    //   },
+                    //   child: Stack(
+                    //     children: [
+                    //       Image.asset(
+                    //         'assets/avatar/md_11.png',
+                    //         width: 80,
+                    //       ),
+                    //       Positioned(
+                    //         bottom: 10,
+                    //         right: 0,
+                    //         child: Icon(
+                    //           CupertinoIcons.pencil_circle_fill,
+                    //           color: Colors.black87,
+                    //           size: 30,
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    Text('แก้ไขโปรไฟล์',style: FontTheme.subtitle1.copyWith(color: ColorTheme.baseColor),),
                     SizedBox(height: 10),
                     InputTextField(
                         controller: _usernameController,

@@ -245,16 +245,18 @@ class _CreateTagPsyPageState extends State<CreateTagPsyPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
+                          backgroundColor: ColorTheme.WhiteColor,
                           title: Text("Error"),
                           content: Text(
-                              "กรุณาเลือกหัวข้อที่จะปรึกษาและกรอกรายละเอียดก่อนกดค้นหา"),
+                            "กรุณาเลือกหัวข้อที่จะปรึกษาและกรอกรายละเอียดก่อนกดค้นหา",
+                            style: FontTheme.caption,
+                          ),
                           actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text("OK"),
-                            ),
+                            SmPrimaryButton(
+                                text: 'ตกลง',
+                                onPressed: () {
+                                  Navigator.pop(context);
+                                })
                           ],
                         );
                       },

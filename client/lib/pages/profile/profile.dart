@@ -71,6 +71,19 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 80,
+        automaticallyImplyLeading: false,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              userName,
+              style: FontTheme.h4.copyWith(color: ColorTheme.primaryColor),
+            ),
+          ],
+        ),
+      ),
       backgroundColor: ColorTheme.WhiteColor,
       body: SingleChildScrollView(
         physics: NeverScrollableScrollPhysics(),
@@ -86,47 +99,44 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      // children: [
-                      //   IconButton(
-                      //     icon: const Icon(
-                      //       Icons
-                      //           .arrow_back_ios, // Replace with your custom icon
-                      //       color: Colors.black38,
-                      //       size: 30, // Customize the icon color
-                      //     ),
-                      //     onPressed: () {
-                      //       Navigator.pop(context);
-                      //     },
-                      //   ),
-                      // ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.start,
+                    //   children: [
+                    //     IconButton(
+                    //       icon: const Icon(
+                    //         Icons
+                    //             .arrow_back_ios, // Replace with your custom icon
+                    //         color: Colors.black38,
+                    //         size: 30, // Customize the icon color
+                    //       ),
+                    //       onPressed: () {
+                    //         Navigator.pop(context);
+                    //       },
+                    //     ),
+                    //   ],
+                    // ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     // Image.asset(
+                    //     //   'assets/avatar/md_10.png',
+                    //     //   width: 80,
+                    //     // ),
+                    //     // Column(
+                    //     //   crossAxisAlignment: CrossAxisAlignment.start,
+                    //     //   children: [
+                    //     //     Text(
+                    //     //       userName, // Use the updated userName here
+                    //     //       style: FontTheme.subtitle1.copyWith(
+                    //     //         color: ColorTheme.primaryColor,
+                    //     //       ),
+                    //     //     ),
+                    //     //   ],
+                    //     // ),
+                    //   ],
+                    // ),
                     SizedBox(
-                      height: 24,
-                    ),
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/avatar/md_10.png',
-                          width: 80,
-                        ),
-                        SizedBox(width: 20),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              userName, // Use the updated userName here
-                              style: FontTheme.subtitle1.copyWith(
-                                color: ColorTheme.baseColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 24,
+                      height: 12,
                     ),
                     CustomElevatedButton(
                       onPressed: () {

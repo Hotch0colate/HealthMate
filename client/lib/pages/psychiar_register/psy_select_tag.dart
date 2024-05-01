@@ -151,7 +151,7 @@ class _PsySelectTagState extends State<PsySelectTag> {
                             children: [
                               TextSpan(
                                 text: 'เลือกหัวข้อที่จะให้คำปรึกษา',
-                                style: FontTheme.h4.copyWith(
+                                style: FontTheme.subtitle1.copyWith(
                                     color: ColorTheme
                                         .secondaryColor), // Black color for the first part of the text
                               ),

@@ -57,7 +57,7 @@ class FontTheme {
   static const TextStyle caption = TextStyle(
     fontFamily: 'Anuphan',
     fontWeight: FontWeight.w300,
-    fontSize: 16,
+    fontSize: 14,
   );
 
   static const TextStyle btn_large = TextStyle(
