@@ -166,12 +166,13 @@ router.post('/delete_data', authenticate, (req, res) => {
 
 router.post('/query_data', authenticate, async (req, res) => {
     var uid = req.user.uid;
-    const { tag } = req.body;
+    var tag = req.body.tags;
 
     try {
         const snapshot = await get(ref(db, 'volunteers'));
         if (snapshot.exists()) {
             let volunteers = snapshot.val();
+            // console.log(tag);
 
             // Convert object to array and include uid in each item
             volunteers = Object.entries(volunteers).map(([uid, details]) => ({
@@ -213,6 +214,16 @@ router.post('/query_data', authenticate, async (req, res) => {
             }
 
             // Return the uid of the best match
+
+            const updateData = {
+                mil: new Date().getTime(),
+                date: formatDate(new Date()),
+                weekly_quota: matchingVolunteers[0].weekly_quota - 1,
+                help_quota: matchingVolunteers[0].help_quota - 1
+            };
+            update(ref(db, 'volunteers/' + matchingVolunteers[0].uid), updateData);
+
+
             return res.status(200).json({
                 RespCode: 200,
                 RespMessage: "Query successful",

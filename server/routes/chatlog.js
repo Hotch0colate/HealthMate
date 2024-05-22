@@ -17,6 +17,7 @@ router.post('/create_data', authenticate, async (req, res) => {
     var volunteer = req.body.volunteer;
     var cid = firebaseadmin.firestore().collection('chats').doc().id;
     var psychiatristchat = req.body.psychiatristchat;
+    // var complete = req.body.complete;
 
     const randomIndexForUser = Math.floor(Math.random() * anonymouseNames.length);
     const randomIndexForVolunteer = Math.floor(Math.random() * anonymouseNames.length);
@@ -86,6 +87,7 @@ router.post('/create_data', authenticate, async (req, res) => {
                     });
             }
         });
+        console.log("Create Chatlog Successfully !");
         return res.status(200).json({
             RespCode: 200,
             RespMessage: "Create Chatlog Successfully !",
@@ -93,7 +95,9 @@ router.post('/create_data', authenticate, async (req, res) => {
             userUid: user,
             volunteerUid: volunteer,
             anonymoususername: userAnon,
-            anonymousvolunteername: volunteerAnon
+            anonymousvolunteername: volunteerAnon,
+            psychiatristchat: psychiatristchat,
+            complete: false
         });
     }
     catch (error) {

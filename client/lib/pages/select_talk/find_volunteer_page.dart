@@ -85,6 +85,7 @@ class FindVolunteerPage extends StatelessWidget {
       );
 
       if (response.statusCode == 200) {
+        // print('response.statusCode == 200');
         final jsonResponse = jsonDecode(response.body);
         String cid = jsonResponse['Data'];
         String userUid = jsonResponse['userUid'];
@@ -97,10 +98,10 @@ class FindVolunteerPage extends StatelessWidget {
         if (cid != null) {
           String? token = await _auth_service.getIdToken();
           String uid = await fetchUidFromToken(token);
-          print('cid reached');
+          // print('cid reached');
 
           if (text != "") {
-            print('text field reached');
+            // print('text field reached');
             final _response = await http.post(
               Uri.parse('http://${fixedIp}:3000/chatroom/create_data'),
               headers: <String, String>{
@@ -113,7 +114,7 @@ class FindVolunteerPage extends StatelessWidget {
             if (_response.statusCode != 200) {
               throw Exception('Fail to sent messages');
             } else {
-              print('text sent');
+              // print('text sent');
             }
           }
           Navigator.push(
@@ -202,13 +203,13 @@ class FindVolunteerPage extends StatelessWidget {
             final data = snapshot.data!;
             // print(data);
             if (data.data != null) {
-              // print('data!=null');
+              print('data!=null');
               // If the `findVolunteer` future is complete and has a volunteer UID, proceed to create chat room
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _CreateChatRoomAndSendFirstMessage(context, data.data!);
               });
             } else {
-              // print('data==null');
+              print('data==null');
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.push(
                   context,
@@ -218,7 +219,7 @@ class FindVolunteerPage extends StatelessWidget {
               });
             }
             // Return a temporary placeholder widget if needed
-            // print('else of else conditions');
+            print('else of else conditions');
             return Container();
           } else {
             WidgetsBinding.instance.addPostFrameCallback((_) {

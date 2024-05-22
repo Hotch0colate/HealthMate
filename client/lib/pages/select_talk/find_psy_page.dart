@@ -93,10 +93,10 @@ class FindPsyPage extends StatelessWidget {
         if (cid != null) {
           String? token = await _auth_service.getIdToken();
           String uid = await fetchUidFromToken(token);
-          print('cid reached');
+          // print('cid reached');
 
           if (text != "") {
-            print('text field reached');
+            // print('text field reached');
             final _response = await http.post(
               Uri.parse('http://${fixedIp}:3000/chatroom/create_data'),
               headers: <String, String>{

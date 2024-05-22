@@ -193,26 +193,29 @@ router.post('/delete_data', authenticate, (req, res) => {
 
 router.post('/query_data', authenticate, async (req, res) => {
     var uid = req.user.uid;
-    const { tag } = req.body;
+    var tag = req.body.tags;
 
     try {
         const snapshot = await get(ref(db, 'psychiatrists'));
         if (snapshot.exists()) {
-            let volunteers = snapshot.val();
+            let psychiatrists = snapshot.val();
+
+            console.log(tag);
 
             // Convert object to array and include uid in each item
-            volunteers = Object.entries(volunteers).map(([uid, details]) => ({
+            psychiatrists = Object.entries(psychiatrists).map(([uid, details]) => ({
                 uid,
                 ...details,
                 tagMatch: details.tags && details.tags.includes(tag),
                 hasGeneric: details.tags && details.tags.includes("generic")
             }));
 
+            console.log(psychiatrists);
             // Filter out volunteers without matching or generic tag
-            let matchingVolunteers = volunteers.filter(v => v.uid !== uid && (v.tagMatch || v.hasGeneric));
+            let matchingPsychiatrists = psychiatrists.filter(v => v.uid !== uid && (v.tagMatch || v.hasGeneric));
 
             // Sort by tag match, then by quotas and score
-            matchingVolunteers.sort((a, b) => {
+            matchingPsychiatrists.sort((a, b) => {
                 // Prioritize tag match over "Generic"
                 if (a.tagMatch && !b.tagMatch) {
                     if (a.weekly_quota === 0 || a.help_quota === 0) return 1;
@@ -231,8 +234,9 @@ router.post('/query_data', authenticate, async (req, res) => {
             });
 
             // Check if a match is found
-            if (matchingVolunteers.length === 0 || matchingVolunteers[0].weekly_quota === 0 || matchingVolunteers[0].help_quota === 0) {
+            if (matchingPsychiatrists.length === 0 || matchingPsychiatrists[0].weekly_quota === 0 || matchingPsychiatrists[0].help_quota === 0) {
                 console.log('data == null');
+                // console.log(matchingPsychiatrists.length);
                 return res.status(200).json({
                     RespCode: 200,
                     RespMessage: "No match found",
@@ -241,11 +245,18 @@ router.post('/query_data', authenticate, async (req, res) => {
             }
 
             // Return the uid of the best match
+            const updateData = {
+                mil: new Date().getTime(),
+                date: formatDate(new Date()),
+                weekly_quota: matchingPsychiatrists[0].weekly_quota - 1,
+                help_quota: matchingPsychiatrists[0].help_quota - 1
+            };
+            update(ref(db, 'psychiatrists/' + matchingPsychiatrists[0].uid), updateData);
             console.log('query successful');
             return res.status(200).json({
                 RespCode: 200,
                 RespMessage: "Query successful",
-                Data: matchingVolunteers[0].uid
+                Data: matchingPsychiatrists[0].uid
             });
         } else {
             console.log('404 not found');
