@@ -47,9 +47,14 @@ class _SplashScreenState extends State<SplashScreen> {
       print(
           "Response JSON: $jsonResponse"); // This line will print the entire response
 
+      int firstLoginStage = 99;
       // Assuming 'firstloginstage' is an integer in the JSON response
-      int firstLoginStage = jsonResponse['Data']['firstloginstage'] ??
-          99; // Default to 99 if not set
+      if (jsonResponse['RespMessage'] != 'No data available') {
+        firstLoginStage = jsonResponse['Data']['firstloginstage'] ??
+            99; // Default to 99 if not set
+      } else {
+        firstLoginStage = -1;
+      }
 
       print(
           "First login stage: $firstLoginStage"); // This will show the parsed or default value
@@ -66,7 +71,15 @@ class _SplashScreenState extends State<SplashScreen> {
     if (sharedToken != null) {
       // Token exists, so navigate to the main app screen
       // print("Token:" + token);
-      int userState = await fetchFirstloginstageFromToken(token);
+      int userState = 99;
+      if (token != null) {
+        userState = await fetchFirstloginstageFromToken(token);
+        if (userState == -1) {
+          Navigator.of(context).pushReplacementNamed('/login');
+        }
+      } else {
+        Navigator.of(context).pushReplacementNamed('/login');
+      }
       print("userState = " + userState.toString());
       if (userState == 0 || userState == 1) {
         Navigator.of(context).pushReplacementNamed('/first_login');

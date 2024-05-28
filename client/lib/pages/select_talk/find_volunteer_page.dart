@@ -203,13 +203,13 @@ class FindVolunteerPage extends StatelessWidget {
             final data = snapshot.data!;
             // print(data);
             if (data.data != null) {
-              print('data!=null');
+              // print('data!=null');
               // If the `findVolunteer` future is complete and has a volunteer UID, proceed to create chat room
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 _CreateChatRoomAndSendFirstMessage(context, data.data!);
               });
             } else {
-              print('data==null');
+              // print('data==null');
               WidgetsBinding.instance.addPostFrameCallback((_) {
                 Navigator.push(
                   context,
@@ -219,7 +219,7 @@ class FindVolunteerPage extends StatelessWidget {
               });
             }
             // Return a temporary placeholder widget if needed
-            print('else of else conditions');
+            // print('else of else conditions');
             return Container();
           } else {
             WidgetsBinding.instance.addPostFrameCallback((_) {

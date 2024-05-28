@@ -109,7 +109,7 @@ class FindPsyPage extends StatelessWidget {
             if (_response.statusCode != 200) {
               throw Exception('Fail to sent messages');
             } else {
-              print('text sent');
+              // print('text sent');
             }
           }
           Navigator.push(
